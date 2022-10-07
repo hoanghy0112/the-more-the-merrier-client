@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npm install --prefix desktop-app",
+    "install": "npm install --prefix desktop-app --verbose",
     "start-web": "npm run dev --prefix web-app",
     "build-web": "npm run build --prefix web-app",
     "preview-web": "npm run preview --prefix web-app",
