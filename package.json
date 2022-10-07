@@ -1,0 +1,34 @@
+{
+  "name": "the-more-the-merrier-codebase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "npm install --prefix desktop-app",
+    "start-web": "npm run dev --prefix web-app",
+    "build-web": "npm run build --prefix web-app",
+    "preview-web": "npm run preview --prefix web-app",
+    "start-desktop": "npm run dev --prefix desktop-app",
+    "build-desktop": "npm run build --prefix desktop-app"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.1.0",
+    "electron": "^21.1.0",
+    "electron-builder": "^23.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.55.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.4",
+    "vite-electron-plugin": "^0.4.4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
