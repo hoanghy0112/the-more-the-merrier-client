@@ -20,5 +20,8 @@
 	},
 	"devDependencies": {
 		"electron": "^21.1.0"
+	},
+	"dependencies": {
+		"the-more-the-merrier-codebase": "file:.."
 	}
 }
