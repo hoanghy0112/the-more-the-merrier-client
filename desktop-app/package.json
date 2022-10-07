@@ -19,9 +19,9 @@
 		}
 	},
 	"devDependencies": {
-		"electron": "^21.1.0"
+		"electron-prebuilt": "^1.4.13"
 	},
 	"dependencies": {
-		"the-more-the-merrier-codebase": "file:.."
+		"electron": "^21.1.0"
 	}
 }
