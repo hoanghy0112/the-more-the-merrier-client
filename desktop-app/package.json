@@ -7,6 +7,7 @@
 	"license": "MIT",
 	"main": "dist-electron/main/index.js",
 	"scripts": {
+		"install": "npm install electron --unsafe-perm=true --allow-root",
 		"dev": "vite",
 		"build": "tsc && vite build && electron-builder"
 	},
