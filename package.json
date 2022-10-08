@@ -11,7 +11,10 @@
 		"start-desktop": "npm run dev --prefix desktop-app",
 		"build-desktop": "npm run build --prefix desktop-app",
 		"build": "npm run build-web && npm run build-desktop",
-		"lint": "npx eslint --ext .jsx,.jx \"src/\""
+		"lint": "npx eslint --ext .jsx,.jx \"src/\"",
+		"test": "vitest run",
+		"watch": "vitest",
+		"coverage": "vitest run --coverage"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.8.5",
@@ -23,9 +26,11 @@
 	},
 	"devDependencies": {
 		"@redux-devtools/core": "^3.13.1",
+		"@testing-library/react": "^13.4.0",
 		"@types/react": "^18.0.17",
 		"@types/react-dom": "^18.0.6",
 		"@vitejs/plugin-react": "^2.1.0",
+		"@vitest/coverage-c8": "^0.24.0",
 		"electron": "^21.1.0",
 		"electron-builder": "^23.3.3",
 		"electron-prebuilt": "^1.4.13",
@@ -35,12 +40,14 @@
 		"eslint-plugin-jsx-a11y": "^6.6.1",
 		"eslint-plugin-react": "^7.31.8",
 		"eslint-plugin-react-hooks": "^4.6.0",
+		"jsdom": "^20.0.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"sass": "^1.55.0",
 		"typescript": "^4.8.4",
-		"vite": "^3.1.4",
-		"vite-electron-plugin": "^0.4.4"
+		"vite": "^3.1.6",
+		"vite-electron-plugin": "^0.4.4",
+		"vitest": "^0.24.0"
 	},
 	"keywords": [],
 	"author": "",
