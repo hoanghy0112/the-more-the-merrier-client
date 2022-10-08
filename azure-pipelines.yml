@@ -11,7 +11,7 @@ jobs:
   - job: '1'
     displayName: 'Run on window'
     pool:
-      vmImage: windows-lastest
+      vmImage: windows-2022
 
     steps:
       - task: NodeTool@0
