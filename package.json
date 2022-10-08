@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"install": "cd ./desktop-app && npm install",
 		"start-web": "npm run dev --prefix web-app",
 		"build-web": "npm run build --prefix web-app",
 		"preview-web": "npm run preview --prefix web-app",
