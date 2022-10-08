@@ -15,7 +15,25 @@ steps:
     versionSpec: '16.x'
   displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+- task: Npm@1
+  inputs:
+    command: 'install'
+  displayName: 'Install dependencies'
+  timeoutInMinutes: 10
+
+- task: Npm@0
+  inputs:
+    command: 'run build-web'
+  displayName: 'Build web-app'
+  timeoutInMinutes: 10
+
+- task: Npm@0
+  inputs:
+    command: 'run build-desktop'
+  displayName: 'Build desktop-app'
+  timeoutInMinutes: 10
+
+# - script: |
+#     npm install
+#     npm run build
+#   displayName: 'npm install and build'
