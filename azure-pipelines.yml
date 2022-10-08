@@ -27,7 +27,7 @@ jobs:
 
       - script: |
           npm run lint
-        displayName: "Check code"
+        displayName: "Check code with eslint"
 
       - script: |
           npm run test
