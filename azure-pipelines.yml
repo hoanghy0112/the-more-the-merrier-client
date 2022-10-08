@@ -34,7 +34,8 @@ jobs:
 
       - task: Npm@0
         inputs:
-          command: 'run build-desktop'
+          commands: 'custom'
+          customCommand: 'run build-desktop'
         displayName: 'Build desktop-app'
         timeoutInMinutes: 10
 
