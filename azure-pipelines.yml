@@ -8,7 +8,7 @@ trigger:
 
 
 jobs:
-  - job:
+  - job: '1'
     displayName: 'Run on window'
     pool:
       vmImage: windows-lastest
