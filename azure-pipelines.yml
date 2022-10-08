@@ -25,6 +25,10 @@ jobs:
         displayName: 'Install dependencies'
         timeoutInMinutes: 10
 
+      - script: |
+          npm run lint
+        displayName: "Check code"
+
       - task: Npm@1
         inputs:
           commands: 'custom'
@@ -32,7 +36,7 @@ jobs:
         displayName: 'Build web-app'
         timeoutInMinutes: 10
 
-      - task: Npm@0
+      - task: Npm@1
         inputs:
           commands: 'custom'
           customCommand: 'run build-desktop'
