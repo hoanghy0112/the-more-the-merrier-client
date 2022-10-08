@@ -28,7 +28,7 @@ jobs:
       - task: Npm@1
         inputs:
           commands: 'custom'
-        customCommand: 'run build-web'
+          customCommand: 'run build-web'
         displayName: 'Build web-app'
         timeoutInMinutes: 10
 
