@@ -29,6 +29,10 @@ jobs:
           npm run lint
         displayName: "Check code"
 
+      - script: |
+          npm run test
+        displayName: "Test app"
+
       - task: Npm@1
         inputs:
           commands: 'custom'
