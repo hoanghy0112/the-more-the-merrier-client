@@ -13,11 +13,13 @@
 		"build": "npm run build-web && npm run build-desktop",
 		"lint": "npx eslint --ext .jsx,.jx \"src/\"",
 		"test": "vitest run",
-		"watch": "vitest",
+		"test-watch": "vitest",
 		"coverage": "vitest run --coverage"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.8.5",
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/user-event": "^14.4.3",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
