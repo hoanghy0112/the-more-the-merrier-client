@@ -8,7 +8,7 @@ trigger:
 
 
 jobs:
-  - job: '1'
+  - job: 'job1'
     displayName: 'Run on window'
     pool:
       vmImage: windows-2022
