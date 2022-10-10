@@ -15,7 +15,7 @@ describe('UI Test', () => {
     expect(await screen.findAllByText('Content')).toBeDefined();
   });
 
-  test('should show Information box', async () => {
+  test('should show Information Box', async () => {
     render(
       <BasePage>
         <h4>Content</h4>
