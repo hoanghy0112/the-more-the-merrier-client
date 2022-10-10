@@ -1,6 +1,6 @@
 {
 	"name": "desktop-app",
-	"productName": "Electron",
+	"productName": "TM2",
 	"private": true,
 	"version": "1.0.0",
 	"description": "Desktop version of The More The Merrier",
