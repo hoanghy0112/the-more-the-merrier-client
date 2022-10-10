@@ -100,7 +100,7 @@ export default function Calendar({ startDate }) {
           .map((_, index) => (
             <TimelineItem time={index} />
           ))}
-        <button
+        <div
           type="button"
           className="task"
           ref={taskRef}
@@ -120,7 +120,7 @@ export default function Calendar({ startDate }) {
             </div>
           )}
           {tasks.map(({ top: top_, left: left_, height: _height }) => (
-            <button
+            <div
               type="button"
               className="task-item"
               // style={{ left: begin[0], top: begin[1] }}
@@ -142,9 +142,9 @@ export default function Calendar({ startDate }) {
                   />
                 </div>
               </Draggable>
-            </button>
+            </div>
           ))}
-        </button>
+        </div>
       </div>
     </div>
   );
