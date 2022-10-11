@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 
 import styles from './CalendarCreateTask.module.scss';
 
-export default function CalendarCreateTask({ gridSize, addNewTask }) {
+export default function CalendarCreateTask({
+  gridSize,
+  taskWrapperRect,
+  addNewTask,
+}) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [begin, setBegin] = useState([0, 0]);
   const [end, setEnd] = useState([0, 0]);
@@ -20,7 +24,7 @@ export default function CalendarCreateTask({ gridSize, addNewTask }) {
 
   function handleMouseMove(e) {
     e.stopPropagation();
-    const parentRect = e.target.parentElement.getBoundingClientRect();
+    const parentRect = taskWrapperRect;
     offset.current = [e.clientX - parentRect.left, e.clientY - parentRect.top];
     if (isMouseDown) {
       setEnd([...offset.current]);
@@ -48,7 +52,7 @@ export default function CalendarCreateTask({ gridSize, addNewTask }) {
         ...prev,
         {
           title: '',
-          id: '3',
+          id: String(Math.random()),
           top: end[1] > begin[1] ? begin[1] : end[1],
           column: begin[0] / gridSize,
           height,
@@ -85,6 +89,12 @@ export default function CalendarCreateTask({ gridSize, addNewTask }) {
 
 CalendarCreateTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
+  taskWrapperRect: PropTypes.objectOf(
+    PropTypes.shape({
+      top: PropTypes.number.isRequired,
+      left: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
   addNewTask: PropTypes.func.isRequired,
 };
 

@@ -51,7 +51,11 @@ export default function Calendar({ startDate }) {
               tasks={tasks}
               setTasks={setTask}
             />
-            <CalendarCreateTask gridSize={gridSize} addNewTask={setTask} />
+            <CalendarCreateTask
+              taskWrapperRect={taskRef?.current?.getBoundingClientRect()}
+              gridSize={gridSize}
+              addNewTask={setTask}
+            />
           </div>
         </div>
       </div>
