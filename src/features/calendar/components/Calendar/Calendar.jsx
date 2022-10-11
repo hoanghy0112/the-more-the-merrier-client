@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import Draggable from 'react-draggable';
@@ -9,6 +10,7 @@ import TimelineItem from '../../../../components/TimelineItem/TimelineItem';
 // import { ResizableBox, Resizable } from "re-resizable";
 
 import TaskCard from '../../../../components/TaskCard/TaskCard';
+import useWindowSize from '../../../../hooks/useWindowSize';
 import './Calendar.scss';
 
 export default function Calendar({ startDate }) {
@@ -19,6 +21,8 @@ export default function Calendar({ startDate }) {
 
   const [resizing, setResizing] = useState(false);
 
+  const [windowWidth] = useWindowSize();
+
   const [, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
@@ -26,16 +30,17 @@ export default function Calendar({ startDate }) {
 
   const taskRef = useRef(null);
 
-  const gridSize = useRef(null);
+  const [gridSize, setGridSize] = useState();
 
   const offset = useRef(null);
 
   useEffect(() => {
     if (taskRef?.current) {
-      gridSize.current =
-        (taskRef.current.getBoundingClientRect().width - 120) / 7;
+      setGridSize((taskRef.current.getBoundingClientRect().width - 120) / 7);
     }
-  }, [taskRef]);
+    // setTask(tasks.map(({left: position, ...others}) => {
+    // })
+  }, [taskRef, windowWidth]);
 
   useLayoutEffect(() => {
     setHeight(end[1] - begin[1]);
@@ -56,9 +61,7 @@ export default function Calendar({ startDate }) {
   function handleMouseDown() {
     setIsMouseDown(true);
     setBegin([
-      parseInt((offset.current[0] - 100) / gridSize.current, 10) *
-        gridSize.current +
-        100,
+      parseInt((offset.current[0] - 100) / gridSize, 10) * gridSize + 100,
       offset.current[1],
     ]);
     setEnd([...offset.current]);
@@ -69,14 +72,14 @@ export default function Calendar({ startDate }) {
     if (isMouseDown) {
       // setEnd([...offset.current]);
       setEnd([...begin]);
-      setWidth(gridSize.current);
+      setWidth(gridSize);
       setHeight(0);
 
       setTask((prev) => [
         ...prev,
         {
           top: begin[1],
-          left: begin[0],
+          left: (begin[0] - 100) / gridSize,
           height,
         },
       ]);
@@ -100,7 +103,7 @@ export default function Calendar({ startDate }) {
           .map((_, index) => (
             <TimelineItem time={index} />
           ))}
-        <div
+        <button
           type="button"
           className="task"
           ref={taskRef}
@@ -108,34 +111,30 @@ export default function Calendar({ startDate }) {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
         >
-          {gridSize?.current && (
+          {gridSize && (
             <div
               className="task-item"
               style={{ left: begin[0], top: begin[1] }}
             >
-              <TaskCard
-                defaultWidth={gridSize.current}
-                defaultHeight={height}
-              />
+              <TaskCard defaultWidth={gridSize} defaultHeight={height} />
             </div>
           )}
           {tasks.map(({ top: top_, left: left_, height: _height }) => (
             <div
               type="button"
               className="task-item"
-              // style={{ left: begin[0], top: begin[1] }}
               onMouseDown={(e) => e.stopPropagation()}
               onMouseMove={(e) => e.stopPropagation()}
               onMouseUp={(e) => e.stopPropagation()}
             >
               <Draggable
-                grid={[gridSize.current, 5]}
-                defaultPosition={{ x: left_, y: top_ }}
+                grid={[gridSize, 5]}
+                position={{ x: left_ * gridSize + 100, y: top_ }}
                 disabled={resizing}
               >
                 <div>
                   <TaskCard
-                    defaultWidth={gridSize.current}
+                    defaultWidth={gridSize}
                     defaultHeight={_height}
                     onResizeStart={() => setResizing(true)}
                     onResizeStop={() => setResizing(false)}
@@ -144,7 +143,7 @@ export default function Calendar({ startDate }) {
               </Draggable>
             </div>
           ))}
-        </div>
+        </button>
       </div>
     </div>
   );
