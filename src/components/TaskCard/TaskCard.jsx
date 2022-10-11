@@ -1,30 +1,33 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
+
+import Draggable from 'react-draggable';
 
 import PropTypes from 'prop-types';
-// import { Resizable } from 're-resizable';
 
-import './TaskCard.scss';
+import styles from './TaskCard.module.scss';
 
-export default function TaskCard({ defaultWidth, defaultHeight }) {
-  const [width, setWidth] = useState(defaultWidth);
-  const [height, setHeight] = useState(defaultHeight);
-
-  useLayoutEffect(() => {
-    setHeight(defaultHeight);
-  }, [defaultHeight]);
-
-  useLayoutEffect(() => {
-    setWidth(defaultWidth);
-  }, [defaultWidth]);
-
+export default function TaskCard({ top, width, height, column, onDragStop }) {
   return (
-    <div style={{ width, height, padding: 3 }}>
-      <div className="task-card__task-item" />
-    </div>
+    <Draggable
+      onMouseDown={(e) => e.stopPropagation()}
+      onMouseMove={(e) => e.stopPropagation()}
+      onMouseUp={(e) => e.stopPropagation()}
+      bounds="parent"
+      grid={[width, 5]}
+      position={{ x: column * width, y: top }}
+      onStop={onDragStop}
+    >
+      <div className={styles.drag} style={{ width, height }}>
+        <div className={styles.task} />
+      </div>
+    </Draggable>
   );
 }
 
 TaskCard.propTypes = {
-  defaultWidth: PropTypes.number.isRequired,
-  defaultHeight: PropTypes.number.isRequired,
+  top: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  column: PropTypes.number.isRequired,
+  onDragStop: PropTypes.func.isRequired,
 };
