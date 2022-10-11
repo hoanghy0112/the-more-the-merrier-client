@@ -1,46 +1,52 @@
 .calendar__container {
-   border-radius: 18px;
-   width: 100%;
+  border-radius: 18px;
+  width: 100%;
 
-   border-radius: 18px;
-   box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25), 3px 4.8px 6px rgba(0, 166, 202, 0.25);
-   margin: 30px;
+  border-radius: 18px;
+  box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
+    3px 4.8px 6px rgba(0, 166, 202, 0.25);
+  margin: 30px;
 
-   .weekdays {
-      display: flex;
-      flex: 1;
-      box-shadow: 0px 1.2px 3px rgba(0, 166, 202, 0.25);
-      padding: 10px 0px;
+  .weekdays {
+    display: flex;
+    flex: 1;
+    box-shadow: 0px 1.2px 3px rgba(0, 166, 202, 0.25);
+    padding: 10px 0px;
+    padding-left: 100px;
+    padding-right: 20px;
+    justify-content: space-around;
+    align-items: center;
+    user-select: none;
+  }
+
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    gap: 40px;
+    user-select: none;
+
+    .task {
+      z-index: 5;
+      position: absolute;
       padding-left: 100px;
       padding-right: 20px;
-      justify-content: space-around;
-      align-items: center;
-      user-select: none;
-   }
+      outline: none;
+      border: 0;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
 
-   .timeline {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      padding: 10px 20px;
-      gap: 40px;
-      user-select: none;
+      cursor: crosshair;
 
-      .task {
-         position: absolute;
-         width: 100%;
-         height: 100%;
-         top: 0;
-         left: 0;
+      &>div {
+        position: absolute;
 
-         cursor: crosshair;
-
-         .task-item {
-            position: absolute;
-            top: 0;
-            left: 0;
-         }
-
+        width: 100%;
+        height: 100%;
       }
-   }
+    }
+  }
 }
