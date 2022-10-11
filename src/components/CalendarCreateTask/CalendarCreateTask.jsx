@@ -15,7 +15,7 @@ export default function CalendarCreateTask({ gridSize, addNewTask }) {
   const offset = useRef(null);
 
   useLayoutEffect(() => {
-    setHeight(end[1] - begin[1]);
+    setHeight(Math.abs(end[1] - begin[1]));
   }, [end]);
 
   function handleMouseMove(e) {
@@ -49,7 +49,7 @@ export default function CalendarCreateTask({ gridSize, addNewTask }) {
         {
           title: '',
           id: '3',
-          top: begin[1],
+          top: end[1] > begin[1] ? begin[1] : end[1],
           column: begin[0] / gridSize,
           height,
         },
@@ -68,7 +68,7 @@ export default function CalendarCreateTask({ gridSize, addNewTask }) {
         {gridSize && isMouseDown && (
           <div
             style={{
-              top: begin[1],
+              top: end[1] > begin[1] ? begin[1] : end[1],
               left: begin[0],
               width: gridSize,
               height,
