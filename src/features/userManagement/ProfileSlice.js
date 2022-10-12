@@ -25,6 +25,10 @@ export const signInWithGoogle = createAsyncThunk(
   'userManagement/signInWithGoogle',
   async () => {
     const user = await signInWithGoogleAPI();
+    const { accessToken } = user;
+
+    console.log({ accessToken });
+
     return { accessToken: user.accessToken };
   },
 );
@@ -46,7 +50,7 @@ export const userManagementSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(getUserProfile.fulfilled, (state, action) => {
-        state.status = 'idle';
+        state.status = 'success';
         state = Object.assign(state, action.payload);
       })
       .addCase(getUserProfile.rejected, (state, action) => {
@@ -57,7 +61,7 @@ export const userManagementSlice = createSlice({
         state.OAuthStatus = 'loading';
       })
       .addCase(signInWithGoogle.fulfilled, (state, action) => {
-        state.OAuthStatus = 'idle';
+        state.OAuthStatus = 'success';
         state = Object.assign(state, action.payload);
       })
       .addCase(signInWithGoogle.rejected, (state, action) => {
