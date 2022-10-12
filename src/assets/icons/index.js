@@ -11,5 +11,6 @@ export { default as ICON_BOOK } from './book.svg';
 export { default as ICON_PENDING } from './VectorPending.svg';
 export { default as ICON_COMPLETED } from './VectorCompleted.svg';
 export { default as ICON_VECTOR_FLAG } from './VectorFlag.svg';
+
 export const ICON_HOUSE = MdOutlineHouse;
 export const ICON_FLAG = FaRegFlag;

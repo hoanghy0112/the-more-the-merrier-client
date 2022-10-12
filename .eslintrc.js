@@ -15,5 +15,7 @@ module.exports = {
     'linebreak-style': 0,
     'object-curly-newline': 0,
     'operator-linebreak': 0,
+    'jsx-a11y/no-static-element-interactions': 0,
+    'jsx-a11y/click-events-have-key-events': 1,
   },
 };
