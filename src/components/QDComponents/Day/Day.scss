@@ -1,0 +1,27 @@
+.day-container {
+    height: 100%;
+    width: calc(1/7 * 100%);
+    text-align: center;
+    color: rgb(57, 194, 248);
+    .date {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        width: 60%;
+        height: 40%;
+        font-weight: 600;
+        font-size: calc(15px + 1vmin);
+        margin-top: 10px;
+    }
+    .active {
+        margin: 10px auto 0;
+        width: 40%;
+        color: white;
+        border-radius: 50%;
+        background-color: rgb(57, 194, 248);
+    }
+    .day-of-week {
+        font-size: smaller;
+    }
+}
