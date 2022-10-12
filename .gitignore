@@ -21,7 +21,7 @@ dist-ssr
 *.sln
 *.sw?
 
-TestPage.jsx
+TestPage
 
 release
 .vscode/.debug.env
