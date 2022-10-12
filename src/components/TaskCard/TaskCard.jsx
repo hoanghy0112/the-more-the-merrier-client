@@ -18,7 +18,11 @@ export default function TaskCard({ top, width, height, column, onDragStop }) {
       onStop={onDragStop}
     >
       <div className={styles.drag} style={{ width, height }}>
-        <div className={styles.task} />
+        <div className={styles.task}>
+          <div className={styles.taskContent}>
+            <p>New Task</p>
+          </div>
+        </div>
       </div>
     </Draggable>
   );

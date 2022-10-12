@@ -6,53 +6,53 @@ import {
   ICON_COMPLETED,
   ICON_PENDING,
 } from '../../assets/icons';
-import './Tag.scss';
+import styles from './Tag.module.scss';
 
 export default function Tag({ type }) {
   switch (type) {
     case 'tagFlag_1':
       return (
-        <div className="container">
+        <div className={styles.container}>
           <ICON_FLAG color="white" />
         </div>
       );
     case 'tagFlag_2':
       return (
-        <div className="container" style={{ backgroundColor: '#9AD0EC' }}>
+        <div className={styles.container} style={{ backgroundColor: '#9AD0EC' }}>
           <ICON_FLAG color="black" />
         </div>
       );
     case 'tagFlag_3':
       return (
-        <div className="container" style={{ backgroundColor: '#EFDAD7' }}>
+        <div className={styles.container} style={{ backgroundColor: '#EFDAD7' }}>
           <ICON_FLAG color="black" />
         </div>
       );
     case 'tagFlag_4':
       return (
-        <div className="container" style={{ backgroundColor: '#E3BEC6' }}>
+        <div className={styles.container} style={{ backgroundColor: '#E3BEC6' }}>
           <ICON_FLAG color="black" />
         </div>
       );
     case 'tagCompleted':
       return (
-        <div className="container" style={{ backgroundColor: '#0DCF4F' }}>
-          <img src={ICON_COMPLETED} />
+        <div className={styles.container} style={{ backgroundColor: '#0DCF4F' }}>
+          <img src={ICON_COMPLETED} alt="Completed" />
         </div>
       );
     case 'tagPending':
       return (
-        <div className="container" style={{ backgroundColor: '#0DCF4F' }}>
-          <img src={ICON_PENDING} />
+        <div className={styles.container} style={{ backgroundColor: '#0DCF4F' }}>
+          <img src={ICON_PENDING} alt="Pending" />
         </div>
       );
     case 'tagLearn':
       return (
         <div
-          className="container"
+          className={styles.container}
           style={{ backgroundColor: '#0066FF', paddingRight: 1, paddingTop: 1 }}
         >
-          <img src={ICON_BOOK} />
+          <img src={ICON_BOOK} alt="Learning" />
         </div>
       );
     default:
