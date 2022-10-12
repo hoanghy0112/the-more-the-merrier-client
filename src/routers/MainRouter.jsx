@@ -4,6 +4,7 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import GroupPage from '../pages/GroupPage/GroupPape';
 import HomePage from '../pages/HomePage/HomePage';
 import LoginPage from '../pages/LoginPage/LoginPage';
+import TestPage from '../pages/TestPage/TestPage';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
         element: <GroupPage />,
       },
     ],
+  },
+  {
+    path: 'test',
+    element: <TestPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: 'authentication',
