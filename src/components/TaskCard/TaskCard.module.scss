@@ -13,5 +13,19 @@
     background-color: rgba(30, 0, 255, 0.482);
 
     z-index: 10;
+
+    .taskContent {
+      height: 60%;
+      max-height: 200px;
+      padding: 0px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      p {
+        font-size: 26px;
+        font-weight: 500;
+      }
+    }
   }
 }
