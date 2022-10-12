@@ -1,0 +1,38 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: space-around;
+
+  padding: 20px;
+
+  background: linear-gradient(240.35deg, #ffffff 18.12%, #00a6ca 129.47%);
+
+  .authenticationTab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 60px;
+
+    .header {
+      text-align: center;
+      font-size: 28px;
+      line-height: 39px;
+
+      .appName {
+        background: linear-gradient(
+          92.49deg,
+          #10d4ff 18.89%,
+          #00a6ca 39.16%,
+          #f9b022 67.06%,
+          #ffd78b 97.38%
+        );
+        font-weight: 700;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+}
