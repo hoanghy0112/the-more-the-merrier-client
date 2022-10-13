@@ -5,7 +5,7 @@ import { DayPicker } from 'react-day-picker';
 
 import PropTypes from 'prop-types';
 
-import { ICON_CALENDAR } from '../../assets/icons';
+import { ICON_CALENDAR, ICON_CALENDAR_2 } from '../../assets/icons';
 
 import styles from './DateTimePicker.module.scss';
 
@@ -37,7 +37,7 @@ export default function DateTimePicker({ startDay, hanldeChangeStartDay }) {
           onClick={() => setIsOpenDateTimePicker(!isOpenDateTimePicker)}
           className={styles['date-time-picker-logo']}
         >
-          <img src={ICON_CALENDAR} alt="Calendar" />
+          <img src={ICON_CALENDAR_2} alt="Calendar" />
         </div>
       </div>
       {isOpenDateTimePicker && (

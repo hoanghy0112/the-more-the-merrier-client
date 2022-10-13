@@ -1,0 +1,150 @@
+.container {
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 15px;
+
+  position: relative;
+  width: 350px;
+  height: 441.4px;
+
+  /* Surface */
+
+  background: #ffffff;
+  box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
+    3px 4.8px 6px rgba(0, 166, 202, 0.25);
+  border-radius: 18px;
+  .taskTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 15px;
+    height: 28px;
+
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.4px;
+    line-height: 28px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
+  .timeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 17px;
+
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.4px;
+    line-height: 28px;
+
+    height: 28px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    .todoTime {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0px;
+      gap: 5px;
+    }
+    .timePicker {
+      box-sizing: border-box;
+
+      background: #ffffff;
+      box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
+        1.2px 1.8px 6px rgba(0, 166, 202, 0.25);
+      border-radius: 6px;
+    }
+  }
+  .sentencesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 10px;
+
+    width: 310px;
+    height: 102.4px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    .desSentence {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0px;
+      gap: 10px;
+      height: 14.4px;
+
+      .timeRemaining {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 9.6px;
+        line-height: 13px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.3px;
+        border: none;
+        color: #000000;
+      }
+    }
+    .desSentence_2 {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0px;
+      gap: 10px;
+
+      // width: 204.4px;
+      height: 19.2px;
+      .buttonRedo {
+        box-sizing: border-box;
+        width: 39px;
+        background: #ffffff;
+
+        border: 0.6px dashed rgba(0, 85, 103, 0.5);
+        border-radius: 6px;
+        // align-items: center;
+        // justify-content: center;
+        text-align: center;
+      }
+      .buttonAdd {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 15px;
+        gap: 10px;
+
+        width: 44.4px;
+        height: 24.4px;
+
+        border: 0.6px dashed rgba(0, 85, 103, 0.5);
+        border-radius: 6px;
+      }
+    }
+  }
+}
