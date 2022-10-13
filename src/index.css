@@ -73,11 +73,6 @@ button:focus-visible {
 /* Document
    ========================================================================== */
 
-@font-face {
-  font-family: Manrope;
-  src: url('./assets/fonts/Manrope-VariableFont_wght.ttf');
-}
-
 * {
   margin: 0;
   padding: 0;
