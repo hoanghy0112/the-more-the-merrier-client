@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './LoginPage.module.scss';
 
-import { signInWithGoogle } from '../../features/userManagement/ProfileSlice';
+import LoginButton from '../../components/LoginButton/LoginButton';
+import {
+  selectAuthenticationStatus,
+  signInWithGoogle,
+} from '../../features/userManagement/ProfileSlice';
+
+import { ICON_FORWARD } from '../../assets/icons';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const authenticationStatus = useSelector(selectAuthenticationStatus);
+
+  function handleSignInWithGoogle() {
+    dispatch(signInWithGoogle());
+  }
+
+  useEffect(() => {
+    if (authenticationStatus === 'success') navigate('/home/schedule');
+  }, [authenticationStatus]);
 
   return (
     <div className={styles.container}>
@@ -17,9 +34,20 @@ export default function LoginPage() {
           <p>Welcome to</p>
           <p className={styles.appName}>The more the merrier</p>
         </div>
-        <button type="button" onClick={() => dispatch(signInWithGoogle())}>
-          Sign in with Google
-        </button>
+        <div className={styles.signInContainer}>
+          <div className={styles.signInButtons}>
+            <LoginButton
+              providerName="Google"
+              onClick={() => handleSignInWithGoogle()}
+            />
+            <LoginButton providerName="Facebook" />
+            <LoginButton providerName="Github" />
+          </div>
+          <div className={styles.noSignIn}>
+            <p>Continue without sign in</p>
+            <img src={ICON_FORWARD} alt="arrow forward" />
+          </div>
+        </div>
       </div>
     </div>
   );

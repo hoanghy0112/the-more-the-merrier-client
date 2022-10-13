@@ -7,7 +7,6 @@ import { getUserProfileAPI } from './profileAPI';
 const initialState = {
   authenticationStatus: '',
   status: '',
-  OAuthStatus: '',
   errorMessage: '',
   accessToken: '',
   givenName: '',
@@ -58,14 +57,14 @@ export const userManagementSlice = createSlice({
         state.errorMessage = action.payload;
       })
       .addCase(signInWithGoogle.pending, (state) => {
-        state.OAuthStatus = 'loading';
+        state.authenticationStatus = 'loading';
       })
       .addCase(signInWithGoogle.fulfilled, (state, action) => {
-        state.OAuthStatus = 'success';
-        state = Object.assign(state, action.payload);
+        state.authenticationStatus = 'success';
+        state = { ...Object.assign(state, action.payload) };
       })
       .addCase(signInWithGoogle.rejected, (state, action) => {
-        state.OAuthStatus = 'fail';
+        state.authenticationStatus = 'fail';
         state.errorMessage = action.payload;
       });
   },

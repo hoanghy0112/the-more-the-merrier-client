@@ -1,11 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import userManagementReducer from '../features/userManagement/ProfileSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    userManagement: userManagementReducer,
+    userManagement: persistReducer(
+      {
+        key: 'userManagement',
+        storage,
+      },
+      userManagementReducer,
+    ),
   },
 });
 
-export default store;
+export const persistor = persistStore(store);

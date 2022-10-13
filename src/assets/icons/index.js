@@ -1,6 +1,5 @@
-import { MdOutlineHouse } from 'react-icons/md';
+import { MdOutlineHouse, MdDelete } from 'react-icons/md';
 import { FaRegFlag } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
 
 export { default as ICON_HOUSE_1 } from './house.svg';
 export { default as ICON_CALENDAR } from './calendar.svg';
@@ -16,6 +15,10 @@ export { default as ICON_FOLDER } from './folder.svg';
 export { default as ICON_PENCIL } from './pencil.svg';
 export { default as ICON_FULL_ARROW_DOWN } from './full_arrow_down.svg';
 export { default as ICON_FULL_ARROW_RIGHT } from './full_arrow_right.svg';
+export { default as ICON_GOOGLE } from './Google logo.svg';
+export { default as ICON_FACEBOOK } from './Facebook logo.svg';
+export { default as ICON_GITHUB } from './Github logo.svg';
+export { default as ICON_FORWARD } from './arrow-forward.svg';
 
 export const ICON_HOUSE = MdOutlineHouse;
 export const ICON_FLAG = FaRegFlag;

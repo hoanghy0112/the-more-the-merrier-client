@@ -1,20 +1,16 @@
 import React from 'react';
-import DateTimePicker from '../../components/DateTimePicker/DateTimePicker';
-import TabButton from '../../components/TabButton/TabButton';
-import Tag from '../../components/Tag/Tag';
+import { Outlet } from 'react-router-dom';
 
-// import Calendar from '../../components/QDComponents/Calendar/Calendar';
-import Calendar from '../../features/calendar/components/Calendar/Calendar';
+import styles from './HomePage.module.scss';
 
 export default function HomePage() {
   return (
-    // <Calendar />
-    <div>
-      This is Home page
-      <TabButton isSelected={false} />
-      <Tag type="tagPending" />
-      <DateTimePicker startDay={new Date()} hanldeChangeStartDay={() => {}} />
-      <Calendar />
+    <div className={styles.container}>
+      <div className={styles.informationBox}>InformationBox</div>
+      <div className={styles.mainBox}>
+        <div className={styles.header}>Logo</div>
+        <Outlet />
+      </div>
     </div>
   );
 }
