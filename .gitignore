@@ -21,8 +21,6 @@ dist-ssr
 *.sln
 *.sw?
 
-TestPage
-
 release
 .vscode/.debug.env
 package-lock.json
@@ -31,3 +29,5 @@ yarn.lock
 dist-electron
 
 build
+
+src/pages/TestPage/TestPage.jsx
