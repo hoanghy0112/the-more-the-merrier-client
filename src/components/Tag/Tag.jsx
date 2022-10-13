@@ -8,52 +8,81 @@ import {
 } from '../../assets/icons';
 import styles from './Tag.module.scss';
 
-export default function Tag({ type }) {
+export default function Tag({ type, input, shape }) {
   switch (type) {
     case 'tagFlag_1':
       return (
-        <div className={styles.container}>
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{ backgroundColor: '#1572A1' }}
+        >
           <ICON_FLAG color="white" />
-        </div>
+        </span>
       );
     case 'tagFlag_2':
       return (
-        <div className={styles.container} style={{ backgroundColor: '#9AD0EC' }}>
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{ backgroundColor: '#9AD0EC' }}
+        >
           <ICON_FLAG color="black" />
-        </div>
+        </span>
       );
     case 'tagFlag_3':
       return (
-        <div className={styles.container} style={{ backgroundColor: '#EFDAD7' }}>
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{ backgroundColor: '#EFDAD7' }}
+        >
           <ICON_FLAG color="black" />
-        </div>
+        </span>
       );
     case 'tagFlag_4':
       return (
-        <div className={styles.container} style={{ backgroundColor: '#E3BEC6' }}>
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{ backgroundColor: '#E3BEC6' }}
+        >
           <ICON_FLAG color="black" />
-        </div>
+        </span>
       );
     case 'tagCompleted':
       return (
-        <div className={styles.container} style={{ backgroundColor: '#0DCF4F' }}>
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{ backgroundColor: '#0DCF4F' }}
+        >
           <img src={ICON_COMPLETED} alt="Completed" />
-        </div>
+        </span>
       );
     case 'tagPending':
       return (
-        <div className={styles.container} style={{ backgroundColor: '#0DCF4F' }}>
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{ backgroundColor: '#0DCF4F' }}
+        >
           <img src={ICON_PENDING} alt="Pending" />
-        </div>
+        </span>
       );
     case 'tagLearn':
       return (
-        <div
-          className={styles.container}
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
           style={{ backgroundColor: '#0066FF', paddingRight: 1, paddingTop: 1 }}
         >
           <img src={ICON_BOOK} alt="Learning" />
-        </div>
+        </span>
+      );
+    case 'tagTask':
+      return (
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{
+            backgroundColor: '#F9B022',
+          }}
+        >
+          <span className={styles.textTag}>{input}</span>
+        </span>
       );
     default:
       return <h3>This tag is not include component</h3>;
@@ -62,4 +91,6 @@ export default function Tag({ type }) {
 
 Tag.propTypes = {
   type: PropTypes.string.isRequired,
+  input: PropTypes.string.isRequired,
+  shape: PropTypes.string.isRequired,
 };

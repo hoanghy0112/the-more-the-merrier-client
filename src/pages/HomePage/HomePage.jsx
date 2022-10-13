@@ -12,7 +12,7 @@ export default function HomePage() {
     <div>
       This is Home page
       <TabButton isSelected={false} />
-      <Tag type="tagPending" />
+      <Tag type="tagPending" shape="rectangle" input="UIT" />
       <DateTimePicker startDay={new Date()} hanldeChangeStartDay={() => {}} />
       <Calendar />
     </div>
