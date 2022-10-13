@@ -22,6 +22,6 @@ import React from 'react';
 export default function TestPage() {
   return (
     // <TagDetail tagTitle={"uit"} description="abc" listTasks={listTasks} />
-    <div></div>
+    <div />
   );
 }
