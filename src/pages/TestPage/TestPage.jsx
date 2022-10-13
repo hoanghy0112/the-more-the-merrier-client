@@ -53,19 +53,8 @@ export default function TestPage() {
 
   return (
     <div>
-<<<<<<< HEAD
       <TagDetail tagTitle={"UIT"} description={description} listTasks={listTasks}/>
       <CreateNewTag />
-=======
-      <button onClick={handleClick} type="button">
-        Click me
-      </button>
-      This is Home page
-      <TabButton isSelected={false} />
-      <Tag type="tagPending" />
-      <DateTimePicker startDay={new Date()} hanldeChangeStartDay={() => {}} />
-      <Calendar />
->>>>>>> a57cfd2e4676e0eccbbb34a33103938796783045
     </div>
   );
 }
