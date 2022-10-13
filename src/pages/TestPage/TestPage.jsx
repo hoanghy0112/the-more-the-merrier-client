@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import DateTimePicker from '../../components/DateTimePicker/DateTimePicker';
 import TabButton from '../../components/TabButton/TabButton';
 import Tag from '../../components/Tag/Tag';
@@ -7,6 +9,7 @@ import CreateNewTag from '../../components/CreateNewTag/CreateNewTag';
 
 // import Calendar from '../../components/QDComponents/Calendar/Calendar';
 import Calendar from '../../features/calendar/components/Calendar/Calendar';
+import { getUserProfile } from '../../features/userManagement/ProfileSlice';
 
 const listTasks = [
   {
@@ -42,10 +45,27 @@ const listTasks = [
 const description = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque doloremque, quis deleniti voluptatum cupiditate reprehenderit, eveniet iure officia veniam, aut maiores vel consectetur explicabo quisquam rem dolores in doloribus minu."
 
 export default function TestPage() {
+  const dispatch = useDispatch();
+
+  async function handleClick() {
+    dispatch(getUserProfile());
+  }
+
   return (
     <div>
+<<<<<<< HEAD
       <TagDetail tagTitle={"UIT"} description={description} listTasks={listTasks}/>
       <CreateNewTag />
+=======
+      <button onClick={handleClick} type="button">
+        Click me
+      </button>
+      This is Home page
+      <TabButton isSelected={false} />
+      <Tag type="tagPending" />
+      <DateTimePicker startDay={new Date()} hanldeChangeStartDay={() => {}} />
+      <Calendar />
+>>>>>>> a57cfd2e4676e0eccbbb34a33103938796783045
     </div>
   );
 }

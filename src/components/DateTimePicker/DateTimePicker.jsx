@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 
-import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 
 import PropTypes from 'prop-types';
@@ -15,19 +14,25 @@ import 'react-day-picker/dist/style.css';
 export default function DateTimePicker({ startDay, hanldeChangeStartDay }) {
   const [isOpenDateTimePicker, setIsOpenDateTimePicker] = useState(false);
   const [selected, setSelected] = useState(startDay);
-  const selectedDay = startDay;
 
   useEffect(() => {
     if (!selected) hanldeChangeStartDay(new Date());
     else hanldeChangeStartDay(selected);
   }, [selected]);
 
+  function formatDay(date) {
+    const month = date.getMonth() + 1;
+    const weekday = date.getDay();
+    const day = date.getDate();
+    return `${
+      weekday !== 7 ? `Thứ ${weekday + 1}` : 'Chủ nhật'
+    }, Ngày ${day} Tháng ${month}`;
+  }
+
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles['date-time-picker-container']}>
-        <div className={styles['selected-month']}>
-          {format(selectedDay, 'LLLL')}
-        </div>
+        <div className={styles['selected-month']}>{formatDay(selected)}</div>
         <div
           onClick={() => setIsOpenDateTimePicker(!isOpenDateTimePicker)}
           className={styles['date-time-picker-logo']}

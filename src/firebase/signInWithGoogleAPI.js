@@ -3,7 +3,7 @@ import app from './configuration';
 
 const provider = new GoogleAuthProvider();
 
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 export default async function signInWithGoogleAPI() {
   return new Promise((resolve) => {
