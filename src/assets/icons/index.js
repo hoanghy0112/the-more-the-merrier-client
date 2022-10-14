@@ -34,6 +34,8 @@ export { default as ICON_GOOGLE } from './Google logo.svg';
 export { default as ICON_FACEBOOK } from './Facebook logo.svg';
 export { default as ICON_GITHUB } from './Github logo.svg';
 export { default as ICON_FORWARD } from './arrow-forward.svg';
+export { default as ICON_MAIL } from './VectorMail.svg';
+export { default as ICON_TRASH } from './VectorTrash.svg';
 
 export const ICON_HOUSE = MdOutlineHouse;
 export const ICON_GROUP = MdOutlineGroup;

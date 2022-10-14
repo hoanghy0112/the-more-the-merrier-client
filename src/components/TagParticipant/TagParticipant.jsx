@@ -8,7 +8,7 @@ export default function TagParticipant({ name, onClick }) {
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div className={styles.container} onClick={onClick}>
       <p className={styles.name}>{name}</p>
-      <img src={ICON_X} alt="X" />
+      <img src={ICON_X} alt="X" style={{ cursor: 'pointer' }} />
     </div>
   );
 }
