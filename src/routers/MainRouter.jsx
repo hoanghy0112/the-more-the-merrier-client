@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import HomePage from '../pages/HomePage/HomePage';
 import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';
-import HomeOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
+import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import TestPage from '../pages/TestPage/TestPage';
 import BasePage from '../pages/BasePage/BasePage';
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'schedule',
-            element: <HomeOutlet />,
+            element: <ScheduleOutlet />,
           },
           {
             path: 'group',

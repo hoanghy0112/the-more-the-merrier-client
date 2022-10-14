@@ -56,7 +56,13 @@
     align-items: flex-end;
 
     .header {
-      background: black;
+      background-color: black;
+      padding: 30px;
+    }
+
+    .outlet {
+      width: 100%;
+      height: 100%;
     }
   }
 }

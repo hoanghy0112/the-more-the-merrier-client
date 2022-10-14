@@ -53,7 +53,9 @@ export default function HomePage() {
       </div>
       <div className={styles.mainBox}>
         <div className={styles.header}>Logo</div>
-        <Outlet />
+        <div className={styles.outlet}>
+          <Outlet />
+        </div>
       </div>
     </div>
   );
