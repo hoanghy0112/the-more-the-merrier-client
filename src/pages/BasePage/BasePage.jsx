@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebase/signInWithGoogleAPI';
@@ -16,17 +16,26 @@ import LoadingPage from '../LoadingPage/LoadingPage';
 export default function BasePage() {
   const dispath = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const status = useSelector(selectFetchUserProfileStatus);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispath(getUserProfile());
-        // if (status === 'success') navigate('/home/schedule');
-      } else {
-        navigate('/authentication');
+  function onAuthChange(user) {
+    if (user) {
+      dispath(getUserProfile());
+      if (location.pathname.split(' ')[1] === 'home') {
+        if (status === 'success') navigate('/home/schedule');
       }
-    });
+    } else {
+      navigate('/authentication');
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, onAuthChange);
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
