@@ -36,7 +36,8 @@ export const getUserProfile = createAsyncThunk(
   'userManagement/getUserProfile',
   async () => {
     const response = await getUserProfileAPI();
-    return response.data;
+    console.log({ response });
+    return response;
   },
 );
 
