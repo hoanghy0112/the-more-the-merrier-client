@@ -23,7 +23,7 @@ export default function Calendar({ startDate }) {
 
   useEffect(() => {
     if (taskRef?.current) {
-      setGridSize((taskRef.current.getBoundingClientRect().width - 120) / 7);
+      setGridSize(taskRef.current.getBoundingClientRect().width / 7);
     }
   }, [taskRef, windowWidth]);
 

@@ -1,0 +1,16 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: rgba(5, 5, 5, 0.235);
+  position: absolute;
+
+  z-index: 100;
+
+  p {
+    padding: 40px;
+    background-color: white;
+    border-radius: 15px;
+  }
+}
