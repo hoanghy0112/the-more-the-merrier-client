@@ -1,7 +1,7 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import styles from './DesPopUp.module.scss';
 import {
   ICON_ADD,
   ICON_ARROW_REDO,
@@ -13,10 +13,11 @@ import {
   ICON_PEOPLE,
   ICON_TRASH,
 } from '../../assets/icons';
-import TimeTag from '../TimeTag/TimeTag';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
-import TagParticipant from '../TagParticipant/TagParticipant';
 import Tag from '../Tag/Tag';
+import TagParticipant from '../TagParticipant/TagParticipant';
+import TimeTag from '../TimeTag/TimeTag';
+import styles from './DesPopUp.module.scss';
 
 export default function DesPopUp() {
   const [isEdit, setIsEdit] = useState(false);
