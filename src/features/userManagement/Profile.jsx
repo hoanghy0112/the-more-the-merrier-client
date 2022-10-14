@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase/signInWithGoogleAPI';
 
 import styles from './Profile.module.scss';
@@ -9,6 +10,7 @@ import { getUserProfile, selectUserProfile } from './ProfileSlice';
 export default function Profile() {
   // const {} = useSelector(selectUserProfile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const user = useSelector(selectUserProfile);
 
@@ -17,7 +19,7 @@ export default function Profile() {
       if (userProfile) {
         dispatch(getUserProfile());
       } else {
-        console.log('Please sign up');
+        navigate('/authentication');
       }
     });
   }, []);
@@ -30,10 +32,13 @@ export default function Profile() {
             <img src={user.photo} alt="avatar" />
           </div>
           <div className={styles.nameContainer}>
-            <p className={styles.name}>
-              {`${user.familyName} ${user.givenName}`}
+            <div className={styles.name}>
+              <p>{`${user.familyName} ${user.givenName}`}</p>
+            </div>
+            <p className={styles.email}>
+              {/* {`${user.email.substring(0, 10)}...`} */}
+              {user.email}
             </p>
-            <p className={styles.email}>{user.email}</p>
           </div>
         </>
       ) : (

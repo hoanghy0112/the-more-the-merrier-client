@@ -1,34 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TabButton.module.scss';
-import { ICON_HOUSE } from '../../assets/icons';
+import { ICON_GROUP, ICON_HOUSE, ICON_SETTING } from '../../assets/icons';
 
-export default function TabButton({ isSelected, onClick }) {
+export default function TabButton({ isSelected, onClick, type }) {
+  const icon = (() => {
+    switch (type) {
+      case 'Home':
+        return (
+          <ICON_HOUSE
+            color={isSelected ? 'white' : 'black'}
+            className={styles.house}
+          />
+        );
+      case 'Group':
+        return (
+          <ICON_GROUP
+            color={isSelected ? 'white' : 'black'}
+            className={styles.house}
+          />
+        );
+      case 'Setting':
+        return (
+          <ICON_SETTING
+            color={isSelected ? 'white' : 'black'}
+            className={styles.house}
+          />
+        );
+      default:
+        return (
+          <ICON_HOUSE
+            color={isSelected ? 'white' : 'black'}
+            className={styles.house}
+          />
+        );
+    }
+  })();
   return (
-    // eslint-disable-next-line max-len
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div
+    <button
+      type="button"
       className={`${styles.selected} ${
-        isSelected || styles['light-background']
+        isSelected && styles['dark-background']
       }`}
       onClick={onClick}
     >
-      <ICON_HOUSE
-        color={isSelected ? 'white' : 'black'}
-        className={styles.house}
-      />
+      {icon}
       <p
         className={`${styles['home-text']} ${
           isSelected ? styles['light-text'] : styles['dark-text']
         }`}
       >
-        Home
+        {type}
       </p>
-    </div>
+    </button>
   );
 }
 
 TabButton.propTypes = {
-  isSelected: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(['Home', 'Group', 'Setting']),
+};
+
+TabButton.defaultProps = {
+  isSelected: false,
+  type: 'Home',
 };
