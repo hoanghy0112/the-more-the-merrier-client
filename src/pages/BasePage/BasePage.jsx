@@ -22,7 +22,7 @@ export default function BasePage() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         dispath(getUserProfile());
-        if (status === 'success') navigate('/home/schedule');
+        // if (status === 'success') navigate('/home/schedule');
       } else {
         navigate('/authentication');
       }
