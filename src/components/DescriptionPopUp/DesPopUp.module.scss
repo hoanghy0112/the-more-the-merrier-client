@@ -147,4 +147,67 @@
       }
     }
   }
+  .descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 15px;
+
+    width: 310px;
+    height: 162.4px;
+
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+    .text {
+      font-family: 'Manrope';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 9.6px;
+      line-height: 13px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.3px;
+
+      color: #000000;
+    }
+    .detailDescription {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 12px;
+      width: 100%;
+      .descriptionItem {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 8px 18px;
+        gap: 7px;
+
+        width: 100%;
+
+        background: #ffffff;
+        box-shadow: -2.1302px -1.42013px 7.10066px rgba(0, 166, 202, 0.25),
+          1.42013px 2.1302px 7.10066px rgba(0, 166, 202, 0.25);
+        border-radius: 6px;
+        .descriptionText {
+          width: 100%;
+          border: none;
+          font-family: 'Manrope';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 11.3611px;
+          line-height: 16px;
+          display: flex;
+          align-items: center;
+          letter-spacing: 0.355033px;
+
+          color: #000000;
+        }
+      }
+    }
+  }
 }
