@@ -164,7 +164,7 @@ export default function DesPopUp() {
                 <p
                   className={styles.descriptionText}
                   onClick={() => setIsEditDes(true)}
-                  style={{ cursor: 'text' }}
+                  style={{ cursor: 'text', overflowWrap: 'anywhere' }}
                 >
                   {sentence.text}
                 </p>
