@@ -27,7 +27,7 @@ export default function DescriptionPopUp({ data, onChange }) {
   const [startTime, setStartTime] = useState(data?.time?.from || new Date());
   const [endTime, setEndTime] = useState(data?.time?.to || new Date());
   const [position, setPosition] = useState(data?.position || '');
-  const [participants] = useState(data?.participants || []);
+  const [participants, setParticipants] = useState(data?.participants || []);
   const [tags] = useState(data?.tags || []);
   const [desSentence, setDesSentence] = useState(data?.descriptions || []);
 
@@ -136,10 +136,15 @@ export default function DescriptionPopUp({ data, onChange }) {
         <div className={styles.desSentence_2}>
           <img src={ICON_PEOPLE} alt="people" />
           <div className={styles.list}>
-            {participants.map((person) => (
+            {participants.map((person, index) => (
               <TagParticipant
-                key={person?.displayName}
+                key={person?.id}
                 name={person?.displayName || 'No name'}
+                onClose={() => {
+                  setParticipants((prev) => [
+                    ...prev.filter((value, _index) => index !== _index),
+                  ]);
+                }}
               />
             ))}
             <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
@@ -152,7 +157,7 @@ export default function DescriptionPopUp({ data, onChange }) {
           <div className={styles.list}>
             {tags.map((tag) => (
               <Tag
-                key={tag.displayName}
+                key={tag.id}
                 shape="rectangle"
                 input={tag.displayName}
                 type="tagTask"
