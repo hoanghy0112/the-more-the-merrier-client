@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { auth } from '../../firebase/signInWithGoogleAPI';
 
 const initialState = {
-    listTasks: [],
-    status: 'idle',
-    error: null
-}
+  listTasks: [],
+  status: 'idle',
+  error: null,
+};
 
 export const getAllTasks = createAsyncThunk('tasksManagement/getAllTasks', async (userID) => {
     const accessToken = await auth.currentUser.getIdToken();
@@ -37,12 +37,7 @@ export const createNewTask = createAsyncThunk('tasksManagement/createNewTask', a
             }
         }
     )
-    const userTasks = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    })
-    return userTasks
+    return res.data
 })
 
 export const changeTask = createAsyncThunk('tasksManagement/changeTask', async (userID, taskID, req) => {
@@ -56,12 +51,7 @@ export const changeTask = createAsyncThunk('tasksManagement/changeTask', async (
             }
         }
     )
-    const userTasks = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    })
-    return userTasks
+    return res.data
 })
 
 export const tasksManagementSclice = createSlice({
@@ -105,10 +95,10 @@ export const tasksManagementSclice = createSlice({
     }
 })
 
-export const selectAllTasks = state => state.tasksManagement.listTasks
+export const selectAllTasks = (state) => state.tasksManagement.listTasks;
 
-export const selectTasksStatus = state => state.tasksManagement.status
+export const selectTasksStatus = (state) => state.tasksManagement.status;
 
-export const selectTasksError = state => state.tasksManagement.error
+export const selectTasksError = (state) => state.tasksManagement.error;
 
-export default tasksManagementSclice.reducer
+export default tasksManagementSclice.reducer;
