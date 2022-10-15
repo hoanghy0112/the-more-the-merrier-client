@@ -12,7 +12,7 @@ import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <BasePage />,
+    element: <TestPage />,
     children: [
       {
         path: 'home',

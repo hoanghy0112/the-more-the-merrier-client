@@ -25,7 +25,7 @@ export const getAllTasks = createAsyncThunk(
 
 export const createNewTask = createAsyncThunk(
   'tasksManagement/createNewTask',
-  async (userID, req) => {
+  async (req) => {
     const accessToken = await auth.currentUser.getIdToken();
     const { title, from, to, participants, tags, belongTo } = req;
     const res = await axios.post(
@@ -52,7 +52,7 @@ export const createNewTask = createAsyncThunk(
 
 export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
-  async (userID, taskID, req) => {
+  async (taskID, req) => {
     const { fieldName, before, after } = req;
     const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.put(
