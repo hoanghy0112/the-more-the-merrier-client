@@ -1,15 +1,22 @@
 .calendar__container {
-  border-radius: 18px;
+  position: relative;
+
   width: 100%;
+  height: 100%;
 
   background-color: white;
 
-  border-top-left-radius: 18px;
+  border-radius: 18px;
 
   box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
     3px 4.8px 6px rgba(0, 166, 202, 0.25);
 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
   .weekdays {
+    position: relative;
     display: flex;
     flex: 1;
     box-shadow: 0px 1.2px 3px rgba(0, 166, 202, 0.25);
@@ -21,13 +28,25 @@
     user-select: none;
   }
 
-  .timeline {
+  .calendar__main {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 20px;
-    gap: 40px;
-    user-select: none;
+
+    width: 100%;
+    --calendar-height: 1200px;
+    height: var(--calendar-height);
+    overflow-y: scroll;
+
+    .timeline {
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px 20px;
+      user-select: none;
+
+      width: 100%;
+      height: var(--calendar-height);
+    }
 
     .task {
       z-index: 5;
@@ -38,10 +57,8 @@
       border: 0;
 
       width: 100%;
-      height: 100%;
-
-      top: 0;
-      left: 0;
+      height: var(--calendar-height);
+      display: flex;
 
       cursor: crosshair;
 
