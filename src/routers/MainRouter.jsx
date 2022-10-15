@@ -7,11 +7,12 @@ import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import TestPage from '../pages/TestPage/TestPage';
 import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
+import BasePage from '../pages/BasePage/BasePage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <TestPage />,
+    element: <BasePage />,
     children: [
       {
         path: 'home',

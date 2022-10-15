@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
 
@@ -12,14 +13,15 @@ const initialState = {
 
 export const getAllTasks = createAsyncThunk(
   'tasksManagement/getAllTasks',
-  async (userID) => {
+  async () => {
     const accessToken = await auth.currentUser.getIdToken();
-    const res = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`, {
+    const res = await axios.get(`https://hoanghy.tech/api/v1/task/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    return res;
+    console.log({ res });
+    return res.data;
   },
 );
 
@@ -110,6 +112,12 @@ export const tasksManagementSclice = createSlice({
 });
 
 export const selectAllTasks = (state) => state.tasksManagement.listTasks;
+export const selectCurrentWeekTasks = (startDate) => (state) =>
+  state.tasksManagement.listTasks.filter(
+    (task) =>
+      new Date(task.time.from) > startDate &&
+      new Date(task.time.from) < startDate.getTime() + 7 * 24 * 60 * 60 * 1000,
+  );
 
 export const selectTasksStatus = (state) => state.tasksManagement.status;
 

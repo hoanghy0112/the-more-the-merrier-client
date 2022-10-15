@@ -19,5 +19,6 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': 0,
     'import/extensions': 0,
     'import/no-unresolved': 0,
+    'no-multi-assign': 0,
   },
 };
