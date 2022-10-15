@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -53,8 +54,9 @@ export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
   async (userID, taskID, req) => {
     const { fieldName, before, after } = req;
+    const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.put(
-      `https://hoanghy.tech/api/v1/task/${taskID}`,
+      `https://www.hoanghy.tech/api/v1/task/${taskID}`,
       {
         [fieldName]: [before, after],
       },
@@ -87,7 +89,7 @@ export const tasksManagementSclice = createSlice({
       .addCase(createNewTask.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(createNewTask.fulfilled, (state, action) => {
+      .addCase(createNewTask.fulfilled, (state) => {
         state.status = 'succeeded';
       })
       .addCase(createNewTask.rejected, (state, action) => {
@@ -97,7 +99,7 @@ export const tasksManagementSclice = createSlice({
       .addCase(changeTask.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(changeTask.fulfilled, (state, action) => {
+      .addCase(changeTask.fulfilled, (state) => {
         state.status = 'succeeded';
       })
       .addCase(changeTask.rejected, (state, action) => {

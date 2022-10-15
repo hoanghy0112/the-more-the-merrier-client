@@ -15,5 +15,9 @@ export default function TagParticipant({ name, onClick }) {
 
 TagParticipant.propTypes = {
   name: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+};
+
+TagParticipant.defaultProps = {
+  onClick: () => {},
 };

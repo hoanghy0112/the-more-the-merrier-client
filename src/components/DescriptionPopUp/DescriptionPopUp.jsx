@@ -1,8 +1,10 @@
+/* eslint-disable indent */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
+
 import {
   ICON_ADD,
   ICON_ARROW_REDO,
@@ -22,10 +24,12 @@ import styles from './DesPopUp.module.scss';
 
 export default function DescriptionPopUp({ data, onChange }) {
   const [title, setTitle] = useState(data?.title || '');
-  const [desSentence, setDesSentence] = useState(data?.descriptions || []);
   const [startTime, setStartTime] = useState(data?.time?.from || new Date());
   const [endTime, setEndTime] = useState(data?.time?.to || new Date());
   const [position, setPosition] = useState(data?.position || '');
+  const [participants] = useState(data?.participants || []);
+  const [tags] = useState(data?.tags || []);
+  const [desSentence, setDesSentence] = useState(data?.descriptions || []);
 
   const [isEdit, setIsEdit] = useState(false);
   const [isEditDes, setIsEditDes] = useState(false);
@@ -38,8 +42,11 @@ export default function DescriptionPopUp({ data, onChange }) {
       startTime,
       endTime,
       position,
+      participants,
+      tags,
+      desSentence,
     });
-  }, [title, startTime, endTime, position]);
+  }, [title, startTime, endTime, position, participants, tags, desSentence]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -58,7 +65,7 @@ export default function DescriptionPopUp({ data, onChange }) {
       if (descriptionAdd !== '') {
         setDesSentence((current) => [
           ...current,
-          { id: uuidv4(), text: descriptionAdd },
+          { id: String(current.length), text: descriptionAdd },
         ]);
       }
       setDescriptionAdd('');
@@ -111,7 +118,11 @@ export default function DescriptionPopUp({ data, onChange }) {
         <div className={styles.desSentence}>
           <img src={ICON_CLOCK} alt="time" />
           <p className={styles.timeRemaining}>
-            {`Còn lại ${startTime - parseInt(new Date() / 60000, 10)} phút`}
+            {startTime - new Date() > 0
+              ? `Còn lại ${parseInt((startTime - new Date()) / 60000, 10)} phút`
+              : new Date() < endTime
+              ? 'Công việc này đang được diễn ra'
+              : 'Công việc đã được hoàn thành'}
           </p>
         </div>
         <div className={styles.desSentence}>
@@ -124,16 +135,32 @@ export default function DescriptionPopUp({ data, onChange }) {
         </div>
         <div className={styles.desSentence_2}>
           <img src={ICON_PEOPLE} alt="people" />
-          <TagParticipant name="Nguyễn Hoàng Hy" />
-          <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
-            <img src={ICON_ARROW_REDO} alt="button" />
+          <div className={styles.list}>
+            {participants.map((person) => (
+              <TagParticipant
+                key={person?.displayName}
+                name={person?.displayName || 'No name'}
+              />
+            ))}
+            <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
+              <img src={ICON_ARROW_REDO} alt="button" />
+            </div>
           </div>
         </div>
         <div className={styles.desSentence_2}>
           <img src={ICON_BOOKMARKS} alt="time" />
-          <Tag shape="rectangle" input="UIT" type="tagTask" />
-          <div className={styles.buttonAdd} style={{ cursor: 'pointer' }}>
-            <img src={ICON_ADD} alt="button" />
+          <div className={styles.list}>
+            {tags.map((tag) => (
+              <Tag
+                key={tag.displayName}
+                shape="rectangle"
+                input={tag.displayName}
+                type="tagTask"
+              />
+            ))}
+            <div className={styles.buttonAdd} style={{ cursor: 'pointer' }}>
+              <img src={ICON_ADD} alt="button" />
+            </div>
           </div>
         </div>
       </div>
@@ -228,7 +255,12 @@ DescriptionPopUp.propTypes = {
         displayName: PropTypes.string,
       }),
     ),
-    descriptions: PropTypes.arrayOf(PropTypes.string),
+    descriptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        text: PropTypes.string,
+      }),
+    ),
   }).isRequired,
   onChange: PropTypes.func,
 };
