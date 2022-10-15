@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import {
   ICON_ADD,
@@ -19,36 +20,28 @@ import TagParticipant from '../TagParticipant/TagParticipant';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './DesPopUp.module.scss';
 
-export default function DesPopUp() {
+export default function DescriptionPopUp({ data, onChange }) {
+  const [title, setTitle] = useState(data?.title || '');
+  const [desSentence, setDesSentence] = useState(data?.descriptions || []);
+  const [startTime, setStartTime] = useState(data?.time?.from || new Date());
+  const [endTime, setEndTime] = useState(data?.time?.to || new Date());
+
   const [isEdit, setIsEdit] = useState(false);
   const [isEditDes, setIsEditDes] = useState(false);
-  const [title, setTitle] = useState('Học bài');
   const [timeRemaining, setTimeRemaining] = useState('Còn 30 phút nữa');
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
-  const [desSentence, setDesSentence] = useState([
-    {
-      id: 1,
-      text: 'Học bài lập trình trực quan',
-    },
-    {
-      id: 2,
-      text: 'Làm bài nhập môn mạng máy tính Tìm hiểu 3-way handshake',
-    },
-  ]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       setIsEdit(false);
     }
-    // console.log(e.target.key);
   };
 
   const handleKeyPressInDes = (e) => {
     if (e.key === 'Enter') {
       setIsEditDes(false);
     }
-    // console.log(e.target.key);
   };
 
   const handleKeyPressAdd = (e) => {
@@ -58,16 +51,14 @@ export default function DesPopUp() {
           ...current,
           { id: uuidv4(), text: descriptionAdd },
         ]);
-        // console.log({ desSentence });
       }
       setDescriptionAdd('');
       setIsAdd(false);
     }
-    // console.log(e.target.key);
   };
 
   return (
-    <span className={styles.container}>
+    <div className={styles.container}>
       {isEdit ? (
         <span className={styles.taskTitle}>
           <input
@@ -96,9 +87,9 @@ export default function DesPopUp() {
       )}
       <div className={styles.timeContainer}>
         <div className={styles.todoTime}>
-          <TimeTag time="1h24 AM" />
+          <TimeTag time={startTime} />
           -
-          <TimeTag time="4h00 AM" />
+          <TimeTag time={endTime} />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
@@ -204,6 +195,35 @@ export default function DesPopUp() {
           <img src={ICON_TRASH} alt="trash" />
         </div>
       </div>
-    </span>
+    </div>
   );
 }
+
+DescriptionPopUp.propTypes = {
+  data: PropTypes.shape({
+    title: PropTypes.string,
+    time: PropTypes.shape({
+      from: PropTypes.instanceOf(Date),
+      to: PropTypes.instanceOf(Date),
+    }),
+    position: PropTypes.string,
+    participants: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        displayName: PropTypes.string,
+      }),
+    ),
+    tags: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        displayName: PropTypes.string,
+      }),
+    ),
+    descriptions: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  onChange: PropTypes.func,
+};
+
+DescriptionPopUp.defaultProps = {
+  onChange: () => {},
+};
