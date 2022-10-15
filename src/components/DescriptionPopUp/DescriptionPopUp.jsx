@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -25,12 +25,21 @@ export default function DescriptionPopUp({ data, onChange }) {
   const [desSentence, setDesSentence] = useState(data?.descriptions || []);
   const [startTime, setStartTime] = useState(data?.time?.from || new Date());
   const [endTime, setEndTime] = useState(data?.time?.to || new Date());
+  const [position, setPosition] = useState(data?.position || '');
 
   const [isEdit, setIsEdit] = useState(false);
   const [isEditDes, setIsEditDes] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState('Còn 30 phút nữa');
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
+
+  useEffect(() => {
+    onChange({
+      title,
+      startTime,
+      endTime,
+      position,
+    });
+  }, [title, startTime, endTime, position]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -87,13 +96,13 @@ export default function DescriptionPopUp({ data, onChange }) {
       )}
       <div className={styles.timeContainer}>
         <div className={styles.todoTime}>
-          <TimeTag time={startTime} />
+          <TimeTag time={startTime} onChange={setStartTime} />
           -
-          <TimeTag time={endTime} />
+          <TimeTag time={endTime} onChange={setEndTime} />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
-            startDay={new Date()}
+            startDay={startTime}
             hanldeChangeStartDay={() => {}}
           />
         </span>
@@ -101,20 +110,20 @@ export default function DescriptionPopUp({ data, onChange }) {
       <div className={styles.sentencesContainer}>
         <div className={styles.desSentence}>
           <img src={ICON_CLOCK} alt="time" />
-          <input
-            className={styles.timeRemaining}
-            value={timeRemaining}
-            onChange={(e) => setTimeRemaining(e.target.value)}
-          />
+          <p className={styles.timeRemaining}>
+            {`Còn lại ${startTime - parseInt(new Date() / 60000, 10)} phút`}
+          </p>
         </div>
         <div className={styles.desSentence}>
           <img src={ICON_LOCATE} alt="time" />
-          <p className={styles.timeRemaining}>
-            Thị trấn Phú Phong, Tây Sơn, Bình Định
-          </p>
+          <input
+            className={styles.timeRemaining}
+            value={position}
+            onChange={(e) => setPosition(e.target.value)}
+          />
         </div>
         <div className={styles.desSentence_2}>
-          <img src={ICON_PEOPLE} alt="time" />
+          <img src={ICON_PEOPLE} alt="people" />
           <TagParticipant name="Nguyễn Hoàng Hy" />
           <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
             <img src={ICON_ARROW_REDO} alt="button" />
