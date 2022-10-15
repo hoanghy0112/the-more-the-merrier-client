@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { auth } from '../../firebase/signInWithGoogleAPI';
 
 const initialState = {
     listTasks: [],
@@ -7,32 +8,59 @@ const initialState = {
 }
 
 export const getAllTasks = createAsyncThunk('tasksManagement/getAllTasks', async (userID) => {
-    const res = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`)
+    const accessToken = await auth.currentUser.getIdToken();
+    const res = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    })
     return res
 })
 
 export const createNewTask = createAsyncThunk('tasksManagement/createNewTask', async (userID, req) => {
-    const {title, from, to, participants, tags, belongTo} = req
-    const res = await axios.post('https://hoanghy.tech/api/v1/task', {
-        title: title,
-        time: {
-            from: from,
-            to: to,
+    const accessToken = await auth.currentUser.getIdToken();
+    const { title, from, to, participants, tags, belongTo } = req
+    const res = await axios.post('https://hoanghy.tech/api/v1/task',
+        {
+            title: title,
+            time: {
+                from: from,
+                to: to,
+            },
+            participants: participants ? participants : [],
+            tags: tags ? tags : [],
+            belongTo: belongTo ? belongTo : null
         },
-        participants: participants ? participants : [],
-        tags: tags ? tags : [],
-        belongTo: belongTo ? belongTo : null
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        }
+    )
+    const userTasks = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
     })
-    const userTasks = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`)
     return userTasks
 })
 
 export const changeTask = createAsyncThunk('tasksManagement/changeTask', async (userID, taskID, req) => {
-    const {fieldName, before, after} = req
+    const { fieldName, before, after } = req
     const res = await axios.put(`https://hoanghy.tech/api/v1/task/${taskID}`, {
-        [fieldName]: [before, after]
+            [fieldName]: [before, after]
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        }
+    )
+    const userTasks = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
     })
-    const userTasks = await axios.get(`https://hoanghy.tech/api/v1/task/${userID}`)
     return userTasks
 })
 
@@ -40,40 +68,40 @@ export const tasksManagementSclice = createSlice({
     name: 'tasksManagement',
     initialState,
     extraReducers(builder) {
-    builder
-        .addCase(getAllTasks.pending, (state) => {
-            state.status = 'loading'
-        })
-        .addCase(getAllTasks.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.listTasks = action.payload
-        })
-        .addCase(getAllTasks.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-        })
-        .addCase(createNewTask.pending, (state) => {
-            state.status = 'loading'
-        })
-        .addCase(createNewTask.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.listTasks = action.payload
-        })
-        .addCase(createNewTask.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-        })
-        .addCase(changeTask.pending, (state) => {
-            state.status = 'loading'
-        })
-        .addCase(changeTask.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.listTasks = action.payload
-        })
-        .addCase(changeTask.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-        })
+        builder
+            .addCase(getAllTasks.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(getAllTasks.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.listTasks = action.payload
+            })
+            .addCase(getAllTasks.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message
+            })
+            .addCase(createNewTask.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(createNewTask.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.listTasks = action.payload
+            })
+            .addCase(createNewTask.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message
+            })
+            .addCase(changeTask.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(changeTask.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+                state.listTasks = action.payload
+            })
+            .addCase(changeTask.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message
+            })
     }
 })
 
