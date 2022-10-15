@@ -5,7 +5,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';
 import HomeOutlet from '../pages/HomePage/HomeOutlet/HomeOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import TestPage from '../pages/TestPage/TestPage';
+//import TestPage from '../pages/TestPage/TestPage';
 
 const router = createBrowserRouter([
   {
@@ -23,11 +23,11 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: 'test',
-    element: <TestPage />,
-    errorElement: <ErrorPage />,
-  },
+  // {
+  //   path: 'test',
+  //   element: <TestPage />,
+  //   errorElement: <ErrorPage />,
+  // },
   {
     path: 'authentication',
     element: <LoginPage />,
