@@ -22,14 +22,14 @@ export const createNewTask = createAsyncThunk('tasksManagement/createNewTask', a
     const { title, from, to, participants, tags, belongTo } = req
     const res = await axios.post('https://hoanghy.tech/api/v1/task',
         {
-            title: title,
+            title,
             time: {
-                from: from,
-                to: to,
+                from,
+                to,
             },
-            participants: participants ? participants : [],
-            tags: tags ? tags : [],
-            belongTo: belongTo ? belongTo : null
+            participants: participants || [],
+            tags: tags || [],
+            belongTo: belongTo || null
         },
         {
             headers: {
@@ -75,7 +75,6 @@ export const tasksManagementSclice = createSlice({
             })
             .addCase(createNewTask.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.listTasks = action.payload
             })
             .addCase(createNewTask.rejected, (state, action) => {
                 state.status = 'failed'
@@ -86,7 +85,6 @@ export const tasksManagementSclice = createSlice({
             })
             .addCase(changeTask.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.listTasks = action.payload
             })
             .addCase(changeTask.rejected, (state, action) => {
                 state.status = 'failed'
