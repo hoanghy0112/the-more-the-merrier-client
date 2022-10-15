@@ -5,7 +5,7 @@ import { DayPicker } from 'react-day-picker';
 
 import PropTypes from 'prop-types';
 
-import { ICON_CALENDAR, ICON_CALENDAR_2 } from '../../assets/icons';
+import { ICON_CALENDAR_2 } from '../../assets/icons';
 
 import styles from './DateTimePicker.module.scss';
 

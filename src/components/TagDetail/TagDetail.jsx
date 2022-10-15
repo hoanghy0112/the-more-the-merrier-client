@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -39,11 +40,11 @@ export default function TagDetail({ tagTitle, description, listTasks }) {
             />
           )}
           <div className="tag-icon">
-            <img src={ICON_FOLDER} />
+            <img src={ICON_FOLDER} alt="folder" />
           </div>
         </div>
         <div className="tag-icon" onClick={() => setIsEdit(!isEdit)}>
-          <img src={ICON_PENCIL} />
+          <img src={ICON_PENCIL} alt="pencil" />
         </div>
       </div>
       <div className="tag-detail-description">
@@ -67,7 +68,7 @@ export default function TagDetail({ tagTitle, description, listTasks }) {
             >
               <div className="task-item">{task.text}</div>
               <div className="task-item">
-                {task.start}-{task.end}
+                {`${task.start}-${task.end}`}
                 {isEdit && (
                   <ICON_DEL style={{ marginLeft: '15px', cursor: 'pointer' }} />
                 )}
@@ -78,7 +79,7 @@ export default function TagDetail({ tagTitle, description, listTasks }) {
       {listTasks.length > 2 && (
         <div className="full-tasks" onClick={handleChangeView}>
           <div className="tag-icon">
-            <img src={ICON_FULL_ARROW_DOWN} />
+            <img src={ICON_FULL_ARROW_DOWN} alt="arrow down" />
           </div>
           <div className="full-tasks-btn">
             {viewTasks.length === 2 ? 'More tasks' : 'Fewer Tasks'}

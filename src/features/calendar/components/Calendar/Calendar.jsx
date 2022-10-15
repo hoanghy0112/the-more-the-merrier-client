@@ -16,6 +16,7 @@ export default function Calendar({ startDate }) {
   const [windowWidth] = useWindowSize();
 
   const [tasks, setTask] = useState([]);
+  const [taskRefPosition, setTaskRefPosition] = useState([]);
 
   const taskRef = useRef(null);
 
@@ -23,9 +24,17 @@ export default function Calendar({ startDate }) {
 
   useEffect(() => {
     if (taskRef?.current) {
-      setGridSize((taskRef.current.getBoundingClientRect().width - 120) / 7);
+      setGridSize(taskRef.current.getBoundingClientRect().width / 7);
     }
   }, [taskRef, windowWidth]);
+
+  useEffect(() => {
+    setTaskRefPosition(taskRef?.current?.getBoundingClientRect());
+  }, []);
+
+  function handleScroll() {
+    setTaskRefPosition(taskRef?.current?.getBoundingClientRect());
+  }
 
   return (
     <div className="calendar__container">
@@ -38,12 +47,14 @@ export default function Calendar({ startDate }) {
             return <DateItem date={date} />;
           })}
       </div>
-      <div className="timeline">
-        {Array(24)
-          .fill()
-          .map((_, index) => (
-            <TimelineItem time={index} />
-          ))}
+      <div className="calendar__main" onScroll={handleScroll}>
+        <div className="timeline">
+          {Array(24)
+            .fill()
+            .map((_, index) => (
+              <TimelineItem time={index} />
+            ))}
+        </div>
         <div className="task">
           <div ref={taskRef}>
             <CalendarDisplayTask
@@ -52,7 +63,7 @@ export default function Calendar({ startDate }) {
               setTasks={setTask}
             />
             <CalendarCreateTask
-              taskWrapperRect={taskRef?.current?.getBoundingClientRect()}
+              taskWrapperRect={taskRefPosition}
               gridSize={gridSize}
               addNewTask={setTask}
             />

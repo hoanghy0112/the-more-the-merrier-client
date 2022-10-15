@@ -3,23 +3,35 @@ import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import HomePage from '../pages/HomePage/HomePage';
 import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';
-import HomeOutlet from '../pages/HomePage/HomeOutlet/HomeOutlet';
+import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
-//import TestPage from '../pages/TestPage/TestPage';
+import TestPage from '../pages/TestPage/TestPage';
+import BasePage from '../pages/BasePage/BasePage';
+import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
 
 const router = createBrowserRouter([
   {
-    path: 'home',
-    element: <HomePage />,
-    errorElement: <ErrorPage />,
+    path: '/',
+    element: <BasePage />,
     children: [
       {
-        path: 'schedule',
-        element: <HomeOutlet />,
-      },
-      {
-        path: 'group',
-        element: <GroupOutlet />,
+        path: 'home',
+        element: <HomePage />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: 'schedule',
+            element: <ScheduleOutlet />,
+          },
+          {
+            path: 'group',
+            element: <GroupOutlet />,
+          },
+          {
+            path: 'setting',
+            element: <SettingOutlet />,
+          },
+        ],
       },
     ],
   },

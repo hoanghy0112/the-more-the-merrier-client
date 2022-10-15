@@ -1,0 +1,34 @@
+.container {
+  width: 100%;
+  height: 100%;
+
+  padding: 15px 40px;
+  background-color: white;
+
+  display: flex;
+  gap: 30px;
+
+  border-top-left-radius: 30px;
+
+  .calendar {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 10px;
+
+    .picker {
+      padding-left: 10px;
+    }
+
+    .calendarMain {
+      height: 100%;
+      padding: 10px;
+      overflow: hidden;
+    }
+  }
+
+  .sideMenu {
+    width: 100px;
+    background-color: red;
+  }
+}
