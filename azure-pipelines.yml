@@ -25,9 +25,9 @@ jobs:
         displayName: 'Install dependencies'
         timeoutInMinutes: 10
 
-      - script: |
-          npm run lint
-        displayName: "Check code with eslint"
+      # - script: |
+      #     npm run lint
+      #   displayName: "Check code with eslint"
 
       # - script: |
       #     npm run test
