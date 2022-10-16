@@ -3,25 +3,20 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment/moment';
 import {
   ICON_ADD,
-  ICON_ARROW_REDO,
-  ICON_BOOKMARKS,
   ICON_CLOCK,
-  ICON_LOCATE,
   ICON_MAIL,
   ICON_PENCIL,
-  ICON_PEOPLE,
   ICON_TRASH,
 } from '../../assets/icons';
-import DateTimePicker from '../DateTimePicker/DateTimePicker';
-import Tag from '../Tag/Tag';
 import TagParticipant from '../TagParticipant/TagParticipant';
 import TimeTag from '../TimeTag/TimeTag';
-import styles from './DesPopUp.module.scss';
+import styles from './PopUpMinimize.module.scss';
+import moment from 'moment/moment';
 
-export default function DescriptionPopUp({ data, onChange }) {
+export default function DescriptionPopUpMinimize({ data, onChange }) {
+  console.log(data);
   const [title, setTitle] = useState(data?.title || '');
   const [desSentence, setDesSentence] = useState(data?.descriptions || []);
   const [startTime, setStartTime] = useState(data?.time?.from || new Date());
@@ -50,6 +45,10 @@ export default function DescriptionPopUp({ data, onChange }) {
 
   const handleKeyPressInDes = (e) => {
     if (e.key === 'Enter') {
+      // eslint-disable-next-line no-shadow
+      setDesSentence((current) =>
+        current.filter((sentence) => sentence.text !== ''),
+      );
       setIsEditDes(false);
     }
   };
@@ -70,7 +69,7 @@ export default function DescriptionPopUp({ data, onChange }) {
   return (
     <div className={styles.container}>
       {isEdit ? (
-        <span className={styles.taskTitle}>
+        <div className={styles.taskTitle}>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -83,31 +82,25 @@ export default function DescriptionPopUp({ data, onChange }) {
             onClick={() => setIsEdit(false)}
             style={{ cursor: 'pointer' }}
           />
-        </span>
+        </div>
       ) : (
         <span className={styles.taskTitle} style={{ cursor: 'default' }}>
-          {title}
-          <img
-            src={ICON_PENCIL}
-            alt="Pencil"
-            onClick={() => setIsEdit(true)}
-            style={{ cursor: 'pointer' }}
-          />
+          <div className={styles.title}>
+            {title}
+            <img
+              src={ICON_PENCIL}
+              alt="Pencil"
+              onClick={() => setIsEdit(true)}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+          <div className={styles.todoTime}>
+            <TimeTag time={startTime} onChange={setStartTime} />
+            -
+            <TimeTag time={endTime} onChange={setEndTime} />
+          </div>
         </span>
       )}
-      <div className={styles.timeContainer}>
-        <div className={styles.todoTime}>
-          <TimeTag time={startTime} onChange={setStartTime} />
-          -
-          <TimeTag time={endTime} onChange={setEndTime} />
-        </div>
-        <span className={styles.timePicker}>
-          <DateTimePicker
-            startDay={startTime}
-            hanldeChangeStartDay={() => {}}
-          />
-        </span>
-      </div>
       <div className={styles.sentencesContainer}>
         <div className={styles.desSentence}>
           <img src={ICON_CLOCK} alt="time" />
@@ -118,31 +111,8 @@ export default function DescriptionPopUp({ data, onChange }) {
             } phút`}
           </p>
         </div>
-        <div className={styles.desSentence}>
-          <img src={ICON_LOCATE} alt="time" />
-          <input
-            className={styles.timeRemaining}
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-          />
-        </div>
-        <div className={styles.desSentence_2}>
-          <img src={ICON_PEOPLE} alt="people" />
-          <TagParticipant name="Nguyễn Hoàng Hy" />
-          <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
-            <img src={ICON_ARROW_REDO} alt="button" />
-          </div>
-        </div>
-        <div className={styles.desSentence_2}>
-          <img src={ICON_BOOKMARKS} alt="time" />
-          <Tag shape="rectangle" input="UIT" type="tagTask" />
-          <div className={styles.buttonAdd} style={{ cursor: 'pointer' }}>
-            <img src={ICON_ADD} alt="button" />
-          </div>
-        </div>
       </div>
       <div className={styles.descriptionContainer}>
-        <p className={styles.text}>Description</p>
         <div className={styles.detailDescription}>
           {desSentence.map((sentence) => (
             <div key={sentence.id} className={styles.descriptionItem}>
@@ -212,7 +182,7 @@ export default function DescriptionPopUp({ data, onChange }) {
   );
 }
 
-DescriptionPopUp.propTypes = {
+DescriptionPopUpMinimize.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string,
     time: PropTypes.shape({
@@ -232,11 +202,16 @@ DescriptionPopUp.propTypes = {
         displayName: PropTypes.string,
       }),
     ),
-    descriptions: PropTypes.arrayOf(PropTypes.string),
+    descriptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        text: PropTypes.string,
+      }),
+    ),
   }).isRequired,
   onChange: PropTypes.func,
 };
 
-DescriptionPopUp.defaultProps = {
+DescriptionPopUpMinimize.defaultProps = {
   onChange: () => {},
 };
