@@ -2,9 +2,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import moment from 'moment/moment';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useFullScreenHandle } from 'react-full-screen';
+
+import Modal from 'react-modal';
 
 import {
   ICON_CLOCK,
@@ -14,13 +16,14 @@ import {
   ICON_PENCIL,
   ICON_TRASH,
 } from '../../assets/icons';
+import DescriptionPopUp from '../DescriptionPopUp/DescriptionPopUp';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './PopUpMinimize.module.scss';
 
-export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
-  const handle = useFullScreenHandle();
+Modal.setAppElement('#modal');
 
-  console.log({ data });
+export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={styles.container}>
@@ -58,6 +61,7 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
           <div
             className={styles.moreTaskContainer}
             style={{ cursor: 'pointer' }}
+            onClick={() => setIsOpen(true)}
           >
             <img src={ICON_MORE_TASK} alt="more task" />
             <p className={styles.text}>Detailed information</p>
@@ -73,6 +77,33 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
           <img src={ICON_TRASH} alt="trash" />
         </div>
       </div>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 2000,
+            backgroundColor: 'transparent',
+            width: '370px',
+            height: '600px',
+            display: 'grid',
+            placeItems: 'center',
+            padding: 10,
+            overflow: 'hidden',
+            cursor: 'default',
+            border: 'none',
+          },
+          overlay: {
+            zIndex: 200,
+            backgroundColor: '#0000004f',
+          },
+        }}
+      >
+        <DescriptionPopUp data={data} onChange={onChange} />
+      </Modal>
     </div>
   );
 }

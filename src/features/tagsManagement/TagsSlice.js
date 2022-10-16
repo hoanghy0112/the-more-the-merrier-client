@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { auth } from '../../firebase/signInWithGoogleAPI';
@@ -72,7 +73,7 @@ export const tagsManagementSlice = createSlice({
       .addCase(findAllTagsOfUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(findAllTagsOfUser.fulfilled, (state) => {
+      .addCase(findAllTagsOfUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.listTags = action.payload;
       })

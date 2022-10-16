@@ -43,12 +43,12 @@ export default function CalendarDisplayTask({
             setTasks({
               id: _id,
               time: {
-                from: newFrom.toLocaleString(),
+                from: newFrom.toISOString(),
                 to: new Date(
                   newFrom.getTime() +
                     new Date(to).getTime() -
                     new Date(from).getTime(),
-                ).toLocaleString(),
+                ).toISOString(),
               },
             });
           }}

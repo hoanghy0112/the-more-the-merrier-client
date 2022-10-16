@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useRef, useState } from 'react';
@@ -10,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import DateItem from '../../../../components/DateItem/DateItem';
 import TimelineItem from '../../../../components/TimelineItem/TimelineItem';
-// import { ResizableBox, Resizable } from "re-resizable";
 
 import CalendarCreateTask from '../../../../components/CalendarCreateTask/CalendarCreateTask';
 import CalendarDisplayTask from '../../../../components/CalendarDisplayTask/CalendarDisplayTask';

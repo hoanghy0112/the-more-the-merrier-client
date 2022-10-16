@@ -54,11 +54,11 @@ export const createNewTask = createAsyncThunk(
 
 export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
-  async ({ id, time }) => {
+  async ({ id, ...otherField }) => {
     const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.put(
       `https://www.hoanghy.tech/api/v1/task/${id}`,
-      { time },
+      { ...otherField },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

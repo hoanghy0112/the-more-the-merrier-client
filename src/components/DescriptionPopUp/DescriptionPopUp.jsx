@@ -22,8 +22,12 @@ import Tag from '../Tag/Tag';
 import TagParticipant from '../TagParticipant/TagParticipant';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './DesPopUp.module.scss';
+import { useDispatch } from 'react-redux';
+import { changeTask } from '../../features/tasksManagement/TasksSlice';
 
 export default function DescriptionPopUp({ data, onChange, isMinimize }) {
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState(data?.title || '');
   const [startTime, setStartTime] = useState(
     new Date(data?.time?.from) || new Date(),
@@ -49,6 +53,8 @@ export default function DescriptionPopUp({ data, onChange, isMinimize }) {
     setEndTime(time);
   };
 
+  console.log({ data });
+
   useEffect(() => {
     onChange({
       title,
@@ -59,6 +65,18 @@ export default function DescriptionPopUp({ data, onChange, isMinimize }) {
       tags,
       desSentence,
     });
+    dispatch(
+      changeTask({
+        id: data._id,
+        title,
+        time: {
+          from: startTime.toISOString(),
+          to: endTime.toISOString(),
+        },
+        position,
+        descriptions: desSentence,
+      }),
+    );
   }, [title, startTime, endTime, position, participants, tags, desSentence]);
 
   const handleKeyPress = (e) => {
@@ -194,19 +212,16 @@ export default function DescriptionPopUp({ data, onChange, isMinimize }) {
         <p className={styles.text}>Description</p>
         <div className={styles.detailDescription}>
           {desSentence.map((sentence) => (
-            <div key={sentence.id} className={styles.descriptionItem}>
+            <div key={sentence} className={styles.descriptionItem}>
               {isEditDes ? (
                 <textarea
                   className={styles.descriptionText}
-                  value={sentence.text}
+                  value={sentence}
                   onChange={(e) => {
                     setDesSentence(
                       [...desSentence].map((object) => {
-                        if (object.id === sentence.id) {
-                          return {
-                            ...object,
-                            text: e.target.value,
-                          };
+                        if (object === sentence) {
+                          return e.target.value;
                         }
                         return object;
                       }),
@@ -220,7 +235,7 @@ export default function DescriptionPopUp({ data, onChange, isMinimize }) {
                   onClick={() => setIsEditDes(true)}
                   style={{ cursor: 'text', overflowWrap: 'anywhere' }}
                 >
-                  {sentence.text}
+                  {sentence}
                 </p>
               )}
             </div>
