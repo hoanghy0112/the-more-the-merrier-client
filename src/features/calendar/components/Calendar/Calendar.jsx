@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -17,6 +18,7 @@ import useWindowSize from '../../../../hooks/useWindowSize';
 
 import './Calendar.scss';
 import {
+  changeTask,
   getAllTasks,
   selectCurrentWeekTasks,
 } from '../../../tasksManagement/TasksSlice';
@@ -36,7 +38,10 @@ export default function Calendar({ startDate }) {
 
   const tasks = useSelector(selectCurrentWeekTasks(startDate));
 
-  function setTask() {}
+  function setTask({ id, time }) {
+    dispatch(changeTask({ id, time }));
+    // dispatch(getAllTasks());
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -87,13 +92,21 @@ export default function Calendar({ startDate }) {
               gridSize={gridSize}
               tasks={tasks}
               startDate={startDate}
-              setTasks={setTask}
+              setTasks={({ id, time }) => setTask({ id, time })}
             />
-            {/* <CalendarCreateTask
+            <CalendarCreateTask
               taskWrapperRect={taskRefPosition}
               gridSize={gridSize}
-              addNewTask={setTask}
-            /> */}
+              startDate={startDate}
+              addNewTask={({ title }) =>
+                setTask((prev) => [
+                  ...prev,
+                  {
+                    title,
+                  },
+                ])
+              }
+            />
           </div>
         </div>
       </div>

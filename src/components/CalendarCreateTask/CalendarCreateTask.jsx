@@ -8,9 +8,12 @@ import styles from './CalendarCreateTask.module.scss';
 export default function CalendarCreateTask({
   gridSize,
   taskWrapperRect,
+  startDate,
   addNewTask,
 }) {
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isCreateNewTask, setIsCreateNewTask] = useState(false);
+
   const [begin, setBegin] = useState([0, 0]);
   const [end, setEnd] = useState([0, 0]);
 
@@ -48,16 +51,25 @@ export default function CalendarCreateTask({
       setEnd([...begin]);
       setHeight(0);
 
-      addNewTask((prev) => [
-        ...prev,
-        {
-          title: '',
-          id: String(Math.random()),
-          top: end[1] > begin[1] ? begin[1] : end[1],
-          column: begin[0] / gridSize,
-          height,
+      const top = end[1] > begin[1] ? begin[1] : end[1];
+      const deltaDay = (top[0] / gridSize) * 24 * 60 * 60 * 1000;
+      const deltaMinutes = (top[1] / 1200) * 24 * 60 * 60 * 1000;
+
+      const newFrom = new Date(
+        parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
+          deltaDay +
+          deltaMinutes,
+      );
+
+      addNewTask({
+        title: '',
+        time: {
+          from: newFrom,
+          to: new Date(
+            newFrom.getTime() + (height / 1200) * 24 * 60 * 60 * 1000,
+          ).toISOString(),
         },
-      ]);
+      });
     }
   }
 
