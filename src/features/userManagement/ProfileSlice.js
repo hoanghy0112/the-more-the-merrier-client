@@ -26,7 +26,7 @@ export const signInWithGoogle = createAsyncThunk(
     const user = await signInWithGoogleAPI();
     const { accessToken } = user;
 
-    return { accessToken: user.accessToken };
+    return { accessToken };
   },
 );
 
