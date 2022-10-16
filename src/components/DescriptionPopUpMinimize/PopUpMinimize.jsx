@@ -10,6 +10,8 @@ import {
   ICON_CLOCK,
   ICON_DROP_DOWN,
   ICON_MAIL,
+  ICON_MORE_TASK,
+  ICON_PENCIL,
   ICON_TRASH,
 } from '../../assets/icons';
 import TimeTag from '../TimeTag/TimeTag';
@@ -40,6 +42,10 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
             )} phút`}
           </p>
         </div>
+      </div>
+      <div className={styles.moreTaskContainer} style={{ cursor: 'pointer' }}>
+        <img src={ICON_MORE_TASK} alt="more task" />
+        <p className={styles.text}>More task</p>
       </div>
       <div className={styles.descriptionContainer}>
         <div className={styles.detailDescription}>
