@@ -7,13 +7,13 @@ export async function getUserProfileAPI() {
   try {
     const accessToken = await auth.currentUser.getIdToken();
     console.log({ accessToken });
-    const data = await axios.get(GET_USER_PROFILE_API_LINK, {
+    const response = await axios.get(GET_USER_PROFILE_API_LINK, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    return await data.json();
+    return response.data;
   } catch (error) {
     return null;
   }

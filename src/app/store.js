@@ -22,6 +22,7 @@ export const store = configureStore({
       },
       tasksManagementReducer,
     ),
+    // tasksManagement: tasksManagementReducer,
     tagsManagement: persistReducer(
       {
         key: 'tagsManagement',

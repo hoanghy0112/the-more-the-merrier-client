@@ -8,15 +8,19 @@ import TaskCard from '../TaskCard/TaskCard';
 export default function CalendarDisplayTask({
   gridSize,
   tasks,
+  rect,
   setTasks,
   startDate,
 }) {
   return (
     <>
-      {tasks.map(({ _id, time: { from, to } }, index) => (
+      {tasks.map(({ _id, time: { from, to }, title }, index) => (
         <TaskCard
           key={_id}
+          title={title}
+          task={tasks[index]}
           width={gridSize}
+          rect={rect}
           height={
             ((new Date(to).getTime() - new Date(from).getTime()) / 86400000) *
             1200
@@ -29,16 +33,6 @@ export default function CalendarDisplayTask({
           onDragStop={(event, { x, y, lastX, lastY, deltaX, deltaY }) => {
             const deltaDay = (lastX / gridSize) * 24 * 60 * 60 * 1000;
             const deltaMinutes = (lastY / 1200) * 24 * 60 * 60 * 1000;
-            console.log({
-              deltaDay,
-              deltaMinutes,
-              lastX,
-              lastY,
-              gridSize,
-              x,
-              y,
-            });
-
             const newFrom = new Date(
               parseInt(new Date(startDate).getTime() / 86400000, 10) *
                 86400000 +
@@ -49,12 +43,12 @@ export default function CalendarDisplayTask({
             setTasks({
               id: _id,
               time: {
-                from: newFrom.toISOString(),
+                from: newFrom.toLocaleString(),
                 to: new Date(
                   newFrom.getTime() +
                     new Date(to).getTime() -
                     new Date(from).getTime(),
-                ).toISOString(),
+                ).toLocaleString(),
               },
             });
           }}
@@ -76,6 +70,7 @@ CalendarDisplayTask.propTypes = {
     }),
   ).isRequired,
   setTasks: PropTypes.func.isRequired,
+  startDate: PropTypes.instanceOf(Date).isRequired,
 };
 
 CalendarDisplayTask.defaultProps = {};

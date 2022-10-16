@@ -40,7 +40,6 @@ export default function Calendar({ startDate }) {
 
   function setTask({ id, time }) {
     dispatch(changeTask({ id, time }));
-    // dispatch(getAllTasks());
   }
 
   useEffect(() => {
@@ -80,7 +79,7 @@ export default function Calendar({ startDate }) {
       </div>
       <div className="calendar__main" onScroll={handleScroll}>
         <div className="timeline">
-          {Array(24)
+          {Array(25)
             .fill()
             .map((_, index) => (
               <TimelineItem time={index} />
@@ -92,6 +91,7 @@ export default function Calendar({ startDate }) {
               gridSize={gridSize}
               tasks={tasks}
               startDate={startDate}
+              rect={taskRef?.current?.getBoundingClientRect()}
               setTasks={({ id, time }) => setTask({ id, time })}
             />
             <CalendarCreateTask

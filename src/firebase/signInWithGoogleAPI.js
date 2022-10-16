@@ -14,8 +14,6 @@ export default async function signInWithGoogleAPI() {
       // The signed-in user info.
       const { user } = result;
 
-      console.log({ credential, user });
-
       resolve(user);
     });
   });

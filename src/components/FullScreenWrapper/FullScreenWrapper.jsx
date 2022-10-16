@@ -29,7 +29,7 @@ export default function FullScreenWrapper({
       onKeyDown={() => {}}
       className={styles.container}
       style={{
-        visibility: open || 'hidden',
+        visibility: open ? 'visible' : 'hidden',
       }}
     >
       <div className={styles.wrapper} onClick={(e) => e.stopPropagation()}>

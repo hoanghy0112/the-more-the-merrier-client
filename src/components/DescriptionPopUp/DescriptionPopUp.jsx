@@ -23,10 +23,14 @@ import TagParticipant from '../TagParticipant/TagParticipant';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './DesPopUp.module.scss';
 
-export default function DescriptionPopUp({ data, onChange }) {
+export default function DescriptionPopUp({ data, onChange, isMinimize }) {
   const [title, setTitle] = useState(data?.title || '');
-  const [startTime, setStartTime] = useState(data?.time?.from || new Date());
-  const [endTime, setEndTime] = useState(data?.time?.to || new Date());
+  const [startTime, setStartTime] = useState(
+    new Date(data?.time?.from) || new Date(),
+  );
+  const [endTime, setEndTime] = useState(
+    new Date(data?.time?.to) || new Date(),
+  );
   const [position, setPosition] = useState(data?.position || '');
   const [participants, setParticipants] = useState(data?.participants || []);
   const [tags] = useState(data?.tags || []);
@@ -285,8 +289,10 @@ DescriptionPopUp.propTypes = {
     ),
   }).isRequired,
   onChange: PropTypes.func,
+  isMinimize: PropTypes.bool,
 };
 
 DescriptionPopUp.defaultProps = {
   onChange: () => {},
+  isMinimize: true,
 };

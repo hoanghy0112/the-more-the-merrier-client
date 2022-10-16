@@ -26,8 +26,6 @@ export const signInWithGoogle = createAsyncThunk(
     const user = await signInWithGoogleAPI();
     const { accessToken } = user;
 
-    console.log({ accessToken });
-
     return { accessToken: user.accessToken };
   },
 );
@@ -36,7 +34,6 @@ export const getUserProfile = createAsyncThunk(
   'userManagement/getUserProfile',
   async () => {
     const response = await getUserProfileAPI();
-    console.log({ response });
     return response;
   },
 );

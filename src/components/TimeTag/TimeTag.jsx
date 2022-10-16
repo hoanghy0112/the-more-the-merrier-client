@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TimeTag.module.scss';
@@ -7,27 +8,26 @@ import TimePicker from '../TimePicker/TimePicker';
 import { useState } from 'react';
 
 export default function TimeTag({ time, onChange }) {
-
-  const [isEdit, setIsEdit] = useState(false)
+  const [isEdit, setIsEdit] = useState(false);
 
   const handleChangeTime = (time) => {
-    console.log(time)
-    onChange(time)
-    setIsEdit(false)
-  }
+    onChange(time);
+    setIsEdit(false);
+  };
 
   return (
-    <>
-    {
-    isEdit === false &&
-    <div className={styles.container} onClick={() => setIsEdit(!isEdit)}>
-      <p className={styles.time}>
+    <div className={styles.container}>
+      <p className={styles.time} onClick={() => setIsEdit(!isEdit)}>
         {`${time.getHours()}h${time.getMinutes()} ${
-          time||new Date().getHours() < 12 ? 'AM' : 'PM'}`}
+          time || new Date().getHours() < 12 ? 'AM' : 'PM'
+        }`}
       </p>
-    </div>}
-    {isEdit === true && <TimePicker time={time} handleChangeTime={handleChangeTime}/>}
-    </>
+      <div className={styles.timePicker}>
+        {isEdit === true && (
+          <TimePicker time={time} handleChangeTime={handleChangeTime} />
+        )}
+      </div>
+    </div>
   );
 }
 

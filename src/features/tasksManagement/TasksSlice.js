@@ -21,7 +21,6 @@ export const getAllTasks = createAsyncThunk(
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log({ res });
     return res.data;
   },
 );
@@ -56,7 +55,6 @@ export const createNewTask = createAsyncThunk(
 export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
   async ({ id, time }) => {
-    console.log({ time, id });
     const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.put(
       `https://www.hoanghy.tech/api/v1/task/${id}`,
@@ -67,7 +65,6 @@ export const changeTask = createAsyncThunk(
         },
       },
     );
-    console.log({ res_put: res });
     return res.data;
   },
 );
@@ -104,9 +101,9 @@ export const tasksManagementSclice = createSlice({
         state.listTasks = [
           ...state.listTasks.filter((task) => task._id !== data.id),
           {
-            ...state.listTasks.filter((task) => task._id === data.id),
-            _id: data.id,
+            ...state.listTasks.filter((task) => task._id === data.id)[0],
             ...data,
+            _id: data.id,
           },
         ];
       })
@@ -126,8 +123,13 @@ export const selectAllTasks = (state) => state.tasksManagement.listTasks;
 export const selectCurrentWeekTasks = (startDate) => (state) =>
   state.tasksManagement.listTasks.filter(
     (task) =>
-      new Date(task.time.from) > startDate &&
-      new Date(task.time.from) < startDate.getTime() + 7 * 24 * 60 * 60 * 1000,
+      new Date(task.time.from) >
+        new Date(parseInt(startDate.getTime() / 86400000, 10) * 86400000) &&
+      new Date(task.time.from) <
+        new Date(
+          parseInt(startDate.getTime() / 86400000, 10) * 86400000 +
+            7 * 24 * 60 * 60 * 1000,
+        ),
   );
 
 export const selectTasksStatus = (state) => state.tasksManagement.status;
