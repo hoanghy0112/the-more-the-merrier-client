@@ -65,6 +65,9 @@ export default function DescriptionPopUp({ data, onChange }) {
 
   const handleKeyPressInDes = (e) => {
     if (e.key === 'Enter') {
+      setDesSentence((current) =>
+        current.filter((sentence) => sentence.text !== ''),
+      );
       setIsEditDes(false);
     }
   };
