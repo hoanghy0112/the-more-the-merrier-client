@@ -2,16 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TimeTag.module.scss';
 
+import TimePicker from '../TimePicker/TimePicker';
+
+import { useState } from 'react';
+
 export default function TimeTag({ time, onChange }) {
+
+  const [isEdit, setIsEdit] = useState(false)
+
+  const handleChangeTime = (time) => {
+    console.log(time)
+    onChange(time)
+    setIsEdit(false)
+  }
+
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div className={styles.container} onClick={onChange}>
+    <>
+    {
+    isEdit === false &&
+    <div className={styles.container} onClick={() => setIsEdit(!isEdit)}>
       <p className={styles.time}>
-        {`${time.getHours() % 12}h${time.getMinutes()} ${
-          time.getHours() < 12 ? 'AM' : 'PM'
-        }`}
+        {`${time.getHours()}h${time.getMinutes()} ${
+          time||new Date().getHours() < 12 ? 'AM' : 'PM'}`}
       </p>
-    </div>
+    </div>}
+    {isEdit === true && <TimePicker time={time} handleChangeTime={handleChangeTime}/>}
+    </>
   );
 }
 

@@ -3,6 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
+import { onAuthStateChanged } from 'firebase/auth';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 import DateItem from '../../../../components/DateItem/DateItem';
 import TimelineItem from '../../../../components/TimelineItem/TimelineItem';
 // import { ResizableBox, Resizable } from "re-resizable";
@@ -10,17 +14,39 @@ import TimelineItem from '../../../../components/TimelineItem/TimelineItem';
 import CalendarCreateTask from '../../../../components/CalendarCreateTask/CalendarCreateTask';
 import CalendarDisplayTask from '../../../../components/CalendarDisplayTask/CalendarDisplayTask';
 import useWindowSize from '../../../../hooks/useWindowSize';
+
 import './Calendar.scss';
+import {
+  getAllTasks,
+  selectCurrentWeekTasks,
+} from '../../../tasksManagement/TasksSlice';
+import { auth } from '../../../../firebase/signInWithGoogleAPI';
 
 export default function Calendar({ startDate }) {
+  const dispatch = useDispatch();
+
   const [windowWidth] = useWindowSize();
 
-  const [tasks, setTask] = useState([]);
+  // const [tasks, setTask] = useState([]);
   const [taskRefPosition, setTaskRefPosition] = useState([]);
 
   const taskRef = useRef(null);
 
   const [gridSize, setGridSize] = useState(199);
+
+  const tasks = useSelector(selectCurrentWeekTasks(startDate));
+
+  function setTask() {}
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(getAllTasks());
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (taskRef?.current) {
@@ -60,13 +86,14 @@ export default function Calendar({ startDate }) {
             <CalendarDisplayTask
               gridSize={gridSize}
               tasks={tasks}
+              startDate={startDate}
               setTasks={setTask}
             />
-            <CalendarCreateTask
+            {/* <CalendarCreateTask
               taskWrapperRect={taskRefPosition}
               gridSize={gridSize}
               addNewTask={setTask}
-            />
+            /> */}
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@ export default function DateTimePicker({ startDay, hanldeChangeStartDay }) {
     const weekday = date.getDay();
     const day = date.getDate();
     return `${
-      weekday !== 7 ? `Thứ ${weekday + 1}` : 'Chủ nhật'
+      weekday !== 0 ? `Thứ ${weekday + 1}` : 'Chủ nhật'
     }, Ngày ${day} Tháng ${month}`;
   }
 

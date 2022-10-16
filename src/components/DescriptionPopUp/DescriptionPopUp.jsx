@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
@@ -23,15 +25,25 @@ import styles from './DesPopUp.module.scss';
 
 export default function DescriptionPopUp({ data, onChange }) {
   const [title, setTitle] = useState(data?.title || '');
-  const [desSentence, setDesSentence] = useState(data?.descriptions || []);
   const [startTime, setStartTime] = useState(data?.time?.from || new Date());
   const [endTime, setEndTime] = useState(data?.time?.to || new Date());
   const [position, setPosition] = useState(data?.position || '');
+  const [participants, setParticipants] = useState(data?.participants || []);
+  const [tags] = useState(data?.tags || []);
+  const [desSentence, setDesSentence] = useState(data?.descriptions || []);
 
   const [isEdit, setIsEdit] = useState(false);
   const [isEditDes, setIsEditDes] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
+
+  const handleChangeStartTime = (time) => {
+    setStartTime(time);
+  };
+
+  const handleChangeEndTime = (time) => {
+    setEndTime(time);
+  };
 
   useEffect(() => {
     onChange({
@@ -39,8 +51,11 @@ export default function DescriptionPopUp({ data, onChange }) {
       startTime,
       endTime,
       position,
+      participants,
+      tags,
+      desSentence,
     });
-  }, [title, startTime, endTime, position]);
+  }, [title, startTime, endTime, position, participants, tags, desSentence]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -59,7 +74,7 @@ export default function DescriptionPopUp({ data, onChange }) {
       if (descriptionAdd !== '') {
         setDesSentence((current) => [
           ...current,
-          { id: uuidv4(), text: descriptionAdd },
+          { id: String(current.length), text: descriptionAdd },
         ]);
       }
       setDescriptionAdd('');
@@ -97,9 +112,9 @@ export default function DescriptionPopUp({ data, onChange }) {
       )}
       <div className={styles.timeContainer}>
         <div className={styles.todoTime}>
-          <TimeTag time={startTime} onChange={setStartTime} />
+          <TimeTag time={startTime} onChange={handleChangeStartTime} />
           -
-          <TimeTag time={endTime} onChange={setEndTime} />
+          <TimeTag time={endTime} onChange={handleChangeEndTime} />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
@@ -112,10 +127,11 @@ export default function DescriptionPopUp({ data, onChange }) {
         <div className={styles.desSentence}>
           <img src={ICON_CLOCK} alt="time" />
           <p className={styles.timeRemaining}>
-            {`Còn lại ${
-              moment(endTime).diff(moment(), 'minutes') -
-              moment(new Date()).diff(moment(), 'minutes')
-            } phút`}
+            {startTime - new Date() > 0
+              ? `Còn lại ${parseInt((startTime - new Date()) / 60000, 10)} phút`
+              : new Date() < endTime
+              ? 'Công việc này đang được diễn ra'
+              : 'Công việc đã được hoàn thành'}
           </p>
         </div>
         <div className={styles.desSentence}>
@@ -128,16 +144,37 @@ export default function DescriptionPopUp({ data, onChange }) {
         </div>
         <div className={styles.desSentence_2}>
           <img src={ICON_PEOPLE} alt="people" />
-          <TagParticipant name="Nguyễn Hoàng Hy" />
-          <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
-            <img src={ICON_ARROW_REDO} alt="button" />
+          <div className={styles.list}>
+            {participants.map((person, index) => (
+              <TagParticipant
+                key={person?.id}
+                name={person?.displayName || 'No name'}
+                onClose={() => {
+                  setParticipants((prev) => [
+                    ...prev.filter((value, _index) => index !== _index),
+                  ]);
+                }}
+              />
+            ))}
+            <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
+              <img src={ICON_ARROW_REDO} alt="button" />
+            </div>
           </div>
         </div>
         <div className={styles.desSentence_2}>
           <img src={ICON_BOOKMARKS} alt="time" />
-          <Tag shape="rectangle" input="UIT" type="tagTask" />
-          <div className={styles.buttonAdd} style={{ cursor: 'pointer' }}>
-            <img src={ICON_ADD} alt="button" />
+          <div className={styles.list}>
+            {tags.map((tag) => (
+              <Tag
+                key={tag.id}
+                shape="rectangle"
+                input={tag.displayName}
+                type="tagTask"
+              />
+            ))}
+            <div className={styles.buttonAdd} style={{ cursor: 'pointer' }}>
+              <img src={ICON_ADD} alt="button" />
+            </div>
           </div>
         </div>
       </div>
@@ -232,7 +269,12 @@ DescriptionPopUp.propTypes = {
         displayName: PropTypes.string,
       }),
     ),
-    descriptions: PropTypes.arrayOf(PropTypes.string),
+    descriptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        text: PropTypes.string,
+      }),
+    ),
   }).isRequired,
   onChange: PropTypes.func,
 };

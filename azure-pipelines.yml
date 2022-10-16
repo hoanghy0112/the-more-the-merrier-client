@@ -29,9 +29,9 @@ jobs:
           npm run lint
         displayName: "Check code with eslint"
 
-      - script: |
-          npm run test
-        displayName: "Test app"
+      # - script: |
+      #     npm run test
+      #   displayName: "Test app"
 
       - task: Npm@1
         inputs:

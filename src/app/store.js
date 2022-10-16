@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import userManagementReducer from '../features/userManagement/ProfileSlice';
 import tasksManagementReducer from '../features/tasksManagement/TasksSlice';
+import tagsManagementReducer from '../features/tagsManagement/TagsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,13 @@ export const store = configureStore({
         storage,
       },
       tasksManagementReducer,
+    ),
+    tagsManagement: persistReducer(
+      {
+        key: 'tagsManagement',
+        storage,
+      },
+      tagsManagementReducer,
     ),
   },
 });
