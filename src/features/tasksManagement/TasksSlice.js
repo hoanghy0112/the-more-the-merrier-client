@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
@@ -15,7 +16,7 @@ export const getAllTasks = createAsyncThunk(
   'tasksManagement/getAllTasks',
   async () => {
     const accessToken = await auth.currentUser.getIdToken();
-    const res = await axios.get(`https://hoanghy.tech/api/v1/task/`, {
+    const res = await axios.get('https://hoanghy.tech/api/v1/task/', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -54,20 +55,19 @@ export const createNewTask = createAsyncThunk(
 
 export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
-  async (taskID, req) => {
-    const { fieldName, before, after } = req;
+  async ({ id, time }) => {
+    console.log({ time, id });
     const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.put(
-      `https://www.hoanghy.tech/api/v1/task/${taskID}`,
-      {
-        [fieldName]: [before, after],
-      },
+      `https://www.hoanghy.tech/api/v1/task/${id}`,
+      { time },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       },
     );
+    console.log({ res_put: res });
     return res.data;
   },
 );
@@ -98,8 +98,17 @@ export const tasksManagementSclice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(changeTask.pending, (state) => {
+      .addCase(changeTask.pending, (state, action) => {
         state.status = 'loading';
+        const data = action.meta.arg;
+        state.listTasks = [
+          ...state.listTasks.filter((task) => task._id !== data.id),
+          {
+            ...state.listTasks.filter((task) => task._id === data.id),
+            _id: data.id,
+            ...data,
+          },
+        ];
       })
       .addCase(changeTask.fulfilled, (state) => {
         state.status = 'succeeded';
@@ -110,6 +119,8 @@ export const tasksManagementSclice = createSlice({
       });
   },
 });
+
+export const { changeListTask } = tasksManagementSclice.actions;
 
 export const selectAllTasks = (state) => state.tasksManagement.listTasks;
 export const selectCurrentWeekTasks = (startDate) => (state) =>
