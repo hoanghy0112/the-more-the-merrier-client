@@ -1,34 +1,49 @@
+/* eslint-disable indent */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment/moment';
 import {
   ICON_ADD,
+  ICON_ARROW_REDO,
+  ICON_BOOKMARKS,
   ICON_CLOCK,
-  ICON_DROP_DOWN,
+  ICON_LOCATE,
   ICON_MAIL,
-  ICON_MORE_TASK,
   ICON_PENCIL,
+  ICON_PEOPLE,
   ICON_TRASH,
 } from '../../assets/icons';
+import DateTimePicker from '../DateTimePicker/DateTimePicker';
+import Tag from '../Tag/Tag';
 import TagParticipant from '../TagParticipant/TagParticipant';
 import TimeTag from '../TimeTag/TimeTag';
-import styles from './PopUpMinimize.module.scss';
-import moment from 'moment/moment';
+import styles from './CreateNewTask.module.scss';
 
-export default function DescriptionPopUpMinimize({ data, onChange }) {
-  //   console.log(data);
-  const [title, setTitle] = useState(data?.title || '');
-  const [desSentence, setDesSentence] = useState(data?.descriptions || []);
+export default function CreateNewTask({ data, onChange }) {
+  const [title, setTitle] = useState('');
+  const [newTitle, setNewTitle] = useState('');
   const [startTime, setStartTime] = useState(data?.time?.from || new Date());
   const [endTime, setEndTime] = useState(data?.time?.to || new Date());
-  const [position, setPosition] = useState(data?.position || '');
+  const [position, setPosition] = useState('');
+  const [participants, setParticipants] = useState(data?.participants || []);
+  const [tags] = useState(data?.tags || []);
+  const [desSentence, setDesSentence] = useState([]);
 
   const [isEdit, setIsEdit] = useState(false);
   const [isEditDes, setIsEditDes] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
+
+  const handleChangeStartTime = (time) => {
+    setStartTime(time);
+  };
+
+  const handleChangeEndTime = (time) => {
+    setEndTime(time);
+  };
 
   useEffect(() => {
     onChange({
@@ -36,8 +51,11 @@ export default function DescriptionPopUpMinimize({ data, onChange }) {
       startTime,
       endTime,
       position,
+      participants,
+      tags,
+      desSentence,
     });
-  }, [title, startTime, endTime, position]);
+  }, [title, startTime, endTime, position, participants, tags, desSentence]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -47,7 +65,6 @@ export default function DescriptionPopUpMinimize({ data, onChange }) {
 
   const handleKeyPressInDes = (e) => {
     if (e.key === 'Enter') {
-      // eslint-disable-next-line no-shadow
       setDesSentence((current) =>
         current.filter((sentence) => {
           const str = sentence.text.replace(/\s/g, '');
@@ -64,7 +81,7 @@ export default function DescriptionPopUpMinimize({ data, onChange }) {
       if (str !== '') {
         setDesSentence((current) => [
           ...current,
-          { id: uuidv4(), text: descriptionAdd },
+          { id: String(current.length), text: descriptionAdd },
         ]);
       }
       setDescriptionAdd('');
@@ -75,54 +92,99 @@ export default function DescriptionPopUpMinimize({ data, onChange }) {
   return (
     <div className={styles.container}>
       {isEdit ? (
-        <div className={styles.taskTitle}>
+        <span className={styles.taskTitle}>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={handleKeyPress}
             tabIndex="0"
           />
-          <img
-            src={ICON_PENCIL}
-            alt="Pencil"
-            onClick={() => setIsEdit(false)}
-            style={{ cursor: 'pointer' }}
-          />
-        </div>
+        </span>
       ) : (
         <span className={styles.taskTitle} style={{ cursor: 'default' }}>
-          <div className={styles.title}>
-            {title}
-            <img
-              src={ICON_PENCIL}
-              alt="Pencil"
+          {title === '' ? (
+            <span
+              className={styles.newTitle}
               onClick={() => setIsEdit(true)}
-              style={{ cursor: 'pointer' }}
-            />
-          </div>
-          <div className={styles.todoTime}>
-            <TimeTag time={startTime} onChange={setStartTime} />
-            -
-            <TimeTag time={endTime} onChange={setEndTime} />
-          </div>
+              style={{ cursor: 'text' }}
+            >
+              Task's title...
+            </span>
+          ) : (
+            <span className={styles.taskTitle} style={{ cursor: 'default' }}>
+              {title}
+              <img
+                src={ICON_PENCIL}
+                alt="Pencil"
+                onClick={() => setIsEdit(true)}
+                style={{ cursor: 'pointer' }}
+              />
+            </span>
+          )}
         </span>
       )}
+      <div className={styles.timeContainer}>
+        <div className={styles.todoTime}>
+          <TimeTag time={startTime} onChange={handleChangeStartTime} />
+          -
+          <TimeTag time={endTime} onChange={handleChangeEndTime} />
+        </div>
+        <span className={styles.timePicker}>
+          <DateTimePicker
+            startDay={startTime}
+            hanldeChangeStartDay={() => {}}
+          />
+        </span>
+      </div>
       <div className={styles.sentencesContainer}>
         <div className={styles.desSentence}>
-          <img src={ICON_CLOCK} alt="time" />
-          <p className={styles.timeRemaining}>
-            {`Còn lại ${
-              moment(endTime).diff(moment(), 'minutes') -
-              moment(new Date()).diff(moment(), 'minutes')
-            } phút`}
-          </p>
+          <img src={ICON_LOCATE} alt="time" />
+          <input
+            className={styles.timeRemaining}
+            value={position}
+            onChange={(e) => setPosition(e.target.value)}
+            style={{ overflowWrap: '-moz-initial' }}
+            placeholder="Enter your task’s location here..."
+          />
+        </div>
+        <div className={styles.desSentence_2}>
+          <img src={ICON_PEOPLE} alt="people" />
+          <div className={styles.list}>
+            {participants.map((person, index) => (
+              <TagParticipant
+                key={person?.id}
+                name={person?.displayName || 'No name'}
+                onClose={() => {
+                  setParticipants((prev) => [
+                    ...prev.filter((value, _index) => index !== _index),
+                  ]);
+                }}
+              />
+            ))}
+            <div className={styles.buttonRedo} style={{ cursor: 'pointer' }}>
+              <img src={ICON_ARROW_REDO} alt="button" />
+            </div>
+          </div>
+        </div>
+        <div className={styles.desSentence_2}>
+          <img src={ICON_BOOKMARKS} alt="time" />
+          <div className={styles.list}>
+            {tags.map((tag) => (
+              <Tag
+                key={tag.id}
+                shape="rectangle"
+                input={tag.displayName}
+                type="tagTask"
+              />
+            ))}
+            <div className={styles.buttonAdd} style={{ cursor: 'pointer' }}>
+              <img src={ICON_ADD} alt="button" />
+            </div>
+          </div>
         </div>
       </div>
-      <div className={styles.moreTaskContainer} style={{ cursor: 'pointer' }}>
-        <img src={ICON_MORE_TASK} alt="more task" />
-        <p className={styles.text}>More task</p>
-      </div>
       <div className={styles.descriptionContainer}>
+        <p className={styles.text}>Description</p>
         <div className={styles.detailDescription}>
           {desSentence.map((sentence) => (
             <div key={sentence.id} className={styles.descriptionItem}>
@@ -192,7 +254,7 @@ export default function DescriptionPopUpMinimize({ data, onChange }) {
   );
 }
 
-DescriptionPopUpMinimize.propTypes = {
+CreateNewTask.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string,
     time: PropTypes.shape({
@@ -222,6 +284,6 @@ DescriptionPopUpMinimize.propTypes = {
   onChange: PropTypes.func,
 };
 
-DescriptionPopUpMinimize.defaultProps = {
+CreateNewTask.defaultProps = {
   onChange: () => {},
 };
