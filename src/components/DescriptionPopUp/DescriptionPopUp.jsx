@@ -36,6 +36,15 @@ export default function DescriptionPopUp({ data, onChange }) {
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
 
+  const handleChangeStartTime = (time) => {
+    setStartTime(time)
+  }
+
+  const handleChangeEndTime = (time) => {
+    setEndTime(time)
+  }
+
+
   useEffect(() => {
     onChange({
       title,
@@ -103,9 +112,9 @@ export default function DescriptionPopUp({ data, onChange }) {
       )}
       <div className={styles.timeContainer}>
         <div className={styles.todoTime}>
-          <TimeTag time={startTime} onChange={setStartTime} />
+          <TimeTag time={startTime} onChange={handleChangeStartTime} />
           -
-          <TimeTag time={endTime} onChange={setEndTime} />
+          <TimeTag time={endTime} onChange={handleChangeEndTime} />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
