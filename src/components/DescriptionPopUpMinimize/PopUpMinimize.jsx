@@ -16,7 +16,7 @@ import styles from './PopUpMinimize.module.scss';
 import moment from 'moment/moment';
 
 export default function DescriptionPopUpMinimize({ data, onChange }) {
-  console.log(data);
+  //   console.log(data);
   const [title, setTitle] = useState(data?.title || '');
   const [desSentence, setDesSentence] = useState(data?.descriptions || []);
   const [startTime, setStartTime] = useState(data?.time?.from || new Date());
@@ -47,7 +47,10 @@ export default function DescriptionPopUpMinimize({ data, onChange }) {
     if (e.key === 'Enter') {
       // eslint-disable-next-line no-shadow
       setDesSentence((current) =>
-        current.filter((sentence) => sentence.text !== ''),
+        current.filter((sentence) => {
+          const str = sentence.text.replace(/\s/g, '');
+          return str !== '';
+        }),
       );
       setIsEditDes(false);
     }
@@ -55,7 +58,8 @@ export default function DescriptionPopUpMinimize({ data, onChange }) {
 
   const handleKeyPressAdd = (e) => {
     if (e.key === 'Enter') {
-      if (descriptionAdd !== '') {
+      const str = descriptionAdd.replace(/\s/g, '');
+      if (str !== '') {
         setDesSentence((current) => [
           ...current,
           { id: uuidv4(), text: descriptionAdd },

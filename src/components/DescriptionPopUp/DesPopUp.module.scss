@@ -84,6 +84,7 @@
     align-self: stretch;
     flex-grow: 0;
     .desSentence {
+      width: 100%;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -92,6 +93,7 @@
       height: 14.4px;
 
       .timeRemaining {
+        width: 100%;
         font-family: 'Manrope';
         font-style: normal;
         font-weight: 500;

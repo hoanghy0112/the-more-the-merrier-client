@@ -66,7 +66,10 @@ export default function DescriptionPopUp({ data, onChange }) {
   const handleKeyPressInDes = (e) => {
     if (e.key === 'Enter') {
       setDesSentence((current) =>
-        current.filter((sentence) => sentence.text !== ''),
+        current.filter((sentence) => {
+          const str = sentence.text.replace(/\s/g, '');
+          return str !== '';
+        }),
       );
       setIsEditDes(false);
     }
@@ -74,7 +77,8 @@ export default function DescriptionPopUp({ data, onChange }) {
 
   const handleKeyPressAdd = (e) => {
     if (e.key === 'Enter') {
-      if (descriptionAdd !== '') {
+      const str = descriptionAdd.replace(/\s/g, '');
+      if (str !== '') {
         setDesSentence((current) => [
           ...current,
           { id: String(current.length), text: descriptionAdd },
@@ -143,6 +147,7 @@ export default function DescriptionPopUp({ data, onChange }) {
             className={styles.timeRemaining}
             value={position}
             onChange={(e) => setPosition(e.target.value)}
+            style={{ overflowWrap: '-moz-initial' }}
           />
         </div>
         <div className={styles.desSentence_2}>
