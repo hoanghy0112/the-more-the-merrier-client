@@ -43,10 +43,6 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
           </p>
         </div>
       </div>
-      <div className={styles.moreTaskContainer} style={{ cursor: 'pointer' }}>
-        <img src={ICON_MORE_TASK} alt="more task" />
-        <p className={styles.text}>More task</p>
-      </div>
       <div className={styles.descriptionContainer}>
         <div className={styles.detailDescription}>
           {data.descriptions.map((sentence) => (
@@ -60,12 +56,11 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
             </div>
           ))}
           <div
-            className={styles.addDescription}
+            className={styles.moreTaskContainer}
             style={{ cursor: 'pointer' }}
-            onClick={handle.enter}
           >
-            <img src={ICON_DROP_DOWN} alt="add" />
-            <p className={styles.addText}>More information</p>
+            <img src={ICON_MORE_TASK} alt="more task" />
+            <p className={styles.text}>Detailed information</p>
           </div>
         </div>
       </div>
