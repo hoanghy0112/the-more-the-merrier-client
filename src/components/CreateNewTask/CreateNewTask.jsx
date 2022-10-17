@@ -34,7 +34,7 @@ import styles from './CreateNewTask.module.scss';
 
 Modal.setAppElement('#modal');
 
-const CreateNewTask = React.forwardRef(({ data }, ref) => {
+const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
   const dispatch = useDispatch();
 
   const [id, setID] = useState(null);
@@ -57,36 +57,31 @@ const CreateNewTask = React.forwardRef(({ data }, ref) => {
   useEffect(() => {
     if (!data._id) {
       console.log({ startTime });
-      dispatch(
-        createNewTask({
-          title: '',
-          time: {
-            from: new Date(startTime).toISOString(),
-            to: new Date(endTime).toISOString(),
-          },
-        }),
-      );
+      // dispatch(
+      //   createNewTask({
+      //     title: 'new task',
+      //     time: {
+      //       from: new Date(startTime).toISOString(),
+      //       to: new Date(endTime).toISOString(),
+      //     },
+      //   }),
+      // );
     }
   }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (data._id || id) {
-        dispatch(
-          changeTask({
-            _id: data._id || id,
-            title,
-            time: {
-              from: startTime.toISOString(),
-              to: endTime.toISOString(),
-            },
-            location: position,
-            participants,
-            tags,
-            descriptions: desSentence,
-          }),
-        );
-      }
+      onChange({
+        title,
+        time: {
+          from: startTime.toISOString(),
+          to: endTime.toISOString(),
+        },
+        location: position,
+        participants,
+        tags,
+        descriptions: desSentence,
+      });
     }, 500);
 
     return () => clearTimeout(timeout);

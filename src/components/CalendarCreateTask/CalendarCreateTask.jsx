@@ -4,9 +4,14 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
 
 import styles from './CalendarCreateTask.module.scss';
 import CreateNewTask from '../CreateNewTask/CreateNewTask';
+import {
+  createNewTask,
+  getAllTasks,
+} from '../../features/tasksManagement/TasksSlice';
 
 Modal.setAppElement('#modal');
 
@@ -15,9 +20,11 @@ export default function CalendarCreateTask({
   taskWrapperRect,
   startDate,
 }) {
+  const dispatch = useDispatch();
+
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
 
   const [begin, setBegin] = useState([0, 0]);
   const [end, setEnd] = useState([0, 0]);
@@ -57,8 +64,10 @@ export default function CalendarCreateTask({
       setHeight(0);
 
       const top = end[1] > begin[1] ? begin[1] : end[1];
-      const deltaDay = (top[0] / gridSize) * 24 * 60 * 60 * 1000;
-      const deltaMinutes = (top[1] / 1200) * 24 * 60 * 60 * 1000;
+      const deltaDay = (begin[0] / gridSize) * 24 * 60 * 60 * 1000;
+      const deltaMinutes = (top / 1200) * 24 * 60 * 60 * 1000;
+
+      console.log({ startDate });
 
       const newFrom = new Date(
         parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
@@ -72,8 +81,11 @@ export default function CalendarCreateTask({
         time: {
           from: newFrom,
           to: new Date(
-            newFrom.getTime() + (height / 1200) * 24 * 60 * 60 * 1000,
-          ).toISOString(),
+            parseInt(
+              newFrom.getTime() + (height / 1200) * 24 * 60 * 60 * 1000,
+              10,
+            ),
+          ),
         },
       });
     }
@@ -103,7 +115,12 @@ export default function CalendarCreateTask({
       </div>
       <Modal
         isOpen={isCreateNewTask}
-        onRequestClose={() => setIsCreateNewTask(false)}
+        onRequestClose={() => {
+          setIsCreateNewTask(false);
+          dispatch(createNewTask(data));
+          dispatch(getAllTasks());
+          console.log({ data });
+        }}
         style={{
           content: {
             top: '50%',
@@ -111,7 +128,6 @@ export default function CalendarCreateTask({
             transform: 'translate(-50%, -50%)',
             zIndex: 2000,
             backgroundColor: 'transparent',
-            // backgroundColor: 'red',
             width: '350px',
             height: '60px',
             display: 'grid',
@@ -127,7 +143,7 @@ export default function CalendarCreateTask({
           },
         }}
       >
-        <CreateNewTask data={data} onChange={() => {}} />
+        <CreateNewTask data={data} onChange={setData} />
       </Modal>
     </div>
   );
