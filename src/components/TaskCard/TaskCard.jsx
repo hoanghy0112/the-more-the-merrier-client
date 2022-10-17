@@ -14,18 +14,26 @@ import styles from './TaskCard.module.scss';
 export default function TaskCard({
   task,
   rect,
-  title,
-  top,
   width,
-  height,
-  column,
+  startDate,
   onDragStop,
   onChange,
 }) {
   const [isDrag, setIsDrag] = useState(false);
-  const [isChoosing, setIsChoosing] = useState(false);
 
-  const [isAppearDetail, setIsAppearDetail] = useState(false);
+  const {
+    title,
+    time: { from, to },
+  } = task;
+
+  const top = ((new Date(from).getTime() % 86400000) / 86400000) * 1200;
+
+  const height =
+    ((new Date(to).getTime() - new Date(from).getTime()) / 86400000) * 1200;
+
+  const column =
+    parseInt(new Date(from).getTime() / 86400000, 10) -
+    parseInt(new Date(startDate).getTime() / 86400000, 10);
 
   return (
     <Draggable
@@ -60,14 +68,20 @@ export default function TaskCard({
 }
 
 TaskCard.propTypes = {
-  title: PropTypes.string,
+  // title: PropTypes.string,
+  task: PropTypes.shape({
+    title: PropTypes.string,
+    time: {
+      from: PropTypes.instanceOf(Date),
+      to: PropTypes.instanceOf(Date),
+    },
+  }).isRequired,
   top: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  column: PropTypes.number.isRequired,
+  // height: PropTypes.number.isRequired,
+  startDate: PropTypes.instanceOf(Date).isRequired,
   onDragStop: PropTypes.func.isRequired,
+  rect: PropTypes.instanceOf(DOMRect).isRequired,
 };
 
-TaskCard.defaultProps = {
-  title: 'Untitled',
-};
+TaskCard.defaultProps = {};

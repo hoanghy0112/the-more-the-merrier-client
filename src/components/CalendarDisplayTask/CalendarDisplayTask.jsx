@@ -21,16 +21,8 @@ export default function CalendarDisplayTask({
           task={tasks[index]}
           width={gridSize}
           rect={rect}
-          height={
-            ((new Date(to).getTime() - new Date(from).getTime()) / 86400000) *
-            1200
-          }
-          column={
-            parseInt(new Date(from).getTime() / 86400000, 10) -
-            parseInt(new Date(startDate).getTime() / 86400000, 10)
-          }
-          top={((new Date(from).getTime() % 86400000) / 86400000) * 1200}
-          onDragStop={(event, { x, y, lastX, lastY, deltaX, deltaY }) => {
+          startDate={startDate}
+          onDragStop={(event, { lastX, lastY }) => {
             const deltaDay = (lastX / gridSize) * 24 * 60 * 60 * 1000;
             const deltaMinutes = (lastY / 1200) * 24 * 60 * 60 * 1000;
             const newFrom = new Date(
@@ -72,6 +64,7 @@ CalendarDisplayTask.propTypes = {
   ).isRequired,
   setTasks: PropTypes.func.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
+  rect: PropTypes.instanceOf(DOMRect).isRequired,
 };
 
 CalendarDisplayTask.defaultProps = {};

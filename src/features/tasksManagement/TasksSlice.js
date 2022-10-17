@@ -123,9 +123,9 @@ export const selectAllTasks = (state) => state.tasksManagement.listTasks;
 export const selectCurrentWeekTasks = (startDate) => (state) =>
   state.tasksManagement.listTasks.filter(
     (task) =>
-      new Date(task.time.from) >
+      new Date(task.time.from) >=
         new Date(parseInt(startDate.getTime() / 86400000, 10) * 86400000) &&
-      new Date(task.time.from) <
+      new Date(task.time.from) <=
         new Date(
           parseInt(startDate.getTime() / 86400000, 10) * 86400000 +
             7 * 24 * 60 * 60 * 1000,
