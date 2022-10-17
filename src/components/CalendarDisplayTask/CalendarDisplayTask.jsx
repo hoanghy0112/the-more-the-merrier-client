@@ -52,6 +52,7 @@ export default function CalendarDisplayTask({
               },
             });
           }}
+          onChange={setTasks}
         />
       ))}
     </>

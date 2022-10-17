@@ -1,18 +1,21 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment/moment';
+import React, { useEffect, useState } from 'react';
+
+import Modal from 'react-modal';
+
 import {
   ICON_ADD,
   ICON_ARROW_REDO,
   ICON_BOOKMARKS,
-  ICON_CLOCK,
   ICON_LOCATE,
   ICON_MAIL,
-  ICON_PENCIL,
   ICON_PEOPLE,
   ICON_TRASH,
 } from '../../assets/icons';
@@ -22,112 +25,71 @@ import TagParticipant from '../TagParticipant/TagParticipant';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
 
-export default function CreateNewTask({ data, onChange }) {
-  const [title, setTitle] = useState('');
-  const [newTitle, setNewTitle] = useState('');
-  const [startTime, setStartTime] = useState(data?.time?.from || new Date());
-  const [endTime, setEndTime] = useState(data?.time?.to || new Date());
-  const [position, setPosition] = useState('');
+Modal.setAppElement('#modal');
+
+const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
+  const [title, setTitle] = useState(data?.title || '');
+  const [startTime, setStartTime] = useState(
+    new Date(data?.time?.from) || new Date(),
+  );
+  const [endTime, setEndTime] = useState(
+    new Date(data?.time?.to) || new Date(),
+  );
+  const [position, setPosition] = useState(data?.position || '');
   const [participants, setParticipants] = useState(data?.participants || []);
   const [tags] = useState(data?.tags || []);
-  const [desSentence, setDesSentence] = useState([]);
+  const [desSentence, setDesSentence] = useState(data?.descriptions || []);
 
-  const [isEdit, setIsEdit] = useState(false);
-  const [isEditDes, setIsEditDes] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
 
-  const handleChangeStartTime = (time) => {
-    setStartTime(time);
-  };
-
-  const handleChangeEndTime = (time) => {
-    setEndTime(time);
-  };
+  console.log({ data });
 
   useEffect(() => {
-    onChange({
-      title,
-      startTime,
-      endTime,
-      position,
-      participants,
-      tags,
-      desSentence,
-    });
+    const timeout = setTimeout(() => {
+      onChange({
+        _id: data._id,
+        title,
+        time: {
+          from: startTime,
+          to: endTime,
+        },
+        location: position,
+        participants,
+        tags,
+        descriptions: desSentence,
+      });
+    }, 500);
+
+    return () => clearTimeout(timeout);
   }, [title, startTime, endTime, position, participants, tags, desSentence]);
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      setIsEdit(false);
+  const handleAddDescription = () => {
+    const str = descriptionAdd.replace(/\s/g, '');
+    if (str !== '') {
+      setDesSentence((current) => [...current, descriptionAdd.trim()]);
     }
-  };
-
-  const handleKeyPressInDes = (e) => {
-    if (e.key === 'Enter') {
-      setDesSentence((current) =>
-        current.filter((sentence) => {
-          const str = sentence.text.replace(/\s/g, '');
-          return str !== '';
-        }),
-      );
-      setIsEditDes(false);
-    }
-  };
-
-  const handleKeyPressAdd = (e) => {
-    if (e.key === 'Enter') {
-      const str = descriptionAdd.replace(/\s/g, '');
-      if (str !== '') {
-        setDesSentence((current) => [
-          ...current,
-          { id: String(current.length), text: descriptionAdd },
-        ]);
-      }
-      setDescriptionAdd('');
-      setIsAdd(false);
-    }
+    setDescriptionAdd('');
+    setIsAdd(false);
   };
 
   return (
-    <div className={styles.container}>
-      {isEdit ? (
-        <span className={styles.taskTitle}>
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            onKeyDown={handleKeyPress}
-            tabIndex="0"
-          />
-        </span>
-      ) : (
-        <span className={styles.taskTitle} style={{ cursor: 'default' }}>
-          {title === '' ? (
-            <span
-              className={styles.newTitle}
-              onClick={() => setIsEdit(true)}
-              style={{ cursor: 'text' }}
-            >
-              Task's title...
-            </span>
-          ) : (
-            <span className={styles.taskTitle} style={{ cursor: 'default' }}>
-              {title}
-              <img
-                src={ICON_PENCIL}
-                alt="Pencil"
-                onClick={() => setIsEdit(true)}
-                style={{ cursor: 'pointer' }}
-              />
-            </span>
-          )}
-        </span>
-      )}
+    <div ref={ref} className={styles.container}>
+      <span className={styles.taskTitle}>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          tabIndex="0"
+          className={styles.input}
+          placeholder="Task’s title..."
+          spellCheck="false"
+        />
+      </span>
       <div className={styles.timeContainer}>
         <div className={styles.todoTime}>
-          <TimeTag time={startTime} onChange={handleChangeStartTime} />
+          <TimeTag time={startTime} onChange={setStartTime} />
           -
-          <TimeTag time={endTime} onChange={handleChangeEndTime} />
+          <TimeTag time={endTime} onChange={setEndTime} />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
@@ -140,11 +102,12 @@ export default function CreateNewTask({ data, onChange }) {
         <div className={styles.desSentence}>
           <img src={ICON_LOCATE} alt="time" />
           <input
-            className={styles.timeRemaining}
+            className={styles.input}
             value={position}
             onChange={(e) => setPosition(e.target.value)}
             style={{ overflowWrap: '-moz-initial' }}
             placeholder="Enter your task’s location here..."
+            spellCheck="false"
           />
         </div>
         <div className={styles.desSentence_2}>
@@ -186,36 +149,30 @@ export default function CreateNewTask({ data, onChange }) {
       <div className={styles.descriptionContainer}>
         <p className={styles.text}>Description</p>
         <div className={styles.detailDescription}>
-          {desSentence.map((sentence) => (
-            <div key={sentence.id} className={styles.descriptionItem}>
-              {isEditDes ? (
-                <textarea
-                  className={styles.descriptionText}
-                  value={sentence.text}
-                  onChange={(e) => {
-                    setDesSentence(
-                      [...desSentence].map((object) => {
-                        if (object.id === sentence.id) {
-                          return {
-                            ...object,
-                            text: e.target.value,
-                          };
-                        }
-                        return object;
-                      }),
-                    );
-                  }}
-                  onKeyDown={handleKeyPressInDes}
-                />
-              ) : (
-                <p
-                  className={styles.descriptionText}
-                  onClick={() => setIsEditDes(true)}
-                  style={{ cursor: 'text', overflowWrap: 'anywhere' }}
-                >
-                  {sentence.text}
-                </p>
-              )}
+          {desSentence.map((sentence, index) => (
+            <div key={index} className={styles.descriptionItem}>
+              <textarea
+                className={styles.descriptionText}
+                value={sentence}
+                rows={sentence.split('\n').length}
+                spellCheck="false"
+                onChange={(e) => {
+                  setDesSentence(
+                    [...desSentence].map((object) => {
+                      if (object === sentence) return e.target.value;
+                      return object;
+                    }),
+                  );
+                }}
+                onBlur={(e) =>
+                  setDesSentence(
+                    [...desSentence].map((object) => {
+                      if (object === sentence) return e.target.value.trim();
+                      return object;
+                    }),
+                  )
+                }
+              />
             </div>
           ))}
           {isAdd ? (
@@ -223,10 +180,12 @@ export default function CreateNewTask({ data, onChange }) {
               <textarea
                 className={styles.descriptionText}
                 value={descriptionAdd}
+                rows={descriptionAdd.split('\n').length}
+                spellCheck="false"
                 onChange={(e) => {
                   setDescriptionAdd(e.target.value);
                 }}
-                onKeyDown={handleKeyPressAdd}
+                onBlur={handleAddDescription}
               />
             </div>
           ) : (
@@ -252,7 +211,9 @@ export default function CreateNewTask({ data, onChange }) {
       </div>
     </div>
   );
-}
+});
+
+export default CreateNewTask;
 
 CreateNewTask.propTypes = {
   data: PropTypes.shape({

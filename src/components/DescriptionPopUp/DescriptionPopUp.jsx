@@ -65,18 +65,23 @@ export default function DescriptionPopUp({ data, onChange, isMinimize }) {
       tags,
       desSentence,
     });
-    dispatch(
-      changeTask({
-        id: data._id,
-        title,
-        time: {
-          from: startTime.toISOString(),
-          to: endTime.toISOString(),
-        },
-        position,
-        descriptions: desSentence,
-      }),
-    );
+    const timeout = setTimeout(() => {
+      dispatch(
+        changeTask({
+          id: data._id,
+          title,
+          time: {
+            from: startTime.toISOString(),
+            to: endTime.toISOString(),
+          },
+          location: position,
+          descriptions: desSentence,
+        }),
+      );
+      console.log('dispatch');
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [title, startTime, endTime, position, participants, tags, desSentence]);
 
   const handleKeyPress = (e) => {

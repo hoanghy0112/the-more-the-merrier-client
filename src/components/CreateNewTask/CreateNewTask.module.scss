@@ -8,15 +8,18 @@
   position: relative;
   width: 350px;
   // height: 441.4px;
+  // max-height: calc(100vh - 200px);
+  // overflow-y: scroll;
 
   background: #ffffff;
   box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
     3px 4.8px 6px rgba(0, 166, 202, 0.25);
+
   border-radius: 18px;
+
+  transform: translateY(-50%);
+
   .taskTitle {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     padding: 0px;
     gap: 15px;
     height: 28px;
@@ -26,24 +29,18 @@
     font-weight: 400;
     font-size: 20.4px;
     line-height: 28px;
+  }
 
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    .newTitle {
-      height: 28px;
+  .input {
+    border: none;
+    outline: none;
+    width: 100%;
 
-      font-family: 'Manrope';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 20.4px;
-      line-height: 28px;
-
-      display: flex;
-      align-items: center;
+    &::placeholder {
       color: rgba(0, 85, 103, 0.5);
     }
   }
+
   .timeContainer {
     display: flex;
     flex-direction: row;
@@ -105,19 +102,9 @@
       gap: 10px;
       height: 14.4px;
 
-      .timeRemaining {
-        width: 100%;
-        font-family: 'Manrope';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 9.6px;
-        line-height: 13px;
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.3px;
-        border: none;
-        color: #000000;
-      }
+      font-weight: 500;
+      font-size: 9.6px;
+      line-height: 13px;
     }
 
     .desSentence_2 {
@@ -242,7 +229,12 @@
         box-shadow: -2.1302px -1.42013px 7.10066px rgba(0, 166, 202, 0.25),
           1.42013px 2.1302px 7.10066px rgba(0, 166, 202, 0.25);
         border-radius: 6px;
+
         .descriptionText {
+          resize: none;
+          border: none;
+          outline: none;
+
           width: 100%;
           border: none;
           font-family: 'Manrope';

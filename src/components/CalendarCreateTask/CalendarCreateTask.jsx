@@ -3,7 +3,12 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
+import Modal from 'react-modal';
+
 import styles from './CalendarCreateTask.module.scss';
+import CreateNewTask from '../CreateNewTask/CreateNewTask';
+
+Modal.setAppElement('#modal');
 
 export default function CalendarCreateTask({
   gridSize,
@@ -13,6 +18,7 @@ export default function CalendarCreateTask({
 }) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
+  const [data, setData] = useState({});
 
   const [begin, setBegin] = useState([0, 0]);
   const [end, setEnd] = useState([0, 0]);
@@ -20,6 +26,7 @@ export default function CalendarCreateTask({
   const [height, setHeight] = useState(0);
 
   const offset = useRef(null);
+  const modalRef = useRef(null);
 
   useLayoutEffect(() => {
     setHeight(Math.abs(end[1] - begin[1]));
@@ -61,8 +68,9 @@ export default function CalendarCreateTask({
           deltaMinutes,
       );
 
-      addNewTask({
-        title: '',
+      setIsCreateNewTask(true);
+
+      setData({
         time: {
           from: newFrom,
           to: new Date(
@@ -70,6 +78,15 @@ export default function CalendarCreateTask({
           ).toISOString(),
         },
       });
+
+      // addNewTask({
+      //   time: {
+      //     from: newFrom,
+      //     to: new Date(
+      //       newFrom.getTime() + (height / 1200) * 24 * 60 * 60 * 1000,
+      //     ).toISOString(),
+      //   },
+      // });
     }
   }
 
@@ -95,6 +112,34 @@ export default function CalendarCreateTask({
           </div>
         )}
       </div>
+      <Modal
+        isOpen={isCreateNewTask}
+        onRequestClose={() => setIsCreateNewTask(false)}
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 2000,
+            backgroundColor: 'transparent',
+            // backgroundColor: 'red',
+            width: '350px',
+            height: '60px',
+            display: 'grid',
+            placeItems: 'center',
+            padding: 10,
+            overflow: 'visible',
+            cursor: 'default',
+            border: 'none',
+          },
+          overlay: {
+            zIndex: 200,
+            backgroundColor: '#0000004f',
+          },
+        }}
+      >
+        <CreateNewTask data={data} onChange={() => {}} />
+      </Modal>
     </div>
   );
 }
@@ -108,6 +153,7 @@ CalendarCreateTask.propTypes = {
     }),
   ).isRequired,
   addNewTask: PropTypes.func.isRequired,
+  startDate: PropTypes.instanceOf(Date).isRequired,
 };
 
 CalendarCreateTask.defaultProps = {};

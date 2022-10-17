@@ -4,25 +4,22 @@ import moment from 'moment/moment';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-import { useFullScreenHandle } from 'react-full-screen';
-
 import Modal from 'react-modal';
 
 import {
   ICON_CLOCK,
-  ICON_DROP_DOWN,
   ICON_MAIL,
   ICON_MORE_TASK,
-  ICON_PENCIL,
   ICON_TRASH,
 } from '../../assets/icons';
-import DescriptionPopUp from '../DescriptionPopUp/DescriptionPopUp';
+import CreateNewTask from '../CreateNewTask/CreateNewTask';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './PopUpMinimize.module.scss';
 
 Modal.setAppElement('#modal');
 
 export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
+  console.log({data})
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -88,11 +85,11 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
             zIndex: 2000,
             backgroundColor: 'transparent',
             width: '370px',
-            height: '600px',
+            height: '60px',
             display: 'grid',
             placeItems: 'center',
             padding: 10,
-            overflow: 'hidden',
+            overflow: 'visible',
             cursor: 'default',
             border: 'none',
           },
@@ -102,7 +99,7 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
           },
         }}
       >
-        <DescriptionPopUp data={data} onChange={onChange} />
+        <CreateNewTask data={data} onChange={onChange} />
       </Modal>
     </div>
   );

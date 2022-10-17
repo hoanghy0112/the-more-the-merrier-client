@@ -79,6 +79,7 @@ export default function HoverBox({ mainBox, infoBox, parentRect, canAppear }) {
         <div
           style={{
             visibility: isAppear && canAppear ? 'visible' : 'hidden',
+            display: isAppear && canAppear ? 'block' : 'none',
           }}
           ref={infoBoxRef}
         >

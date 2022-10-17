@@ -20,6 +20,7 @@ export default function TaskCard({
   height,
   column,
   onDragStop,
+  onChange,
 }) {
   const [isDrag, setIsDrag] = useState(false);
   const [isChoosing, setIsChoosing] = useState(false);
@@ -49,7 +50,7 @@ export default function TaskCard({
               </div>
             </div>
           }
-          infoBox={<DescriptionPopUpMinimize data={task} />}
+          infoBox={<DescriptionPopUpMinimize data={task} onChange={onChange} />}
           parentRect={rect}
           canAppear={!isDrag}
         />
