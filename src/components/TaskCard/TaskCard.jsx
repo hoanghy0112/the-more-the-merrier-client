@@ -81,7 +81,7 @@ export default function TaskCard({ task, rect, width, startDate }) {
               </div>
             </div>
           }
-          infoBox={<DescriptionPopUpMinimize data={task} onChange={() => {}} />}
+          infoBox={<DescriptionPopUpMinimize data={task} />}
           parentRect={rect}
           canAppear={!isDrag}
         />

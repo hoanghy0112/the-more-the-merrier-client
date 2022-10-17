@@ -18,8 +18,8 @@ import styles from './PopUpMinimize.module.scss';
 
 Modal.setAppElement('#modal');
 
-export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
-  console.log({data})
+export default function DescriptionPopUpMinimize({ data }) {
+  console.log({ data });
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -99,7 +99,7 @@ export default function DescriptionPopUpMinimize({ data, onChange, onExpand }) {
           },
         }}
       >
-        <CreateNewTask data={data} onChange={onChange} />
+        <CreateNewTask data={data} />
       </Modal>
     </div>
   );
@@ -132,9 +132,6 @@ DescriptionPopUpMinimize.propTypes = {
       }),
     ),
   }).isRequired,
-  onChange: PropTypes.func,
 };
 
-DescriptionPopUpMinimize.defaultProps = {
-  onChange: () => {},
-};
+DescriptionPopUpMinimize.defaultProps = {};
