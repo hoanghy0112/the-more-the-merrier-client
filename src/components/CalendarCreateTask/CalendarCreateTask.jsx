@@ -14,7 +14,6 @@ export default function CalendarCreateTask({
   gridSize,
   taskWrapperRect,
   startDate,
-  addNewTask,
 }) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
@@ -26,7 +25,6 @@ export default function CalendarCreateTask({
   const [height, setHeight] = useState(0);
 
   const offset = useRef(null);
-  const modalRef = useRef(null);
 
   useLayoutEffect(() => {
     setHeight(Math.abs(end[1] - begin[1]));
@@ -78,15 +76,6 @@ export default function CalendarCreateTask({
           ).toISOString(),
         },
       });
-
-      // addNewTask({
-      //   time: {
-      //     from: newFrom,
-      //     to: new Date(
-      //       newFrom.getTime() + (height / 1200) * 24 * 60 * 60 * 1000,
-      //     ).toISOString(),
-      //   },
-      // });
     }
   }
 
@@ -152,7 +141,6 @@ CalendarCreateTask.propTypes = {
       left: PropTypes.number.isRequired,
     }),
   ).isRequired,
-  addNewTask: PropTypes.func.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
 };
 

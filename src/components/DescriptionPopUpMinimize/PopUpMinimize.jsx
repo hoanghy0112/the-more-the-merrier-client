@@ -19,7 +19,6 @@ import styles from './PopUpMinimize.module.scss';
 Modal.setAppElement('#modal');
 
 export default function DescriptionPopUpMinimize({ data }) {
-  console.log({ data });
   const [isOpen, setIsOpen] = useState(false);
 
   return (

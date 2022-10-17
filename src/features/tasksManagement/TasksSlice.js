@@ -29,18 +29,12 @@ export const createNewTask = createAsyncThunk(
   'tasksManagement/createNewTask',
   async (req) => {
     const accessToken = await auth.currentUser.getIdToken();
-    const { title, from, to, participants, tags, belongTo } = req;
+    // const { time } = req;
     const res = await axios.post(
       'https://hoanghy.tech/api/v1/task',
       {
-        title,
-        time: {
-          from,
-          to,
-        },
-        participants: participants || [],
-        tags: tags || [],
-        belongTo: belongTo || null,
+        // time,
+        ...req,
       },
       {
         headers: {
@@ -54,18 +48,24 @@ export const createNewTask = createAsyncThunk(
 
 export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
-  async ({ id, ...otherField }) => {
+  async ({ _id, ...otherField }) => {
     const accessToken = await auth.currentUser.getIdToken();
-    const res = await axios.put(
-      `https://www.hoanghy.tech/api/v1/task/${id}`,
-      { ...otherField },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+    try {
+      const res = await axios.put(
+        `https://www.hoanghy.tech/api/v1/task/${_id}`,
+        { ...otherField },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      },
-    );
-    return res.data;
+      );
+      console.log({ res });
+      return res.data;
+    } catch (error) {
+      console.log({ error });
+    }
+    return {};
   },
 );
 
@@ -99,11 +99,11 @@ export const tasksManagementSclice = createSlice({
         state.status = 'loading';
         const data = action.meta.arg;
         state.listTasks = [
-          ...state.listTasks.filter((task) => task._id !== data.id),
+          ...state.listTasks.filter((task) => task._id !== data._id),
           {
-            ...state.listTasks.filter((task) => task._id === data.id)[0],
+            ...state.listTasks.filter((task) => task._id === data._id)[0],
             ...data,
-            _id: data.id,
+            _id: data._id,
           },
         ];
       })

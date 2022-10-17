@@ -45,7 +45,7 @@ export default function TaskCard({ task, rect, width, startDate }) {
 
     dispatch(
       changeTask({
-        id: task._id,
+        _id: task._id,
         time: {
           from: newFrom.toISOString(),
           to: new Date(

@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-curly-newline */
@@ -9,6 +11,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
 
 import {
   ICON_ADD,
@@ -19,6 +22,10 @@ import {
   ICON_PEOPLE,
   ICON_TRASH,
 } from '../../assets/icons';
+import {
+  changeTask,
+  createNewTask,
+} from '../../features/tasksManagement/TasksSlice';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import Tag from '../Tag/Tag';
 import TagParticipant from '../TagParticipant/TagParticipant';
@@ -27,7 +34,11 @@ import styles from './CreateNewTask.module.scss';
 
 Modal.setAppElement('#modal');
 
-const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
+const CreateNewTask = React.forwardRef(({ data }, ref) => {
+  const dispatch = useDispatch();
+
+  const [id, setID] = useState(null);
+
   const [title, setTitle] = useState(data?.title || '');
   const [startTime, setStartTime] = useState(
     new Date(data?.time?.from) || new Date(),
@@ -43,22 +54,39 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
 
-  console.log({ data });
+  useEffect(() => {
+    if (!data._id) {
+      console.log({ startTime });
+      dispatch(
+        createNewTask({
+          title: '',
+          time: {
+            from: new Date(startTime).toISOString(),
+            to: new Date(endTime).toISOString(),
+          },
+        }),
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onChange({
-        _id: data._id,
-        title,
-        time: {
-          from: startTime,
-          to: endTime,
-        },
-        location: position,
-        participants,
-        tags,
-        descriptions: desSentence,
-      });
+      if (data._id || id) {
+        dispatch(
+          changeTask({
+            _id: data._id || id,
+            title,
+            time: {
+              from: startTime.toISOString(),
+              to: endTime.toISOString(),
+            },
+            location: position,
+            participants,
+            tags,
+            descriptions: desSentence,
+          }),
+        );
+      }
     }, 500);
 
     return () => clearTimeout(timeout);
@@ -242,9 +270,6 @@ CreateNewTask.propTypes = {
       }),
     ),
   }).isRequired,
-  onChange: PropTypes.func,
 };
 
-CreateNewTask.defaultProps = {
-  onChange: () => {},
-};
+CreateNewTask.defaultProps = {};
