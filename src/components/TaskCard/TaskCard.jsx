@@ -1,24 +1,23 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
 
 import Draggable from 'react-draggable';
 
 import PropTypes from 'prop-types';
 
-import HoverBox from '../HoverBox/HoverBox';
 import DescriptionPopUpMinimize from '../DescriptionPopUpMinimize/PopUpMinimize';
+import HoverBox from '../HoverBox/HoverBox';
 
+import { changeTask } from '../../features/tasksManagement/TasksSlice';
 import styles from './TaskCard.module.scss';
 
-export default function TaskCard({
-  task,
-  rect,
-  width,
-  startDate,
-  onDragStop,
-  onChange,
-}) {
+export default function TaskCard({ task, rect, width, startDate }) {
+  const dispatch = useDispatch();
+
   const [isDrag, setIsDrag] = useState(false);
 
   const {
@@ -35,6 +34,30 @@ export default function TaskCard({
     parseInt(new Date(from).getTime() / 86400000, 10) -
     parseInt(new Date(startDate).getTime() / 86400000, 10);
 
+  function handleDragStop(event, { lastX, lastY }) {
+    const deltaDay = (lastX / width) * 24 * 60 * 60 * 1000;
+    const deltaMinutes = (lastY / 1200) * 24 * 60 * 60 * 1000;
+    const newFrom = new Date(
+      parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
+        deltaDay +
+        deltaMinutes,
+    );
+
+    dispatch(
+      changeTask({
+        id: task._id,
+        time: {
+          from: newFrom.toISOString(),
+          to: new Date(
+            newFrom.getTime() +
+              new Date(to).getTime() -
+              new Date(from).getTime(),
+          ).toISOString(),
+        },
+      }),
+    );
+  }
+
   return (
     <Draggable
       onMouseDown={(e) => e.stopPropagation()}
@@ -46,7 +69,7 @@ export default function TaskCard({
       onStart={() => setIsDrag(true)}
       onStop={(...params) => {
         setIsDrag(false);
-        onDragStop(...params);
+        handleDragStop(...params);
       }}
     >
       <div className={styles.drag} style={{ width, height }}>
@@ -58,7 +81,7 @@ export default function TaskCard({
               </div>
             </div>
           }
-          infoBox={<DescriptionPopUpMinimize data={task} onChange={onChange} />}
+          infoBox={<DescriptionPopUpMinimize data={task} onChange={() => {}} />}
           parentRect={rect}
           canAppear={!isDrag}
         />
@@ -68,19 +91,16 @@ export default function TaskCard({
 }
 
 TaskCard.propTypes = {
-  // title: PropTypes.string,
   task: PropTypes.shape({
+    _id: PropTypes.string,
     title: PropTypes.string,
     time: {
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
     },
   }).isRequired,
-  top: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  // height: PropTypes.number.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
-  onDragStop: PropTypes.func.isRequired,
   rect: PropTypes.instanceOf(DOMRect).isRequired,
 };
 
