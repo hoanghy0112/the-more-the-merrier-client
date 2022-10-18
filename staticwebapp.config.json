@@ -5,5 +5,10 @@
       "route": "/*",
       "rewrite": "/"
     }
-  ]
+  ],
+  "mimeTypes": {
+    ".css": "text/css",
+    ".js": "text/javascript",
+    ".json": "text/json"
+  }
 }
