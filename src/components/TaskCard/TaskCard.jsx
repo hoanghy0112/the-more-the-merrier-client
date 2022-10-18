@@ -86,7 +86,7 @@ export default function TaskCard({ task, rect, width, startDate }) {
             </div>
           }
           infoBox={<DescriptionPopUpMinimize data={task} />}
-          onOpen
+          onOpen={setIsHovering}
           parentRect={rect}
           canAppear={!isDrag}
         />
