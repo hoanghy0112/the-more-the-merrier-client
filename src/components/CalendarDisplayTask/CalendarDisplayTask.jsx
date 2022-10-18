@@ -1,9 +1,12 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
 import PropTypes from 'prop-types';
 
 import TaskCard from '../TaskCard/TaskCard';
+import { useDispatch } from 'react-redux';
+import { changeTask } from '../../features/tasksManagement/TasksSlice';
 
 export default function CalendarDisplayTask({
   gridSize,
@@ -12,39 +15,22 @@ export default function CalendarDisplayTask({
   setTasks,
   startDate,
 }) {
+  const dispatch = useDispatch();
+
+  function handleChange(newData) {
+    dispatch(changeTask(newData));
+  }
+
   return (
     <>
-      {tasks.map(({ _id, time: { from, to }, title }, index) => (
+      {tasks.map(({ _id }, index) => (
         <TaskCard
           key={_id}
-          title={title}
           task={tasks[index]}
           width={gridSize}
           rect={rect}
           startDate={startDate}
-          onDragStop={(event, { lastX, lastY }) => {
-            const deltaDay = (lastX / gridSize) * 24 * 60 * 60 * 1000;
-            const deltaMinutes = (lastY / 1200) * 24 * 60 * 60 * 1000;
-            const newFrom = new Date(
-              parseInt(new Date(startDate).getTime() / 86400000, 10) *
-                86400000 +
-                deltaDay +
-                deltaMinutes,
-            );
-
-            setTasks({
-              id: _id,
-              time: {
-                from: newFrom.toISOString(),
-                to: new Date(
-                  newFrom.getTime() +
-                    new Date(to).getTime() -
-                    new Date(from).getTime(),
-                ).toISOString(),
-              },
-            });
-          }}
-          onChange={setTasks}
+          onChange={handleChange}
         />
       ))}
     </>

@@ -92,7 +92,7 @@ export default function Calendar({ startDate }) {
               tasks={tasks}
               startDate={startDate}
               rect={taskRef?.current?.getBoundingClientRect()}
-              setTasks={({ id, time }) => setTask({ id, time })}
+              setTasks={(...params) => setTask(...params)}
             />
             <CalendarCreateTask
               taskWrapperRect={taskRefPosition}

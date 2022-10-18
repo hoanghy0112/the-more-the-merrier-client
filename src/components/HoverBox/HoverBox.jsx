@@ -2,9 +2,19 @@ import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
+import Modal from 'react-modal';
+
 import styles from './HoverBox.module.scss';
 
-export default function HoverBox({ mainBox, infoBox, parentRect, canAppear }) {
+Modal.setAppElement('#modal');
+
+export default function HoverBox({
+  mainBox,
+  infoBox,
+  onOpen,
+  parentRect,
+  canAppear,
+}) {
   const [isAppear, setIsAppear] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -18,6 +28,11 @@ export default function HoverBox({ mainBox, infoBox, parentRect, canAppear }) {
 
     return () => clearTimeout(timeout);
   }, [isHovering, canAppear]);
+
+  useLayoutEffect(() => {
+    // if (isAppear) onOpen(tru);
+    onOpen(isAppear);
+  }, [isAppear]);
 
   useLayoutEffect(() => {
     if (!canAppear) setIsAppear(false);
@@ -101,6 +116,7 @@ HoverBox.propTypes = {
   ]),
   canAppear: PropTypes.bool,
   parentRect: PropTypes.arrayOf(PropTypes.number),
+  onOpen: PropTypes.func,
 };
 
 HoverBox.defaultProps = {
@@ -108,4 +124,5 @@ HoverBox.defaultProps = {
   infoBox: <div />,
   canAppear: true,
   parentRect: [0, 0, 0, 0],
+  onOpen: () => {},
 };

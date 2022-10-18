@@ -71,17 +71,34 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onChange({
-        title,
-        time: {
-          from: startTime.toISOString(),
-          to: endTime.toISOString(),
-        },
-        location: position,
-        participants,
-        tags,
-        descriptions: desSentence,
-      });
+      if (onChange) {
+        onChange({
+          title,
+          time: {
+            from: startTime.toISOString(),
+            to: endTime.toISOString(),
+          },
+          location: position,
+          participants,
+          tags,
+          descriptions: desSentence,
+        });
+      } else {
+        dispatch(
+          changeTask({
+            _id: data._id,
+            title,
+            time: {
+              from: startTime.toISOString(),
+              to: endTime.toISOString(),
+            },
+            location: position,
+            participants,
+            tags,
+            descriptions: desSentence,
+          }),
+        );
+      }
     }, 500);
 
     return () => clearTimeout(timeout);

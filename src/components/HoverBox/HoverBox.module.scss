@@ -10,7 +10,7 @@
 
   .infoBox {
     position: fixed;
-    z-index: 200;
+    z-index: 200 !important;
     cursor: default;
   }
 }

@@ -19,6 +19,7 @@ export default function TaskCard({ task, rect, width, startDate }) {
   const dispatch = useDispatch();
 
   const [isDrag, setIsDrag] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   const {
     title,
@@ -72,7 +73,10 @@ export default function TaskCard({ task, rect, width, startDate }) {
         handleDragStop(...params);
       }}
     >
-      <div className={styles.drag} style={{ width, height }}>
+      <div
+        className={styles.drag}
+        style={{ width, height, zIndex: isHovering ? 20 : 10 }}
+      >
         <HoverBox
           mainBox={
             <div className={styles.task}>
@@ -82,6 +86,7 @@ export default function TaskCard({ task, rect, width, startDate }) {
             </div>
           }
           infoBox={<DescriptionPopUpMinimize data={task} />}
+          onOpen
           parentRect={rect}
           canAppear={!isDrag}
         />
