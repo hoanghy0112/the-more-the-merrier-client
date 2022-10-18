@@ -26,7 +26,7 @@ jobs:
       azure_static_web_apps_api_token: "c200f40279569d6f0826d781c2b5b0530e8b316cb2a43cd9b3ae42a012abf5ed2-656d2d2b-73f6-4335-bdf7-f8ac7605fc1d00038561"
 ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
 # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-      app_build_command: npm install && npm run build-web
+      app_build_command: 'npm install && npm run build-web'
       app_location: "./" # App source code path
       api_location: "" # Api source code path - optional
       output_location: "build/web" # Built app content directory - optional
