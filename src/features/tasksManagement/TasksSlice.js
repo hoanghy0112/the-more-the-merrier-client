@@ -109,7 +109,10 @@ export const tasksManagementSclice = createSlice({
       })
       .addCase(createNewTask.pending, (state, action) => {
         state.status = 'loading';
-        // const data = action.meta.arg;
+
+        const data = action.meta.arg;
+
+        state.listTasks = [...state.listTasks, data];
       })
       .addCase(createNewTask.fulfilled, (state) => {
         state.status = 'succeeded';

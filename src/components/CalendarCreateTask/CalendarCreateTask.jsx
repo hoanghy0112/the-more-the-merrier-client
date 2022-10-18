@@ -58,10 +58,10 @@ export default function CalendarCreateTask({
 
   function handleMouseUp(e) {
     e.stopPropagation();
-    setIsMouseDown(false);
+    // setIsMouseDown(false);
     if (isMouseDown) {
-      setEnd([...begin]);
-      setHeight(0);
+      // setEnd([...begin]);
+      // setHeight(0);
 
       const top = end[1] > begin[1] ? begin[1] : end[1];
       const deltaDay = (begin[0] / gridSize + 1) * 24 * 60 * 60 * 1000;
@@ -118,7 +118,10 @@ export default function CalendarCreateTask({
         onRequestClose={() => {
           setIsCreateNewTask(false);
           dispatch(createNewTask(data));
-          dispatch(getAllTasks());
+          setTimeout(() => dispatch(getAllTasks()), 500);
+          setIsMouseDown(false);
+          setEnd([...begin]);
+          setHeight(0);
         }}
         style={{
           content: {
