@@ -30,7 +30,6 @@ export default function HoverBox({
   }, [isHovering, canAppear]);
 
   useLayoutEffect(() => {
-    // if (isAppear) onOpen(tru);
     onOpen(isAppear);
   }, [isAppear]);
 
