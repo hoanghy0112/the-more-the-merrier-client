@@ -23,13 +23,16 @@ export default function BasePage() {
     if (user) {
       dispath(getUserProfile());
       // if (location.pathname.split(' ')[1] === '') {
-      if (status === 'success') navigate('/home/schedule');
-      else navigate('/authentication');
       // }
     } else {
       navigate('/authentication');
     }
   }
+
+  useEffect(() => {
+    if (status === 'success') navigate('/home/schedule');
+    // else navigate('/authentication');
+  }, [status]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, onAuthChange);
