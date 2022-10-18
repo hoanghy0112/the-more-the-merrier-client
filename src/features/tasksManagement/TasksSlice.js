@@ -53,7 +53,7 @@ export const changeTask = createAsyncThunk(
     const accessToken = await auth.currentUser.getIdToken();
     try {
       const res = await axios.put(
-        `https://www.hoanghy.tech/api/v1/task/${_id}`,
+        `https://hoanghy.tech/api/v1/task/${_id}`,
         { ...otherField },
         {
           headers: {
@@ -136,7 +136,7 @@ export const selectCurrentWeekTasks = (startDate) => (state) =>
       //   ),
       //   'days',
       // );
-      console.log({ diff }, task.title, task.time.from);
+      // console.log({ diff }, task.title, task.time.from);
       return diff >= 0 && diff < 7;
     },
     // new Date(task.time.from) >=
