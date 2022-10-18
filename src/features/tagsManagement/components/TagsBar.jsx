@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ICON_ADD_IO } from '../../../assets/icons';
+import ExpandBox from '../../../components/ExpandBox/ExpandBox';
 
 import { findAllTagsOfUser, selectAllTags } from '../TagsSlice';
 
@@ -15,11 +17,15 @@ export default function TagsBar() {
         <div />
       </div>
       <div className={styles.tagsBox}>
-        <div></div>
+        <ExpandBox>
+          <p>New Tag</p>
+        </ExpandBox>
       </div>
-      <div className={styles.addButton}>
-        <button type="button">Add</button>
-      </div>
+      <button type="button" className={styles.addButton}>
+        {/* <img src={ICON_ADD} alt="add" /> */}
+        <ICON_ADD_IO color="white" className={styles.icon} />
+        <p>Add</p>
+      </button>
     </div>
   );
 }

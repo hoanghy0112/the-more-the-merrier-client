@@ -5,6 +5,9 @@ import {
   MdOutlineSettings,
   MdLogout,
 } from 'react-icons/md';
+// import { IoAdd } from 'react-icons/io5';
+import { IoMdAdd } from 'react-icons/io';
+import { IoChevronUpOutline } from 'react-icons/io5';
 import { FaRegFlag } from 'react-icons/fa';
 // import { IoSettingsOutline } from 'react-icons/io';
 
@@ -45,3 +48,6 @@ export const ICON_LOGOUT = MdLogout;
 
 export const ICON_FLAG = FaRegFlag;
 export const ICON_DEL = MdDelete;
+
+export const ICON_ADD_IO = IoMdAdd;
+export const ICON_CHEVRON_UP = IoChevronUpOutline;
