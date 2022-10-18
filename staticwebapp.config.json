@@ -1,11 +1,10 @@
 {
-  "routes": [
-    {
-      "route": "/*",
-      "rewrite": "/"
-    }
-  ],
-  "mimeTypes": {
-    ".html": "text/html"
+  "navigationFallback": {
+    "rewrite": "/",
+    "exclude": [
+      "/assets/*",
+      "/images/*.{png,jpg,gif}",
+      "/css/*"
+    ]
   }
 }
