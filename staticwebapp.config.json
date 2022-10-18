@@ -4,5 +4,8 @@
       "route": "/*",
       "rewrite": "/"
     }
-  ]
+  ],
+  "mimeTypes": {
+    ".html": "text/html"
+  }
 }
