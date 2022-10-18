@@ -1,7 +1,9 @@
 {
   "trailingSlash": "always",
-  "routes": {
-    "route": "/*",
-    "rewrite": "/"
-  }
+  "routes": [
+    {
+      "route": "/*",
+      "rewrite": "/"
+    }
+  ]
 }
