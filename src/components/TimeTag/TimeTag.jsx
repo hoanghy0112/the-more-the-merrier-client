@@ -18,8 +18,8 @@ export default function TimeTag({ time, onChange }) {
   return (
     <div className={styles.container}>
       <p className={styles.time} onClick={() => setIsEdit(!isEdit)}>
-        {`${time.getHours()}h${time.getMinutes()} ${
-          time || new Date().getHours() < 12 ? 'AM' : 'PM'
+        {`${time.getHours() - 7}h${time.getMinutes()} ${
+          (time || new Date().getHours()) - 7 < 12 ? 'AM' : 'PM'
         }`}
       </p>
       <div className={styles.timePicker}>

@@ -61,6 +61,8 @@
       height: var(--calendar-height);
       display: flex;
 
+      overflow: hidden;
+
       & > div {
         position: relative;
 

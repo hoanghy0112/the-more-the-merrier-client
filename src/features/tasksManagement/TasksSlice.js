@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { auth } from '../../firebase/signInWithGoogleAPI';
+import moment from 'moment/moment';
 
 const initialState = {
   listTasks: [],
@@ -122,15 +123,29 @@ export const { changeListTask } = tasksManagementSclice.actions;
 
 export const selectAllTasks = (state) => state.tasksManagement.listTasks;
 export const selectCurrentWeekTasks = (startDate) => (state) =>
+  // console.log({ startDate });
   state.tasksManagement.listTasks.filter(
-    (task) =>
-      new Date(task.time.from) >=
-        new Date(parseInt(startDate.getTime() / 86400000, 10) * 86400000) &&
-      new Date(task.time.from) <=
-        new Date(
-          parseInt(startDate.getTime() / 86400000, 10) * 86400000 +
-            7 * 24 * 60 * 60 * 1000,
-        ),
+    (task) => {
+      const diff =
+        new Date(task.time.from).getDate() - new Date(startDate).getDate();
+      // const diff = moment(new Date(task.time.from)).diff(
+      //   new Date(
+      //     startDate.getYear() + 1900,
+      //     startDate.getMonth(),
+      //     startDate.getDate(),
+      //   ),
+      //   'days',
+      // );
+      console.log({ diff }, task.title, task.time.from);
+      return diff >= 0 && diff < 7;
+    },
+    // new Date(task.time.from) >=
+    //   new Date(parseInt(startDate.getTime() / 86400000, 10) * 86400000) &&
+    // new Date(task.time.from) <=
+    //   new Date(
+    //     parseInt(startDate.getTime() / 86400000, 10) * 86400000 +
+    //       7 * 24 * 60 * 60 * 1000,
+    //   ),
   );
 
 export const selectTasksStatus = (state) => state.tasksManagement.status;

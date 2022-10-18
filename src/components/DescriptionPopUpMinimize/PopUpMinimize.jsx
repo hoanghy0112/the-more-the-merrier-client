@@ -48,7 +48,7 @@ export default function DescriptionPopUpMinimize({ data }) {
             <div key={sentence} className={styles.descriptionItem}>
               <p
                 className={styles.descriptionText}
-                style={{ cursor: 'text', overflowWrap: 'anywhere' }}
+                style={{ cursor: 'text', overflowWrap: '-moz-initial' }}
               >
                 {sentence}
               </p>

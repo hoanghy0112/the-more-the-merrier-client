@@ -40,7 +40,7 @@ export default function HoverBox({
 
   const PADDING = 10;
 
-  const left = useMemo(() => {
+  const left = (() => {
     if (mainBoxRef?.current && infoBoxRef?.current) {
       const mainBoxRect = mainBoxRef.current.getBoundingClientRect();
       const infoBoxRect = infoBoxRef.current.getBoundingClientRect();
@@ -52,9 +52,10 @@ export default function HoverBox({
       return l;
     }
     return 0;
-  }, [mainBoxRef, infoBoxRef, parentRect, isAppear, isHovering]);
+  })();
+  // , [mainBoxRef, infoBoxRef, parentRect, isAppear, isHovering]);
 
-  const top = useMemo(() => {
+  const top = (() => {
     if (mainBoxRef?.current && infoBoxRef?.current) {
       const mainBoxRect = mainBoxRef.current.getBoundingClientRect();
       const infoBoxRect = infoBoxRef.current.getBoundingClientRect();
@@ -66,7 +67,8 @@ export default function HoverBox({
       return t;
     }
     return 0;
-  }, [mainBoxRef, infoBoxRef, parentRect, isAppear, isHovering]);
+  })();
+  // , [mainBoxRef, infoBoxRef, parentRect, isAppear, isHovering]);
 
   function stopPropagation(e) {
     e.stopPropagation();

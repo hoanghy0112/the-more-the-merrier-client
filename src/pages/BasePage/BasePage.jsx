@@ -22,9 +22,9 @@ export default function BasePage() {
   function onAuthChange(user) {
     if (user) {
       dispath(getUserProfile());
-      if (location.pathname.split(' ')[1] === 'home') {
-        if (status === 'success') navigate('/home/schedule');
-      }
+      // if (location.pathname.split(' ')[1] === '') {
+      if (status === 'success') navigate('/home/schedule');
+      // }
     } else {
       navigate('/authentication');
     }

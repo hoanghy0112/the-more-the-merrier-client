@@ -37,8 +37,6 @@ Modal.setAppElement('#modal');
 const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
   const dispatch = useDispatch();
 
-  const [id, setID] = useState(null);
-
   const [title, setTitle] = useState(data?.title || '');
   const [startTime, setStartTime] = useState(
     new Date(data?.time?.from) || new Date(),

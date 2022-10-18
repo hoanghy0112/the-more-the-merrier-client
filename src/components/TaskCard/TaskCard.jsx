@@ -31,9 +31,14 @@ export default function TaskCard({ task, rect, width, startDate }) {
   const height =
     ((new Date(to).getTime() - new Date(from).getTime()) / 86400000) * 1200;
 
-  const column =
-    parseInt(new Date(from).getTime() / 86400000, 10) -
-    parseInt(new Date(startDate).getTime() / 86400000, 10);
+  const column = new Date(from).getDate() - new Date(startDate).getDate();
+
+  console.log(
+    { column },
+    new Date(from).getDate(),
+    new Date(startDate).getDate(),
+    title,
+  );
 
   function handleDragStop(event, { lastX, lastY }) {
     const deltaDay = (lastX / width) * 24 * 60 * 60 * 1000;
@@ -65,7 +70,7 @@ export default function TaskCard({ task, rect, width, startDate }) {
       onMouseMove={(e) => e.stopPropagation()}
       onMouseUp={(e) => e.stopPropagation()}
       bounds="parent"
-      grid={[width, 1]}
+      grid={[width, 50 / 12]}
       position={{ x: column * width, y: top }}
       onStart={() => setIsDrag(true)}
       onStop={(...params) => {

@@ -3,16 +3,16 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import TaskCard from '../TaskCard/TaskCard';
-import { useDispatch } from 'react-redux';
 import { changeTask } from '../../features/tasksManagement/TasksSlice';
 
 export default function CalendarDisplayTask({
   gridSize,
   tasks,
   rect,
-  setTasks,
+  // setTasks,
   startDate,
 }) {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ CalendarDisplayTask.propTypes = {
       height: PropTypes.number.isRequired,
     }),
   ).isRequired,
-  setTasks: PropTypes.func.isRequired,
+  // setTasks: PropTypes.func.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
   rect: PropTypes.instanceOf(DOMRect).isRequired,
 };
