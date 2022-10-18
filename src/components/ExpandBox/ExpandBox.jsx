@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -6,16 +6,38 @@ import styles from './ExpandBox.module.scss';
 import { ICON_CHEVRON_UP } from '../../assets/icons';
 
 export default function ExpandBox({ title, children, className, style }) {
+  const [isExpand, setIsExpand] = useState(true);
+
+  const contentRef = useRef();
+
   return (
     <div className={`${styles.container} ${className}`} style={style}>
-      <div className={styles.title}>
-        <div className={styles.daskTitle}>
+      <button
+        type="button"
+        className={styles.title}
+        onClick={() => setIsExpand((prev) => !prev)}
+      >
+        <div className={styles.dashTitle}>
           <p>{title}</p>
           <div />
         </div>
-        <ICON_CHEVRON_UP className={styles.icon} />
+        <ICON_CHEVRON_UP
+          style={{
+            transform: `rotate(${isExpand ? 0 : 180}deg)`,
+          }}
+          className={styles.icon}
+        />
+      </button>
+      <div
+        className={`${styles.contentBox} ${isExpand || styles.expand}`}
+        style={{
+          height: contentRef?.current
+            ? contentRef?.current.getBoundingClientRect().height
+            : 0,
+        }}
+      >
+        <div ref={contentRef}>{children}</div>
       </div>
-      <div className={styles.contentBox}>{children}</div>
     </div>
   );
 }

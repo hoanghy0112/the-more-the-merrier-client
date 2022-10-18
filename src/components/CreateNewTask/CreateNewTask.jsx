@@ -24,7 +24,7 @@ import {
 } from '../../assets/icons';
 import {
   changeTask,
-  createNewTask,
+  deleteTask,
 } from '../../features/tasksManagement/TasksSlice';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import Tag from '../Tag/Tag';
@@ -51,21 +51,6 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
 
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
-
-  useEffect(() => {
-    if (!data._id) {
-      console.log({ startTime });
-      // dispatch(
-      //   createNewTask({
-      //     title: 'new task',
-      //     time: {
-      //       from: new Date(startTime).toISOString(),
-      //       to: new Date(endTime).toISOString(),
-      //     },
-      //   }),
-      // );
-    }
-  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -101,6 +86,10 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
 
     return () => clearTimeout(timeout);
   }, [title, startTime, endTime, position, participants, tags, desSentence]);
+
+  function handleDelete() {
+    dispatch(deleteTask(data));
+  }
 
   const handleAddDescription = () => {
     const str = descriptionAdd.replace(/\s/g, '');
@@ -243,7 +232,11 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
           <img src={ICON_MAIL} alt="invite" />
           <p className={styles.textInvite}>Invite participants</p>
         </div>
-        <div className={styles.trashContainer} style={{ cursor: 'pointer' }}>
+        <div
+          onClick={handleDelete}
+          className={styles.trashContainer}
+          style={{ cursor: 'pointer' }}
+        >
           <img src={ICON_TRASH} alt="trash" />
         </div>
       </div>

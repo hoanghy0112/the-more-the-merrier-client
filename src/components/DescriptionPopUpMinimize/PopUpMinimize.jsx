@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
 
 import {
   ICON_CLOCK,
@@ -12,6 +13,7 @@ import {
   ICON_MORE_TASK,
   ICON_TRASH,
 } from '../../assets/icons';
+import { deleteTask } from '../../features/tasksManagement/TasksSlice';
 import CreateNewTask from '../CreateNewTask/CreateNewTask';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './PopUpMinimize.module.scss';
@@ -19,7 +21,13 @@ import styles from './PopUpMinimize.module.scss';
 Modal.setAppElement('#modal');
 
 export default function DescriptionPopUpMinimize({ data }) {
+  const dispatch = useDispatch();
+
   const [isOpen, setIsOpen] = useState(false);
+
+  function handleDelete() {
+    dispatch(deleteTask(data));
+  }
 
   return (
     <div className={styles.container}>
@@ -69,7 +77,11 @@ export default function DescriptionPopUpMinimize({ data }) {
           <img src={ICON_MAIL} alt="invite" />
           <p className={styles.textInvite}>Invite participants</p>
         </div>
-        <div className={styles.trashContainer} style={{ cursor: 'pointer' }}>
+        <div
+          onClick={handleDelete}
+          className={styles.trashContainer}
+          style={{ cursor: 'pointer' }}
+        >
           <img src={ICON_TRASH} alt="trash" />
         </div>
       </div>

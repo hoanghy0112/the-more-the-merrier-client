@@ -69,6 +69,27 @@ export const changeTask = createAsyncThunk(
     return {};
   },
 );
+export const deleteTask = createAsyncThunk(
+  'tasksManagement/deleteTask',
+  async ({ _id }) => {
+    const accessToken = await auth.currentUser.getIdToken();
+    try {
+      const res = await axios.delete(
+        `https://hoanghy.tech/api/v1/task/${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      console.log({ res });
+      return res.data;
+    } catch (error) {
+      console.log({ error });
+    }
+    return {};
+  },
+);
 
 export const tasksManagementSclice = createSlice({
   name: 'tasksManagement',
@@ -115,6 +136,13 @@ export const tasksManagementSclice = createSlice({
       .addCase(changeTask.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(deleteTask.pending, (state, action) => {
+        state.status = 'loading';
+        const { _id } = action.meta.arg;
+        state.listTasks = [
+          ...state.listTasks.filter((task) => task._id !== _id),
+        ];
       });
   },
 });

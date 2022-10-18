@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { ICON_ADD_IO } from '../../../assets/icons';
+
+import Tag from '../../../components/Tag/Tag';
 import ExpandBox from '../../../components/ExpandBox/ExpandBox';
 
 import { findAllTagsOfUser, selectAllTags } from '../TagsSlice';
@@ -17,12 +20,34 @@ export default function TagsBar() {
         <div />
       </div>
       <div className={styles.tagsBox}>
-        <ExpandBox>
-          <p>New Tag</p>
+        <ExpandBox title="Priority">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}
+          >
+            <p>Coming soon</p>
+            <p>Coming soon</p>
+            <p>Coming soon</p>
+            <p>Coming soon</p>
+          </div>
+        </ExpandBox>
+        <ExpandBox title="Status">
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}
+          >
+            <p>Coming soon</p>
+            <p>Coming soon</p>
+          </div>
         </ExpandBox>
       </div>
       <button type="button" className={styles.addButton}>
-        {/* <img src={ICON_ADD} alt="add" /> */}
         <ICON_ADD_IO color="white" className={styles.icon} />
         <p>Add</p>
       </button>

@@ -64,26 +64,6 @@ export default function Tag({ type, input, shape }) {
           <img src={ICON_PENDING} alt="Pending" />
         </span>
       );
-    case 'tagLearn':
-      return (
-        <span
-          className={[styles.container, styles[shape]].join(' ')}
-          style={{ backgroundColor: '#0066FF', paddingRight: 1, paddingTop: 1 }}
-        >
-          <img src={ICON_BOOK} alt="Learning" />
-        </span>
-      );
-    case 'tagTask':
-      return (
-        <span
-          className={[styles.container, styles[shape]].join(' ')}
-          style={{
-            backgroundColor: '#F9B022',
-          }}
-        >
-          <span className={styles.textTag}>{input}</span>
-        </span>
-      );
     default:
       return <h3>This tag is not include component</h3>;
   }
