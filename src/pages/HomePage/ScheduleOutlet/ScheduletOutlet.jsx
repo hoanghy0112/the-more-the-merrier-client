@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
 
 import Calendar from '../../../features/calendar/components/Calendar/Calendar';
+import TagsBar from '../../../features/tagsManagement/components/TagsBar';
 
 // import styles from './ScheduleOutlet.module.scss';
 import styles from './ScheduleOutlet.module.scss';
@@ -19,7 +20,9 @@ export default function ScheduleOutlet() {
           <Calendar startDate={date} />
         </div>
       </div>
-      <div className={styles.sideMenu}>tag</div>
+      <div className={styles.sideMenu}>
+        <TagsBar />
+      </div>
     </div>
   );
 }

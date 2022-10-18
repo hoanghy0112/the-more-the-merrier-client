@@ -22,7 +22,7 @@ export const createNewTag = createAsyncThunk(
       },
       { headers: { Authorization: `Bearer ${accessToken}` } },
     );
-    return res;
+    return res.data;
   },
 );
 
@@ -30,7 +30,7 @@ export const findTagByTitle = createAsyncThunk(
   'tagsManagement/findTagByTitle',
   async (tagTitle) => {
     const res = await axios.get(`https://hoanghy.tech/api/v1/tag/${tagTitle}`);
-    return res;
+    return res.data;
   },
 );
 
@@ -38,10 +38,10 @@ export const findAllTagsOfUser = createAsyncThunk(
   'tagsManagement/findAllTagsOfUser',
   async () => {
     const accessToken = await auth.currentUser.getIdToken();
-    const res = await axios.post('https://hoanghy.tech/api/v1/tag', {
+    const res = await axios.get('https://hoanghy.tech/api/v1/tag', {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    return res;
+    return res.data;
   },
 );
 
