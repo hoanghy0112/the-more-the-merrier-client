@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { onAuthStateChanged } from 'firebase/auth';
@@ -9,9 +9,8 @@ import styles from './LoginPage.module.scss';
 
 import LoginButton from '../../components/LoginButton/LoginButton';
 import {
-  selectAuthenticationStatus,
-  selectFetchUserProfileStatus,
   signInWithFacebook,
+  signInWithGithub,
   signInWithGoogle,
 } from '../../features/userManagement/ProfileSlice';
 
@@ -32,6 +31,10 @@ export default function LoginPage() {
     dispatch(signInWithFacebook());
   }
 
+  function handleSignInWithGithub() {
+    dispatch(signInWithGithub());
+  }
+
   function onAuthChange(user) {
     if (user) {
       navigate('/home/schedule');
@@ -45,14 +48,6 @@ export default function LoginPage() {
       unsubscribe();
     };
   }, []);
-
-  // useEffect(() => {
-  //   if (authenticationStatus === 'success') navigate('/home/schedule');
-  // }, [authenticationStatus]);
-
-  // useEffect(() => {
-  //   if (status === 'success') navigate('/home/schedule');
-  // }, [status]);
 
   return (
     <div className={styles.container}>
@@ -72,7 +67,10 @@ export default function LoginPage() {
               providerName="Facebook"
               onClick={() => handleSignInWithFacebook()}
             />
-            <LoginButton providerName="Github" />
+            <LoginButton
+              onClick={() => handleSignInWithGithub()}
+              providerName="Github"
+            />
           </div>
           <div className={styles.noSignIn}>
             <p>Continue without sign in</p>
