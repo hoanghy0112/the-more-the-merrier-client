@@ -3,9 +3,8 @@
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
 
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { auth } from '../../firebase/signInWithGoogleAPI';
-import moment from 'moment/moment';
 
 const initialState = {
   listTasks: [],
