@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -30,7 +30,6 @@ export default function HoverBox({
   }, [isHovering, canAppear]);
 
   useLayoutEffect(() => {
-    // if (isAppear) onOpen(tru);
     onOpen(isAppear);
   }, [isAppear]);
 
@@ -38,7 +37,7 @@ export default function HoverBox({
     if (!canAppear) setIsAppear(false);
   }, [canAppear]);
 
-  const PADDING = 10;
+  const PADDING = 8;
 
   const left = (() => {
     if (mainBoxRef?.current && infoBoxRef?.current) {

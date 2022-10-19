@@ -3,28 +3,51 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { onAuthStateChanged } from 'firebase/auth';
+
 import styles from './LoginPage.module.scss';
 
 import LoginButton from '../../components/LoginButton/LoginButton';
 import {
   selectAuthenticationStatus,
+  selectFetchUserProfileStatus,
   signInWithGoogle,
 } from '../../features/userManagement/ProfileSlice';
 
 import { ICON_FORWARD } from '../../assets/icons';
+import { auth } from '../../firebase/signInWithGoogleAPI';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const authenticationStatus = useSelector(selectAuthenticationStatus);
+  const status = useSelector(selectFetchUserProfileStatus);
 
   function handleSignInWithGoogle() {
     dispatch(signInWithGoogle());
   }
 
+  function onAuthChange(user) {
+    if (user) {
+      navigate('/home/schedule');
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, onAuthChange);
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   useEffect(() => {
     if (authenticationStatus === 'success') navigate('/home/schedule');
   }, [authenticationStatus]);
+
+  useEffect(() => {
+    if (status === 'success') navigate('/home/schedule');
+  }, [status]);
 
   return (
     <div className={styles.container}>

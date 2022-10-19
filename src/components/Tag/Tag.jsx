@@ -11,7 +11,7 @@ import styles from './Tag.module.scss';
 
 export default function Tag({ type, input = '', shape }) {
   switch (type) {
-    case 'tagFlag_1':
+    case '1':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
@@ -20,7 +20,7 @@ export default function Tag({ type, input = '', shape }) {
           <ICON_FLAG color="white" />
         </span>
       );
-    case 'tagFlag_2':
+    case '2':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
@@ -29,7 +29,7 @@ export default function Tag({ type, input = '', shape }) {
           <ICON_FLAG color="black" />
         </span>
       );
-    case 'tagFlag_3':
+    case '3':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
@@ -39,7 +39,7 @@ export default function Tag({ type, input = '', shape }) {
           <ICON_FLAG color="black" />
         </span>
       );
-    case 'tagFlag_4':
+    case '4':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
@@ -48,7 +48,7 @@ export default function Tag({ type, input = '', shape }) {
           <ICON_FLAG color="black" />
         </span>
       );
-    case 'tagCompleted':
+    case 'completed':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
@@ -57,7 +57,7 @@ export default function Tag({ type, input = '', shape }) {
           <img src={ICON_COMPLETED} alt="Completed" />
         </span>
       );
-    case 'tagPending':
+    case 'pending':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}

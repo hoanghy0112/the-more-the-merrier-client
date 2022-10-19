@@ -33,15 +33,8 @@ export default function TaskCard({ task, rect, width, startDate }) {
 
   const column = new Date(from).getDate() - new Date(startDate).getDate();
 
-  console.log(
-    { column },
-    new Date(from).getDate(),
-    new Date(startDate).getDate(),
-    title,
-  );
-
   function handleDragStop(event, { lastX, lastY }) {
-    const deltaDay = (lastX / width) * 24 * 60 * 60 * 1000;
+    const deltaDay = (lastX / width + 1) * 24 * 60 * 60 * 1000;
     const deltaMinutes = (lastY / 1200) * 24 * 60 * 60 * 1000;
     const newFrom = new Date(
       parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +

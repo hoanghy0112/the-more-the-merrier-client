@@ -1,0 +1,66 @@
+.container {
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  .header {
+    display: grid;
+    place-items: center;
+    gap: 4px;
+
+    p {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    div {
+      width: 22.2px;
+      height: 3px;
+      background: rgba(0, 166, 202, 0.5);
+      border-radius: 6px;
+    }
+  }
+
+  .tagsBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 20px;
+    padding: 15px 10px;
+    box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
+      3px 4.8px 6px rgba(0, 166, 202, 0.25);
+    border-radius: 18px;
+  }
+
+  .addButton {
+    width: 100%;
+    height: 35px;
+    background-color: #00a6ca;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    gap: 5px;
+    cursor: pointer;
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      color: white;
+      fill: white;
+    }
+
+    p {
+      font-weight: 800;
+      font-size: 11.6px;
+      color: white;
+    }
+  }
+}

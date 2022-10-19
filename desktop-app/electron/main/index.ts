@@ -48,6 +48,7 @@ async function createWindow() {
       // nativeWindowOpen: true
     },
   })
+  win.webContents.openDevTools()
 
   win.setMenuBarVisibility(false)
 
