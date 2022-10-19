@@ -5,10 +5,11 @@ import {
   ICON_BOOK,
   ICON_COMPLETED,
   ICON_PENDING,
+  ICON_HAT,
 } from '../../assets/icons';
 import styles from './Tag.module.scss';
 
-export default function Tag({ type, input, shape }) {
+export default function Tag({ type, input = '', shape }) {
   switch (type) {
     case 'tagFlag_1':
       return (
@@ -34,6 +35,7 @@ export default function Tag({ type, input, shape }) {
           className={[styles.container, styles[shape]].join(' ')}
           style={{ backgroundColor: '#EFDAD7' }}
         >
+          {input}
           <ICON_FLAG color="black" />
         </span>
       );
@@ -82,6 +84,19 @@ export default function Tag({ type, input, shape }) {
           }}
         >
           <span className={styles.textTag}>{input}</span>
+        </span>
+      );
+    case 'tagUIT':
+      return (
+        <span
+          className={[styles.container, styles[shape]].join(' ')}
+          style={{ backgroundColor: '#F9B022' }}
+        >
+          <img
+            src={ICON_HAT}
+            alt="uit"
+            style={{ width: '55%', height: '55%' }}
+          />
         </span>
       );
     default:
