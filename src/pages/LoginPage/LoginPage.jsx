@@ -20,8 +20,8 @@ import { auth } from '../../firebase/signInWithGoogleAPI';
 export default function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authenticationStatus = useSelector(selectAuthenticationStatus);
-  const status = useSelector(selectFetchUserProfileStatus);
+  // const authenticationStatus = useSelector(selectAuthenticationStatus);
+  // const status = useSelector(selectFetchUserProfileStatus);
 
   function handleSignInWithGoogle() {
     dispatch(signInWithGoogle());
@@ -41,13 +41,13 @@ export default function LoginPage() {
     };
   }, []);
 
-  useEffect(() => {
-    if (authenticationStatus === 'success') navigate('/home/schedule');
-  }, [authenticationStatus]);
+  // useEffect(() => {
+  //   if (authenticationStatus === 'success') navigate('/home/schedule');
+  // }, [authenticationStatus]);
 
-  useEffect(() => {
-    if (status === 'success') navigate('/home/schedule');
-  }, [status]);
+  // useEffect(() => {
+  //   if (status === 'success') navigate('/home/schedule');
+  // }, [status]);
 
   return (
     <div className={styles.container}>
