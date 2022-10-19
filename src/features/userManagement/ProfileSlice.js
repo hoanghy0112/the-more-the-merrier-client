@@ -1,6 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import signInWithFacebookAPI from '../../firebase/signInWithFacebookAPI';
 import signInWithGoogleAPI from '../../firebase/signInWithGoogleAPI';
 import { getUserProfileAPI } from './profileAPI';
 
@@ -24,6 +25,16 @@ export const signInWithGoogle = createAsyncThunk(
   'userManagement/signInWithGoogle',
   async () => {
     const user = await signInWithGoogleAPI();
+    const { accessToken } = user;
+
+    return { accessToken };
+  },
+);
+
+export const signInWithFacebook = createAsyncThunk(
+  'userManagement/signInWithFacebook',
+  async () => {
+    const user = await signInWithFacebookAPI();
     const { accessToken } = user;
 
     return { accessToken };

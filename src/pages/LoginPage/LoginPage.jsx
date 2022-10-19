@@ -11,6 +11,7 @@ import LoginButton from '../../components/LoginButton/LoginButton';
 import {
   selectAuthenticationStatus,
   selectFetchUserProfileStatus,
+  signInWithFacebook,
   signInWithGoogle,
 } from '../../features/userManagement/ProfileSlice';
 
@@ -25,6 +26,10 @@ export default function LoginPage() {
 
   function handleSignInWithGoogle() {
     dispatch(signInWithGoogle());
+  }
+
+  function handleSignInWithFacebook() {
+    dispatch(signInWithFacebook());
   }
 
   function onAuthChange(user) {
@@ -63,7 +68,10 @@ export default function LoginPage() {
               providerName="Google"
               onClick={() => handleSignInWithGoogle()}
             />
-            <LoginButton providerName="Facebook" />
+            <LoginButton
+              providerName="Facebook"
+              onClick={() => handleSignInWithFacebook()}
+            />
             <LoginButton providerName="Github" />
           </div>
           <div className={styles.noSignIn}>
