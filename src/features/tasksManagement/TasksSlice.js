@@ -29,11 +29,10 @@ export const createNewTask = createAsyncThunk(
   'tasksManagement/createNewTask',
   async (req) => {
     const accessToken = await auth.currentUser.getIdToken();
-    // const { time } = req;
+    console.log({ req });
     const res = await axios.post(
       'https://hoanghy.tech/api/v1/task',
       {
-        // time,
         ...req,
       },
       {

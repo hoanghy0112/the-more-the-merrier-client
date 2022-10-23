@@ -42,6 +42,7 @@ export { default as ICON_TRASH } from './VectorTrash.svg';
 export { default as ICON_MORE_TASK } from './VectorMoreTask.svg';
 export { default as ICON_SEARCH } from './VectorSearch.svg';
 export { default as ICON_HAT } from './VectorHat.svg';
+// export {default as ICON_SEARCH}
 
 export const ICON_HOUSE = MdOutlineHouse;
 export const ICON_GROUP = MdOutlineGroup;

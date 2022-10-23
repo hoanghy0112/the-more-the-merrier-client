@@ -12,7 +12,6 @@ export default function CalendarDisplayTask({
   gridSize,
   tasks,
   rect,
-  // setTasks,
   startDate,
 }) {
   const dispatch = useDispatch();

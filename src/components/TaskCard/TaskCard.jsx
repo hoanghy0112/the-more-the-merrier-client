@@ -46,12 +46,12 @@ export default function TaskCard({ task, rect, width, startDate }) {
       changeTask({
         _id: task._id,
         time: {
-          from: newFrom.toISOString(),
+          from: newFrom.getTime(),
           to: new Date(
             newFrom.getTime() +
               new Date(to).getTime() -
               new Date(from).getTime(),
-          ).toISOString(),
+          ).getTime(),
         },
       }),
     );

@@ -13,6 +13,8 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
+import TagChoosing from '../../features/tagsManagement/components/TagChoosing/TagChoosing';
+
 import {
   ICON_ADD,
   ICON_ARROW_REDO,
@@ -46,11 +48,13 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
   );
   const [position, setPosition] = useState(data?.position || '');
   const [participants, setParticipants] = useState(data?.participants || []);
-  const [tags] = useState(data?.tags || []);
+  const [tags, setTags] = useState(data?.tags || []);
   const [desSentence, setDesSentence] = useState(data?.descriptions || []);
 
   const [isAdd, setIsAdd] = useState(false);
   const [descriptionAdd, setDescriptionAdd] = useState('');
+
+  const [isAddTag, setIsAddTag] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -91,6 +95,10 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
     dispatch(deleteTask(data));
   }
 
+  function handleAddTag(tagID) {
+    setTags((prev) => [...prev, tagID]);
+  }
+
   const handleAddDescription = () => {
     const str = descriptionAdd.replace(/\s/g, '');
     if (str !== '') {
@@ -101,7 +109,11 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
   };
 
   return (
-    <div ref={ref} className={styles.container}>
+    <div
+      onClick={() => setIsAddTag(false)}
+      ref={ref}
+      className={styles.container}
+    >
       <span className={styles.taskTitle}>
         <input
           value={title}
@@ -167,10 +179,18 @@ const CreateNewTask = React.forwardRef(({ data, onChange }, ref) => {
                 type="tagTask"
               />
             ))}
-            <div className={styles.buttonAdd} style={{ cursor: 'pointer' }}>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsAddTag(true);
+              }}
+              className={styles.buttonAdd}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={ICON_ADD} alt="button" />
             </div>
           </div>
+          {isAddTag && <TagChoosing setTag={(tagID) => handleAddTag(tagID)} />}
         </div>
       </div>
       <div className={styles.descriptionContainer}>

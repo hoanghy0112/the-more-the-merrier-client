@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
 
 import Calendar from '../../../features/calendar/components/Calendar/Calendar';
-import TagsBar from '../../../features/tagsManagement/components/TagsBar';
+import TagsBar from '../../../features/tagsManagement/components/TagBar/TagsBar';
 
 // import styles from './ScheduleOutlet.module.scss';
 import styles from './ScheduleOutlet.module.scss';

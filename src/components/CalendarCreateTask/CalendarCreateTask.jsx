@@ -79,13 +79,13 @@ export default function CalendarCreateTask({
 
       setData({
         time: {
-          from: newFrom,
+          from: newFrom.getTime(),
           to: new Date(
             parseInt(
               newFrom.getTime() + (height / 1200) * 24 * 60 * 60 * 1000,
               10,
             ),
-          ),
+          ).getTime(),
         },
       });
     }
