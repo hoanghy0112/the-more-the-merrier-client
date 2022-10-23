@@ -93,6 +93,7 @@
     order: 1;
     align-self: stretch;
     flex-grow: 0;
+
     .desSentence {
       width: 100%;
       display: flex;
@@ -103,8 +104,13 @@
       height: 14.4px;
 
       font-weight: 500;
-      font-size: 9.6px;
+      font-size: 12px;
       line-height: 13px;
+
+      img {
+        width: 15px;
+        height: 15px;
+      }
     }
 
     .desSentence_2 {
@@ -117,6 +123,62 @@
       gap: 10px;
 
       // height: 19.2px;
+      .priorityDropDown {
+        position: relative;
+
+        .priorityHeader {
+          display: flex;
+          align-items: flex-end;
+          gap: 5px;
+
+          padding: 4px 8px;
+          border-radius: 5px;
+
+          background-color: var(--background-color);
+          box-shadow: -3px -2px 10px rgba(0, 166, 202, 0.25),
+            2px 3px 10px rgba(0, 166, 202, 0.25);
+
+          cursor: pointer;
+
+          p {
+            color: var(--color);
+            font-size: 11px;
+          }
+
+          img {
+            width: 15px;
+            height: 15px;
+          }
+        }
+
+        .choosingBox {
+          position: absolute;
+          top: 25px;
+          width: 100px;
+          z-index: 10;
+          border-radius: 5px;
+          overflow: hidden;
+
+          box-shadow: -3px -2px 10px rgba(0, 166, 202, 0.25),
+            2px 3px 10px rgba(0, 166, 202, 0.25);
+
+          .tagItem {
+            background-color: var(--background-color);
+            color: var(--color);
+            padding: 6px 8px;
+            font-size: 11px;
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            &:hover {
+              padding: 10px 8px;
+              // box-shadow: -3px -2px 15px rgba(0, 0, 0, 0.876),
+              //   2px 3px 15px rgba(0, 0, 0, 0.784);
+            }
+          }
+        }
+      }
 
       .list {
         display: flex;
@@ -298,6 +360,34 @@
       justify-content: center;
       background: #e11c1c;
       border-radius: 6px;
+    }
+  }
+
+  .createButton {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    background-color: #00a6ca;
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    cursor: pointer;
+
+    color: white;
+    font-weight: 500;
+    border-radius: 12px;
+    box-shadow: -3px -2px 40px rgba(0, 166, 202, 0.6),
+      2px 3px 10px rgba(0, 166, 202, 0.25);
+
+    img {
+      width: 15px;
+      height: 15px;
     }
   }
 }

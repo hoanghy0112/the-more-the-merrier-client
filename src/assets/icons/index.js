@@ -7,7 +7,7 @@ import {
 } from 'react-icons/md';
 // import { IoAdd } from 'react-icons/io5';
 import { IoMdAdd } from 'react-icons/io';
-import { IoChevronUpOutline } from 'react-icons/io5';
+import { IoChevronUpOutline, IoStatsChartOutline } from 'react-icons/io5';
 import { FaRegFlag } from 'react-icons/fa';
 // import { IoSettingsOutline } from 'react-icons/io';
 
@@ -42,6 +42,7 @@ export { default as ICON_TRASH } from './VectorTrash.svg';
 export { default as ICON_MORE_TASK } from './VectorMoreTask.svg';
 export { default as ICON_SEARCH } from './VectorSearch.svg';
 export { default as ICON_HAT } from './VectorHat.svg';
+export { default as ICON_CHART } from './chart.svg';
 // export {default as ICON_SEARCH}
 
 export const ICON_HOUSE = MdOutlineHouse;
@@ -54,3 +55,5 @@ export const ICON_DEL = MdDelete;
 
 export const ICON_ADD_IO = IoMdAdd;
 export const ICON_CHEVRON_UP = IoChevronUpOutline;
+
+export const ICON_STACK = IoStatsChartOutline;

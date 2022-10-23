@@ -115,14 +115,6 @@ export default function CalendarCreateTask({
       </div>
       <Modal
         isOpen={isCreateNewTask}
-        onRequestClose={() => {
-          setIsCreateNewTask(false);
-          dispatch(createNewTask(data));
-          setTimeout(() => dispatch(getAllTasks()), 500);
-          setIsMouseDown(false);
-          setEnd([...begin]);
-          setHeight(0);
-        }}
         style={{
           content: {
             top: '50%',
@@ -145,7 +137,18 @@ export default function CalendarCreateTask({
           },
         }}
       >
-        <CreateNewTask data={data} onChange={setData} />
+        <CreateNewTask
+          data={data}
+          onChange={setData}
+          onCreateNewTask={() => {
+            setIsCreateNewTask(false);
+            dispatch(createNewTask(data));
+            setTimeout(() => dispatch(getAllTasks()), 500);
+            setIsMouseDown(false);
+            setEnd([...begin]);
+            setHeight(0);
+          }}
+        />
       </Modal>
     </div>
   );

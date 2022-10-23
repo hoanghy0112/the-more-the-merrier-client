@@ -10,7 +10,9 @@
     position: relative;
 
     border-radius: 10px;
-    background-color: #efdad7;
+    background-color: var(--color);
+
+    transition: 0.5s;
 
     .taskContent {
       height: 60%;
