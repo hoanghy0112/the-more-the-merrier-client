@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -21,12 +21,31 @@ export default function HoverBox({
   const mainBoxRef = useRef();
   const infoBoxRef = useRef();
 
-  useLayoutEffect(() => {
-    const timeout = setTimeout(() => {
-      if (canAppear) setIsAppear(isHovering);
-    }, 500);
+  // useEffect(() => {
+  //   if (isHovering) {
+  //     const timeout = setTimeout(() => {
+  //       console.log('hide it !!!');
+  //       setIsHovering(false);
+  //     }, 500);
 
-    return () => clearTimeout(timeout);
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [isHovering]);
+
+  useLayoutEffect(() => {
+    if (isHovering) {
+      const timeout = setTimeout(() => {
+        if (canAppear) setIsAppear(isHovering);
+      }, 500);
+
+      return () => clearTimeout(timeout);
+    } else {
+      const timeout = setTimeout(() => {
+        if (canAppear) setIsAppear(isHovering);
+      }, 200);
+
+      return () => clearTimeout(timeout);
+    }
   }, [isHovering, canAppear]);
 
   useLayoutEffect(() => {

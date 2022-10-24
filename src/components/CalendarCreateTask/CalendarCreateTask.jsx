@@ -113,6 +113,12 @@ export default function CalendarCreateTask({
       </div>
       <Modal
         isOpen={isCreateNewTask}
+        onRequestClose={() => {
+          setIsCreateNewTask(false);
+          setIsMouseDown(false);
+          setEnd([...begin]);
+          setHeight(0);
+        }}
         style={{
           content: {
             top: '50%',
