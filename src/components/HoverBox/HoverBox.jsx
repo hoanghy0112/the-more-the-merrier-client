@@ -21,31 +21,29 @@ export default function HoverBox({
   const mainBoxRef = useRef();
   const infoBoxRef = useRef();
 
-  // useEffect(() => {
-  //   if (isHovering) {
-  //     const timeout = setTimeout(() => {
-  //       console.log('hide it !!!');
-  //       setIsHovering(false);
-  //     }, 500);
-
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [isHovering]);
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isHovering) {
       const timeout = setTimeout(() => {
-        if (canAppear) setIsAppear(isHovering);
-      }, 500);
+        setIsHovering(false);
+      }, 5000);
 
       return () => clearTimeout(timeout);
-    } else {
+    }
+
+    return () => {};
+  }, [isHovering]);
+
+  useLayoutEffect(() => {
+    if (!isHovering) {
       const timeout = setTimeout(() => {
-        if (canAppear) setIsAppear(isHovering);
+        if (canAppear) setIsAppear(false);
       }, 200);
 
       return () => clearTimeout(timeout);
     }
+    if (canAppear) setIsAppear(isHovering);
+
+    return () => {};
   }, [isHovering, canAppear]);
 
   useLayoutEffect(() => {
@@ -94,7 +92,7 @@ export default function HoverBox({
 
   return (
     <div
-      onMouseEnter={() => {
+      onMouseMove={() => {
         setIsHovering(true);
       }}
       onMouseLeave={() => {
