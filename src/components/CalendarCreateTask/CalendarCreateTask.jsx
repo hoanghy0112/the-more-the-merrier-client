@@ -67,8 +67,6 @@ export default function CalendarCreateTask({
       const deltaDay = (begin[0] / gridSize) * 24 * 60 * 60 * 1000;
       const deltaMinutes = (top / 1200) * 24 * 60 * 60 * 1000;
 
-      console.log({ startDate });
-
       const newFrom = new Date(
         parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
           deltaDay +

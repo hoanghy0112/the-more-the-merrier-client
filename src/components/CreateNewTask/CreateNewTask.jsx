@@ -34,6 +34,7 @@ import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import Tag from '../Tag/Tag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
+import { findTagByID } from '../../features/tagsManagement/tagAPI';
 
 Modal.setAppElement('#modal');
 
@@ -51,7 +52,10 @@ const CreateNewTask = React.forwardRef(
     const [position, setPosition] = useState(data?.position || '');
     const [priority, setPriority] = useState(data?.priority || 3);
     const [participants, setParticipants] = useState(data?.participants || []);
+
     const [tags, setTags] = useState(data?.tags || []);
+    const [populatedTags, setPopulatedTags] = useState([]);
+
     const [desSentence, setDesSentence] = useState(data?.descriptions || []);
 
     const [isAdd, setIsAdd] = useState(false);
@@ -59,6 +63,15 @@ const CreateNewTask = React.forwardRef(
 
     const [isAddTag, setIsAddTag] = useState(false);
     const [isChoosePriority, setIsChoosePriority] = useState(false);
+
+    useEffect(() => {
+      setPopulatedTags(
+        tags.map(async (tagID) => {
+          const tagInfo = await findTagByID(tagID);
+          return tagInfo;
+        }),
+      );
+    }, [tags]);
 
     useEffect(() => {
       const timeout = setTimeout(() => {
@@ -229,11 +242,11 @@ const CreateNewTask = React.forwardRef(
           <div className={styles.desSentence_2}>
             <img src={ICON_BOOKMARKS} alt="time" />
             <div className={styles.list}>
-              {tags.map((tag) => (
+              {populatedTags.map((tag) => (
                 <Tag
-                  key={tag.id}
+                  key={tag._id}
                   shape="rectangle"
-                  input={tag.displayName}
+                  input={tag.title}
                   type="tagTask"
                 />
               ))}

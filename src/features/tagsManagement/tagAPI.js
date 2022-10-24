@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FIND_TAG_BY_TITLE } from '../../constants/API_LINK';
+import { FIND_TAG_BY_ID, FIND_TAG_BY_TITLE } from '../../constants/API_LINK';
 import { auth } from '../../firebase/signInWithGoogleAPI';
 
 export default async function findTagByTitle(title) {
@@ -12,6 +12,18 @@ export default async function findTagByTitle(title) {
       Authorization: `Bearer ${accessToken}`,
     },
   });
+
+  return response.data;
+}
+
+export async function findTagByID(tagID) {
+  const accessToken = await auth.currentUser.getIdToken();
+  const response = await axios.get(`${FIND_TAG_BY_ID}/${tagID}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  console.log({ response });
 
   return response.data;
 }

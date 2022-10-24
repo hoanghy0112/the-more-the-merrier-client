@@ -15,6 +15,8 @@ export default function TimeTag({ time, onChange }) {
     setIsEdit(false);
   };
 
+  console.log({ time });
+
   return (
     <div className={styles.container}>
       <p className={styles.time} onClick={() => setIsEdit(!isEdit)}>
