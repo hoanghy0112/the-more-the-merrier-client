@@ -17,15 +17,14 @@ import TagChoosing from '../../features/tagsManagement/components/TagChoosing/Ta
 
 import {
   ICON_ADD,
-  ICON_ARROW_LEFT,
   ICON_BOOKMARKS,
   ICON_CHART,
-  ICON_DROP_DOWN,
   ICON_FULL_ARROW_RIGHT,
   ICON_LOCATE,
   ICON_MAIL,
   ICON_TRASH,
 } from '../../assets/icons';
+import { findTagByID } from '../../features/tagsManagement/tagAPI';
 import {
   changeTask,
   deleteTask,
@@ -34,7 +33,7 @@ import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import Tag from '../Tag/Tag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
-import { findTagByID } from '../../features/tagsManagement/tagAPI';
+import EditTag from '../Tag/EditTag/EditTag';
 
 Modal.setAppElement('#modal');
 
@@ -51,7 +50,7 @@ const CreateNewTask = React.forwardRef(
     );
     const [position, setPosition] = useState(data?.position || '');
     const [priority, setPriority] = useState(data?.priority || 3);
-    const [participants, setParticipants] = useState(data?.participants || []);
+    const [participants] = useState(data?.participants || []);
 
     const [tags, setTags] = useState(data?.tags || []);
     const [populatedTags, setPopulatedTags] = useState([]);
@@ -65,12 +64,18 @@ const CreateNewTask = React.forwardRef(
     const [isChoosePriority, setIsChoosePriority] = useState(false);
 
     useEffect(() => {
-      setPopulatedTags(
-        tags.map(async (tagID) => {
-          const tagInfo = await findTagByID(tagID);
-          return tagInfo;
-        }),
-      );
+      async function fetchTagsData() {
+        setPopulatedTags(
+          await Promise.all(
+            tags.map(async (tagID) => {
+              const tagInfo = await findTagByID(tagID);
+              return tagInfo;
+            }),
+          ),
+        );
+      }
+
+      fetchTagsData();
     }, [tags]);
 
     useEffect(() => {
@@ -140,8 +145,8 @@ const CreateNewTask = React.forwardRef(
       setIsAdd(false);
     };
 
-    function getTagStyle(priority) {
-      switch (priority) {
+    function getTagStyle(priorityNum) {
+      switch (priorityNum) {
         case 1:
           return ["Can't be ignored", '#1572A1', 'white'];
         case 2:
@@ -243,11 +248,11 @@ const CreateNewTask = React.forwardRef(
             <img src={ICON_BOOKMARKS} alt="time" />
             <div className={styles.list}>
               {populatedTags.map((tag) => (
-                <Tag
+                <EditTag
                   key={tag._id}
                   shape="rectangle"
                   input={tag.title}
-                  type="tagTask"
+                  type="chooseTag"
                 />
               ))}
               <div
