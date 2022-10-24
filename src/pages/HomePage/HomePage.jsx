@@ -4,7 +4,7 @@ import Profile from '../../features/userManagement/Profile';
 import TabButton from '../../components/TabButton/TabButton';
 
 import { ICON_LOGOUT } from '../../assets/icons';
-
+import Mylogo from '../../assets/Logo.svg';
 import styles from './HomePage.module.scss';
 
 export default function HomePage() {
@@ -52,7 +52,10 @@ export default function HomePage() {
         </button>
       </div>
       <div className={styles.mainBox}>
-        <div className={styles.header}>Logo</div>
+        <div className={styles.header}>
+          <img src={Mylogo} alt="Logo" />
+
+        </div>
         <div className={styles.outlet}>
           <Outlet />
         </div>
