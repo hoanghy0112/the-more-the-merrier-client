@@ -46,16 +46,35 @@ export default function TaskCard({ task, rect, width, startDate }) {
       changeTask({
         _id: task._id,
         time: {
-          from: newFrom.toISOString(),
+          from: newFrom.getTime(),
           to: new Date(
             newFrom.getTime() +
               new Date(to).getTime() -
               new Date(from).getTime(),
-          ).toISOString(),
+          ).getTime(),
         },
       }),
     );
   }
+
+  const primaryColor = (() => {
+    switch (task.priority) {
+      case 1:
+        return '#1572A1';
+
+      case 2:
+        return '#9AD0EC';
+
+      case 3:
+        return '#EFDAD7';
+
+      case 4:
+        return '#E3BEC6';
+
+      default:
+        return '#EFDAD7';
+    }
+  })();
 
   return (
     <Draggable
@@ -73,7 +92,13 @@ export default function TaskCard({ task, rect, width, startDate }) {
     >
       <div
         className={styles.drag}
-        style={{ width, height, zIndex: isHovering ? 20 : 10 }}
+        style={{
+          width,
+          height,
+          zIndex: isHovering ? 20 : 10,
+          '--color': primaryColor,
+          color: task.priority === 1 ? 'white' : 'black',
+        }}
       >
         <HoverBox
           mainBox={
@@ -97,6 +122,7 @@ TaskCard.propTypes = {
   task: PropTypes.shape({
     _id: PropTypes.string,
     title: PropTypes.string,
+    priority: PropTypes.number,
     time: {
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),

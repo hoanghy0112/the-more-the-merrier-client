@@ -15,55 +15,72 @@ export default function Tag({ type, input = '', shape }) {
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
-          style={{ backgroundColor: '#1572A1' }}
+          style={{ '--color': '#1572A1' }}
         >
-          <ICON_FLAG color="white" />
+          <div>
+            <ICON_FLAG color="white" />
+          </div>
+          <p>Can't be ignored</p>
         </span>
       );
     case '2':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
-          style={{ backgroundColor: '#9AD0EC' }}
+          style={{ '--color': '#9AD0EC' }}
         >
-          <ICON_FLAG color="black" />
+          <div>
+            <ICON_FLAG color="black" />
+          </div>
+          <p>Important</p>
         </span>
       );
     case '3':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
-          style={{ backgroundColor: '#EFDAD7' }}
+          style={{ '--color': '#EFDAD7' }}
         >
-          {input}
-          <ICON_FLAG color="black" />
+          <div>
+            <ICON_FLAG color="black" />
+          </div>
+          <p>Normal</p>
         </span>
       );
     case '4':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
-          style={{ backgroundColor: '#E3BEC6' }}
+          style={{ '--color': '#E3BEC6' }}
         >
-          <ICON_FLAG color="black" />
+          <div>
+            <ICON_FLAG color="black" />
+          </div>
+          <p>Can be ignored</p>
         </span>
       );
     case 'completed':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
-          style={{ backgroundColor: '#0DCF4F' }}
+          style={{ '--color': '#0DCF4F' }}
         >
-          <img src={ICON_COMPLETED} alt="Completed" />
+          <div>
+            <img src={ICON_COMPLETED} alt="Completed" />
+          </div>
+          <p>Completed</p>
         </span>
       );
     case 'pending':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}
-          style={{ backgroundColor: '#0DCF4F' }}
+          style={{ '--color': '#E11C1C' }}
         >
-          <img src={ICON_PENDING} alt="Pending" />
+          <div>
+            <img src={ICON_PENDING} alt="Pending" />
+          </div>
+          <p>Pending</p>
         </span>
       );
     case 'tagLearn':

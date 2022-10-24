@@ -1,14 +1,22 @@
 .container {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  padding: 0px;
-  isolation: isolate;
   height: 33px;
+  gap: 10px;
 
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+  div {
+    background-color: var(--color);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+  }
+
+  p {
+    font-size: 13px;
+  }
 }
 
 .circle {
