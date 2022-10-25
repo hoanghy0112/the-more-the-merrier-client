@@ -252,6 +252,7 @@ const CreateNewTask = React.forwardRef(
                 <ImportedTag
                   key={tag._id}
                   name={tag.title}
+                  color={tag.color}
                   onClose={() => {
                     setTags((prev) =>
                       prev.filter((currentTag) => currentTag !== tag._id),

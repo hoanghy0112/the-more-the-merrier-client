@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_USER_PROFILE_API_LINK } from '../../constants/API_LINK';
+import { GET_USER_PROFILE_API_LINK } from '../../constants/apiURL';
 import { auth } from '../../firebase/signInWithGoogleAPI';
 
 export async function getUserProfileAPI() {

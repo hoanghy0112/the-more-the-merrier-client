@@ -3,7 +3,7 @@ import {
   CREATE_NEW_TAG,
   FIND_TAG_BY_ID,
   FIND_TAG_BY_TITLE,
-} from '../../constants/API_LINK';
+} from '../../constants/apiURL';
 import { auth } from '../../firebase/signInWithGoogleAPI';
 
 export async function createNewTagAPI(newTag) {
