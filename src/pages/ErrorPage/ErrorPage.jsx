@@ -1,6 +1,6 @@
 import React from 'react';
-import BasePage from '../AuthenticationRoute/AuthenticationRoute';
+import AuthenticationRoute from '../AuthenticationRoute/AuthenticationRoute';
 
 export default function ErrorPage() {
-  return <BasePage>404 page not found</BasePage>;
+  return <AuthenticationRoute>404 page not found</AuthenticationRoute>;
 }
