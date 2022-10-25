@@ -119,7 +119,12 @@ export default function TaskCard({ task, rect, width, startDate }) {
       >
         <HoverBox
           mainBox={
-            <div className={styles.task}>
+            <div
+              className={[
+                styles.task,
+                new Date(to) < new Date() && styles.passed,
+              ].join(' ')}
+            >
               <div className={styles.taskContent}>
                 <p>{title}</p>
                 <div className={styles.tags}>

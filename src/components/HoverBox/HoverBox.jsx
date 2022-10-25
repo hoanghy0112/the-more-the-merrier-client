@@ -65,7 +65,7 @@ export default function HoverBox({
       const infoBoxRect = infoBoxRef.current.getBoundingClientRect();
       let l = mainBoxRect.width + PADDING;
       if (l + infoBoxRect.width + mainBoxRect.left > parentRect.right) {
-        l = -infoBoxRect.width - PADDING;
+        l = -infoBoxRect.width;
       }
 
       return l;
@@ -116,8 +116,10 @@ export default function HoverBox({
           in={isHovering && canAppear}
           timeout={400}
           classNames={{
+            enter: styles.enter,
             enterActive: styles.enterActive,
             enterDone: styles.enterDone,
+            exit: styles.exit,
             exitActive: styles.exitActive,
             exitDone: styles.exitDone,
           }}

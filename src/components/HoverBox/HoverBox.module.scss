@@ -19,16 +19,33 @@
       opacity: 0;
       transition: 0.4s;
       z-index: 200 !important;
+      display: none;
+      visibility: hidden;
     }
 
+    .enter {
+      display: block;
+      visibility: visible;
+      opacity: 0;
+    }
     .enterActive {
+      display: block;
+      visibility: visible;
       opacity: 1;
     }
     .enterDone {
-      // background-color: red;
+      display: block;
+      visibility: visible;
+      opacity: 1;
+    }
+    .exit {
+      display: block;
+      visibility: visible;
       opacity: 1;
     }
     .exitActive {
+      display: block;
+      visibility: visible;
       opacity: 0;
     }
     .exitDone {

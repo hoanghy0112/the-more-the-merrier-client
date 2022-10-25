@@ -104,6 +104,7 @@ export const tagsManagementSlice = createSlice({
 export const selectAllTags = (state) => state.tagsManagement.listTags;
 
 export const selectTagsStatus = (state) => state.tagsManagement.status;
+export const selectCreateStatus = (state) => state.tagsManagement.createStatus;
 
 export const selectTagsError = (state) => state.tagsManagement.error;
 

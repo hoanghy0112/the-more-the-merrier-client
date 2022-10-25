@@ -64,8 +64,8 @@ export default function CalendarCreateTask({
       // setHeight(0);
 
       const top = end[1] > begin[1] ? begin[1] : end[1];
-      const deltaDay = (begin[0] / gridSize) * 24 * 60 * 60 * 1000;
-      const deltaMinutes = (top / 1200) * 24 * 60 * 60 * 1000;
+      // const deltaDay = (begin[0] / gridSize) * 24 * 60 * 60 * 1000;
+      // const deltaMinutes = (top / 1200) * 24 * 60 * 60 * 1000;
 
       // const newFrom = new Date(
       //   parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
