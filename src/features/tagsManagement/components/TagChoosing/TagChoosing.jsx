@@ -1,20 +1,23 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-import { findTagByTitleAPI } from '../../tagAPI';
+import PropTypes from 'prop-types';
 
 import { ICON_SEARCH } from '../../../../assets/icons';
 
+import { selectTagsWithKeyword } from '../../TagsSlice';
 import styles from './TagChoosing.module.scss';
 
 export default function TagChoosing({ setTag }) {
-  const [tagList, setTagList] = useState([]);
+  // const [tagList, setTagList] = useState([]);
   const [keyword, setKeyword] = useState('');
 
+  const tagList = useSelector(selectTagsWithKeyword(keyword));
+
   async function fetchData() {
-    if (keyword) setTagList(await findTagByTitleAPI(keyword));
+    // if (keyword) setTagList(await findTagByTitleAPI(keyword));
   }
 
   useEffect(() => {

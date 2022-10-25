@@ -1,8 +1,10 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { auth } from '../../firebase/signInWithGoogleAPI';
-import { createNewTagAPI } from './tagAPI';
+import { createNewTagAPI, deleteTagByIDAPI } from './tagAPI';
 
 const initialState = {
   listTags: [],
@@ -38,13 +40,26 @@ export const findAllTagsOfUser = createAsyncThunk(
   },
 );
 
+// export const deleteTagByID = createAsyncThunk()
+export const deleteTagByID = createAsyncThunk(
+  'tagsManagement/deleteTagByID',
+  async (tag) => {
+    const data = await deleteTagByIDAPI(tag);
+    return data;
+  },
+);
+
 export const tagsManagementSlice = createSlice({
   name: 'tagsManagement',
   initialState,
   extraReducers(builder) {
     builder
-      .addCase(createNewTag.pending, (state) => {
+      .addCase(createNewTag.pending, (state, action) => {
         state.createStatus = 'loading';
+
+        const data = action.meta.arg;
+
+        state.listTags = [...state.listTags, data];
       })
       .addCase(createNewTag.fulfilled, (state) => {
         state.createStatus = 'succeeded';
@@ -73,6 +88,14 @@ export const tagsManagementSlice = createSlice({
       .addCase(findAllTagsOfUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(deleteTagByID.pending, (state, action) => {
+        state.createStatus = 'loading';
+
+        const data = action.meta.arg;
+
+        // state.listTags = [...state.listTags, data];
+        state.listTags = state.listTags.filter((tag) => tag._id !== data._id);
       });
   },
 });
@@ -82,5 +105,11 @@ export const selectAllTags = (state) => state.tagsManagement.listTags;
 export const selectTagsStatus = (state) => state.tagsManagement.status;
 
 export const selectTagsError = (state) => state.tagsManagement.error;
+
+export const selectTagsWithIDs = (tagIDs) => (state) =>
+  state.tagsManagement.listTags.filter((tag) => tagIDs.indexOf(tag._id) !== -1);
+
+export const selectTagsWithKeyword = (keyword) => (state) =>
+  state.tagsManagement.listTags.filter((tag) => tag.title.includes(keyword));
 
 export default tagsManagementSlice.reducer;

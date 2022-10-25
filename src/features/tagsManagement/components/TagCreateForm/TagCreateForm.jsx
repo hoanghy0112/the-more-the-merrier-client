@@ -9,7 +9,10 @@ import {
   ICON_FULL_ARROW_RIGHT,
 } from '../../../../assets/icons';
 import { createNewTagAPI } from '../../tagAPI';
+
 import styles from './TagCreateForm.module.scss';
+import { useDispatch } from 'react-redux';
+import { createNewTag } from '../../TagsSlice';
 
 export default function TagCreateForm({ onSendRequest }) {
   const sampleColor = [
@@ -22,6 +25,8 @@ export default function TagCreateForm({ onSendRequest }) {
     '#3BF9C0',
   ];
 
+  const dispatch = useDispatch();
+
   const titleRef = useRef();
   const descriptionRef = useRef();
   const [chosenColor, setChosenColor] = useState(sampleColor[0]);
@@ -33,9 +38,9 @@ export default function TagCreateForm({ onSendRequest }) {
         description: descriptionRef.current.textContent,
         color: chosenColor,
       };
-
       onSendRequest(newTag);
-      createNewTagAPI(newTag);
+      dispatch(createNewTag(newTag));
+      // createNewTagAPI(newTag);
     }
   }
 

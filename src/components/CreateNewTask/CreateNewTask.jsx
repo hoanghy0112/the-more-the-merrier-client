@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import Modal from 'react-modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TagChoosing from '../../features/tagsManagement/components/TagChoosing/TagChoosing';
 
@@ -25,7 +25,7 @@ import {
   ICON_MAIL,
   ICON_TRASH,
 } from '../../assets/icons';
-import { findTagByIDAPI } from '../../features/tagsManagement/tagAPI';
+
 import {
   changeTask,
   deleteTask,
@@ -34,6 +34,7 @@ import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
+import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 
 Modal.setAppElement('#modal');
 
@@ -53,7 +54,7 @@ const CreateNewTask = React.forwardRef(
     const [participants] = useState(data?.participants || []);
 
     const [tags, setTags] = useState(data?.tags || []);
-    const [populatedTags, setPopulatedTags] = useState([]);
+    // const [populatedTags, setPopulatedTags] = useState([]);
 
     const [desSentence, setDesSentence] = useState(data?.descriptions || []);
 
@@ -63,16 +64,18 @@ const CreateNewTask = React.forwardRef(
     const [isAddTag, setIsAddTag] = useState(false);
     const [isChoosePriority, setIsChoosePriority] = useState(false);
 
+    const populatedTags = useSelector(selectTagsWithIDs(tags));
+
     useEffect(() => {
       async function fetchTagsData() {
-        setPopulatedTags(
-          await Promise.all(
-            tags.map(async (tagID) => {
-              const tagInfo = await findTagByIDAPI(tagID);
-              return tagInfo;
-            }),
-          ),
-        );
+        // setPopulatedTags(
+        //   await Promise.all(
+        //     tags.map(async (tagID) => {
+        //       const tagInfo = await findTagByIDAPI(tagID);
+        //       return tagInfo;
+        //     }),
+        //   ),
+        // );
       }
 
       fetchTagsData();

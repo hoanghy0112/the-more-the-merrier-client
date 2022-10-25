@@ -6,63 +6,64 @@ import {
   ICON_PENCIL,
   ICON_FULL_ARROW_DOWN,
   ICON_DEL,
+  ICON_TRASH,
 } from '../../../../assets/icons';
 import './TagDetail.scss';
 
 const color = ['#1572A1', '#9AD0EC', '#EFDAD7', '#E3BEC6'];
 
 export default function TagDetail({
-  tagTitle,
+  title,
   description,
-  listTasks,
-  onChange,
+  // listTasks,
+  onDelete,
 }) {
-  const [viewTasks, setViewTasks] = useState(
-    listTasks.length > 2 ? listTasks.slice(0, 2) : listTasks,
-  );
+  // const [viewTasks, setViewTasks] = useState(
+  //   listTasks.length > 2 ? listTasks.slice(0, 2) : listTasks,
+  // );
 
   const [isEdit, setIsEdit] = useState(false);
 
-  const [newTitle, setNewTitle] = useState(tagTitle);
+  const [newTitle, setNewTitle] = useState(title || '');
 
   const [newDescription, setNewDescription] = useState(description);
 
-  const handleChangeView = () => {
-    if (viewTasks.length > 2) setViewTasks(listTasks.slice(0, 2));
-    else setViewTasks(listTasks);
-  };
+  // const handleChangeView = () => {
+  //   if (viewTasks.length > 2) setViewTasks(listTasks.slice(0, 2));
+  //   else setViewTasks(listTasks);
+  // };
 
   return (
     <div className="tag-detail-container">
       <div className="tag-detail-header">
         <div className="tag-name">
-          {isEdit === false ? (
-            tagTitle
-          ) : (
-            <input
+          {/* {isEdit === false ? ( */}
+          {title}
+          {/* ) : ( */}
+          {/* <input
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
             />
-          )}
+          )} */}
           <div className="tag-icon">
             <img src={ICON_FOLDER} alt="folder" />
           </div>
         </div>
-        <div className="tag-icon" onClick={() => setIsEdit(!isEdit)}>
-          <img src={ICON_PENCIL} alt="pencil" />
+        <div className="tag-icon" onClick={() => onDelete()}>
+          <img src={ICON_TRASH} alt="pencil" />
         </div>
       </div>
       <div className="tag-detail-description">
-        {isEdit === false ? (
-          description
-        ) : (
-          <textarea
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-          />
-        )}
+        {/* {isEdit === false ? ( */}
+        {description || 'No description'}
+        {/* // ) : (
+        //   <textarea
+        //     value={newDescription}
+        //     onChange={(e) => setNewDescription(e.target.value)}
+        //   />
+        // )} */}
       </div>
-      <div className="tag-detail-tasks">
+      {/* <div className="tag-detail-tasks">
         {viewTasks &&
           viewTasks.length > 0 &&
           viewTasks.map((task) => (
@@ -90,21 +91,25 @@ export default function TagDetail({
             {viewTasks.length === 2 ? 'More tasks' : 'Fewer Tasks'}
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
 
 TagDetail.propTypes = {
-  tagTitle: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  listTasks: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-      start: PropTypes.string.isRequired,
-      end: PropTypes.string.isRequired,
-      priority: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
+  onDelete: PropTypes.func,
+  // listTasks: PropTypes.arrayOf( PropTypes.shape({
+  //     id: PropTypes.number.isRequired,
+  //     text: PropTypes.string.isRequired,
+  //     start: PropTypes.string.isRequired,
+  //     end: PropTypes.string.isRequired,
+  //     priority: PropTypes.number.isRequired,
+  //   }),
+  // ).isRequired,
+};
+
+TagDetail.defaultProps = {
+  onDelete: () => {},
 };
