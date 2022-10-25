@@ -19,6 +19,10 @@
 
     transition: 0.5s;
 
+    &:hover {
+      transform: scale(1.1);
+    }
+
     .taskContent {
       // height: 60%;
       // max-height: 200px;

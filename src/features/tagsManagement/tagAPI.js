@@ -1,12 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 import {
   CREATE_NEW_TAG,
   DELETE_TAG_BY_ID,
   FIND_TAG_BY_ID,
   FIND_TAG_BY_TITLE,
 } from '../../constants/apiURL';
-import { auth } from '../../firebase/signInWithGoogleAPI';
+// import { auth } from '../../firebase/signInWithGoogleAPI';
 
 export async function createNewTagAPI(newTag) {
   const accessToken = await auth.currentUser.getIdToken();
@@ -21,6 +22,7 @@ export async function createNewTagAPI(newTag) {
 }
 
 export async function findTagByTitleAPI(title) {
+  const auth = getAuth();
   const accessToken = await auth.currentUser.getIdToken();
   const response = await axios.get(FIND_TAG_BY_TITLE, {
     params: {
@@ -35,6 +37,7 @@ export async function findTagByTitleAPI(title) {
 }
 
 export async function findTagByIDAPI(tagID) {
+  const auth = getAuth();
   const accessToken = await auth.currentUser.getIdToken();
   const response = await axios.get(`${FIND_TAG_BY_ID}/${tagID}`, {
     headers: {
@@ -47,6 +50,7 @@ export async function findTagByIDAPI(tagID) {
 }
 
 export async function deleteTagByIDAPI(tag) {
+  const auth = getAuth();
   const accessToken = await auth.currentUser.getIdToken();
   const response = await axios.delete(`${DELETE_TAG_BY_ID}/${tag._id}`, {
     headers: {

@@ -3,8 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../firebase/signInWithGoogleAPI';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import { findAllTagsOfUser } from '../../features/tagsManagement/TagsSlice';
 import {
@@ -30,10 +29,10 @@ export default function BasePage() {
 
   useEffect(() => {
     if (status === 'success') navigate('/home/schedule');
-    // else navigate('/authentication');
   }, [status]);
 
   useEffect(() => {
+    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, onAuthChange);
 
     return () => {

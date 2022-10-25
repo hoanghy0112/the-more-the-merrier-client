@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
+import { CSSTransition } from 'react-transition-group';
 
 import styles from './HoverBox.module.scss';
 
@@ -33,11 +36,11 @@ export default function HoverBox({
     return () => {};
   }, [isHovering]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!isHovering) {
       const timeout = setTimeout(() => {
         if (canAppear) setIsAppear(false);
-      }, 200);
+      }, 300);
 
       return () => clearTimeout(timeout);
     }
@@ -46,15 +49,15 @@ export default function HoverBox({
     return () => {};
   }, [isHovering, canAppear]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     onOpen(isAppear);
   }, [isAppear]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!canAppear) setIsAppear(false);
   }, [canAppear]);
 
-  const PADDING = 8;
+  const PADDING = 9;
 
   const left = (() => {
     if (mainBoxRef?.current && infoBoxRef?.current) {
@@ -109,15 +112,26 @@ export default function HoverBox({
         className={styles.infoBox}
         style={{ left, top }}
       >
-        <div
-          style={{
-            visibility: isAppear && canAppear ? 'visible' : 'hidden',
-            display: isAppear && canAppear ? 'block' : 'none',
+        <CSSTransition
+          in={isHovering && canAppear}
+          timeout={400}
+          classNames={{
+            enterActive: styles.enterActive,
+            enterDone: styles.enterDone,
+            exitActive: styles.exitActive,
+            exitDone: styles.exitDone,
           }}
-          ref={infoBoxRef}
         >
-          {infoBox}
-        </div>
+          <div
+            className={styles.infoBoxTransition}
+            onMouseMove={(e) =>
+              (!isHovering || !canAppear) && e.stopPropagation()
+            }
+            ref={infoBoxRef}
+          >
+            {infoBox}
+          </div>
+        </CSSTransition>
       </div>
     </div>
   );

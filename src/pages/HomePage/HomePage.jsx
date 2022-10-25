@@ -6,6 +6,7 @@ import TabButton from '../../components/TabButton/TabButton';
 import { ICON_LOGOUT } from '../../assets/icons';
 import Mylogo from '../../assets/Logo.svg';
 import styles from './HomePage.module.scss';
+import { getAuth } from 'firebase/auth';
 
 export default function HomePage() {
   const [tab, setTab] = useState('');
@@ -16,6 +17,11 @@ export default function HomePage() {
   useEffect(() => {
     setTab(location.pathname.split('/')[2]);
   }, [location]);
+
+  function handleSignout() {
+    const auth = getAuth();
+    auth.signOut();
+  }
 
   return (
     <div className={styles.container}>
@@ -46,7 +52,11 @@ export default function HomePage() {
             />
           </div>
         </div>
-        <button type="button" className={styles.signOutButton}>
+        <button
+          type="button"
+          className={styles.signOutButton}
+          onClick={handleSignout}
+        >
           <ICON_LOGOUT className={styles.signOutIcon} />
           <p>Log out</p>
         </button>
@@ -54,7 +64,6 @@ export default function HomePage() {
       <div className={styles.mainBox}>
         <div className={styles.header}>
           <img src={Mylogo} alt="Logo" />
-
         </div>
         <div className={styles.outlet}>
           <Outlet />

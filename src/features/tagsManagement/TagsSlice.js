@@ -3,7 +3,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { auth } from '../../firebase/signInWithGoogleAPI';
+import { getAuth } from 'firebase/auth';
 import { createNewTagAPI, deleteTagByIDAPI } from './tagAPI';
 
 const initialState = {
@@ -32,6 +32,7 @@ export const findTagByTitle = createAsyncThunk(
 export const findAllTagsOfUser = createAsyncThunk(
   'tagsManagement/findAllTagsOfUser',
   async () => {
+    const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.get('https://hoanghy.tech/api/v1/tag', {
       headers: { Authorization: `Bearer ${accessToken}` },
