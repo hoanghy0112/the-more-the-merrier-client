@@ -93,4 +93,63 @@
       }
     }
   }
+  .userContainer {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    gap: 10px;
+
+    width: 100%;
+
+    border-bottom: 1px solid rgba(0, 85, 103, 0.5);
+
+    .imageContainer {
+      width: 20px;
+      height: 20px;
+
+      border-radius: 9999px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .nameContainer {
+      height: 11px;
+
+      font-family: 'Manrope';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 8px;
+      line-height: 11px;
+
+      display: flex;
+      align-items: center;
+      text-align: center;
+      letter-spacing: 0.5px;
+
+      color: #000000;
+    }
+    .email {
+      height: 11px;
+
+      font-family: 'Manrope';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 8px;
+      line-height: 11px;
+
+      display: flex;
+      align-items: center;
+      text-align: center;
+      letter-spacing: 0.5px;
+
+      color: rgba(0, 85, 103, 0.5);
+    }
+  }
 }
