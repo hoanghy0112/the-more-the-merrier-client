@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { auth } from '../../firebase/signInWithGoogleAPI';
+import { getAuth } from 'firebase/auth';
 
 const initialState = {
   listTasks: [],
@@ -15,6 +15,7 @@ const initialState = {
 export const getAllTasks = createAsyncThunk(
   'tasksManagement/getAllTasks',
   async () => {
+    const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.get('https://hoanghy.tech/api/v1/task/', {
       headers: {
@@ -28,8 +29,8 @@ export const getAllTasks = createAsyncThunk(
 export const createNewTask = createAsyncThunk(
   'tasksManagement/createNewTask',
   async (req) => {
+    const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
-    console.log({ req });
     const res = await axios.post(
       'https://hoanghy.tech/api/v1/task',
       {
@@ -48,6 +49,7 @@ export const createNewTask = createAsyncThunk(
 export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
   async ({ _id, ...otherField }) => {
+    const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     try {
       const res = await axios.put(
@@ -59,10 +61,9 @@ export const changeTask = createAsyncThunk(
           },
         },
       );
-      console.log({ res });
       return res.data;
     } catch (error) {
-      console.log({ error });
+      // console.log({ error });
     }
     return {};
   },
@@ -70,6 +71,7 @@ export const changeTask = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
   'tasksManagement/deleteTask',
   async ({ _id }) => {
+    const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     try {
       const res = await axios.delete(
@@ -80,10 +82,10 @@ export const deleteTask = createAsyncThunk(
           },
         },
       );
-      console.log({ res });
+      // console.log({ res });
       return res.data;
     } catch (error) {
-      console.log({ error });
+      // console.log({ error });
     }
     return {};
   },

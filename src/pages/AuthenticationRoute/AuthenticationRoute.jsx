@@ -1,31 +1,27 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../firebase/signInWithGoogleAPI';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+import { findAllTagsOfUser } from '../../features/tagsManagement/TagsSlice';
 import {
   getUserProfile,
   selectFetchUserProfileStatus,
 } from '../../features/userManagement/ProfileSlice';
-import styles from './BasePage.module.scss';
 import LoadingPage from '../LoadingPage/LoadingPage';
-import { findAllTagsOfUser } from '../../features/tagsManagement/TagsSlice';
+import styles from './AuthenticationRoute.module.scss';
 
 export default function BasePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const status = useSelector(selectFetchUserProfileStatus);
 
   function onAuthChange(user) {
     if (user) {
       dispatch(getUserProfile());
       dispatch(findAllTagsOfUser());
-      // if (location.pathname.split(' ')[1] === '') {
-      // }
     } else {
       navigate('/authentication');
     }
@@ -33,10 +29,10 @@ export default function BasePage() {
 
   useEffect(() => {
     if (status === 'success') navigate('/home/schedule');
-    // else navigate('/authentication');
   }, [status]);
 
   useEffect(() => {
+    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, onAuthChange);
 
     return () => {

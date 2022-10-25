@@ -1,8 +1,11 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
+import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
+import { CSSTransition } from 'react-transition-group';
 
 import styles from './HoverBox.module.scss';
 
@@ -21,23 +24,40 @@ export default function HoverBox({
   const mainBoxRef = useRef();
   const infoBoxRef = useRef();
 
-  useLayoutEffect(() => {
-    const timeout = setTimeout(() => {
-      if (canAppear) setIsAppear(isHovering);
-    }, 500);
+  useEffect(() => {
+    if (isHovering) {
+      const timeout = setTimeout(() => {
+        setIsHovering(false);
+      }, 5000);
 
-    return () => clearTimeout(timeout);
+      return () => clearTimeout(timeout);
+    }
+
+    return () => {};
+  }, [isHovering]);
+
+  useEffect(() => {
+    if (!isHovering) {
+      const timeout = setTimeout(() => {
+        if (canAppear) setIsAppear(false);
+      }, 300);
+
+      return () => clearTimeout(timeout);
+    }
+    if (canAppear) setIsAppear(isHovering);
+
+    return () => {};
   }, [isHovering, canAppear]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     onOpen(isAppear);
   }, [isAppear]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!canAppear) setIsAppear(false);
   }, [canAppear]);
 
-  const PADDING = 8;
+  const PADDING = 9;
 
   const left = (() => {
     if (mainBoxRef?.current && infoBoxRef?.current) {
@@ -75,7 +95,7 @@ export default function HoverBox({
 
   return (
     <div
-      onMouseEnter={() => {
+      onMouseMove={() => {
         setIsHovering(true);
       }}
       onMouseLeave={() => {
@@ -92,15 +112,26 @@ export default function HoverBox({
         className={styles.infoBox}
         style={{ left, top }}
       >
-        <div
-          style={{
-            visibility: isAppear && canAppear ? 'visible' : 'hidden',
-            display: isAppear && canAppear ? 'block' : 'none',
+        <CSSTransition
+          in={isHovering && canAppear}
+          timeout={400}
+          classNames={{
+            enterActive: styles.enterActive,
+            enterDone: styles.enterDone,
+            exitActive: styles.exitActive,
+            exitDone: styles.exitDone,
           }}
-          ref={infoBoxRef}
         >
-          {infoBox}
-        </div>
+          <div
+            className={styles.infoBoxTransition}
+            onMouseMove={(e) =>
+              (!isHovering || !canAppear) && e.stopPropagation()
+            }
+            ref={infoBoxRef}
+          >
+            {infoBox}
+          </div>
+        </CSSTransition>
       </div>
     </div>
   );

@@ -1,21 +1,17 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './TimeTag.module.scss';
 
 import TimePicker from '../TimePicker/TimePicker';
 
-import { useState } from 'react';
-
 export default function TimeTag({ time, onChange }) {
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleChangeTime = (time) => {
-    onChange(time);
+  const handleChangeTime = (newTime) => {
+    onChange(newTime);
     setIsEdit(false);
   };
-
-  console.log({ time });
 
   return (
     <div className={styles.container}>

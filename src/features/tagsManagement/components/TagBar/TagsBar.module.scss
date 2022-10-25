@@ -27,6 +27,8 @@
 
   .tagsBox {
     width: 100%;
+    height: 100%;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -51,6 +53,9 @@
         align-items: center;
         gap: 8px;
         width: 100%;
+        padding: 5px;
+
+        transition: 0.3s;
 
         div {
           width: 30px;
@@ -60,11 +65,25 @@
         }
 
         p {
+          position: relative;
+          left: 0;
+          transition: 0.3s;
           font-size: 13px;
           white-space: nowrap;
           width: calc(100% - 40px);
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        &:hover {
+          background-color: var(--color);
+          box-shadow: 0 0 10px 0 var(--color);
+          border-radius: 6px;
+
+          p {
+            left: -10px;
+            font-weight: 500;
+          }
         }
       }
     }
@@ -83,6 +102,8 @@
     gap: 5px;
     cursor: pointer;
 
+    transition: 0.3s;
+
     .icon {
       width: 18px;
       height: 18px;
@@ -94,6 +115,10 @@
       font-weight: 800;
       font-size: 11.6px;
       color: white;
+    }
+
+    &:hover {
+      box-shadow: 0 0 10px #00a6ca;
     }
   }
 }

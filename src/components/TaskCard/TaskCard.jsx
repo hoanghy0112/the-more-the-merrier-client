@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Draggable from 'react-draggable';
 
@@ -14,6 +14,7 @@ import HoverBox from '../HoverBox/HoverBox';
 
 import { changeTask } from '../../features/tasksManagement/TasksSlice';
 import styles from './TaskCard.module.scss';
+import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 
 export default function TaskCard({ task, rect, width, startDate }) {
   const dispatch = useDispatch();
@@ -24,7 +25,10 @@ export default function TaskCard({ task, rect, width, startDate }) {
   const {
     title,
     time: { from, to },
+    tags: tagIDs,
   } = task;
+
+  const tags = useSelector(selectTagsWithIDs(tagIDs));
 
   const top = ((new Date(from).getTime() % 86400000) / 86400000) * 1200;
 
@@ -105,6 +109,11 @@ export default function TaskCard({ task, rect, width, startDate }) {
             <div className={styles.task}>
               <div className={styles.taskContent}>
                 <p>{title}</p>
+                <div className={styles.tags}>
+                  {tags.map((tag) => (
+                    <p style={{ backgroundColor: tag.color }}>{tag.title}</p>
+                  ))}
+                </div>
               </div>
             </div>
           }
@@ -127,6 +136,7 @@ TaskCard.propTypes = {
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
     },
+    tags: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   width: PropTypes.number.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,

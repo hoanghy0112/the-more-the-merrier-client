@@ -20,7 +20,7 @@ export default function Tag({ type, input = '', shape }) {
           <div>
             <ICON_FLAG color="white" />
           </div>
-          <p>Can't be ignored</p>
+          <p>Can&apos;t be ignored</p>
         </span>
       );
     case '2':
@@ -92,7 +92,7 @@ export default function Tag({ type, input = '', shape }) {
           <img src={ICON_BOOK} alt="Learning" />
         </span>
       );
-    case 'tagTask':
+    case 'chooseTag':
       return (
         <span
           className={[styles.container, styles[shape]].join(' ')}

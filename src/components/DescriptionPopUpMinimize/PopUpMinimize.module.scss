@@ -13,6 +13,7 @@
   box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
     3px 4.8px 6px rgba(0, 166, 202, 0.25);
   border-radius: 18px;
+
   .taskTitle {
     display: flex;
     flex-direction: row;
@@ -94,7 +95,7 @@
         font-family: 'Manrope';
         font-style: normal;
         font-weight: 500;
-        font-size: 9.6px;
+        font-size: 11px;
         line-height: 13px;
         display: flex;
         align-items: center;
@@ -253,6 +254,12 @@
       justify-content: center;
       background: #e11c1c;
       border-radius: 6px;
+
+      transition: 0.3s;
+
+      &:hover {
+        box-shadow: 0 0 10px #e11c1c;
+      }
     }
   }
   .moreTaskContainer {
@@ -271,6 +278,13 @@
     order: 2;
     align-self: stretch;
     flex-grow: 0;
+
+    transition: 0.3s;
+
+    &:hover {
+      box-shadow: 0 0 10px #00a6ca;
+    }
+
     .text {
       font-family: 'Manrope';
       font-style: normal;

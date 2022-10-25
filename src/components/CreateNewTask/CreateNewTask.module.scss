@@ -140,6 +140,12 @@
 
           cursor: pointer;
 
+          transition: 0.3s;
+
+          &:hover {
+            transform: scale(1.15);
+          }
+
           p {
             color: var(--color);
             font-size: 11px;
@@ -186,6 +192,14 @@
         gap: 10px;
         flex-wrap: wrap;
         // background-color: red;
+        div {
+          transition: 0.5s;
+          transition-timing-function: cubic-bezier(0.74, -0.65, 0.16, 1.62);
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
       }
 
       .buttonRedo {
@@ -195,10 +209,9 @@
 
         border: 0.6px dashed rgba(0, 85, 103, 0.5);
         border-radius: 6px;
-        // align-items: center;
-        // justify-content: center;
         text-align: center;
       }
+
       .buttonAdd {
         box-sizing: border-box;
         display: flex;
@@ -209,7 +222,7 @@
         gap: 10px;
 
         width: 44.4px;
-        height: 24.4px;
+        height: 30px;
 
         border: 0.6px dashed rgba(0, 85, 103, 0.5);
         border-radius: 6px;
@@ -234,7 +247,7 @@
       font-family: 'Manrope';
       font-style: normal;
       font-weight: 600;
-      font-size: 9.6px;
+      font-size: 11px;
       line-height: 13px;
       display: flex;
       align-items: center;
@@ -360,6 +373,14 @@
       justify-content: center;
       background: #e11c1c;
       border-radius: 6px;
+
+      transition: 0.5s;
+      transition-timing-function: cubic-bezier(0.74, -0.65, 0.16, 1.62);
+
+      &:hover {
+        transform: scale(1.1);
+        background-color: #ff0000;
+      }
     }
   }
 

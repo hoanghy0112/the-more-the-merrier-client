@@ -12,19 +12,44 @@
     border-radius: 10px;
     background-color: var(--color);
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
     transition: 0.5s;
 
+    &:hover {
+      transform: scale(1.1);
+    }
+
     .taskContent {
-      height: 60%;
-      max-height: 200px;
+      // height: 60%;
+      // max-height: 200px;
       padding: 0px 20px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      gap: 20px;
 
       p {
         font-size: 20px;
         font-weight: 500;
+      }
+
+      .tags {
+        display: grid;
+        gap: 5px;
+
+        p {
+          font-size: 13px;
+          font-weight: 500;
+
+          color: white;
+
+          padding: 5px;
+          border-radius: 5px;
+        }
       }
     }
   }

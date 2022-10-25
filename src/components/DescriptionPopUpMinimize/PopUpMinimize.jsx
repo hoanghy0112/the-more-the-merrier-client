@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import moment from 'moment/moment';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
@@ -8,7 +7,7 @@ import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
 import {
-  ICON_CLOCK,
+  ICON_LOCATE,
   ICON_MAIL,
   ICON_MORE_TASK,
   ICON_TRASH,
@@ -40,7 +39,7 @@ export default function DescriptionPopUpMinimize({ data }) {
         </div>
       </span>
       <div className={styles.sentencesContainer}>
-        <div className={styles.desSentence}>
+        {/* <div className={styles.desSentence}>
           <img src={ICON_CLOCK} alt="time" />
           <p className={styles.timeRemaining}>
             {`Còn lại ${moment(new Date(data.time.from)).diff(
@@ -48,7 +47,13 @@ export default function DescriptionPopUpMinimize({ data }) {
               'minutes',
             )} phút`}
           </p>
-        </div>
+        </div> */}
+        {data?.location && (
+          <div className={styles.desSentence}>
+            <img src={ICON_LOCATE} alt="location" />
+            <p className={styles.timeRemaining}>{data.location}</p>
+          </div>
+        )}
       </div>
       <div className={styles.descriptionContainer}>
         <div className={styles.detailDescription}>
@@ -123,7 +128,7 @@ DescriptionPopUpMinimize.propTypes = {
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
     }),
-    position: PropTypes.string,
+    location: PropTypes.string,
     participants: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string,

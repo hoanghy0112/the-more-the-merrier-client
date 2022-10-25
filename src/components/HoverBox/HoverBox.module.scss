@@ -12,5 +12,29 @@
     position: fixed;
     z-index: 200 !important;
     cursor: default;
+
+    // transition: 0.3s;
+
+    .infoBoxTransition {
+      opacity: 0;
+      transition: 0.4s;
+      z-index: 200 !important;
+    }
+
+    .enterActive {
+      opacity: 1;
+    }
+    .enterDone {
+      // background-color: red;
+      opacity: 1;
+    }
+    .exitActive {
+      opacity: 0;
+    }
+    .exitDone {
+      opacity: 0;
+      display: none;
+      visibility: hidden;
+    }
   }
 }
