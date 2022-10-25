@@ -57,7 +57,7 @@ const CreateNewTask = React.forwardRef(
     // const [populatedTags, setPopulatedTags] = useState([]);
 
     const [desSentence, setDesSentence] = useState(
-      data?.descriptions.filter((des) => des !== '') || [],
+      data?.descriptions?.filter((des) => des !== '') || [],
     );
 
     const [isAdd, setIsAdd] = useState(false);
