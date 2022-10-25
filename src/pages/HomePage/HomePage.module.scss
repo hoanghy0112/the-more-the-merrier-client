@@ -5,11 +5,16 @@
   display: flex;
   flex-direction: row;
 
+  // display: grid;
+  // grid-template-columns: 1fr 6fr;
+
   background: linear-gradient(104.45deg, #f8f4ff 0.84%, #aadae4 93.15%);
 
   .informationBox {
     height: 100%;
-    width: 220px;
+    width: 100%;
+    flex-shrink: 5;
+    max-width: 200px;
     padding: 20px 20px;
 
     display: flex;
@@ -18,7 +23,6 @@
     align-items: flex-end;
 
     .topBox {
-      // background-color: blue;
       display: grid;
       gap: 50px;
       width: 100%;
@@ -28,7 +32,6 @@
         flex-direction: column;
         gap: 10px;
         align-items: flex-end;
-        // background-color: white;
       }
     }
 
@@ -52,6 +55,8 @@
   .mainBox {
     width: 100%;
     height: 100%;
+    // flex-shrink: 1;
+
     display: flex;
     flex-direction: column;
     align-items: flex-end;

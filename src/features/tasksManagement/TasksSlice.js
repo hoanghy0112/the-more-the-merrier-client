@@ -61,7 +61,6 @@ export const changeTask = createAsyncThunk(
           },
         },
       );
-      // console.log({ res });
       return res.data;
     } catch (error) {
       // console.log({ error });

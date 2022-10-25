@@ -11,7 +11,7 @@ import {
   selectFetchUserProfileStatus,
 } from '../../features/userManagement/ProfileSlice';
 import LoadingPage from '../LoadingPage/LoadingPage';
-import styles from './BasePage.module.scss';
+import styles from './AuthenticationRoute.module.scss';
 
 export default function BasePage() {
   const dispatch = useDispatch();

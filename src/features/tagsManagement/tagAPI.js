@@ -7,9 +7,9 @@ import {
   FIND_TAG_BY_ID,
   FIND_TAG_BY_TITLE,
 } from '../../constants/apiURL';
-// import { auth } from '../../firebase/signInWithGoogleAPI';
 
 export async function createNewTagAPI(newTag) {
+  const auth = getAuth();
   const accessToken = await auth.currentUser.getIdToken();
 
   const response = await axios.post(CREATE_NEW_TAG, newTag, {
@@ -44,7 +44,6 @@ export async function findTagByIDAPI(tagID) {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  // console.log({ response });
 
   return response.data;
 }
@@ -57,7 +56,6 @@ export async function deleteTagByIDAPI(tag) {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  // console.log({ response });
 
   return response.data;
 }

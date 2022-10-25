@@ -5,15 +5,14 @@ import HomePage from '../pages/HomePage/HomePage';
 import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';
 import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
-// import TestPage from '../pages/TestPage/TestPage';
 import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
-import BasePage from '../pages/BasePage/BasePage';
+import AuthenticationRoute from '../pages/AuthenticationRoute/AuthenticationRoute';
 import TestPage2 from '../pages/TestPage/TestPage2';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <BasePage />,
+    element: <AuthenticationRoute />,
     children: [
       {
         path: 'home',
