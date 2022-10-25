@@ -59,9 +59,10 @@ export default function TagsBar() {
                   setIsOpenEditModal(true);
                   setTagDetail(tag);
                 }}
+                style={{ '--color': tag.color }}
                 className={styles.tag}
               >
-                <div style={{ '--color': tag.color }} />
+                <div />
                 <p>{tag.title}</p>
               </div>
             ))}

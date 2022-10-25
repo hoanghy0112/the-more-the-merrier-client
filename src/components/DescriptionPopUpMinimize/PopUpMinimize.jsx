@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import moment from 'moment/moment';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
@@ -8,7 +7,6 @@ import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
 import {
-  ICON_CLOCK,
   ICON_LOCATE,
   ICON_MAIL,
   ICON_MORE_TASK,
@@ -50,10 +48,12 @@ export default function DescriptionPopUpMinimize({ data }) {
             )} phút`}
           </p>
         </div> */}
-        <div className={styles.desSentence}>
-          <img src={ICON_LOCATE} alt="location" />
-          <p className={styles.timeRemaining}>{data.location}</p>
-        </div>
+        {data?.location && (
+          <div className={styles.desSentence}>
+            <img src={ICON_LOCATE} alt="location" />
+            <p className={styles.timeRemaining}>{data.location}</p>
+          </div>
+        )}
       </div>
       <div className={styles.descriptionContainer}>
         <div className={styles.detailDescription}>

@@ -53,6 +53,9 @@
         align-items: center;
         gap: 8px;
         width: 100%;
+        padding: 5px;
+
+        transition: 0.3s;
 
         div {
           width: 30px;
@@ -62,11 +65,25 @@
         }
 
         p {
+          position: relative;
+          left: 0;
+          transition: 0.3s;
           font-size: 13px;
           white-space: nowrap;
           width: calc(100% - 40px);
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+
+        &:hover {
+          background-color: var(--color);
+          box-shadow: 0 0 10px 0 var(--color);
+          border-radius: 6px;
+
+          p {
+            left: -10px;
+            font-weight: 500;
+          }
         }
       }
     }
