@@ -3,16 +3,16 @@ import React, { useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
+import { useDispatch } from 'react-redux';
+
 import {
   ICON_BOOKMARKS,
   ICON_CHECKMARK,
   ICON_FULL_ARROW_RIGHT,
 } from '../../../../assets/icons';
-import { createNewTagAPI } from '../../tagAPI';
 
-import styles from './TagCreateForm.module.scss';
-import { useDispatch } from 'react-redux';
 import { createNewTag } from '../../TagsSlice';
+import styles from './TagCreateForm.module.scss';
 
 export default function TagCreateForm({ onSendRequest }) {
   const sampleColor = [
@@ -40,7 +40,6 @@ export default function TagCreateForm({ onSendRequest }) {
       };
       onSendRequest(newTag);
       dispatch(createNewTag(newTag));
-      // createNewTagAPI(newTag);
     }
   }
 
@@ -57,28 +56,31 @@ export default function TagCreateForm({ onSendRequest }) {
       <div className={styles.description}>
         <span ref={descriptionRef} role="textbox" contentEditable />
       </div>
-      <div className={styles.colorContainer}>
-        {sampleColor.map((color) => (
-          <div
-            onClick={() => setChosenColor(color)}
-            className={[
-              chosenColor === color && styles.chosen,
-              styles.colorWrapper,
-            ].join(' ')}
-          >
+      <div className={styles.chooseColor}>
+        <p>Choose your tag&apos;s color</p>
+        <div className={styles.colorContainer}>
+          {sampleColor.map((color) => (
             <div
-              className={styles.colorItem}
-              style={{
-                backgroundColor: color,
-              }}
-            />
-            <div className={styles.checkIcon}>
-              {chosenColor === color && (
-                <img src={ICON_CHECKMARK} alt="check" />
-              )}
+              onClick={() => setChosenColor(color)}
+              className={[
+                chosenColor === color && styles.chosen,
+                styles.colorWrapper,
+              ].join(' ')}
+            >
+              <div
+                className={styles.colorItem}
+                style={{
+                  backgroundColor: color,
+                }}
+              />
+              <div className={styles.checkIcon}>
+                {chosenColor === color && (
+                  <img src={ICON_CHECKMARK} alt="check" />
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <div className={styles.createButton} onClick={handleCreateNewTask}>
         <p>Create</p>
