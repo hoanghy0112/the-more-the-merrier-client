@@ -2,9 +2,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ICON_X } from '../../../assets/icons';
-import styles from './EditTag.module.scss';
+import styles from './ImportedTag.module.scss';
 
-export default function EditTag({ name, color, onClose }) {
+export default function ImportedTag({ name, color, onClose }) {
   return (
     <div
       className={styles.container}
@@ -18,13 +18,13 @@ export default function EditTag({ name, color, onClose }) {
   );
 }
 
-EditTag.propTypes = {
+ImportedTag.propTypes = {
   name: PropTypes.string,
   color: PropTypes.string,
   onClose: PropTypes.func,
 };
 
-EditTag.defaultProps = {
+ImportedTag.defaultProps = {
   name: '',
   color: '#00A6CA',
   onClose: () => {},

@@ -8,13 +8,11 @@ import { ICON_ADD_IO } from '../../../../assets/icons';
 
 import ExpandBox from '../../../../components/ExpandBox/ExpandBox';
 import Tag from '../../../../components/Tag/Tag';
-import AddTag from '../../../../components/AddTag/AddTag';
 
 import { selectAllTags } from '../../TagsSlice';
 
-import styles from './TagsBar.module.scss';
-import TagDetail from '../../../../components/TagDetail/TagDetail';
 import TagCreateForm from '../TagCreateForm/TagCreateForm';
+import styles from './TagsBar.module.scss';
 
 Modal.setAppElement('#modal');
 

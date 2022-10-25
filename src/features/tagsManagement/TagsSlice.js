@@ -2,27 +2,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { auth } from '../../firebase/signInWithGoogleAPI';
+import { createNewTagAPI } from './tagAPI';
 
 const initialState = {
   listTags: [],
   status: 'idle',
+  createStatus: 'idle',
   error: null,
 };
 
 export const createNewTag = createAsyncThunk(
   'tagsManagement/createNewTag',
-  async (req) => {
-    const { title, description } = req;
-    const accessToken = await auth.currentUser.getIdToken();
-    const res = await axios.post(
-      'https://hoanghy.tech/api/v1/tag',
-      {
-        title,
-        description,
-      },
-      { headers: { Authorization: `Bearer ${accessToken}` } },
-    );
-    return res.data;
+  async (newTag) => {
+    const data = await createNewTagAPI(newTag);
+    return data;
   },
 );
 
@@ -51,13 +44,13 @@ export const tagsManagementSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(createNewTag.pending, (state) => {
-        state.status = 'loading';
+        state.createStatus = 'loading';
       })
       .addCase(createNewTag.fulfilled, (state) => {
-        state.status = 'succeeded';
+        state.createStatus = 'succeeded';
       })
       .addCase(createNewTag.rejected, (state, action) => {
-        state.status = 'failed';
+        state.createStatus = 'failed';
         state.error = action.error.message;
       })
       .addCase(findTagByTitle.pending, (state) => {

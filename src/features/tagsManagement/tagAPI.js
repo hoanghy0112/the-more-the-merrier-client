@@ -9,8 +9,6 @@ import { auth } from '../../firebase/signInWithGoogleAPI';
 export async function createNewTagAPI(newTag) {
   const accessToken = await auth.currentUser.getIdToken();
 
-  console.log({ newTag });
-
   const response = await axios.post(CREATE_NEW_TAG, newTag, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -20,7 +18,7 @@ export async function createNewTagAPI(newTag) {
   return response.data;
 }
 
-export default async function findTagByTitle(title) {
+export async function findTagByTitleAPI(title) {
   const accessToken = await auth.currentUser.getIdToken();
   const response = await axios.get(FIND_TAG_BY_TITLE, {
     params: {
@@ -34,7 +32,7 @@ export default async function findTagByTitle(title) {
   return response.data;
 }
 
-export async function findTagByID(tagID) {
+export async function findTagByIDAPI(tagID) {
   const accessToken = await auth.currentUser.getIdToken();
   const response = await axios.get(`${FIND_TAG_BY_ID}/${tagID}`, {
     headers: {

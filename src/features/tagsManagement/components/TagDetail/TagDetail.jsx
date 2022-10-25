@@ -6,7 +6,7 @@ import {
   ICON_PENCIL,
   ICON_FULL_ARROW_DOWN,
   ICON_DEL,
-} from '../../assets/icons';
+} from '../../../../assets/icons';
 import './TagDetail.scss';
 
 const color = ['#1572A1', '#9AD0EC', '#EFDAD7', '#E3BEC6'];

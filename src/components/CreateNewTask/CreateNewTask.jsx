@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
@@ -24,7 +25,7 @@ import {
   ICON_MAIL,
   ICON_TRASH,
 } from '../../assets/icons';
-import { findTagByID } from '../../features/tagsManagement/tagAPI';
+import { findTagByIDAPI } from '../../features/tagsManagement/tagAPI';
 import {
   changeTask,
   deleteTask,
@@ -33,7 +34,7 @@ import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import Tag from '../Tag/Tag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
-import EditTag from '../Tag/EditTag/EditTag';
+import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 
 Modal.setAppElement('#modal');
 
@@ -68,7 +69,7 @@ const CreateNewTask = React.forwardRef(
         setPopulatedTags(
           await Promise.all(
             tags.map(async (tagID) => {
-              const tagInfo = await findTagByID(tagID);
+              const tagInfo = await findTagByIDAPI(tagID);
               return tagInfo;
             }),
           ),
@@ -248,7 +249,7 @@ const CreateNewTask = React.forwardRef(
             <img src={ICON_BOOKMARKS} alt="time" />
             <div className={styles.list}>
               {populatedTags.map((tag) => (
-                <EditTag
+                <ImportedTag
                   key={tag._id}
                   name={tag.title}
                   onClose={() => {

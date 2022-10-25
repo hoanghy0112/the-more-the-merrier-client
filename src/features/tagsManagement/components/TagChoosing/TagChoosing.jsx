@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import findTagByTitle from '../../tagAPI';
+import { findTagByTitleAPI } from '../../tagAPI';
 
 import { ICON_SEARCH } from '../../../../assets/icons';
 
@@ -14,7 +14,7 @@ export default function TagChoosing({ setTag }) {
   const [keyword, setKeyword] = useState('');
 
   async function fetchData() {
-    if (keyword) setTagList(await findTagByTitle(keyword));
+    if (keyword) setTagList(await findTagByTitleAPI(keyword));
   }
 
   useEffect(() => {
