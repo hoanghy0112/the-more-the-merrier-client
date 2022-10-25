@@ -8,7 +8,7 @@ import { selectUserProfile } from '../../features/userManagement/ProfileSlice';
 
 export default function AddParticipant({ data }) {
   const [searchInput, setSearchInput] = useState('');
-  const [tagList, setTagList] = useState(data);
+  const [tagList, setTagList] = useState(data || []);
   const user = useSelector(selectUserProfile);
   console.log(user);
 
