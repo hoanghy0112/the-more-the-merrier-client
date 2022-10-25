@@ -31,10 +31,9 @@ import {
   deleteTask,
 } from '../../features/tasksManagement/TasksSlice';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
-import Tag from '../Tag/Tag';
+import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
-import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 
 Modal.setAppElement('#modal');
 
@@ -80,34 +79,27 @@ const CreateNewTask = React.forwardRef(
     }, [tags]);
 
     useEffect(() => {
+      const newData = {
+        title,
+        time: {
+          from: startTime.toISOString(),
+          to: endTime.toISOString(),
+        },
+        location: position,
+        priority,
+        participants,
+        tags,
+        descriptions: desSentence,
+      };
+
       const timeout = setTimeout(() => {
         if (onChange) {
-          onChange({
-            title,
-            time: {
-              from: startTime.toISOString(),
-              to: endTime.toISOString(),
-            },
-            location: position,
-            priority,
-            participants,
-            tags,
-            descriptions: desSentence,
-          });
+          onChange(newData);
         } else {
           dispatch(
             changeTask({
               _id: data._id,
-              title,
-              time: {
-                from: startTime.toISOString(),
-                to: endTime.toISOString(),
-              },
-              location: position,
-              priority,
-              participants,
-              tags,
-              descriptions: desSentence,
+              ...newData,
             }),
           );
         }
