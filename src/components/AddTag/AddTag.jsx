@@ -7,6 +7,7 @@ import Tag from '../Tag/Tag';
 export default function AddTag({ data }) {
   const [searchInput, setSearchInput] = useState('');
   const [tagList, setTagList] = useState(data);
+
   const handleSearchTag = (e) => {
     console.log(e.target.value);
     setSearchInput(e.target.value);

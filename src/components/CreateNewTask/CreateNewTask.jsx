@@ -250,9 +250,12 @@ const CreateNewTask = React.forwardRef(
               {populatedTags.map((tag) => (
                 <EditTag
                   key={tag._id}
-                  shape="rectangle"
-                  input={tag.title}
-                  type="chooseTag"
+                  name={tag.title}
+                  onClose={() => {
+                    setTags((prev) =>
+                      prev.filter((currentTag) => currentTag !== tag._id),
+                    );
+                  }}
                 />
               ))}
               <div

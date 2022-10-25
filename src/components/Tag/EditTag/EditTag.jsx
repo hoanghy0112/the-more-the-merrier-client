@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import PropTypes from 'prop-types';
 import React from 'react';
+import { ICON_X } from '../../../assets/icons';
 import styles from './EditTag.module.scss';
 
-export default function EditTag({ input, color }) {
+export default function EditTag({ name, color, onClose }) {
   return (
     <div
       className={styles.container}
@@ -10,17 +12,20 @@ export default function EditTag({ input, color }) {
         backgroundColor: color,
       }}
     >
-      <p className={styles.textTag}>{input}</p>
+      <p className={styles.textTag}>{name}</p>
+      <img onClick={onClose} src={ICON_X} alt="close" />
     </div>
   );
 }
 
 EditTag.propTypes = {
-  input: PropTypes.string,
+  name: PropTypes.string,
   color: PropTypes.string,
+  onClose: PropTypes.func,
 };
 
 EditTag.defaultProps = {
-  input: '',
+  name: '',
   color: '#00A6CA',
+  onClose: () => {},
 };

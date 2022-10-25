@@ -11,7 +11,12 @@ import './TagDetail.scss';
 
 const color = ['#1572A1', '#9AD0EC', '#EFDAD7', '#E3BEC6'];
 
-export default function TagDetail({ tagTitle, description, listTasks }) {
+export default function TagDetail({
+  tagTitle,
+  description,
+  listTasks,
+  onChange,
+}) {
   const [viewTasks, setViewTasks] = useState(
     listTasks.length > 2 ? listTasks.slice(0, 2) : listTasks,
   );
