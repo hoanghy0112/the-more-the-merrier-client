@@ -56,7 +56,9 @@ const CreateNewTask = React.forwardRef(
     const [tags, setTags] = useState(data?.tags || []);
     // const [populatedTags, setPopulatedTags] = useState([]);
 
-    const [desSentence, setDesSentence] = useState(data?.descriptions || []);
+    const [desSentence, setDesSentence] = useState(
+      data?.descriptions.filter((des) => des !== '') || [],
+    );
 
     const [isAdd, setIsAdd] = useState(false);
     const [descriptionAdd, setDescriptionAdd] = useState('');
@@ -120,7 +122,10 @@ const CreateNewTask = React.forwardRef(
     const handleAddDescription = () => {
       const str = descriptionAdd.replace(/\s/g, '');
       if (str !== '') {
-        setDesSentence((current) => [...current, descriptionAdd.trim()]);
+        setDesSentence((current) => [
+          ...current.filter((des) => des !== ''),
+          descriptionAdd.trim(),
+        ]);
       }
       setDescriptionAdd('');
       setIsAdd(false);
@@ -268,10 +273,12 @@ const CreateNewTask = React.forwardRef(
                   spellCheck="false"
                   onChange={(e) => {
                     setDesSentence(
-                      [...desSentence].map((object) => {
-                        if (object === sentence) return e.target.value;
-                        return object;
-                      }),
+                      [...desSentence]
+                        .map((object) => {
+                          if (object === sentence) return e.target.value;
+                          return object;
+                        })
+                        .filter((des) => des !== ''),
                     );
                   }}
                   onBlur={(e) =>
