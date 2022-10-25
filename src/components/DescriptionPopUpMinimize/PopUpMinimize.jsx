@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 
 import {
   ICON_CLOCK,
+  ICON_LOCATE,
   ICON_MAIL,
   ICON_MORE_TASK,
   ICON_TRASH,
@@ -40,7 +41,7 @@ export default function DescriptionPopUpMinimize({ data }) {
         </div>
       </span>
       <div className={styles.sentencesContainer}>
-        <div className={styles.desSentence}>
+        {/* <div className={styles.desSentence}>
           <img src={ICON_CLOCK} alt="time" />
           <p className={styles.timeRemaining}>
             {`Còn lại ${moment(new Date(data.time.from)).diff(
@@ -48,6 +49,10 @@ export default function DescriptionPopUpMinimize({ data }) {
               'minutes',
             )} phút`}
           </p>
+        </div> */}
+        <div className={styles.desSentence}>
+          <img src={ICON_LOCATE} alt="location" />
+          <p className={styles.timeRemaining}>{data.location}</p>
         </div>
       </div>
       <div className={styles.descriptionContainer}>
@@ -123,7 +128,7 @@ DescriptionPopUpMinimize.propTypes = {
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
     }),
-    position: PropTypes.string,
+    location: PropTypes.string,
     participants: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string,

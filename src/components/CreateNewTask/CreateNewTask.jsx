@@ -49,7 +49,7 @@ const CreateNewTask = React.forwardRef(
     const [endTime, setEndTime] = useState(
       new Date(data?.time?.to) || new Date(),
     );
-    const [position, setPosition] = useState(data?.position || '');
+    const [position, setPosition] = useState(data?.location || '');
     const [priority, setPriority] = useState(data?.priority || 3);
     const [participants] = useState(data?.participants || []);
 
@@ -65,21 +65,6 @@ const CreateNewTask = React.forwardRef(
     const [isChoosePriority, setIsChoosePriority] = useState(false);
 
     const populatedTags = useSelector(selectTagsWithIDs(tags));
-
-    useEffect(() => {
-      async function fetchTagsData() {
-        // setPopulatedTags(
-        //   await Promise.all(
-        //     tags.map(async (tagID) => {
-        //       const tagInfo = await findTagByIDAPI(tagID);
-        //       return tagInfo;
-        //     }),
-        //   ),
-        // );
-      }
-
-      fetchTagsData();
-    }, [tags]);
 
     useEffect(() => {
       const newData = {
