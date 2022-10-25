@@ -30,7 +30,10 @@ export default function TaskCard({ task, rect, width, startDate }) {
 
   const tags = useSelector(selectTagsWithIDs(tagIDs));
 
-  const top = ((new Date(from).getTime() % 86400000) / 86400000) * 1200;
+  // const top = ((new Date(from).getTime() % 86400000) / 86400000) * 1200;
+  const fromDate = new Date(from);
+  const top =
+    ((fromDate.getHours() * 60 + fromDate.getMinutes()) / (24 * 60)) * 1200;
 
   const height =
     ((new Date(to).getTime() - new Date(from).getTime()) / 86400000) * 1200;
@@ -40,10 +43,20 @@ export default function TaskCard({ task, rect, width, startDate }) {
   function handleDragStop(event, { lastX, lastY }) {
     const deltaDay = (lastX / width) * 24 * 60 * 60 * 1000;
     const deltaMinutes = (lastY / 1200) * 24 * 60 * 60 * 1000;
+    // const newFrom = new Date(
+    //   parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
+    //     deltaDay +
+    //     deltaMinutes,
+    // );
     const newFrom = new Date(
-      parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
-        deltaDay +
-        deltaMinutes,
+      startDate.getYear() + 1900,
+      startDate.getMonth(),
+      startDate.getDate() + parseInt(lastX / width, 10),
+      parseInt((lastY / 1200) * 24, 10),
+      parseInt((lastY / 1200) * 24 * 60, 10) % 60,
+      // parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
+      //   deltaDay +
+      //   deltaMinutes,
     );
 
     dispatch(
