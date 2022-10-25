@@ -24,7 +24,7 @@ export default function AuthenticationRoute() {
       dispatch(findAllTagsOfUser());
     } else {
       navigate('/authentication');
-      console.log({ user });
+      // console.log({ user });
     }
   }
 

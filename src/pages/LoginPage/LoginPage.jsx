@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import styles from './LoginPage.module.scss';
 
@@ -15,7 +15,6 @@ import {
 } from '../../features/userManagement/ProfileSlice';
 
 import { ICON_FORWARD } from '../../assets/icons';
-import { auth } from '../../firebase/signInWithGoogleAPI';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -42,6 +41,7 @@ export default function LoginPage() {
   }
 
   useEffect(() => {
+    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, onAuthChange);
 
     return () => {
