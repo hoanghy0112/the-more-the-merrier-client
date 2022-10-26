@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -9,6 +9,15 @@ export default function ExpandBox({ title, children, className, style }) {
   const [isExpand, setIsExpand] = useState(true);
 
   const contentRef = useRef();
+
+  const height = useMemo(() => {
+    if (contentRef?.current) {
+      return (
+        parseInt(contentRef?.current?.getBoundingClientRect().height, 10) + 50
+      );
+    }
+    return 0;
+  }, [contentRef?.current?.getBoundingClientRect().height, children.length]);
 
   return (
     <div className={`${styles.container} ${className}`} style={style}>
@@ -30,11 +39,7 @@ export default function ExpandBox({ title, children, className, style }) {
       </button>
       <div
         className={`${styles.contentBox} ${isExpand || styles.expand}`}
-        style={{
-          height: contentRef?.current
-            ? contentRef?.current.getBoundingClientRect().height
-            : 0,
-        }}
+        style={{ height }}
       >
         <div ref={contentRef}>{children}</div>
       </div>

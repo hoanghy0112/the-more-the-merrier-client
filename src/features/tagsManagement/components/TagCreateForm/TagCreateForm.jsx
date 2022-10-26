@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   ICON_BOOKMARKS,
@@ -11,7 +11,11 @@ import {
   ICON_FULL_ARROW_RIGHT,
 } from '../../../../assets/icons';
 
-import { createNewTag } from '../../TagsSlice';
+import {
+  createNewTag,
+  findAllTagsOfUser,
+  selectCreateStatus,
+} from '../../TagsSlice';
 import styles from './TagCreateForm.module.scss';
 
 export default function TagCreateForm({ onSendRequest }) {
@@ -30,6 +34,12 @@ export default function TagCreateForm({ onSendRequest }) {
   const titleRef = useRef();
   const descriptionRef = useRef();
   const [chosenColor, setChosenColor] = useState(sampleColor[0]);
+
+  const createStatus = useSelector(selectCreateStatus);
+
+  useEffect(() => {
+    if (createStatus === 'succeeded') dispatch(findAllTagsOfUser());
+  }, [createStatus]);
 
   function handleCreateNewTask() {
     if ((titleRef?.current, descriptionRef?.current)) {

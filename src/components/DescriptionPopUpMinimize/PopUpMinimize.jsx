@@ -6,7 +6,10 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
+import moment from 'moment/moment';
+
 import {
+  ICON_CLOCK,
   ICON_LOCATE,
   ICON_MAIL,
   ICON_MORE_TASK,
@@ -24,6 +27,33 @@ export default function DescriptionPopUpMinimize({ data }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  // const remainString = `Còn lại ${diffMonth ? `${diffMonth} tháng` : ''} ${
+  //   diffDay ? `${diffDay % 30} ngày` : ''
+  // } ${diffHour ? `${diffHour % 24} giờ` : ''} ${
+  //   diffMinute ? `${diffMinute % 60} phút` : ''
+  // }`;
+
+  function getRemainString() {
+    const fromDate = new Date(data.time.from);
+    const toDate = new Date(data.time.to);
+    const now = new Date();
+
+    const diffMonth = moment(fromDate).diff(now, 'month');
+    const diffDay = moment(fromDate).diff(now, 'day') % 30;
+    const diffHour = moment(fromDate).diff(now, 'hour') % 24;
+    const diffMinute = moment(fromDate).diff(now, 'minutes') % 60;
+
+    if (toDate < now) return 'Công việc này đã qua';
+    if (fromDate < now && now < toDate) {
+      return 'Công việc này đang được diễn ra';
+    }
+
+    if (diffMonth) return `Còn lại hơn ${diffMonth} tháng`;
+    if (diffDay) return `Còn lại hơn ${diffDay} ngày`;
+    if (diffHour) return `Còn lại ${diffHour} giờ ${diffMinute} phút`;
+    return `Còn lại ${diffMinute} phút`;
+  }
+
   function handleDelete() {
     dispatch(deleteTask(data));
   }
@@ -39,15 +69,10 @@ export default function DescriptionPopUpMinimize({ data }) {
         </div>
       </span>
       <div className={styles.sentencesContainer}>
-        {/* <div className={styles.desSentence}>
+        <div className={styles.desSentence}>
           <img src={ICON_CLOCK} alt="time" />
-          <p className={styles.timeRemaining}>
-            {`Còn lại ${moment(new Date(data.time.from)).diff(
-              moment(new Date()),
-              'minutes',
-            )} phút`}
-          </p>
-        </div> */}
+          <p className={styles.timeRemaining}>{getRemainString()}</p>
+        </div>
         {data?.location && (
           <div className={styles.desSentence}>
             <img src={ICON_LOCATE} alt="location" />

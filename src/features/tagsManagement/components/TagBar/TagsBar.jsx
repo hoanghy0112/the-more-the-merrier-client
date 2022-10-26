@@ -75,7 +75,7 @@ export default function TagsBar() {
         className={styles.addButton}
       >
         <ICON_ADD_IO color="white" className={styles.icon} />
-        <p>Add</p>
+        <p>Add tag</p>
       </button>
       {isOpenCreateModal && (
         <Modal

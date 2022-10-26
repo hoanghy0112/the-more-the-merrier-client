@@ -13,7 +13,7 @@ import {
 import LoadingPage from '../LoadingPage/LoadingPage';
 import styles from './AuthenticationRoute.module.scss';
 
-export default function BasePage() {
+export default function AuthenticationRoute() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const status = useSelector(selectFetchUserProfileStatus);
@@ -24,6 +24,7 @@ export default function BasePage() {
       dispatch(findAllTagsOfUser());
     } else {
       navigate('/authentication');
+      // console.log({ user });
     }
   }
 
