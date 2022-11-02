@@ -42,6 +42,8 @@ const CreateNewTask = React.forwardRef(
   ({ data, onChange, onCreateNewTask }, ref) => {
     const dispatch = useDispatch();
 
+    // console.log({ data });
+
     const [title, setTitle] = useState(data?.title || '');
     const [startTime, setStartTime] = useState(
       new Date(data?.time?.from) || new Date(),
@@ -108,7 +110,20 @@ const CreateNewTask = React.forwardRef(
     ]);
 
     function handleCreateNewTask() {
-      onCreateNewTask();
+      const newData = {
+        title,
+        time: {
+          from: startTime.toISOString(),
+          to: endTime.toISOString(),
+        },
+        location: position,
+        priority,
+        participants,
+        tags,
+        descriptions: desSentence,
+      };
+
+      onCreateNewTask(newData);
     }
 
     function handleDelete() {

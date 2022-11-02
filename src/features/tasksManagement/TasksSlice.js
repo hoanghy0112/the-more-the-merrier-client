@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAuth } from 'firebase/auth';
+import moment from 'moment';
 
 const initialState = {
   listTasks: [],
@@ -153,31 +154,19 @@ export const tasksManagementSclice = createSlice({
 export const { changeListTask } = tasksManagementSclice.actions;
 
 export const selectAllTasks = (state) => state.tasksManagement.listTasks;
-export const selectCurrentWeekTasks = (startDate) => (state) =>
-  // console.log({ startDate });
-  state.tasksManagement.listTasks.filter(
-    (task) => {
-      const diff =
-        new Date(task.time.from).getDate() - new Date(startDate).getDate();
-      // const diff = moment(new Date(task.time.from)).diff(
-      //   new Date(
-      //     startDate.getYear() + 1900,
-      //     startDate.getMonth(),
-      //     startDate.getDate(),
-      //   ),
-      //   'days',
-      // );
-      // console.log({ diff }, task.title, task.time.from);
+export const selectCurrentWeekTasks = (startDate) =>
+  function (state) {
+    // console.log({ startDate });
+    const tasks = state.tasksManagement.listTasks.filter((task) => {
+      const diff = moment(new Date(task.time.from)).diff(
+        new Date(startDate),
+        'd',
+      );
       return diff >= 0 && diff < 7;
-    },
-    // new Date(task.time.from) >=
-    //   new Date(parseInt(startDate.getTime() / 86400000, 10) * 86400000) &&
-    // new Date(task.time.from) <=
-    //   new Date(
-    //     parseInt(startDate.getTime() / 86400000, 10) * 86400000 +
-    //       7 * 24 * 60 * 60 * 1000,
-    //   ),
-  );
+    });
+    // console.log({ tasks });
+    return tasks;
+  };
 
 export const selectTasksStatus = (state) => state.tasksManagement.status;
 

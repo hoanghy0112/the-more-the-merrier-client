@@ -87,13 +87,13 @@ export default function CalendarCreateTask({
 
       setData({
         time: {
-          from: newFrom.getTime(),
+          from: newFrom,
           to: new Date(
             parseInt(
               newFrom.getTime() + (height / 1200) * 24 * 60 * 60 * 1000,
               10,
             ),
-          ).getTime(),
+          ),
         },
       });
     }
@@ -154,9 +154,10 @@ export default function CalendarCreateTask({
         <CreateNewTask
           data={data}
           onChange={setData}
-          onCreateNewTask={() => {
+          onCreateNewTask={(newData) => {
             setIsCreateNewTask(false);
-            dispatch(createNewTask(data));
+            // dispatch(createNewTask(data));
+            dispatch(createNewTask(newData));
             setTimeout(() => dispatch(getAllTasks()), 500);
             setIsMouseDown(false);
             setEnd([...begin]);
