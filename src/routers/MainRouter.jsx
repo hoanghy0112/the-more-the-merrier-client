@@ -7,6 +7,7 @@ import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
 import AuthenticationRoute from '../pages/AuthenticationRoute/AuthenticationRoute';
+import TestPage2 from '../pages/TestPage/TestPage2';
 
 const router = createBrowserRouter([
   {

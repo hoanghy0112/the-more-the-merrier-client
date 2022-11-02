@@ -37,15 +37,22 @@ export default function AddParticipant({ data }) {
           placeholder="Enter tag name here ..."
         />
       </div>
-      {tagList.map((tag) => (
-        <div key={tag.id} className={styles.tagDescription}>
-          <span className={styles.iconDes}>
-            <Tag type={tag.type} input={tag.input} shape={tag.shape} />
-            <p className={styles.description}>{tag.input}</p>
-          </span>
-          <p className={styles.description}>{tag.description}</p>
-        </div>
-      ))}
+      <div className={styles.userContainer}>
+        {user ? (
+          <>
+            <div className={styles.imageContainer}>
+              <img src={user.photo} alt="avatar" />
+            </div>
+
+            <div className={styles.nameContainer}>
+              <p>{`${user.familyName} ${user.givenName}`}</p>
+            </div>
+            <p className={styles.email}>{user.email}</p>
+          </>
+        ) : (
+          <div>Loading</div>
+        )}
+      </div>
     </div>
   );
 }
