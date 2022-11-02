@@ -15,6 +15,7 @@ import HoverBox from '../HoverBox/HoverBox';
 import { changeTask } from '../../features/tasksManagement/TasksSlice';
 import styles from './TaskCard.module.scss';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
+import moment from 'moment/moment';
 
 export default function TaskCard({ task, rect, width, startDate }) {
   const dispatch = useDispatch();
@@ -38,7 +39,8 @@ export default function TaskCard({ task, rect, width, startDate }) {
   const height =
     ((new Date(to).getTime() - new Date(from).getTime()) / 86400000) * 1200;
 
-  const column = new Date(from).getDate() - new Date(startDate).getDate();
+  // const column = new Date(from).getDate() - new Date(startDate).getDate();
+  const column = moment(new Date(from)).diff(new Date(startDate), 'd');
 
   function handleDragStop(event, { lastX, lastY }) {
     // const deltaDay = (lastX / width) * 24 * 60 * 60 * 1000;
