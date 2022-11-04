@@ -35,6 +35,9 @@
   }
 
   .tagList {
+    max-height: 250px;
+    overflow-y: scroll;
+
     .tag {
       padding: 10px 15px;
       border-top: 1px solid rgba(0, 85, 103, 0.5);

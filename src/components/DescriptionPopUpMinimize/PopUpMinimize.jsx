@@ -27,12 +27,6 @@ export default function DescriptionPopUpMinimize({ data }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // const remainString = `Còn lại ${diffMonth ? `${diffMonth} tháng` : ''} ${
-  //   diffDay ? `${diffDay % 30} ngày` : ''
-  // } ${diffHour ? `${diffHour % 24} giờ` : ''} ${
-  //   diffMinute ? `${diffMinute % 60} phút` : ''
-  // }`;
-
   function getRemainString() {
     const fromDate = new Date(data.time.from);
     const toDate = new Date(data.time.to);

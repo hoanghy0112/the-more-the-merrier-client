@@ -57,7 +57,7 @@ export default function HoverBox({
     if (!canAppear) setIsAppear(false);
   }, [canAppear]);
 
-  const PADDING = 9;
+  const PADDING = 7;
 
   const left = (() => {
     if (mainBoxRef?.current && infoBoxRef?.current) {
@@ -65,7 +65,7 @@ export default function HoverBox({
       const infoBoxRect = infoBoxRef.current.getBoundingClientRect();
       let l = mainBoxRect.width + PADDING;
       if (l + infoBoxRect.width + mainBoxRect.left > parentRect.right) {
-        l = -infoBoxRect.width;
+        l = -infoBoxRect.width - PADDING - 3;
       }
 
       return l;

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Draggable from 'react-draggable';
 
+import moment from 'moment/moment';
 import PropTypes from 'prop-types';
 
 import DescriptionPopUpMinimize from '../DescriptionPopUpMinimize/PopUpMinimize';
@@ -15,7 +16,6 @@ import HoverBox from '../HoverBox/HoverBox';
 import { changeTask } from '../../features/tasksManagement/TasksSlice';
 import styles from './TaskCard.module.scss';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
-import moment from 'moment/moment';
 
 export default function TaskCard({ task, rect, width, startDate }) {
   const dispatch = useDispatch();
