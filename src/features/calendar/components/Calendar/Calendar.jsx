@@ -6,11 +6,19 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import CalendarCreateTask from '../../../../components/CalendarCreateTask/CalendarCreateTask';
-import CalendarDisplayTask from '../../../../components/CalendarDisplayTask/CalendarDisplayTask';
+import { useSelector } from 'react-redux';
+
+import {
+  createNewTask,
+  // getAllTasks,
+  selectCurrentWeekTasks,
+} from '../../../tasksManagement/TasksSlice';
+
+import CalendarCreateTask from '../CalendarCreateTask/CalendarCreateTask';
+import CalendarDisplayTask from '../CalendarDisplayTask/CalendarDisplayTask';
 import useWindowSize from '../../../../hooks/useWindowSize';
 
-import CalendarBoard from '../../../../components/CalendarBoard/CalendarBoard';
+import CalendarBoard from '../CalendarBoard/CalendarBoard';
 
 import './Calendar.scss';
 
@@ -22,6 +30,8 @@ export default function Calendar({ startDate }) {
   const taskRef = useRef(null);
 
   const [gridSize, setGridSize] = useState(199);
+
+  const tasks = useSelector(selectCurrentWeekTasks(startDate));
 
   useEffect(() => {
     if (taskRef?.current) {
@@ -43,11 +53,13 @@ export default function Calendar({ startDate }) {
         gridSize={gridSize}
         startDate={startDate}
         rect={taskRef?.current?.getBoundingClientRect()}
+        tasks={tasks}
       />
       <CalendarCreateTask
         taskWrapperRect={taskRefPosition}
         gridSize={gridSize}
         startDate={startDate}
+        createNewTask={createNewTask}
       />
     </CalendarBoard>
   );

@@ -3,14 +3,15 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
-import { selectCurrentWeekTasks } from '../../features/tasksManagement/TasksSlice';
-import TaskCard from '../TaskCard/TaskCard';
+import TaskCard from '../../../../components/TaskCard/TaskCard';
 
-export default function CalendarDisplayTask({ gridSize, rect, startDate }) {
-  const tasks = useSelector(selectCurrentWeekTasks(startDate));
-
+export default function CalendarDisplayTask({
+  gridSize,
+  rect,
+  startDate,
+  tasks,
+}) {
   return (
     <>
       {tasks.map(({ _id }, index) => (
@@ -30,6 +31,20 @@ CalendarDisplayTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
   rect: PropTypes.instanceOf(DOMRect).isRequired,
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      title: PropTypes.string,
+      priority: PropTypes.number,
+      time: {
+        from: PropTypes.instanceOf(Date),
+        to: PropTypes.instanceOf(Date),
+      },
+      tags: PropTypes.arrayOf(PropTypes.string),
+    }),
+  ),
 };
 
-CalendarDisplayTask.defaultProps = {};
+CalendarDisplayTask.defaultProps = {
+  tasks: [],
+};

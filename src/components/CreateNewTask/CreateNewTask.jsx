@@ -42,8 +42,6 @@ const CreateNewTask = React.forwardRef(
   ({ data, onChange, onCreateNewTask }, ref) => {
     const dispatch = useDispatch();
 
-    // console.log({ data });
-
     const [title, setTitle] = useState(data?.title || '');
     const [startTime, setStartTime] = useState(
       new Date(data?.time?.from) || new Date(),

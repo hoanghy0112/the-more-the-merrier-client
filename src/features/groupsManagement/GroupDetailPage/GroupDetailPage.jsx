@@ -1,6 +1,5 @@
 import React from 'react';
-
-import Calendar from '../../calendar/components/Calendar/Calendar';
+import CalendarBoard from '../../calendar/components/CalendarCreateTask/CalendarCreateTask';
 
 import styles from './GroupDetailPage.module.scss';
 
@@ -8,7 +7,7 @@ export default function GroupDetailPage() {
   return (
     <div className={styles.container}>
       <div>
-        <Calendar />
+        <CalendarBoard />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default function AuthenticationRoute() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log({ location });
+
   const status = useSelector(selectFetchUserProfileStatus);
 
   function onAuthChange(user) {
@@ -26,7 +26,6 @@ export default function AuthenticationRoute() {
       dispatch(findAllTagsOfUser());
     } else {
       navigate('/authentication');
-      // console.log({ user });
     }
   }
 
