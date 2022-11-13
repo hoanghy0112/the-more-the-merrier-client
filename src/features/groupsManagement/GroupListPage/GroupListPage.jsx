@@ -27,28 +27,31 @@ export default function GroupListPage() {
 
   return (
     <div className={styles.container}>
-      {groupList.map(({ _id, name, description, admin, users }) => (
-        <div
-          key={_id}
-          className={styles.groupContainer}
-          onClick={() => {
-            navigate(_id);
-          }}
-        >
-          <div className={styles.introduction}>
-            <p className={styles.name}>{name}</p>
-            <div className={styles.numOfUser}>
-              <p className={styles.num}>{users.length + 1}</p>
-              <p className={styles.string}> users</p>
+      <button type="button" className={styles.createGroup}>Create new group</button>
+      <div className={styles.groupList}>
+        {groupList.map(({ _id, name, description, admin, users }) => (
+          <div
+            key={_id}
+            className={styles.groupContainer}
+            onClick={() => {
+              navigate(_id);
+            }}
+          >
+            <div className={styles.introduction}>
+              <p className={styles.name}>{name}</p>
+              <div className={styles.numOfUser}>
+                <p className={styles.num}>{users.length + 1}</p>
+                <p className={styles.string}> users</p>
+              </div>
+            </div>
+            <p className={styles.description}>{description}</p>
+            <div className={styles.adminInfo}>
+              <p className={styles.string}>Admin ID: </p>
+              <p className={styles.num}>{admin}</p>
             </div>
           </div>
-          <p className={styles.description}>{description}</p>
-          <div className={styles.adminInfo}>
-            <p className={styles.string}>Admin ID: </p>
-            <p className={styles.num}>{admin}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
