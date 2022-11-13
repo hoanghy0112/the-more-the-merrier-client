@@ -3,22 +3,13 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+import { selectCurrentWeekTasks } from '../../features/tasksManagement/TasksSlice';
 import TaskCard from '../TaskCard/TaskCard';
-import { changeTask } from '../../features/tasksManagement/TasksSlice';
 
-export default function CalendarDisplayTask({
-  gridSize,
-  tasks,
-  rect,
-  startDate,
-}) {
-  const dispatch = useDispatch();
-
-  function handleChange(newData) {
-    dispatch(changeTask(newData));
-  }
+export default function CalendarDisplayTask({ gridSize, rect, startDate }) {
+  const tasks = useSelector(selectCurrentWeekTasks(startDate));
 
   return (
     <>
@@ -29,7 +20,6 @@ export default function CalendarDisplayTask({
           width={gridSize}
           rect={rect}
           startDate={startDate}
-          onChange={handleChange}
         />
       ))}
     </>
@@ -38,16 +28,6 @@ export default function CalendarDisplayTask({
 
 CalendarDisplayTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
-  tasks: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-      column: PropTypes.number.isRequired,
-      top: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
-  // setTasks: PropTypes.func.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
   rect: PropTypes.instanceOf(DOMRect).isRequired,
 };

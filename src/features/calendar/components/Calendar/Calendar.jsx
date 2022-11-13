@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -5,52 +6,22 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { onAuthStateChanged } from 'firebase/auth';
-
-import { useDispatch, useSelector } from 'react-redux';
-
-import DateItem from '../../../../components/DateItem/DateItem';
-import TimelineItem from '../../../../components/TimelineItem/TimelineItem';
-
 import CalendarCreateTask from '../../../../components/CalendarCreateTask/CalendarCreateTask';
 import CalendarDisplayTask from '../../../../components/CalendarDisplayTask/CalendarDisplayTask';
 import useWindowSize from '../../../../hooks/useWindowSize';
 
+import CalendarBoard from '../../../../components/CalendarBoard/CalendarBoard';
+
 import './Calendar.scss';
-import {
-  changeTask,
-  getAllTasks,
-  selectCurrentWeekTasks,
-} from '../../../tasksManagement/TasksSlice';
-import { auth } from '../../../../firebase/signInWithGoogleAPI';
 
 export default function Calendar({ startDate }) {
-  const dispatch = useDispatch();
-
   const [windowWidth] = useWindowSize();
 
-  // const [tasks, setTask] = useState([]);
   const [taskRefPosition, setTaskRefPosition] = useState([]);
 
   const taskRef = useRef(null);
 
   const [gridSize, setGridSize] = useState(199);
-
-  const tasks = useSelector(selectCurrentWeekTasks(startDate));
-
-  function setTask({ id, time }) {
-    dispatch(changeTask({ id, time }));
-  }
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(getAllTasks());
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     if (taskRef?.current) {
@@ -67,50 +38,18 @@ export default function Calendar({ startDate }) {
   }
 
   return (
-    <div className="calendar__container">
-      <div className="weekdays">
-        {Array(7)
-          .fill('')
-          .map((_, index) => {
-            const date = new Date(startDate);
-            date.setDate(date.getDate() + index);
-            return <DateItem date={date} />;
-          })}
-      </div>
-      <div className="calendar__main" onScroll={handleScroll}>
-        <div className="timeline">
-          {Array(25)
-            .fill()
-            .map((_, index) => (
-              <TimelineItem time={index} />
-            ))}
-        </div>
-        <div className="task">
-          <div ref={taskRef}>
-            <CalendarDisplayTask
-              gridSize={gridSize}
-              tasks={tasks}
-              startDate={startDate}
-              rect={taskRef?.current?.getBoundingClientRect()}
-              setTasks={(...params) => setTask(...params)}
-            />
-            <CalendarCreateTask
-              taskWrapperRect={taskRefPosition}
-              gridSize={gridSize}
-              startDate={startDate}
-              addNewTask={({ title }) =>
-                setTask((prev) => [
-                  ...prev,
-                  {
-                    title,
-                  },
-                ])
-              }
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <CalendarBoard onScroll={handleScroll} ref={taskRef}>
+      <CalendarDisplayTask
+        gridSize={gridSize}
+        startDate={startDate}
+        rect={taskRef?.current?.getBoundingClientRect()}
+      />
+      <CalendarCreateTask
+        taskWrapperRect={taskRefPosition}
+        gridSize={gridSize}
+        startDate={startDate}
+      />
+    </CalendarBoard>
   );
 }
 

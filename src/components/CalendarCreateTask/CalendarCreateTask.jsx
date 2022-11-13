@@ -6,12 +6,12 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 
-import styles from './CalendarCreateTask.module.scss';
-import CreateNewTask from '../CreateNewTask/CreateNewTask';
 import {
   createNewTask,
   getAllTasks,
 } from '../../features/tasksManagement/TasksSlice';
+import CreateNewTask from '../CreateNewTask/CreateNewTask';
+import styles from './CalendarCreateTask.module.scss';
 
 Modal.setAppElement('#modal');
 
