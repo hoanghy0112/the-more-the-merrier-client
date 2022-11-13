@@ -1,10 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {
-  ICON_ADD,
-  ICON_ARROW_RIGHT,
-  ICON_FOLDER,
-  ICON_FULL_ARROW_RIGHT,
-} from '../../../../assets/icons';
+import { ICON_ADD, ICON_FULL_ARROW_RIGHT } from '../../../../assets/icons';
 
 import styles from './CreateNewGroup.module.scss';
 

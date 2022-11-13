@@ -1,10 +1,10 @@
 import React from 'react';
-import CreateNewGroup from '../../../features/group/Dialog/CreateNewGroup/CreateNewGroup';
+import { Outlet } from 'react-router-dom';
 
 export default function GroupOutlet() {
   return (
     <div>
-      <CreateNewGroup />
+      <Outlet />
     </div>
   );
 }
