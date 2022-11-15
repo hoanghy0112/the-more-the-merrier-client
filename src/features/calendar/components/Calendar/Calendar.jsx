@@ -22,6 +22,7 @@ export default function Calendar({
   retrieveAllTask,
   setGridSize,
   groupTasks,
+  isGroup,
 }) {
   const [windowWidth] = useWindowSize();
 
@@ -65,6 +66,7 @@ export default function Calendar({
         startDate={startDate}
         createNewTask={createNewTask}
         retrieveAllTask={retrieveAllTask}
+        isGroup={isGroup}
       />
     </CalendarBoard>
   );
@@ -94,6 +96,7 @@ Calendar.propTypes = {
       to: PropTypes.instanceOf(Date),
     }),
   ),
+  isGroup: PropTypes.bool,
 };
 
 Calendar.defaultProps = {
@@ -104,4 +107,5 @@ Calendar.defaultProps = {
   retrieveAllTask: () => {},
   setGridSize: () => {},
   groupTasks: [],
+  isGroup: false,
 };

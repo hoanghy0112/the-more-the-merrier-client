@@ -16,7 +16,6 @@ export default function CreateNewGroup() {
           placeholder="Enter group name..."
           spellCheck={false}
         />
-        {/* <img src={ICON_FOLDER} alt="" /> */}
       </div>
       <textarea
         className={styles.description}

@@ -38,7 +38,7 @@ export default function GroupCalendar({ startDate }) {
 
   return (
     <div className={styles.container}>
-      <Calendar startDate={startDate} groupTasks={groupTasks} />
+      <Calendar startDate={startDate} groupTasks={groupTasks} isGroup />
     </div>
   );
 }

@@ -1,14 +1,18 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAllGroups, selectAllGroups } from '../groupSlice';
+import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
+import { getAllGroups, selectAllGroups } from '../../groupSlice';
 
 import styles from './GroupListPage.module.scss';
 
 export default function GroupListPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isOpenCreateGroupModal, setIsOpenCreateGroupModal] = useState(false);
 
   const groupList = useSelector(selectAllGroups);
 
@@ -25,7 +29,19 @@ export default function GroupListPage() {
 
   return (
     <div className={styles.container}>
-      <button type="button" className={styles.createGroup}>Create new group</button>
+      <button
+        type="button"
+        className={styles.createGroup}
+        onClick={() => setIsOpenCreateGroupModal(true)}
+      >
+        Create new group
+      </button>
+      <CenteredModal
+        isOpen={isOpenCreateGroupModal}
+        onClose={() => setIsOpenCreateGroupModal(false)}
+      >
+        <CreateNewGroup />
+      </CenteredModal>
       <div className={styles.groupList}>
         {groupList.map(({ _id, name, description, admin, users }) => (
           <div

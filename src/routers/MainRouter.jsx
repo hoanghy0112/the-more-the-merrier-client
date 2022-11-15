@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import GroupDetailPage from '../features/groupsManagement/GroupDetailPage/GroupDetailPage';
-import GroupListPage from '../features/groupsManagement/GroupListPage/GroupListPage';
+import GroupDetailPage from '../features/groupsManagement/pages/GroupDetailPage/GroupDetailPage';
+import GroupListPage from '../features/groupsManagement/pages/GroupListPage/GroupListPage';
 import AuthenticationRoute from '../pages/AuthenticationRoute/AuthenticationRoute';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';

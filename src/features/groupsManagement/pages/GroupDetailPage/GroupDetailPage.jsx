@@ -4,19 +4,25 @@ import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
+import DateTimePicker from '../../../../components/DateTimePicker/DateTimePicker';
 
-import GroupCalendar from '../../calendar/components/GroupCalendar/GroupCalendar';
-import { getAllTasks } from '../../tasksManagement/TasksSlice';
+import GroupCalendar from '../../../calendar/components/GroupCalendar/GroupCalendar';
+import { getAllTasks } from '../../../tasksManagement/TasksSlice';
 
-import { ICON_BACK_PRIMARY } from '../../../assets/icons';
-import { selectGroupByID } from '../groupSlice';
+import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
+import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
+import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
-import PrimaryButton from '../../../components/PrimaryButton/PrimaryButton';
+import AddUserModal from '../../components/AddUserModal/AddUserModal';
+import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false);
+  const [isOpenAddTaskModal, setIsOpenAddTaskModal] = useState(false);
 
   const groupInfo = useSelector(
     selectGroupByID(location.pathname.split('/').slice(-1)[0]),
@@ -78,7 +84,26 @@ export default function GroupDetailPage() {
               {`${(groupInfo?.users?.length || 0) + 1} users`}
             </p>
           </div>
-          <PrimaryButton title="Add users" />
+          <PrimaryButton
+            onClick={() => setIsOpenAddUserModal(true)}
+            title="Add users"
+          />
+          <PrimaryButton
+            onClick={() => setIsOpenAddTaskModal(true)}
+            title="Add new meeting"
+          />
+          <CenteredModal
+            isOpen={isOpenAddUserModal}
+            onClose={() => setIsOpenAddUserModal(false)}
+          >
+            <AddUserModal />
+          </CenteredModal>
+          <CenteredModal
+            isOpen={isOpenAddTaskModal}
+            onClose={() => setIsOpenAddTaskModal(false)}
+          >
+            <SuggestTimeModal />
+          </CenteredModal>
         </div>
       </div>
     </div>

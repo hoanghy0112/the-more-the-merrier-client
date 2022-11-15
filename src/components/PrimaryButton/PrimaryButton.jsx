@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import styles from './PrimaryButton.module.scss';
 
-export default function PrimaryButton({ title }) {
+export default function PrimaryButton({ title, onClick }) {
   return (
-    <button type="button" className={styles.primaryButton}>
+    <button type="button" onClick={onClick} className={styles.primaryButton}>
       {title}
     </button>
   );
@@ -14,8 +14,10 @@ export default function PrimaryButton({ title }) {
 
 PrimaryButton.propTypes = {
   title: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 PrimaryButton.defaultProps = {
   title: 'None title',
+  onClick: () => {},
 };

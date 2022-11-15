@@ -17,6 +17,7 @@ export default function CalendarCreateTask({
   startDate,
   createNewTask,
   retrieveAllTask,
+  isGroup,
 }) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
@@ -114,6 +115,7 @@ export default function CalendarCreateTask({
         <CreateNewTask
           data={data}
           onChange={setData}
+          isGroup={isGroup}
           onCreateNewTask={(newData) => {
             setIsCreateNewTask(false);
             createNewTask(newData);
@@ -139,6 +141,9 @@ CalendarCreateTask.propTypes = {
     }),
   ).isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
+  isGroup: PropTypes.bool,
 };
 
-CalendarCreateTask.defaultProps = {};
+CalendarCreateTask.defaultProps = {
+  isGroup: false,
+};
