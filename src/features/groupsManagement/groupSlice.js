@@ -1,13 +1,21 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { createNewGroupAPI, getAllGroupsOfUserAPI } from './groupAPI';
+import {
+  createNewGroupAPI,
+  getAllGroupsOfUserAPI,
+  getTaskOfGroupAPI,
+} from './groupAPI';
 
 const initialState = {
   groups: [],
+  currentGroupID: '',
+  groupBusyTime: [],
   status: 'idle',
+  fetchGroupBusyTimeStatus: 'idle',
   error: null,
 };
 
@@ -29,6 +37,17 @@ export const createNewGroup = createAsyncThunk(
       users,
       admin,
     });
+
+    return response;
+  },
+);
+
+export const getTaskOfGroup = createAsyncThunk(
+  'groupsManagement/getTaskOfGroup',
+  async (req) => {
+    const { groupID, from, to } = req;
+    const response = await getTaskOfGroupAPI(groupID, from, to);
+
     return response;
   },
 );
@@ -62,10 +81,36 @@ export const groupsManagementSlice = createSlice({
       .addCase(createNewGroup.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(getTaskOfGroup.pending, (state, action) => {
+        state.fetchGroupBusyTimeStatus = 'loading';
+
+        const { groupID } = action.meta.arg;
+
+        state.currentGroupID = groupID;
+      })
+      .addCase(getTaskOfGroup.fulfilled, (state, action) => {
+        state.fetchGroupBusyTimeStatus = 'succeeded';
+        state.groupBusyTime = action.payload;
+      })
+      .addCase(getTaskOfGroup.rejected, (state, action) => {
+        state.fetchGroupBusyTimeStatus = 'failed';
+        state.error = action.error.message;
       });
   },
 });
 
 export const selectAllGroups = (state) => state.groupsManagement.groups;
+
+export const selectGroupByID = (groupID) => (state) =>
+  state.groupsManagement.groups.find((group) => group._id === groupID);
+
+export const selectCurrentGroupInfo = (state) =>
+  state.groupsManagement.groups.find(
+    (group) => group._id === state.groupsManagement.currentGroupID,
+  );
+
+export const selectGroupBusyTime = (state) =>
+  state.groupsManagement.groupBusyTime;
 
 export default groupsManagementSlice.reducer;

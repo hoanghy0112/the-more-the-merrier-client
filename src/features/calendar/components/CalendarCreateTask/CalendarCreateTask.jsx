@@ -4,15 +4,10 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
-import { useDispatch } from 'react-redux';
 
-import {
-  // createNewTask,
-  getAllTasks,
-} from '../../../tasksManagement/TasksSlice';
+import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import CreateNewTask from '../../../../components/CreateNewTask/CreateNewTask';
 import styles from './CalendarCreateTask.module.scss';
-import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 
 Modal.setAppElement('#modal');
 
@@ -21,9 +16,8 @@ export default function CalendarCreateTask({
   taskWrapperRect,
   startDate,
   createNewTask,
+  retrieveAllTask,
 }) {
-  const dispatch = useDispatch();
-
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
   const [data, setData] = useState(null);
@@ -122,8 +116,8 @@ export default function CalendarCreateTask({
           onChange={setData}
           onCreateNewTask={(newData) => {
             setIsCreateNewTask(false);
-            dispatch(createNewTask(newData));
-            setTimeout(() => dispatch(getAllTasks()), 500);
+            createNewTask(newData);
+            setTimeout(() => retrieveAllTask(), 500);
             setIsMouseDown(false);
             setEnd([...begin]);
             setHeight(0);
@@ -137,6 +131,7 @@ export default function CalendarCreateTask({
 CalendarCreateTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
   createNewTask: PropTypes.func.isRequired,
+  retrieveAllTask: PropTypes.func.isRequired,
   taskWrapperRect: PropTypes.objectOf(
     PropTypes.shape({
       top: PropTypes.number.isRequired,

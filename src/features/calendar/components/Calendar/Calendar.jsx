@@ -6,14 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useSelector } from 'react-redux';
-
-import {
-  createNewTask,
-  // getAllTasks,
-  selectCurrentWeekTasks,
-} from '../../../tasksManagement/TasksSlice';
-
 import CalendarCreateTask from '../CalendarCreateTask/CalendarCreateTask';
 import CalendarDisplayTask from '../CalendarDisplayTask/CalendarDisplayTask';
 import useWindowSize from '../../../../hooks/useWindowSize';
@@ -22,22 +14,32 @@ import CalendarBoard from '../CalendarBoard/CalendarBoard';
 
 import './Calendar.scss';
 
-export default function Calendar({ startDate }) {
+export default function Calendar({
+  startDate,
+  tasks,
+  changeTask,
+  createNewTask,
+  retrieveAllTask,
+  setGridSize,
+  groupTasks,
+}) {
   const [windowWidth] = useWindowSize();
 
   const [taskRefPosition, setTaskRefPosition] = useState([]);
 
   const taskRef = useRef(null);
 
-  const [gridSize, setGridSize] = useState(199);
-
-  const tasks = useSelector(selectCurrentWeekTasks(startDate));
+  const [gridSize, setGridSizeState] = useState(199);
 
   useEffect(() => {
     if (taskRef?.current) {
-      setGridSize(taskRef.current.getBoundingClientRect().width / 7);
+      setGridSizeState(taskRef.current.getBoundingClientRect().width / 7);
     }
   }, [taskRef, windowWidth]);
+
+  useEffect(() => {
+    setGridSize(gridSize);
+  }, [gridSize]);
 
   useEffect(() => {
     setTaskRefPosition(taskRef?.current?.getBoundingClientRect());
@@ -48,18 +50,21 @@ export default function Calendar({ startDate }) {
   }
 
   return (
-    <CalendarBoard onScroll={handleScroll} ref={taskRef}>
+    <CalendarBoard startDate={startDate} onScroll={handleScroll} ref={taskRef}>
       <CalendarDisplayTask
         gridSize={gridSize}
         startDate={startDate}
         rect={taskRef?.current?.getBoundingClientRect()}
         tasks={tasks}
+        changeTask={changeTask}
+        groupTasks={groupTasks}
       />
       <CalendarCreateTask
         taskWrapperRect={taskRefPosition}
         gridSize={gridSize}
         startDate={startDate}
         createNewTask={createNewTask}
+        retrieveAllTask={retrieveAllTask}
       />
     </CalendarBoard>
   );
@@ -67,8 +72,36 @@ export default function Calendar({ startDate }) {
 
 Calendar.propTypes = {
   startDate: PropTypes.instanceOf(Date),
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      title: PropTypes.string,
+      priority: PropTypes.number,
+      time: {
+        from: PropTypes.instanceOf(Date),
+        to: PropTypes.instanceOf(Date),
+      },
+      tags: PropTypes.arrayOf(PropTypes.string),
+    }),
+  ),
+  changeTask: PropTypes.func,
+  createNewTask: PropTypes.func,
+  retrieveAllTask: PropTypes.func,
+  setGridSize: PropTypes.func,
+  groupTasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      from: PropTypes.instanceOf(Date),
+      to: PropTypes.instanceOf(Date),
+    }),
+  ),
 };
 
 Calendar.defaultProps = {
   startDate: new Date(),
+  tasks: [],
+  changeTask: () => {},
+  createNewTask: () => {},
+  retrieveAllTask: () => {},
+  setGridSize: () => {},
+  groupTasks: [],
 };

@@ -73,6 +73,8 @@ button:focus-visible {
 /* Document
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Bungee&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -86,13 +88,8 @@ button:focus-visible {
   width: 7px;
 }
 
-*::-webkit-scrollbar-track {
-  // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
 *::-webkit-scrollbar-thumb {
   background-color: #00a5ca46;
-  // outline: 1px solid slategrey;
   border-radius: 9999px;
 }
 

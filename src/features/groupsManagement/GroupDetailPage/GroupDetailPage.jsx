@@ -1,13 +1,85 @@
-import React from 'react';
-import CalendarBoard from '../../calendar/components/CalendarCreateTask/CalendarCreateTask';
+/* eslint-disable react/jsx-no-bind */
+import React, { useEffect, useState } from 'react';
 
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
+
+import GroupCalendar from '../../calendar/components/GroupCalendar/GroupCalendar';
+import { getAllTasks } from '../../tasksManagement/TasksSlice';
+
+import { ICON_BACK_PRIMARY } from '../../../assets/icons';
+import { selectGroupByID } from '../groupSlice';
 import styles from './GroupDetailPage.module.scss';
+import PrimaryButton from '../../../components/PrimaryButton/PrimaryButton';
 
 export default function GroupDetailPage() {
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const groupInfo = useSelector(
+    selectGroupByID(location.pathname.split('/').slice(-1)[0]),
+  );
+
+  const now = new Date();
+
+  const [date, setDate] = useState(
+    new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - now.getDay() + 1,
+    ),
+  );
+
+  function handleChangeDate(newDate) {
+    setDate(
+      new Date(
+        newDate.getFullYear(),
+        newDate.getMonth(),
+        newDate.getDate() - newDate.getDay() + 1,
+      ),
+    );
+  }
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(getAllTasks());
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className={styles.container}>
-      <div>
-        <CalendarBoard />
+      <div className={styles.calendar}>
+        <div className={styles.picker}>
+          <DateTimePicker
+            startDay={date}
+            hanldeChangeStartDay={handleChangeDate}
+          />
+        </div>
+        <div className={styles.calendarMain}>
+          <GroupCalendar startDate={date} />
+        </div>
+      </div>
+      <div className={styles.sideMenu}>
+        <div className={styles.groupInfo}>
+          <div className={styles.back}>
+            <img src={ICON_BACK_PRIMARY} alt="" />
+            <p>Back</p>
+          </div>
+          <div className={styles.groupBasicInfo}>
+            <p className={styles.name}>{groupInfo?.name || ''}</p>
+            <p className={styles.numOfUser}>
+              {`${(groupInfo?.users?.length || 0) + 1} users`}
+            </p>
+          </div>
+          <PrimaryButton title="Add users" />
+        </div>
       </div>
     </div>
   );

@@ -23,8 +23,6 @@ export default function GroupListPage() {
     return () => unsubscribe();
   }, []);
 
-  // useEffect(() => {}, [groupList]);
-
   return (
     <div className={styles.container}>
       <button type="button" className={styles.createGroup}>Create new group</button>

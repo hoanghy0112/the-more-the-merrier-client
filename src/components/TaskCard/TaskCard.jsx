@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React, { useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Draggable from 'react-draggable';
 
@@ -13,14 +13,11 @@ import PropTypes from 'prop-types';
 import DescriptionPopUpMinimize from '../DescriptionPopUpMinimize/PopUpMinimize';
 import HoverBox from '../HoverBox/HoverBox';
 
-import { changeTask } from '../../features/tasksManagement/TasksSlice';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 
 import styles from './TaskCard.module.scss';
 
-export default function TaskCard({ task, rect, width, startDate }) {
-  const dispatch = useDispatch();
-
+export default function TaskCard({ task, rect, width, startDate, changeTask }) {
   const [isDrag, setIsDrag] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -50,19 +47,15 @@ export default function TaskCard({ task, rect, width, startDate }) {
       parseInt((lastY / 1200) * 24 * 60, 10) % 60,
     );
 
-    dispatch(
-      changeTask({
-        _id: task._id,
-        time: {
-          from: newFrom.getTime(),
-          to: new Date(
-            newFrom.getTime() +
-              new Date(to).getTime() -
-              new Date(from).getTime(),
-          ).getTime(),
-        },
-      }),
-    );
+    changeTask({
+      _id: task._id,
+      time: {
+        from: newFrom.getTime(),
+        to: new Date(
+          newFrom.getTime() + new Date(to).getTime() - new Date(from).getTime(),
+        ).getTime(),
+      },
+    });
   }
 
   const primaryColor = (() => {
@@ -150,6 +143,7 @@ TaskCard.propTypes = {
   width: PropTypes.number.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
   rect: PropTypes.instanceOf(DOMRect).isRequired,
+  changeTask: PropTypes.func.isRequired,
 };
 
 TaskCard.defaultProps = {};

@@ -4,11 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
 
-import Calendar from '../../../features/calendar/components/Calendar/Calendar';
+import PersonalCalendar from '../../../features/calendar/components/PersonalCalendar/PersonalCalendar';
 import TagsBar from '../../../features/tagsManagement/components/TagBar/TagsBar';
 import { getAllTasks } from '../../../features/tasksManagement/TasksSlice';
 
-// import styles from './ScheduleOutlet.module.scss';
 import styles from './ScheduleOutlet.module.scss';
 
 export default function ScheduleOutlet() {
@@ -54,7 +53,7 @@ export default function ScheduleOutlet() {
           />
         </div>
         <div className={styles.calendarMain}>
-          <Calendar startDate={date} />
+          <PersonalCalendar startDate={date} />
         </div>
       </div>
       <div className={styles.sideMenu}>
