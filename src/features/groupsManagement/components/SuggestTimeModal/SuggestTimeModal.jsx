@@ -32,7 +32,7 @@ export default function SuggestTimeModal({ onChooseTime }) {
   const [isAdvanced, setIsAdvanced] = useState(false);
 
   function handleSuggest() {
-    onChooseTime(howLong, timeOfDay, isWeekend);
+    onChooseTime({ howLong, timeOfDay, isWeekend });
   }
 
   return (

@@ -1,0 +1,58 @@
+.container {
+  width: 650px;
+  padding: 25px;
+
+  display: grid;
+  gap: 25px;
+
+  border: 1px solid rgb(76, 76, 76);
+  border-radius: 15px;
+
+  background-color: white;
+  box-shadow: 5px 5px 0 0 rgb(186, 186, 186);
+
+  // transform: translateX(-50%), translateY(-50%);
+  transform: translate(-25%, -50%);
+
+  .header {
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  .suggestionBox {
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: space-around;
+    gap: 10px;
+
+    .suggestion {
+      position: relative;
+      top: 0;
+      left: 0;
+      padding: 10px 20px;
+      border: 0.5px solid rgb(152, 152, 152);
+      border-radius: 5px;
+      display: grid;
+      gap: 10px;
+
+      transition: 0.2s;
+      cursor: pointer;
+
+      .day {
+        font-weight: 600;
+      }
+
+      .time {
+        display: flex;
+        gap: 10px;
+      }
+
+      &:hover {
+        top: -5px;
+        left: -5px;
+
+        box-shadow: 5px 5px 0 0 rgb(149, 149, 149);
+      }
+    }
+  }
+}

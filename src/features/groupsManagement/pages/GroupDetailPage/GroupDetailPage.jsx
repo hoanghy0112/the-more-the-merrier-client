@@ -12,10 +12,11 @@ import { getAllTasks } from '../../../tasksManagement/TasksSlice';
 import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
+import AddUserModal from '../../components/AddUserModal/AddUserModal';
+import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
+import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
-import AddUserModal from '../../components/AddUserModal/AddUserModal';
-import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -23,6 +24,10 @@ export default function GroupDetailPage() {
 
   const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false);
   const [isOpenAddTaskModal, setIsOpenAddTaskModal] = useState(false);
+  const [isOpenGeneratedTimeModal, setIsOpenGeneratedTimeModal] =
+    useState(false);
+
+  const [suggestionOptions, setSuggestionOptions] = useState({});
 
   const groupInfo = useSelector(
     selectGroupByID(location.pathname.split('/').slice(-1)[0]),
@@ -102,10 +107,33 @@ export default function GroupDetailPage() {
             isOpen={isOpenAddTaskModal}
             onClose={() => setIsOpenAddTaskModal(false)}
           >
-            <SuggestTimeModal />
+            <SuggestTimeModal
+              onChooseTime={(options) => {
+                setIsOpenAddTaskModal(false);
+                setIsOpenGeneratedTimeModal(true);
+                setSuggestionOptions(options);
+              }}
+            />
+          </CenteredModal>
+          <CenteredModal
+            isOpen={isOpenGeneratedTimeModal}
+            onClose={() => setIsOpenGeneratedTimeModal(false)}
+          >
+            <GeneratedSuggestionModal
+              // startDate={startDate}
+              options={suggestionOptions}
+            />
           </CenteredModal>
         </div>
       </div>
     </div>
   );
 }
+
+// GroupDetailPage.propTypes = {
+//   startDate: PropTypes.instanceOf(Date),
+// };
+
+// GroupDetailPage.defaultProps = {
+//   startDate: new Date(),
+// };
