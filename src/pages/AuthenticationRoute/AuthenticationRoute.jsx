@@ -30,7 +30,10 @@ export default function AuthenticationRoute() {
   }
 
   useEffect(() => {
-    if (status === 'success' && location === '/authentication') {
+    if (
+      status === 'success' &&
+      (location.pathname === '/authentication' || location.pathname === '/')
+    ) {
       navigate('/home/schedule');
     }
   }, [status]);
