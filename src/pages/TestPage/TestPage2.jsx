@@ -7,6 +7,8 @@ import DescriptionPopUpMinimize from '../../components/DescriptionPopUpMinimize/
 import CreateNewTask from '../../components/CreateNewTask/CreateNewTask';
 import AddTag from '../../components/AddTag/AddTag';
 import AddParticipant from '../../components/AddParticipant/AddParticipant';
+import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
+import GroupDetail from '../../components/GroupDetail/GroupDetail';
 
 const x = new Date();
 x.setHours(x.getHours() - Math.random() * (3 - 1));
@@ -39,7 +41,8 @@ export default function TestPage2() {
       {/* <CreateNewTask data={data} /> */}
       {/* <AddTag data={data} /> */}
       {/* <Profile /> */}
-      <AddParticipant />
+      {/* <AddParticipant /> */}
+      <GroupDetail />
     </div>
   );
 }
