@@ -1,5 +1,10 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 export default function GroupOutlet() {
-  return <div>Group outlet</div>;
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
@@ -16,6 +16,8 @@ import styles from './AuthenticationRoute.module.scss';
 export default function AuthenticationRoute() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const status = useSelector(selectFetchUserProfileStatus);
 
   function onAuthChange(user) {
@@ -24,12 +26,13 @@ export default function AuthenticationRoute() {
       dispatch(findAllTagsOfUser());
     } else {
       navigate('/authentication');
-      // console.log({ user });
     }
   }
 
   useEffect(() => {
-    if (status === 'success') navigate('/home/schedule');
+    if (status === 'success' && location === '/authentication') {
+      navigate('/home/schedule');
+    }
   }, [status]);
 
   useEffect(() => {

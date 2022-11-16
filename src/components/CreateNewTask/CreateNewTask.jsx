@@ -39,10 +39,8 @@ import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 Modal.setAppElement('#modal');
 
 const CreateNewTask = React.forwardRef(
-  ({ data, onChange, onCreateNewTask }, ref) => {
+  ({ data, onChange, onCreateNewTask, isGroup }, ref) => {
     const dispatch = useDispatch();
-
-    // console.log({ data });
 
     const [title, setTitle] = useState(data?.title || '');
     const [startTime, setStartTime] = useState(
@@ -390,6 +388,9 @@ CreateNewTask.propTypes = {
       }),
     ),
   }).isRequired,
+  isGroup: PropTypes.bool,
 };
 
-CreateNewTask.defaultProps = {};
+CreateNewTask.defaultProps = {
+  isGroup: false,
+};

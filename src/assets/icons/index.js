@@ -44,6 +44,7 @@ export { default as ICON_SEARCH } from './VectorSearch.svg';
 export { default as ICON_HAT } from './VectorHat.svg';
 export { default as ICON_CHART } from './chart.svg';
 export { default as ICON_CHECKMARK } from './checkmark.svg';
+export { default as ICON_BACK_PRIMARY } from './chevron-back-primary.svg';
 // export {default as ICON_SEARCH}
 
 export const ICON_HOUSE = MdOutlineHouse;

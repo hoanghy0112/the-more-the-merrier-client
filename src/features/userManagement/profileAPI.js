@@ -7,6 +7,7 @@ export async function getUserProfileAPI() {
   try {
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
+    console.log({ accessToken });
     const response = await axios.get(GET_USER_PROFILE_API_LINK, {
       withCredentials: true,
       headers: {

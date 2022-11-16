@@ -1,13 +1,14 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import ErrorPage from '../pages/ErrorPage/ErrorPage';
-import HomePage from '../pages/HomePage/HomePage';
-import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';
-import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
-import LoginPage from '../pages/LoginPage/LoginPage';
-import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
+import GroupDetailPage from '../features/groupsManagement/pages/GroupDetailPage/GroupDetailPage';
+import GroupListPage from '../features/groupsManagement/pages/GroupListPage/GroupListPage';
 import AuthenticationRoute from '../pages/AuthenticationRoute/AuthenticationRoute';
-import TestPage2 from '../pages/TestPage/TestPage2';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';
+import HomePage from '../pages/HomePage/HomePage';
+import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
+import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
+import LoginPage from '../pages/LoginPage/LoginPage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,16 @@ const router = createBrowserRouter([
           {
             path: 'group',
             element: <GroupOutlet />,
+            children: [
+              {
+                path: '',
+                element: <GroupListPage />,
+              },
+              {
+                path: ':groupID',
+                element: <GroupDetailPage />,
+              },
+            ],
           },
           {
             path: 'setting',

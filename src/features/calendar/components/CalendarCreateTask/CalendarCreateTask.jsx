@@ -4,14 +4,10 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
-import { useDispatch } from 'react-redux';
 
+import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import CreateNewTask from '../../../../components/CreateNewTask/CreateNewTask';
 import styles from './CalendarCreateTask.module.scss';
-import CreateNewTask from '../CreateNewTask/CreateNewTask';
-import {
-  createNewTask,
-  getAllTasks,
-} from '../../features/tasksManagement/TasksSlice';
 
 Modal.setAppElement('#modal');
 
@@ -19,9 +15,10 @@ export default function CalendarCreateTask({
   gridSize,
   taskWrapperRect,
   startDate,
+  createNewTask,
+  retrieveAllTask,
+  isGroup,
 }) {
-  const dispatch = useDispatch();
-
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
   const [data, setData] = useState(null);
@@ -58,29 +55,14 @@ export default function CalendarCreateTask({
 
   function handleMouseUp(e) {
     e.stopPropagation();
-    // setIsMouseDown(false);
     if (isMouseDown) {
-      // setEnd([...begin]);
-      // setHeight(0);
-
       const top = end[1] > begin[1] ? begin[1] : end[1];
-      // const deltaDay = (begin[0] / gridSize) * 24 * 60 * 60 * 1000;
-      // const deltaMinutes = (top / 1200) * 24 * 60 * 60 * 1000;
-
-      // const newFrom = new Date(
-      //   parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
-      //     deltaDay +
-      //     deltaMinutes,
-      // );
       const newFrom = new Date(
         startDate.getYear() + 1900,
         startDate.getMonth(),
         startDate.getDate() + parseInt(begin[0] / gridSize, 10),
         parseInt((top / 1200) * 24, 10),
         parseInt((top / 1200) * 24 * 60, 10) % 60,
-        // parseInt(new Date(startDate).getTime() / 86400000, 10) * 86400000 +
-        //   deltaDay +
-        //   deltaMinutes,
       );
 
       setIsCreateNewTask(true);
@@ -121,56 +103,37 @@ export default function CalendarCreateTask({
           </div>
         )}
       </div>
-      <Modal
+      <CenteredModal
         isOpen={isCreateNewTask}
-        onRequestClose={() => {
+        onClose={() => {
           setIsCreateNewTask(false);
           setIsMouseDown(false);
           setEnd([...begin]);
           setHeight(0);
         }}
-        style={{
-          content: {
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 2000,
-            backgroundColor: 'transparent',
-            width: '350px',
-            height: '60px',
-            display: 'grid',
-            placeItems: 'center',
-            padding: 10,
-            overflow: 'visible',
-            cursor: 'default',
-            border: 'none',
-          },
-          overlay: {
-            zIndex: 200,
-            backgroundColor: '#0000004f',
-          },
-        }}
       >
         <CreateNewTask
           data={data}
           onChange={setData}
+          isGroup={isGroup}
           onCreateNewTask={(newData) => {
             setIsCreateNewTask(false);
-            // dispatch(createNewTask(data));
-            dispatch(createNewTask(newData));
-            setTimeout(() => dispatch(getAllTasks()), 500);
+            createNewTask(newData);
+            setTimeout(() => retrieveAllTask(), 500);
             setIsMouseDown(false);
             setEnd([...begin]);
             setHeight(0);
           }}
         />
-      </Modal>
+      </CenteredModal>
     </div>
   );
 }
 
 CalendarCreateTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
+  createNewTask: PropTypes.func.isRequired,
+  retrieveAllTask: PropTypes.func.isRequired,
   taskWrapperRect: PropTypes.objectOf(
     PropTypes.shape({
       top: PropTypes.number.isRequired,
@@ -178,6 +141,9 @@ CalendarCreateTask.propTypes = {
     }),
   ).isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
+  isGroup: PropTypes.bool,
 };
 
-CalendarCreateTask.defaultProps = {};
+CalendarCreateTask.defaultProps = {
+  isGroup: false,
+};
