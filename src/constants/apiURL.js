@@ -1,6 +1,7 @@
 export const BASE_URL = 'https://hoanghy.tech';
 
 export const GET_USER_PROFILE_API_LINK = `${BASE_URL}/api/v1/user`;
+export const FIND_USER_BY_NAME = `${BASE_URL}/api/v1/user/find`;
 
 export const CREATE_NEW_TASK = `${BASE_URL}/api/v1/task/`;
 export const UPDATE_TASK = `${BASE_URL}/api/v1/task/`;
