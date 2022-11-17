@@ -30,8 +30,6 @@ function filterByPeriod(startDate, busyTime, howLong) {
     (a, b) => new Date(a.from).getTime() - new Date(b.from).getTime(),
   );
 
-  console.log({ busyTimeList });
-
   busyTimeList.forEach(({ from, to }) => {
     const lastTime = filteredTime.slice(-1)[0];
     if (
@@ -53,8 +51,6 @@ function filterByPeriod(startDate, busyTime, howLong) {
       filteredTime.push(newPiece);
     }
   });
-
-  console.log({ bbb: [...filteredTime] });
 
   let i = filteredTime.length - 1;
   while (i >= 0) {
@@ -81,42 +77,6 @@ function filterByPeriod(startDate, busyTime, howLong) {
     i -= 1;
   }
 
-  console.log({ aaa: [...filteredTime] });
-
-  // if (howLong === 'ít hơn 1 giờ') {
-  //   return filteredTime.filter(
-  //     ({ from, to }) => moment(to).diff(new Date(from), 'hour', true) < 1,
-  //   );
-  // }
-  // if (howLong === 'từ 1-2 giờ') {
-  //   return filteredTime.filter(
-  //     ({ from, to }) =>
-  //       moment(to).diff(new Date(from), 'hour', true) > 1 &&
-  //       moment(to).diff(new Date(from), 'hour', true) < 2,
-  //   );
-  // }
-  // if (howLong === 'từ 2-4 giờ') {
-  //   return filteredTime.filter(
-  //     ({ from, to }) =>
-  //       moment(to).diff(new Date(from), 'hour', true) > 2 &&
-  //       moment(from).diff(new Date(to), 'hour', true) < 4,
-  //   );
-  // }
-  // if (howLong === 'khoảng một buổi') {
-  //   return filteredTime.filter(
-  //     ({ from, to }) =>
-  //       ((from.getHours() > 6 && from.getHours < 8) ||
-  //         (from.getHours() > 13 && from.getHours < 15) ||
-  //         (from.getHours() > 17 && from.getHours < 20)) &&
-  //       moment(to).diff(new Date(from), 'hour', true) > 4 &&
-  //       moment(to).diff(new Date(from), 'hour', true) < 6,
-  //   );
-  // }
-  // if (howLong === 'cả ngày') {
-  //   return filteredTime.filter(
-  //     ({ from, to }) => moment(to).diff(new Date(from), 'hour', true) > 12,
-  //   );
-  // }
   if (howLong === 'từ 1-2 giờ') {
     return filteredTime.filter(
       ({ from, to }) => moment(to).diff(new Date(from), 'hour', true) > 1,
