@@ -42,7 +42,8 @@ export default function TestPage2() {
       {/* <AddTag data={data} /> */}
       {/* <Profile /> */}
       {/* <AddParticipant /> */}
-      <GroupDetail />
+      <CreateNewGroup />
+      {/* <AddUserModal /> */}
     </div>
   );
 }
