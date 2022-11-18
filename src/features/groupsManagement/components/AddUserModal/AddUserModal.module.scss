@@ -6,7 +6,7 @@
   padding: 0px;
 
   position: relative;
-  width: 303px;
+  width: 353px;
   // height: 149px;
 
   background: #ffffff;
@@ -32,7 +32,7 @@
     gap: 10px;
 
     width: 100%;
-    height: 26px;
+    height: 36px;
 
     // background: #ffffff;
 
@@ -118,8 +118,8 @@
     border-bottom: 1px solid rgba(0, 85, 103, 0.5);
 
     .imageContainer {
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
 
       border-radius: 9999px;
       overflow: hidden;
@@ -131,12 +131,12 @@
     }
 
     .nameContainer {
-      height: 11px;
+      height: 21px;
 
       font-family: 'Manrope';
       font-style: normal;
       font-weight: 400;
-      font-size: 8px;
+      font-size: 10px;
       line-height: 11px;
 
       display: flex;
@@ -147,12 +147,12 @@
       color: #000000;
     }
     .email {
-      height: 11px;
+      height: 21px;
 
       font-family: 'Manrope';
       font-style: normal;
       font-weight: 400;
-      font-size: 8px;
+      font-size: 10px;
       line-height: 11px;
 
       display: flex;

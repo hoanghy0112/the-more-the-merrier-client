@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
 import GroupDetail from '../../components/GroupDetail/GroupDetail';
 import AddUserModal from '../../features/groupsManagement/components/AddUserModal/AddUserModal';
+import AddUserScreen from '../../features/groupsManagement/components/AddUserScreen/AddUserScreen';
 
 const x = new Date();
 x.setHours(x.getHours() - Math.random() * (3 - 1));
@@ -37,7 +38,8 @@ export default function TestPage2() {
       {/* <Profile /> */}
       {/* <AddParticipant /> */}
       {/* <CreateNewGroup /> */}
-      <AddUserModal />
+      {/* <AddUserModal /> */}
+      <AddUserScreen />
     </div>
   );
 }

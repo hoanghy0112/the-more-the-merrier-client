@@ -10,6 +10,7 @@ import { FIND_USER_BY_NAME } from '../../../../constants/apiURL';
 export default function AddUserModal() {
   const [searchInput, setSearchInput] = useState('');
   const [users, setUsers] = useState([]);
+  const [isNotFind, setIsNotFind] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +28,58 @@ export default function AddUserModal() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.searchContainer}>
+      {isNotFind ? (
+        <div className={styles.searchContainer}>
+          <img src={ICON_SEARCH} alt="search" />
+          <input
+            className={styles.search}
+            style={{
+              border: 'none',
+              fontSize: 11,
+              height: '90%',
+            }}
+            value={searchInput}
+            onClick={() => setIsNotFind(false)}
+            placeholder="Enter tag name here ..."
+          />
+        </div>
+      ) : (
+        <>
+          <div className={styles.searchContainer}>
+            <img src={ICON_SEARCH} alt="search" />
+            <input
+              className={styles.search}
+              style={{
+                border: 'none',
+                fontSize: 11,
+                height: '90%',
+              }}
+              value={searchInput}
+              onChange={handleSearchChange}
+              placeholder="Enter tag name here ..."
+            />
+          </div>
+          <div className={styles.listUser}>
+            {users ? (
+              users.map((user) => (
+                <div className={styles.userContainer}>
+                  <div className={styles.imageContainer}>
+                    <img src={user.photo} alt="avatar" />
+                  </div>
+
+                  <div className={styles.nameContainer}>
+                    <p>{`${user.familyName} ${user.givenName}`}</p>
+                  </div>
+                  <p className={styles.email}>{user.email}</p>
+                </div>
+              ))
+            ) : (
+              <div>Loading</div>
+            )}
+          </div>
+        </>
+      )}
+      {/* <div className={styles.searchContainer}>
         <img src={ICON_SEARCH} alt="search" />
         <input
           className={styles.search}
@@ -58,7 +110,7 @@ export default function AddUserModal() {
         ) : (
           <div>Loading</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

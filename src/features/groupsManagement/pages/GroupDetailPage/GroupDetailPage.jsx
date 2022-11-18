@@ -17,6 +17,7 @@ import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
+import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -101,7 +102,8 @@ export default function GroupDetailPage() {
             isOpen={isOpenAddUserModal}
             onClose={() => setIsOpenAddUserModal(false)}
           >
-            <AddUserModal />
+            {/* <AddUserModal /> */}
+            <AddUserScreen />
           </CenteredModal>
           <CenteredModal
             isOpen={isOpenAddTaskModal}
