@@ -6,6 +6,7 @@ import userManagementReducer from '../features/userManagement/ProfileSlice';
 import tasksManagementReducer from '../features/tasksManagement/TasksSlice';
 import tagsManagementReducer from '../features/tagsManagement/TagsSlice';
 import groupsManagementReducer from '../features/groupsManagement/groupSlice';
+import calendarReducer from '../features/calendar/calendarSlice';
 
 export const store = configureStore({
   reducer: {
@@ -37,6 +38,13 @@ export const store = configureStore({
         storage,
       },
       groupsManagementReducer,
+    ),
+    calendar: persistReducer(
+      {
+        key: 'calendar',
+        storage,
+      },
+      calendarReducer,
     ),
   },
 });

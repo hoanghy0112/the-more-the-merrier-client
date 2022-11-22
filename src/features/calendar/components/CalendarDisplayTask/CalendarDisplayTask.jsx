@@ -10,6 +10,10 @@ import TaskCard from '../../../../components/TaskCard/TaskCard';
 
 import styles from './CalendarDisplayTask.module.scss';
 import { selectCurrentGroupInfo } from '../../../groupsManagement/groupSlice';
+import {
+  selectSuggestionTime,
+  selectSuggestionVisible,
+} from '../../calendarSlice';
 
 export default function CalendarDisplayTask({
   gridSize,
@@ -20,6 +24,9 @@ export default function CalendarDisplayTask({
   groupTasks,
 }) {
   const groupInfo = useSelector(selectCurrentGroupInfo);
+
+  const suggestionVisible = useSelector(selectSuggestionVisible);
+  const suggestionTime = useSelector(selectSuggestionTime);
 
   return (
     <>
@@ -54,10 +61,36 @@ export default function CalendarDisplayTask({
               1200
             }px`,
             opacity: 1 / ((groupInfo?.users?.length || 0) + 1),
-            // height: 100
           }}
         />
       ))}
+
+      {suggestionVisible &&
+        suggestionTime.map(({ from, to }) => (
+          <div
+            className={styles.suggestionTask}
+            style={{
+              top: `${
+                (((new Date(from).getHours() * 60 +
+                  new Date(from).getMinutes()) %
+                  (24 * 60)) /
+                  (24 * 60)) *
+                1200
+              }px`,
+              left: `${
+                moment(new Date(from)).diff(new Date(startDate), 'days') *
+                gridSize
+              }px`,
+              width: `${gridSize - 6}px`,
+              height: `${
+                (moment(new Date(to)).diff(new Date(from), 'hours', true) /
+                  24) *
+                1200
+              }px`,
+              opacity: 1 / ((groupInfo?.users?.length || 0) + 1),
+            }}
+          />
+        ))}
     </>
   );
 }

@@ -12,6 +12,7 @@ import {
   getTaskOfGroup,
   selectGroupBusyTime,
 } from '../../../groupsManagement/groupSlice';
+
 import styles from './GroupCalendar.module.scss';
 
 export default function GroupCalendar({ startDate }) {
@@ -36,11 +37,7 @@ export default function GroupCalendar({ startDate }) {
     return () => unsubscribe();
   }, [startDate]);
 
-  return (
-    <div className={styles.container}>
-      <Calendar startDate={startDate} groupTasks={groupTasks} isGroup />
-    </div>
-  );
+  return <Calendar startDate={startDate} groupTasks={groupTasks} isGroup />;
 }
 
 GroupCalendar.propTypes = {

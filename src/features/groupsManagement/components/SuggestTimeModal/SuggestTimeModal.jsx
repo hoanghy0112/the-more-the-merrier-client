@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
@@ -23,11 +24,11 @@ const TIME_OF_DAY = [
   'Khuya',
 ];
 
-const IS_WEEKEND = ['Cuối tuần', 'Trong tuần'];
+const IS_WEEKEND = ['Cuối tuần', 'Trong tuần', 'Cả tuần'];
 
 export default function SuggestTimeModal({ onChooseTime }) {
   const [howLong, setHowLong] = useState('');
-  const [timeOfDay, setTimeOfDay] = useState();
+  const [timeOfDay, setTimeOfDay] = useState(new Map());
   const [isWeekend, setIsWeekend] = useState();
   const [isAdvanced, setIsAdvanced] = useState(false);
 
@@ -59,8 +60,14 @@ export default function SuggestTimeModal({ onChooseTime }) {
             <div className={styles.answer}>
               {TIME_OF_DAY.map((value) => (
                 <p
-                  className={value === timeOfDay && styles.choosing}
-                  onClick={() => setTimeOfDay(value)}
+                  className={timeOfDay.get(value) && styles.choosing}
+                  onClick={() =>
+                    setTimeOfDay((prev) => {
+                      const newData = new Map(prev);
+                      newData.set(value, !newData.get(value));
+                      return newData;
+                    })
+                  }
                 >
                   {value}
                 </p>
