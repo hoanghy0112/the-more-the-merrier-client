@@ -5,14 +5,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectGroupBusyTime } from '../../groupSlice';
-import styles from './GeneratedSuggestionModal.module.scss';
-import filterByPeriod from './utils/filterByPeriod';
+import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import {
   setSuggestionTime,
   setSuggestionVisible,
 } from '../../../calendar/calendarSlice';
-import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
+import { selectGroupBusyTime } from '../../groupSlice';
+import styles from './GeneratedSuggestionModal.module.scss';
 import filterTime from './utils';
 
 export default function GeneratedSuggestionModal({

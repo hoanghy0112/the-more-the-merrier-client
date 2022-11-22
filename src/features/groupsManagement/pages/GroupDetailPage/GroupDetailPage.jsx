@@ -12,13 +12,11 @@ import { getAllTasks } from '../../../tasksManagement/TasksSlice';
 import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
-import AddUserModal from '../../components/AddUserModal/AddUserModal';
+import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
-import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
-import PersonalCalendar from '../../../calendar/components/PersonalCalendar/PersonalCalendar';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();

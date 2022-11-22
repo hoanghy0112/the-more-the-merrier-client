@@ -2,18 +2,17 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
-import styles from './SuggestTimeModal.module.scss';
 import {
   IS_WEEKEND_LABELS,
   TIME_OF_DAY_LABELS,
   TIME_PERIOD_LABELS,
 } from '../../../../constants/suggestion';
-import { useEffect } from 'react';
+import styles from './SuggestTimeModal.module.scss';
 
 const HOW_LONG = Object.values(TIME_PERIOD_LABELS);
 
@@ -29,7 +28,6 @@ export default function SuggestTimeModal({ onChooseTime }) {
 
   useEffect(() => {
     if (howLong === TIME_PERIOD_LABELS.A_DAY) {
-      console.log('aaaaaaaaaaaaaaa');
       setTimeOfDay(() => {
         const newTime = new Map();
         newTime.set(TIME_OF_DAY_LABELS.ALL_DAY, true);
