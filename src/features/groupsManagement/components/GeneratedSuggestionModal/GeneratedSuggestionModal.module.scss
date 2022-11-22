@@ -1,5 +1,5 @@
 .container {
-  width: 650px;
+  // width: 650px;
   padding: 25px;
 
   display: grid;
@@ -20,7 +20,9 @@
   }
 
   .suggestionBox {
-    display: flex;
+    // display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     flex-wrap: wrap;
     // justify-content: space-around;
     gap: 10px;
@@ -34,6 +36,7 @@
       border-radius: 5px;
       display: grid;
       gap: 10px;
+      width: max-content;
 
       transition: 0.2s;
       cursor: pointer;
