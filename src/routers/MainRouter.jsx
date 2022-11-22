@@ -9,7 +9,8 @@ import HomePage from '../pages/HomePage/HomePage';
 import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
 import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import TestPage2 from '../pages/TestPage/TestPage2';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
+// import TestPage2 from '../pages/TestPage/TestPage2';
 
 const router = createBrowserRouter([
   {
@@ -45,13 +46,17 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
+      },
     ],
   },
-  {
-    path: 'test',
-    element: <TestPage2 />,
-    errorElement: <ErrorPage />,
-  },
+  // {
+  //   path: 'test',
+  //   element: <TestPage2 />,
+  //   errorElement: <ErrorPage />,
+  // },
   {
     path: 'authentication',
     element: <LoginPage />,
