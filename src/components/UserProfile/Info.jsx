@@ -12,7 +12,7 @@ export default function Info(props) {
               </div>
               <div className={styles.nameContainer}>
                   <div className={styles.name}>
-                      <p>{props.familyName} {props.familyName}</p>
+                      <p>{props.givenName} {props.familyName}</p>
                   </div>
               </div>
           </div>
@@ -21,7 +21,7 @@ export default function Info(props) {
                 <table width="100%">
                     <tr>
                         <td className={styles.header}>Name:</td>
-                        <td>{props.familyName} {props.familyName}</td>
+                        <td>{props.givenName} {props.familyName}</td>
                     </tr>
                     <tr>
                         <td className={styles.header}>Gender:</td>
