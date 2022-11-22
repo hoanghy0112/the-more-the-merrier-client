@@ -3,7 +3,6 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
-import GroupCalendar from '../../../features/calendar/components/GroupCalendar/GroupCalendar';
 
 import PersonalCalendar from '../../../features/calendar/components/PersonalCalendar/PersonalCalendar';
 import TagsBar from '../../../features/tagsManagement/components/TagBar/TagsBar';
