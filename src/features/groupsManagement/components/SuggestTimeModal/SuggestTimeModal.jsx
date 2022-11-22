@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -7,30 +8,35 @@ import PropTypes from 'prop-types';
 
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import styles from './SuggestTimeModal.module.scss';
+import {
+  IS_WEEKEND_LABELS,
+  TIME_OF_DAY_LABELS,
+  TIME_PERIOD_LABELS,
+} from '../../../../constants/suggestion';
+import { useEffect } from 'react';
 
-const HOW_LONG = [
-  'ít hơn 1 giờ',
-  'từ 1-2 giờ',
-  'từ 2-4 giờ',
-  'khoảng một buổi',
-  'cả ngày',
-];
+const HOW_LONG = Object.values(TIME_PERIOD_LABELS);
 
-const TIME_OF_DAY = [
-  'Buổi sáng',
-  'Buổi trưa',
-  'Buổi chiều',
-  'Buổi tối',
-  'Khuya',
-];
+const TIME_OF_DAY = Object.values(TIME_OF_DAY_LABELS);
 
-const IS_WEEKEND = ['Cuối tuần', 'Trong tuần', 'Cả tuần'];
+const IS_WEEKEND = Object.values(IS_WEEKEND_LABELS);
 
 export default function SuggestTimeModal({ onChooseTime }) {
   const [howLong, setHowLong] = useState('');
   const [timeOfDay, setTimeOfDay] = useState(new Map());
   const [isWeekend, setIsWeekend] = useState();
   const [isAdvanced, setIsAdvanced] = useState(false);
+
+  useEffect(() => {
+    if (howLong === TIME_PERIOD_LABELS.A_DAY) {
+      console.log('aaaaaaaaaaaaaaa');
+      setTimeOfDay(() => {
+        const newTime = new Map();
+        newTime.set(TIME_OF_DAY_LABELS.ALL_DAY, true);
+        return newTime;
+      });
+    }
+  }, [howLong]);
 
   function handleSuggest() {
     onChooseTime({ howLong, timeOfDay, isWeekend });

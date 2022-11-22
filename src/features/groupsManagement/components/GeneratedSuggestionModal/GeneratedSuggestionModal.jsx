@@ -67,7 +67,7 @@ export default function GeneratedSuggestionModal({
 GeneratedSuggestionModal.propTypes = {
   options: PropTypes.shape({
     howLong: PropTypes.string,
-    timeOfDay: PropTypes.string,
+    timeOfDay: PropTypes.instanceOf(Map),
     isWeekend: PropTypes.string,
   }),
   startDate: PropTypes.instanceOf(Date),
