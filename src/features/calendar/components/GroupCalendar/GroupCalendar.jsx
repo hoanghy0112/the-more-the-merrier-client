@@ -13,7 +13,7 @@ import {
   selectGroupBusyTime,
 } from '../../../groupsManagement/groupSlice';
 
-import styles from './GroupCalendar.module.scss';
+// import styles from './GroupCalendar.module.scss';
 
 export default function GroupCalendar({ startDate }) {
   const dispatch = useDispatch();
