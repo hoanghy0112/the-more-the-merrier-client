@@ -6,6 +6,7 @@ import AuthenticationRoute from '../pages/AuthenticationRoute/AuthenticationRout
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import GroupOutlet from '../pages/HomePage/GroupOutlet/GroupOutlet';
 import HomePage from '../pages/HomePage/HomePage';
+import ProfileOutlet from '../pages/HomePage/ProfileOutlet/ProfileOutlet';
 import ScheduleOutlet from '../pages/HomePage/ScheduleOutlet/ScheduletOutlet';
 import SettingOutlet from '../pages/HomePage/SettingOutlet/SettingOutlet';
 import LoginPage from '../pages/LoginPage/LoginPage';
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: 'setting',
             element: <SettingOutlet />,
+          },
+          {
+            path: 'profile',
+            element: <ProfileOutlet />,
           },
         ],
       },
