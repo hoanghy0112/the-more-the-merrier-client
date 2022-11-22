@@ -14,7 +14,7 @@ export default function Profile(props) {
       {user ? (
         <>
           <div className={styles.imageContainer}>
-            <img src={user.photo} alt="avatar" />
+            {user?.photo ? <img src={user.photo} alt="avatar" /> : <div />}
           </div>
           <div className={styles.nameContainer}>
             <div className={styles.name}>
