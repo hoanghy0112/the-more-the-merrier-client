@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 
 import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
 import GroupDetail from '../../components/GroupDetail/GroupDetail';
+import NotificationList from '../../components/NotificationList/NotificationList';
+import InviteToJoinTask from '../../components/NotificationScreen/InviteToJoinTask';
+import NotificationScreen from '../../components/NotificationScreen/NotificationScreen';
 import AddUserModal from '../../features/groupsManagement/components/AddUserModal/AddUserModal';
 import AddUserScreen from '../../features/groupsManagement/components/AddUserScreen/AddUserScreen';
 
@@ -39,7 +42,10 @@ export default function TestPage2() {
       {/* <AddParticipant /> */}
       {/* <CreateNewGroup /> */}
       {/* <AddUserModal /> */}
-      <AddUserScreen />
+      {/* <AddUserScreen /> */}
+      {/* <NotificationScreen /> */}
+      {/* <InviteToJoinTask group="Gúp đồ án" task="Học bài" /> */}
+      <NotificationList />
     </div>
   );
 }
