@@ -93,8 +93,8 @@ Calendar.propTypes = {
   setGridSize: PropTypes.func,
   groupBusyTimes: PropTypes.arrayOf(
     PropTypes.shape({
-      from: PropTypes.instanceOf(Date),
-      to: PropTypes.instanceOf(Date),
+      from: PropTypes.oneOfType(PropTypes.instanceOf(Date), PropTypes.string),
+      to: PropTypes.oneOfType(PropTypes.instanceOf(Date), PropTypes.string),
     }),
   ),
   isGroup: PropTypes.bool,

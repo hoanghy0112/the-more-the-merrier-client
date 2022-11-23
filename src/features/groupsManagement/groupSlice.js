@@ -174,6 +174,9 @@ export const selectGroupTaskOfCurrentGroup = (state) => {
   );
 };
 
+// export const selectGroupBusyTime = (state) => [ ...state.groupsManagement.groupBusyTime,
+//   // selectGroupTaskOfCurrentGroup(state).map((task) => task.time),
+// ];
 export const selectGroupBusyTime = (state) =>
   state.groupsManagement.groupBusyTime;
 

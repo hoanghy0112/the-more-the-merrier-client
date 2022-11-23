@@ -45,6 +45,7 @@ export default function CalendarDisplayTask({
 
       {groupBusyTimes.map(({ from, to }) => (
         <div
+          key={from + to}
           className={styles.groupTask}
           style={{
             top: `${
@@ -70,6 +71,7 @@ export default function CalendarDisplayTask({
       {suggestionVisible &&
         suggestionTime.map(({ from, to }) => (
           <div
+            key={from + to}
             className={styles.suggestionTask}
             style={{
               top: `${
@@ -100,7 +102,7 @@ export default function CalendarDisplayTask({
 CalendarDisplayTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
-  rect: PropTypes.instanceOf(DOMRect).isRequired,
+  rect: PropTypes.instanceOf(DOMRect),
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
@@ -127,4 +129,5 @@ CalendarDisplayTask.defaultProps = {
   tasks: [],
   groupBusyTimes: [],
   isGroup: false,
+  rect: new DOMRect(0, 0, 0, 0),
 };

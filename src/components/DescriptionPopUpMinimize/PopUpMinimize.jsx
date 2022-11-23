@@ -121,8 +121,8 @@ DescriptionPopUpMinimize.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string,
     time: PropTypes.shape({
-      from: PropTypes.instanceOf(Date),
-      to: PropTypes.instanceOf(Date),
+      from: PropTypes.oneOfType(PropTypes.instanceOf(Date), PropTypes.string),
+      to: PropTypes.oneOfType(PropTypes.instanceOf(Date), PropTypes.string),
     }),
     location: PropTypes.string,
     participants: PropTypes.arrayOf(
