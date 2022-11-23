@@ -69,7 +69,14 @@ export default function NotificationList() {
       <div className={styles.listContainer}>
         {isSelected
           ? list.map((notification) => (
-              <div className={styles.notiContainer}>
+              <div
+                className={styles.notiContainer}
+                style={{
+                  backgroundColor: notification.isRead
+                    ? '#EFDAD7'
+                    : 'transparent',
+                }}
+              >
                 <img
                   src={notification.thumbnail}
                   alt="notification"
@@ -78,7 +85,27 @@ export default function NotificationList() {
                 <p className={styles.content}>{notification.content}</p>
               </div>
             ))
-          : null}
+          : list
+              .filter((notice) => {
+                return notice.isRead;
+              })
+              .map((notification) => (
+                <div
+                  className={styles.notiContainer}
+                  style={{
+                    backgroundColor: notification.isRead
+                      ? '#EFDAD7'
+                      : 'transparent',
+                  }}
+                >
+                  <img
+                    src={notification.thumbnail}
+                    alt="notification"
+                    className={styles.imageContainer}
+                  />
+                  <p className={styles.content}>{notification.content}</p>
+                </div>
+              ))}
       </div>
     </div>
   );
