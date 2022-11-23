@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import Calendar from '../Calendar/Calendar';
 
 import {
-  getTaskOfGroup,
+  getBusyTimeOfGroup,
   selectGroupBusyTime,
 } from '../../../groupsManagement/groupSlice';
 
@@ -19,9 +19,7 @@ export default function GroupCalendar({ startDate }) {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // const [gridSize, setGridSize] = useState();
-
-  const groupTasks = useSelector(selectGroupBusyTime);
+  const groupBusyTimes = useSelector(selectGroupBusyTime);
 
   useEffect(() => {
     const auth = getAuth();
@@ -30,14 +28,14 @@ export default function GroupCalendar({ startDate }) {
         const groupID = location.pathname.split('/').slice(-1)[0];
         const from = new Date(startDate).getTime();
         const to = new Date(from + 7 * 24 * 60 * 60 * 1000).getTime();
-        dispatch(getTaskOfGroup({ groupID, from, to }));
+        dispatch(getBusyTimeOfGroup({ groupID, from, to }));
       }
     });
 
     return () => unsubscribe();
   }, [startDate]);
 
-  return <Calendar startDate={startDate} groupTasks={groupTasks} isGroup />;
+  return <Calendar startDate={startDate} groupBusyTimes={groupBusyTimes} isGroup />;
 }
 
 GroupCalendar.propTypes = {

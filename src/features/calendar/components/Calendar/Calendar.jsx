@@ -21,7 +21,7 @@ export default function Calendar({
   createNewTask,
   retrieveAllTask,
   setGridSize,
-  groupTasks,
+  groupBusyTimes,
   isGroup,
 }) {
   const [windowWidth] = useWindowSize();
@@ -58,7 +58,7 @@ export default function Calendar({
         rect={taskRef?.current?.getBoundingClientRect()}
         tasks={tasks}
         changeTask={changeTask}
-        groupTasks={groupTasks}
+        groupBusyTimes={groupBusyTimes}
       />
       <CalendarCreateTask
         taskWrapperRect={taskRefPosition}
@@ -90,7 +90,7 @@ Calendar.propTypes = {
   createNewTask: PropTypes.func,
   retrieveAllTask: PropTypes.func,
   setGridSize: PropTypes.func,
-  groupTasks: PropTypes.arrayOf(
+  groupBusyTimes: PropTypes.arrayOf(
     PropTypes.shape({
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
@@ -106,6 +106,6 @@ Calendar.defaultProps = {
   createNewTask: () => {},
   retrieveAllTask: () => {},
   setGridSize: () => {},
-  groupTasks: [],
+  groupBusyTimes: [],
   isGroup: false,
 };

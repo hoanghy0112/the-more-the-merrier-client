@@ -21,7 +21,7 @@ export default function CalendarDisplayTask({
   startDate,
   tasks,
   changeTask,
-  groupTasks,
+  groupBusyTimes,
 }) {
   const groupInfo = useSelector(selectCurrentGroupInfo);
 
@@ -41,7 +41,7 @@ export default function CalendarDisplayTask({
         />
       ))}
 
-      {groupTasks.map(({ from, to }) => (
+      {groupBusyTimes.map(({ from, to }) => (
         <div
           className={styles.groupTask}
           style={{
@@ -112,7 +112,7 @@ CalendarDisplayTask.propTypes = {
     }),
   ),
   changeTask: PropTypes.func.isRequired,
-  groupTasks: PropTypes.arrayOf(
+  groupBusyTimes: PropTypes.arrayOf(
     PropTypes.shape({
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
@@ -122,5 +122,5 @@ CalendarDisplayTask.propTypes = {
 
 CalendarDisplayTask.defaultProps = {
   tasks: [],
-  groupTasks: [],
+  groupBusyTimes: [],
 };

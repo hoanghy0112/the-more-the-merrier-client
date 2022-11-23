@@ -6,12 +6,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
   createNewGroupAPI,
+  createTaskOfGroupAPI,
   getAllGroupsOfUserAPI,
-  getTaskOfGroupAPI,
+  getBusyTimeOfGroupAPI,
 } from './groupAPI';
 
 const initialState = {
   groups: [],
+  groupTasks: [],
   currentGroupID: '',
   groupBusyTime: [],
   status: 'idle',
@@ -42,11 +44,40 @@ export const createNewGroup = createAsyncThunk(
   },
 );
 
-export const getTaskOfGroup = createAsyncThunk(
+export const getBusyTimeOfGroup = createAsyncThunk(
   'groupsManagement/getTaskOfGroup',
   async (req) => {
     const { groupID, from, to } = req;
-    const response = await getTaskOfGroupAPI(groupID, from, to);
+    const response = await getBusyTimeOfGroupAPI(groupID, from, to);
+
+    return response;
+  },
+);
+
+export const createTaskOfGroup = createAsyncThunk(
+  'groupsManagement/createTaskOfGroup',
+  async (req) => {
+    const {
+      groupID,
+      title,
+      location,
+      priority,
+      from,
+      to,
+      participants,
+      descriptions,
+    } = req;
+
+    const response = await createTaskOfGroupAPI(
+      groupID,
+      title,
+      location,
+      priority,
+      from,
+      to,
+      participants,
+      descriptions,
+    );
 
     return response;
   },
@@ -82,18 +113,32 @@ export const groupsManagementSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(getTaskOfGroup.pending, (state, action) => {
+      .addCase(createTaskOfGroup.pending, (state, action) => {
+        state.status = 'loading';
+
+        const data = action.meta.arg;
+
+        state.groupTasks = [...state.groupTasks, data];
+      })
+      .addCase(createTaskOfGroup.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(createTaskOfGroup.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(getBusyTimeOfGroup.pending, (state, action) => {
         state.fetchGroupBusyTimeStatus = 'loading';
 
         const { groupID } = action.meta.arg;
 
         state.currentGroupID = groupID;
       })
-      .addCase(getTaskOfGroup.fulfilled, (state, action) => {
+      .addCase(getBusyTimeOfGroup.fulfilled, (state, action) => {
         state.fetchGroupBusyTimeStatus = 'succeeded';
         state.groupBusyTime = action.payload;
       })
-      .addCase(getTaskOfGroup.rejected, (state, action) => {
+      .addCase(getBusyTimeOfGroup.rejected, (state, action) => {
         state.fetchGroupBusyTimeStatus = 'failed';
         state.error = action.error.message;
       });
