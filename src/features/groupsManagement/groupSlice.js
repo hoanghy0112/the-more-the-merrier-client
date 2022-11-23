@@ -9,6 +9,7 @@ import {
   createTaskOfGroupAPI,
   getAllGroupsOfUserAPI,
   getBusyTimeOfGroupAPI,
+  getTaskOfGroupAPI,
 } from './groupAPI';
 
 const initialState = {
@@ -62,8 +63,7 @@ export const createTaskOfGroup = createAsyncThunk(
       title,
       location,
       priority,
-      from,
-      to,
+      time: { from, to },
       participants,
       descriptions,
     } = req;
@@ -86,7 +86,7 @@ export const createTaskOfGroup = createAsyncThunk(
 export const getTaskOfGroup = createAsyncThunk(
   'groupsManagement/getTaskOfGroup',
   async () => {
-    const response = await getTaskOfGroup();
+    const response = await getTaskOfGroupAPI();
 
     return response;
   },
