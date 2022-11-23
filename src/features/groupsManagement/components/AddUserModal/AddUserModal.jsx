@@ -95,6 +95,7 @@ export default function AddUserModal() {
                 <div
                   className={styles.userContainer}
                   onClick={() => handleAddUser(user)}
+                  style={{ cursor: 'pointer' }}
                 >
                   <div className={styles.imageContainer}>
                     <img src={user.photo} alt="avatar" />
