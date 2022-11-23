@@ -12,6 +12,7 @@ import {
 } from '../../features/userManagement/ProfileSlice';
 import LoadingPage from '../LoadingPage/LoadingPage';
 import styles from './AuthenticationRoute.module.scss';
+import { setSuggestionVisible } from '../../features/calendar/calendarSlice';
 
 export default function AuthenticationRoute() {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ export default function AuthenticationRoute() {
       navigate('/home/schedule');
     }
   }, [status]);
+
+  useEffect(() => {
+    dispatch(setSuggestionVisible(false));
+  }, [location.pathname]);
 
   useEffect(() => {
     const auth = getAuth();

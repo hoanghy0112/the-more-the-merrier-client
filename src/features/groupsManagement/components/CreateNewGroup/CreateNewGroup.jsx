@@ -1,11 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ICON_ADD, ICON_FULL_ARROW_RIGHT } from '../../../../assets/icons';
-import {
-  getUserProfile,
-  selectUserProfile,
-} from '../../../userManagement/ProfileSlice';
-import { createNewGroup, selectAllGroups } from '../../groupSlice';
+import { selectUserProfile } from '../../../userManagement/ProfileSlice';
+import { createNewGroup } from '../../groupSlice';
 
 import styles from './CreateNewGroup.module.scss';
 

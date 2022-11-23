@@ -12,12 +12,11 @@ import { getAllTasks } from '../../../tasksManagement/TasksSlice';
 import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
-import AddUserModal from '../../components/AddUserModal/AddUserModal';
+import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
-import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -102,7 +101,6 @@ export default function GroupDetailPage() {
             isOpen={isOpenAddUserModal}
             onClose={() => setIsOpenAddUserModal(false)}
           >
-            {/* <AddUserModal /> */}
             <AddUserScreen />
           </CenteredModal>
           <CenteredModal
@@ -122,8 +120,8 @@ export default function GroupDetailPage() {
             onClose={() => setIsOpenGeneratedTimeModal(false)}
           >
             <GeneratedSuggestionModal
-              // startDate={startDate}
               options={suggestionOptions}
+              onClose={() => setIsOpenGeneratedTimeModal(false)}
             />
           </CenteredModal>
         </div>
@@ -131,11 +129,3 @@ export default function GroupDetailPage() {
     </div>
   );
 }
-
-// GroupDetailPage.propTypes = {
-//   startDate: PropTypes.instanceOf(Date),
-// };
-
-// GroupDetailPage.defaultProps = {
-//   startDate: new Date(),
-// };
