@@ -21,6 +21,7 @@ export const REMOVE_USER_FROM_GROUP = `${BASE_URL}/api/v1/group`;
 export const DELETE_GROUP_BY_ID = `${BASE_URL}/api/v1/group`;
 
 export const CREATE_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
+export const CHANGE_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
 export const GET_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
 
 export const GET_ALL_NOTIFICATIONS = `${BASE_URL}/api/v1/notifications`;

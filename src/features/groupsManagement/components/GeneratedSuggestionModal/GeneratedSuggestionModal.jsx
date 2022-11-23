@@ -1,6 +1,6 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable prefer-const */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,6 @@ import {
 } from '../../groupSlice';
 import styles from './GeneratedSuggestionModal.module.scss';
 import filterTime from './utils';
-import { useEffect } from 'react';
 
 export default function GeneratedSuggestionModal({
   startDate,

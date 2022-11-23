@@ -5,6 +5,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
+  changeTaskOfGroupAPI,
   createNewGroupAPI,
   createTaskOfGroupAPI,
   getAllGroupsOfUserAPI,
@@ -83,6 +84,19 @@ export const createTaskOfGroup = createAsyncThunk(
   },
 );
 
+export const changeTaskOfGroup = createAsyncThunk(
+  'groupsManagement/changeTaskOfGroup',
+  async (req) => {
+    const { taskID, ...data } = req;
+    console.log(req);
+
+    const response = await changeTaskOfGroupAPI(taskID, data);
+    console.log({ response });
+
+    return response;
+  },
+);
+
 export const getTaskOfGroup = createAsyncThunk(
   'groupsManagement/getTaskOfGroup',
   async () => {
@@ -135,6 +149,18 @@ export const groupsManagementSlice = createSlice({
       .addCase(createTaskOfGroup.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(changeTaskOfGroup.pending, (state, action) => {
+        const { taskID, ...data } = action.meta.arg;
+
+        state.groupTasks = [
+          ...state.groupTasks.filter((task) => task._id !== taskID),
+          {
+            ...state.groupTasks.find((task) => task._id === taskID),
+            ...data,
+            _id: taskID,
+          },
+        ];
       })
       .addCase(getBusyTimeOfGroup.pending, (state, action) => {
         state.fetchGroupBusyTimeStatus = 'loading';

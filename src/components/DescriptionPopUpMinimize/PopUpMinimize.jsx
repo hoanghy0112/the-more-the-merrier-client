@@ -23,7 +23,7 @@ import CenteredModal from '../CenteredModal/CenteredModal';
 
 Modal.setAppElement('#modal');
 
-export default function DescriptionPopUpMinimize({ data, isGroup }) {
+export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +111,7 @@ export default function DescriptionPopUpMinimize({ data, isGroup }) {
         </div>
       </div>
       <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <CreateNewTask isGroup={isGroup} data={data} />
+        <CreateNewTask onChange={onChange} isGroup={isGroup} data={data} />
       </CenteredModal>
     </div>
   );
@@ -144,9 +144,11 @@ DescriptionPopUpMinimize.propTypes = {
       }),
     ),
   }).isRequired,
+  onChange: PropTypes.func,
   isGroup: PropTypes.bool,
 };
 
 DescriptionPopUpMinimize.defaultProps = {
   isGroup: false,
+  onChange: () => {},
 };
