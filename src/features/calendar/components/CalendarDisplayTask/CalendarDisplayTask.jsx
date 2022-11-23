@@ -22,6 +22,7 @@ export default function CalendarDisplayTask({
   tasks,
   changeTask,
   groupBusyTimes,
+  isGroup,
 }) {
   const groupInfo = useSelector(selectCurrentGroupInfo);
 
@@ -38,6 +39,7 @@ export default function CalendarDisplayTask({
           rect={rect}
           startDate={startDate}
           changeTask={changeTask}
+          isGroup={isGroup}
         />
       ))}
 
@@ -118,9 +120,11 @@ CalendarDisplayTask.propTypes = {
       to: PropTypes.instanceOf(Date),
     }),
   ),
+  isGroup: PropTypes.bool,
 };
 
 CalendarDisplayTask.defaultProps = {
   tasks: [],
   groupBusyTimes: [],
+  isGroup: false,
 };

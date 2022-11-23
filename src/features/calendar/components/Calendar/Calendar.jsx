@@ -59,6 +59,7 @@ export default function Calendar({
         tasks={tasks}
         changeTask={changeTask}
         groupBusyTimes={groupBusyTimes}
+        isGroup={isGroup}
       />
       <CalendarCreateTask
         taskWrapperRect={taskRefPosition}

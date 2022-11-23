@@ -243,36 +243,39 @@ const CreateNewTask = React.forwardRef(
               )}
             </div>
           </div>
-          <div className={styles.desSentence_2}>
-            <img src={ICON_BOOKMARKS} alt="time" />
-            <div className={styles.list}>
-              {populatedTags.map((tag) => (
-                <ImportedTag
-                  key={tag._id}
-                  name={tag.title}
-                  color={tag.color}
-                  onClose={() => {
-                    setTags((prev) =>
-                      prev.filter((currentTag) => currentTag !== tag._id),
-                    );
+          {!isGroup && (
+            <div className={styles.desSentence_2}>
+              <img src={ICON_BOOKMARKS} alt="time" />
+              <div className={styles.list}>
+                {populatedTags.map((tag) => (
+                  <ImportedTag
+                    key={tag._id}
+                    name={tag.title}
+                    color={tag.color}
+                    onClose={() => {
+                      setTags((prev) =>
+                        prev.filter((currentTag) => currentTag !== tag._id),
+                      );
+                    }}
+                  />
+                ))}
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsAddTag(true);
                   }}
-                />
-              ))}
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsAddTag(true);
-                }}
-                className={styles.buttonAdd}
-                style={{ cursor: 'pointer' }}
-              >
-                <img src={ICON_ADD} alt="button" />
+                  className={styles.buttonAdd}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={ICON_ADD} alt="button" />
+                </div>
               </div>
+              {isAddTag && (
+                <TagChoosing setTag={(tagID) => handleAddTag(tagID)} />
+              )}
             </div>
-            {isAddTag && (
-              <TagChoosing setTag={(tagID) => handleAddTag(tagID)} />
-            )}
-          </div>
+          )}
+          {isGroup && <div>Add users</div>}
         </div>
         <div className={styles.descriptionContainer}>
           <p className={styles.text}>Description</p>
