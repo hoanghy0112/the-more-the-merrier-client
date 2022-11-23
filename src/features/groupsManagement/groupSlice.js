@@ -45,7 +45,7 @@ export const createNewGroup = createAsyncThunk(
 );
 
 export const getBusyTimeOfGroup = createAsyncThunk(
-  'groupsManagement/getTaskOfGroup',
+  'groupsManagement/getBusyTimeOfGroup',
   async (req) => {
     const { groupID, from, to } = req;
     const response = await getBusyTimeOfGroupAPI(groupID, from, to);
@@ -78,6 +78,15 @@ export const createTaskOfGroup = createAsyncThunk(
       participants,
       descriptions,
     );
+
+    return response;
+  },
+);
+
+export const getTaskOfGroup = createAsyncThunk(
+  'groupsManagement/getTaskOfGroup',
+  async () => {
+    const response = await getTaskOfGroup();
 
     return response;
   },
@@ -141,6 +150,9 @@ export const groupsManagementSlice = createSlice({
       .addCase(getBusyTimeOfGroup.rejected, (state, action) => {
         state.fetchGroupBusyTimeStatus = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(getTaskOfGroup.fulfilled, (state, action) => {
+        state.groupTasks = action.payload;
       });
   },
 });
@@ -154,6 +166,13 @@ export const selectCurrentGroupInfo = (state) =>
   state.groupsManagement.groups.find(
     (group) => group._id === state.groupsManagement.currentGroupID,
   );
+
+export const selectGroupTaskOfCurrentGroup = (state) => {
+  const { currentGroupID } = state.groupsManagement;
+  return state.groupsManagement.groupTasks.filter(
+    (task) => task.belongTo === currentGroupID,
+  );
+};
 
 export const selectGroupBusyTime = (state) =>
   state.groupsManagement.groupBusyTime;
