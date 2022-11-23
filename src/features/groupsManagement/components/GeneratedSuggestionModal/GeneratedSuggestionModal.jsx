@@ -16,6 +16,7 @@ import {
 } from '../../groupSlice';
 import styles from './GeneratedSuggestionModal.module.scss';
 import filterTime from './utils';
+import { useEffect } from 'react';
 
 export default function GeneratedSuggestionModal({
   startDate,
@@ -34,7 +35,9 @@ export default function GeneratedSuggestionModal({
     isWeekend,
   );
 
-  dispatch(setSuggestionTime(filterdBusyTimeByPeriod));
+  useEffect(() => {
+    dispatch(setSuggestionTime(filterdBusyTimeByPeriod));
+  }, []);
 
   return (
     <div className={styles.container}>
