@@ -12,6 +12,8 @@
   display: grid;
   gap: 25px;
 
+  transform: translateY(-50%);
+
   input,
   textarea {
     border: none;

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 export default function DateItem({ date }) {
   const isThisDay =
     date.toLocaleDateString() === new Date().toLocaleDateString();
+
   return (
     <div className="date-item__container">
       <div className={`day-container ${isThisDay && 'thisDay'}`}>

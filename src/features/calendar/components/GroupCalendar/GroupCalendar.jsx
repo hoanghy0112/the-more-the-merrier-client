@@ -1,3 +1,6 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
@@ -9,8 +12,12 @@ import { useLocation } from 'react-router-dom';
 import Calendar from '../Calendar/Calendar';
 
 import {
+  createTaskOfGroup,
+  getBusyTimeOfGroup,
   getTaskOfGroup,
+  selectCurrentGroupInfo,
   selectGroupBusyTime,
+  selectGroupTaskOfCurrentGroup,
 } from '../../../groupsManagement/groupSlice';
 
 // import styles from './GroupCalendar.module.scss';
@@ -19,9 +26,9 @@ export default function GroupCalendar({ startDate }) {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // const [gridSize, setGridSize] = useState();
-
-  const groupTasks = useSelector(selectGroupBusyTime);
+  const tasks = useSelector(selectGroupTaskOfCurrentGroup);
+  const currentGroupInfo = useSelector(selectCurrentGroupInfo);
+  const groupBusyTimes = useSelector(selectGroupBusyTime);
 
   useEffect(() => {
     const auth = getAuth();
@@ -30,14 +37,25 @@ export default function GroupCalendar({ startDate }) {
         const groupID = location.pathname.split('/').slice(-1)[0];
         const from = new Date(startDate).getTime();
         const to = new Date(from + 7 * 24 * 60 * 60 * 1000).getTime();
-        dispatch(getTaskOfGroup({ groupID, from, to }));
+        dispatch(getBusyTimeOfGroup({ groupID, from, to }));
       }
     });
 
     return () => unsubscribe();
   }, [startDate]);
 
-  return <Calendar startDate={startDate} groupTasks={groupTasks} isGroup />;
+  return (
+    <Calendar
+      startDate={startDate}
+      tasks={tasks}
+      groupBusyTimes={groupBusyTimes}
+      createNewTask={(data) =>
+        dispatch(createTaskOfGroup({ groupID: currentGroupInfo._id, ...data }))
+      }
+      retrieveAllTask={() => dispatch(getTaskOfGroup())}
+      isGroup
+    />
+  );
 }
 
 GroupCalendar.propTypes = {

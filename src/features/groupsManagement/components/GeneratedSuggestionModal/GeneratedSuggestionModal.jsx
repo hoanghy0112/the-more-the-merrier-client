@@ -10,7 +10,10 @@ import {
   setSuggestionTime,
   setSuggestionVisible,
 } from '../../../calendar/calendarSlice';
-import { selectGroupBusyTime } from '../../groupSlice';
+import {
+  selectGroupBusyTime,
+  selectGroupTaskOfCurrentGroup,
+} from '../../groupSlice';
 import styles from './GeneratedSuggestionModal.module.scss';
 import filterTime from './utils';
 
@@ -21,11 +24,11 @@ export default function GeneratedSuggestionModal({
 }) {
   const dispatch = useDispatch();
   const busyTime = useSelector(selectGroupBusyTime);
+  const groupTask = useSelector(selectGroupTaskOfCurrentGroup);
 
-  // const filterdBusyTimeByPeriod = filterByPeriod(startDate, busyTime, howLong);
   const filterdBusyTimeByPeriod = filterTime(
     startDate,
-    busyTime,
+    busyTime.concat(groupTask.map((task) => task.time)),
     howLong,
     timeOfDay,
     isWeekend,

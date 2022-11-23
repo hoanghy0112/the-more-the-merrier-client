@@ -21,7 +21,8 @@ export default function CalendarDisplayTask({
   startDate,
   tasks,
   changeTask,
-  groupTasks,
+  groupBusyTimes,
+  isGroup,
 }) {
   const groupInfo = useSelector(selectCurrentGroupInfo);
 
@@ -38,11 +39,13 @@ export default function CalendarDisplayTask({
           rect={rect}
           startDate={startDate}
           changeTask={changeTask}
+          isGroup={isGroup}
         />
       ))}
 
-      {groupTasks.map(({ from, to }) => (
+      {groupBusyTimes.map(({ from, to }) => (
         <div
+          key={from + to}
           className={styles.groupTask}
           style={{
             top: `${
@@ -68,6 +71,7 @@ export default function CalendarDisplayTask({
       {suggestionVisible &&
         suggestionTime.map(({ from, to }) => (
           <div
+            key={from + to}
             className={styles.suggestionTask}
             style={{
               top: `${
@@ -98,7 +102,7 @@ export default function CalendarDisplayTask({
 CalendarDisplayTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
-  rect: PropTypes.instanceOf(DOMRect).isRequired,
+  rect: PropTypes.instanceOf(DOMRect),
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
@@ -112,15 +116,18 @@ CalendarDisplayTask.propTypes = {
     }),
   ),
   changeTask: PropTypes.func.isRequired,
-  groupTasks: PropTypes.arrayOf(
+  groupBusyTimes: PropTypes.arrayOf(
     PropTypes.shape({
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
     }),
   ),
+  isGroup: PropTypes.bool,
 };
 
 CalendarDisplayTask.defaultProps = {
   tasks: [],
-  groupTasks: [],
+  groupBusyTimes: [],
+  isGroup: false,
+  rect: new DOMRect(0, 0, 0, 0),
 };

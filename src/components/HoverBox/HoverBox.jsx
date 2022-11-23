@@ -149,7 +149,7 @@ HoverBox.propTypes = {
     PropTypes.node,
   ]),
   canAppear: PropTypes.bool,
-  parentRect: PropTypes.arrayOf(PropTypes.number),
+  parentRect: PropTypes.instanceOf(DOMRect),
   onOpen: PropTypes.func,
 };
 
@@ -157,6 +157,6 @@ HoverBox.defaultProps = {
   mainBox: <div />,
   infoBox: <div />,
   canAppear: true,
-  parentRect: [0, 0, 0, 0],
+  parentRect: new DOMRect(0, 0, 0, 0),
   onOpen: () => {},
 };

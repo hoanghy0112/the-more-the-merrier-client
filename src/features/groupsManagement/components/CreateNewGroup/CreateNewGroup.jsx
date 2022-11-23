@@ -16,7 +16,14 @@ export default function CreateNewGroup() {
   const users = [];
 
   const handleCreateCLick = () => {
-    dispatch(createNewGroup(user.engName, description, users, user._id));
+    dispatch(
+      createNewGroup({
+        name: titleRef?.current?.value || '',
+        description,
+        users,
+        admin: user._id,
+      }),
+    );
   };
 
   return (
