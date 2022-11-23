@@ -19,3 +19,5 @@ export const GET_GROUP_BY_ID = `${BASE_URL}/api/v1/group`;
 export const ADD_NEW_USER_TO_GROUP = `${BASE_URL}/api/v1/group`;
 export const REMOVE_USER_FROM_GROUP = `${BASE_URL}/api/v1/group`;
 export const DELETE_GROUP_BY_ID = `${BASE_URL}/api/v1/group`;
+
+export const GET_ALL_NOTIFICATIONS = `${BASE_URL}/api/v1/notifications`;

@@ -105,4 +105,45 @@
       color: #00a6ca;
     }
   }
+  .listContainer {
+    overflow: scroll;
+    *::-webkit-scrollbar {
+      width: 0px;
+    }
+    .notiContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 4px 0px 4px 5px;
+      gap: 10px;
+
+      // width: 241px;
+      height: 42px;
+
+      background: #ffffff;
+      border-radius: 5px;
+      .imageContainer {
+        width: 33px;
+        height: 33px;
+        border-radius: 9999px;
+
+        background: #d9d9d9;
+      }
+      .content {
+        height: 13px;
+
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 9.6px;
+        line-height: 13px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        letter-spacing: 0.05em;
+
+        color: #000000;
+      }
+    }
+  }
 }

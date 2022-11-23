@@ -62,7 +62,10 @@ export default function AddUserModal() {
           <div className={styles.listUser}>
             {users ? (
               users.map((user) => (
-                <div className={styles.userContainer}>
+                <div
+                  className={styles.userContainer}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className={styles.imageContainer}>
                     <img src={user.photo} alt="avatar" />
                   </div>
