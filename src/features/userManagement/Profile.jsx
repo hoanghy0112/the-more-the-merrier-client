@@ -6,7 +6,6 @@ import { selectUserProfile } from './ProfileSlice';
 
 export default function Profile() {
   const user = useSelector(selectUserProfile);
-
   return (
     <div className={styles.container}>
       {user ? (
