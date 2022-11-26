@@ -10,6 +10,10 @@ import TaskCard from '../../../../components/TaskCard/TaskCard';
 
 import styles from './CalendarDisplayTask.module.scss';
 import { selectCurrentGroupInfo } from '../../../groupsManagement/groupSlice';
+import {
+  selectSuggestionTime,
+  selectSuggestionVisible,
+} from '../../calendarSlice';
 
 export default function CalendarDisplayTask({
   gridSize,
@@ -17,9 +21,13 @@ export default function CalendarDisplayTask({
   startDate,
   tasks,
   changeTask,
-  groupTasks,
+  groupBusyTimes,
+  isGroup,
 }) {
   const groupInfo = useSelector(selectCurrentGroupInfo);
+
+  const suggestionVisible = useSelector(selectSuggestionVisible);
+  const suggestionTime = useSelector(selectSuggestionTime);
 
   return (
     <>
@@ -31,11 +39,13 @@ export default function CalendarDisplayTask({
           rect={rect}
           startDate={startDate}
           changeTask={changeTask}
+          isGroup={isGroup}
         />
       ))}
 
-      {groupTasks.map(({ from, to }) => (
+      {groupBusyTimes.map(({ from, to }) => (
         <div
+          key={from + to}
           className={styles.groupTask}
           style={{
             top: `${
@@ -54,10 +64,37 @@ export default function CalendarDisplayTask({
               1200
             }px`,
             opacity: 1 / ((groupInfo?.users?.length || 0) + 1),
-            // height: 100
           }}
         />
       ))}
+
+      {suggestionVisible &&
+        suggestionTime.map(({ from, to }) => (
+          <div
+            key={from + to}
+            className={styles.suggestionTask}
+            style={{
+              top: `${
+                (((new Date(from).getHours() * 60 +
+                  new Date(from).getMinutes()) %
+                  (24 * 60)) /
+                  (24 * 60)) *
+                1200
+              }px`,
+              left: `${
+                moment(new Date(from)).diff(new Date(startDate), 'days') *
+                gridSize
+              }px`,
+              width: `${gridSize - 6}px`,
+              height: `${
+                (moment(new Date(to)).diff(new Date(from), 'hours', true) /
+                  24) *
+                1200
+              }px`,
+              opacity: 1 / ((groupInfo?.users?.length || 0) + 1),
+            }}
+          />
+        ))}
     </>
   );
 }
@@ -65,7 +102,7 @@ export default function CalendarDisplayTask({
 CalendarDisplayTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
   startDate: PropTypes.instanceOf(Date).isRequired,
-  rect: PropTypes.instanceOf(DOMRect).isRequired,
+  rect: PropTypes.instanceOf(DOMRect),
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
@@ -79,15 +116,18 @@ CalendarDisplayTask.propTypes = {
     }),
   ),
   changeTask: PropTypes.func.isRequired,
-  groupTasks: PropTypes.arrayOf(
+  groupBusyTimes: PropTypes.arrayOf(
     PropTypes.shape({
       from: PropTypes.instanceOf(Date),
       to: PropTypes.instanceOf(Date),
     }),
   ),
+  isGroup: PropTypes.bool,
 };
 
 CalendarDisplayTask.defaultProps = {
   tasks: [],
-  groupTasks: [],
+  groupBusyTimes: [],
+  isGroup: false,
+  rect: new DOMRect(0, 0, 0, 0),
 };

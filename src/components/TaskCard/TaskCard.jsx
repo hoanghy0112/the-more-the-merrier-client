@@ -17,7 +17,14 @@ import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 
 import styles from './TaskCard.module.scss';
 
-export default function TaskCard({ task, rect, width, startDate, changeTask }) {
+export default function TaskCard({
+  task,
+  rect,
+  width,
+  startDate,
+  changeTask,
+  isGroup,
+}) {
   const [isDrag, setIsDrag] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -119,7 +126,13 @@ export default function TaskCard({ task, rect, width, startDate, changeTask }) {
               </div>
             </div>
           }
-          infoBox={<DescriptionPopUpMinimize data={task} />}
+          infoBox={
+            <DescriptionPopUpMinimize
+              onChange={changeTask}
+              isGroup={isGroup}
+              data={task}
+            />
+          }
           onOpen={setIsHovering}
           parentRect={rect}
           canAppear={!isDrag}
@@ -144,6 +157,9 @@ TaskCard.propTypes = {
   startDate: PropTypes.instanceOf(Date).isRequired,
   rect: PropTypes.instanceOf(DOMRect).isRequired,
   changeTask: PropTypes.func.isRequired,
+  isGroup: PropTypes.bool,
 };
 
-TaskCard.defaultProps = {};
+TaskCard.defaultProps = {
+  isGroup: false,
+};

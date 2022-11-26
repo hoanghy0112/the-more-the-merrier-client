@@ -4,14 +4,17 @@ import { useSelector } from 'react-redux';
 import styles from './Profile.module.scss';
 import { selectUserProfile } from './ProfileSlice';
 
-export default function Profile() {
+export default function Profile(props) {
   const user = useSelector(selectUserProfile);
+  function handleClick() {
+    props.onClick();
+  }
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleClick}>
       {user ? (
         <>
           <div className={styles.imageContainer}>
-            <img src={user.photo} alt="avatar" />
+            {user?.photo ? <img src={user.photo} alt="avatar" /> : <div />}
           </div>
           <div className={styles.nameContainer}>
             <div className={styles.name}>

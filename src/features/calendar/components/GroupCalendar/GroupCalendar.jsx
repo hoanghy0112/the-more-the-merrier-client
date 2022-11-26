@@ -1,3 +1,6 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
@@ -9,18 +12,24 @@ import { useLocation } from 'react-router-dom';
 import Calendar from '../Calendar/Calendar';
 
 import {
+  changeTaskOfGroup,
+  createTaskOfGroup,
+  getBusyTimeOfGroup,
   getTaskOfGroup,
+  selectCurrentGroupInfo,
   selectGroupBusyTime,
+  selectGroupTaskOfCurrentGroup,
 } from '../../../groupsManagement/groupSlice';
-import styles from './GroupCalendar.module.scss';
+
+// import styles from './GroupCalendar.module.scss';
 
 export default function GroupCalendar({ startDate }) {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // const [gridSize, setGridSize] = useState();
-
-  const groupTasks = useSelector(selectGroupBusyTime);
+  const tasks = useSelector(selectGroupTaskOfCurrentGroup);
+  const currentGroupInfo = useSelector(selectCurrentGroupInfo);
+  const groupBusyTimes = useSelector(selectGroupBusyTime);
 
   useEffect(() => {
     const auth = getAuth();
@@ -29,7 +38,7 @@ export default function GroupCalendar({ startDate }) {
         const groupID = location.pathname.split('/').slice(-1)[0];
         const from = new Date(startDate).getTime();
         const to = new Date(from + 7 * 24 * 60 * 60 * 1000).getTime();
-        dispatch(getTaskOfGroup({ groupID, from, to }));
+        dispatch(getBusyTimeOfGroup({ groupID, from, to }));
       }
     });
 
@@ -37,9 +46,19 @@ export default function GroupCalendar({ startDate }) {
   }, [startDate]);
 
   return (
-    <div className={styles.container}>
-      <Calendar startDate={startDate} groupTasks={groupTasks} isGroup />
-    </div>
+    <Calendar
+      startDate={startDate}
+      tasks={tasks}
+      groupBusyTimes={groupBusyTimes}
+      createNewTask={(data) => {
+        dispatch(createTaskOfGroup({ groupID: currentGroupInfo._id, ...data }));
+      }}
+      changeTask={(data, taskID) => {
+        dispatch(changeTaskOfGroup({ taskID, ...data }));
+      }}
+      retrieveAllTask={() => dispatch(getTaskOfGroup())}
+      isGroup
+    />
   );
 }
 

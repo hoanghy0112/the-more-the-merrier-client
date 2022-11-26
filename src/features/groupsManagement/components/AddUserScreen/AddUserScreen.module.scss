@@ -3,15 +3,17 @@
   top: 0;
   left: 0;
 
+  transform: translateY(-50%);
+
   display: grid;
-  gap: 25px;
+  gap: 20px;
 
   background-color: white;
 
   width: fit-content;
   padding: 30px;
   margin: 20px;
-  max-height: 200px;
+  max-height: 315px;
 
   // border: 0.5px solid rgb(113, 113, 113);
   border: 0.562212px solid rgba(0, 165, 202, 0.602);

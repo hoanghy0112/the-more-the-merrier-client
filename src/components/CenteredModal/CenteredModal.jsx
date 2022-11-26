@@ -3,6 +3,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
+import styles from './CenteredModal.module.scss';
+
 Modal.setAppElement('#modal');
 
 export default function CenteredModal({ isOpen, onClose, children }) {
@@ -10,6 +12,7 @@ export default function CenteredModal({ isOpen, onClose, children }) {
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
+      className={styles.modal}
       style={{
         content: {
           top: '50%',

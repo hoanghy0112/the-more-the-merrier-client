@@ -123,6 +123,11 @@ export default function Tag({ type, input = '', shape }) {
 
 Tag.propTypes = {
   type: PropTypes.string.isRequired,
-  input: PropTypes.string.isRequired,
-  shape: PropTypes.string.isRequired,
+  input: PropTypes.string,
+  shape: PropTypes.string,
+};
+
+Tag.defaultProps = {
+  input: '',
+  shape: '',
 };

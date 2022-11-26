@@ -29,7 +29,7 @@
     flex-direction: row;
     align-items: center;
     padding: 0px 10px;
-    gap: 10px;
+    gap: 8px;
 
     width: 100%;
     height: 36px;
@@ -103,10 +103,10 @@
     *::-webkit-scrollbar {
       width: 0;
     }
-    max-height: 250px;
+    max-height: 120px;
   }
   .userContainer {
-    box-sizing: border-box;
+    cursor: pointer;
 
     display: flex;
     flex-direction: row;
@@ -116,6 +116,12 @@
     width: 100%;
 
     border-bottom: 1px solid rgba(0, 85, 103, 0.5);
+
+    transition: 0.2s;
+
+    &:hover {
+      background-color: #bce3ec;
+    }
 
     .imageContainer {
       width: 30px;
