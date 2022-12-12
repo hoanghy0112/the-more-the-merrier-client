@@ -2,18 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { selectCurrentWeekTasks } from '../../../features/tasksManagement/TasksSlice';
 import { useSelector } from 'react-redux';
 import styles from './BusyChart.module.scss';
-import { UserData } from './BusyChartData';
 
+import Chart from 'chart.js/auto';
 import { Bar, Line } from "react-chartjs-2";
 
-const now = new Date();
-const date = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() - now.getDay() + 1,
-);
 
 const labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+
 export default function BusyChart() {
   const now = new Date();
   const [date, setDate] = useState(
