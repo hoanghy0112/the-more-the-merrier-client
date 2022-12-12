@@ -1,4 +1,5 @@
 export const TIME_PERIOD_LABELS = {
+  // howLong
   LESS_THAN_1: 'ít hơn 1 giờ',
   FROM_1_TO_2: 'từ 1-2 giờ',
   FROM_2_TO_4: 'từ 2-4 giờ',
@@ -7,6 +8,7 @@ export const TIME_PERIOD_LABELS = {
 };
 
 export const TIME_OF_DAY_LABELS = {
+  // timeOfDay
   MORNING: 'Buổi sáng',
   NOON: 'Buổi trưa',
   AFTERNOON: 'Buổi chiều',
