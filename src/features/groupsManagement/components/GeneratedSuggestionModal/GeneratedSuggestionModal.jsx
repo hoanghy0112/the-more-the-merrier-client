@@ -1,6 +1,6 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable prefer-const */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,7 +34,9 @@ export default function GeneratedSuggestionModal({
     isWeekend,
   );
 
-  dispatch(setSuggestionTime(filterdBusyTimeByPeriod));
+  useEffect(() => {
+    dispatch(setSuggestionTime(filterdBusyTimeByPeriod));
+  }, []);
 
   return (
     <div className={styles.container}>

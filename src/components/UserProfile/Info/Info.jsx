@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-import styles from '../../pages/HomePage/ProfileOutlet/ProfileOutlet.module.scss';
+import styles from './Info.module.scss';
 
 export default function Info(props) {
     return (
@@ -19,6 +18,7 @@ export default function Info(props) {
           <p>Personal Information</p>
             <div className={styles.userInfoTable}>
                 <table width="100%">
+                    <tbody>
                     <tr>
                         <td className={styles.header}>Name:</td>
                         <td>{props.givenName} {props.familyName}</td>
@@ -35,6 +35,7 @@ export default function Info(props) {
                         <td className={styles.header}>Email:</td>
                         <td>{props.email}</td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

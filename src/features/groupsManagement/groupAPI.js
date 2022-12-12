@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 
 import {
+  CHANGE_TASK_OF_GROUP,
   CREATE_NEW_GROUP,
   CREATE_TASK_OF_GROUP,
   GET_ALL_GROUP_OF_CURRENT_USER,
@@ -104,6 +105,27 @@ export async function createTaskOfGroupAPI(
         belongTo: groupID,
         descriptions,
       },
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function changeTaskOfGroupAPI(taskID, data) {
+  try {
+    const auth = getAuth();
+    const accessToken = await auth.currentUser.getIdToken();
+    const response = await axios.put(
+      `${CHANGE_TASK_OF_GROUP}/${taskID}`,
+      data,
       {
         withCredentials: true,
         headers: {

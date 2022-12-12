@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import Calendar from '../Calendar/Calendar';
 
 import {
+  changeTaskOfGroup,
   createTaskOfGroup,
   getBusyTimeOfGroup,
   getTaskOfGroup,
@@ -49,9 +50,12 @@ export default function GroupCalendar({ startDate }) {
       startDate={startDate}
       tasks={tasks}
       groupBusyTimes={groupBusyTimes}
-      createNewTask={(data) =>
-        dispatch(createTaskOfGroup({ groupID: currentGroupInfo._id, ...data }))
-      }
+      createNewTask={(data) => {
+        dispatch(createTaskOfGroup({ groupID: currentGroupInfo._id, ...data }));
+      }}
+      changeTask={(data, taskID) => {
+        dispatch(changeTaskOfGroup({ taskID, ...data }));
+      }}
       retrieveAllTask={() => dispatch(getTaskOfGroup())}
       isGroup
     />

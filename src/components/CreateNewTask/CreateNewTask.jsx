@@ -88,7 +88,7 @@ export default function CreateNewTask({
 
     const timeout = setTimeout(() => {
       if (onChange) {
-        onChange(newData);
+        onChange(newData, data._id);
       } else {
         dispatch(
           changeTask({

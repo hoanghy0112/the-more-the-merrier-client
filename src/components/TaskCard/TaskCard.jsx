@@ -126,7 +126,13 @@ export default function TaskCard({
               </div>
             </div>
           }
-          infoBox={<DescriptionPopUpMinimize isGroup={isGroup} data={task} />}
+          infoBox={
+            <DescriptionPopUpMinimize
+              onChange={changeTask}
+              isGroup={isGroup}
+              data={task}
+            />
+          }
           onOpen={setIsHovering}
           parentRect={rect}
           canAppear={!isDrag}
