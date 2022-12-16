@@ -4,7 +4,7 @@ import filterIsWeekend from './filterIsWeekend';
 import { getInitialTimeList, splitBusyTime, splitDay } from './utils';
 
 export default function filterTime(
-  startDate,
+  startDate, // Date
   busyTime,
   howLong,
   timeOfDay,
