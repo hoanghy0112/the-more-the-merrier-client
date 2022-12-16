@@ -38,7 +38,7 @@ export default function AddUserModal() {
     const groupID = currentGroup._id;
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
-    axios.put(
+    await axios.put(
       `${ADD_NEW_USER_TO_GROUP}/${groupID}/add`,
       {
         members: [userID],

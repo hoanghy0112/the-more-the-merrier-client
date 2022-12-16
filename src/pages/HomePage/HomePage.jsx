@@ -29,7 +29,7 @@ export default function HomePage() {
     <div className={styles.container}>
       <div className={styles.informationBox}>
         <div className={styles.topBox}>
-          <Profile 
+          <Profile
             onClick={() => {
               navigate('/home/profile');
             }}
