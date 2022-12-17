@@ -32,7 +32,14 @@ export default function BusyChart() {
     for (let i=0; i<tasks.length; i++)
     {
       var taskDate = new Date(tasks[i].time.from);
-      var taskDayOfWeek = labels[taskDate.getDay()];
+      var taskDayNumber = taskDate.getDay();
+      taskDayNumber -= 1;
+      if (taskDayNumber === -1)
+      {
+        taskDayNumber = 6
+      }
+      console.log(taskDayNumber); 
+      var taskDayOfWeek = labels[taskDayNumber];
       if (taskDayOfWeek === dayOfWeek)
       {
         count += ((new Date(tasks[i].time.to).getTime() - new Date(tasks[i].time.from).getTime()) / 86400000) * 24;
@@ -81,7 +88,7 @@ export default function BusyChart() {
   }
 
   // const [labels, setLabels] = useState(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
-  var labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const [data, setData] = useState({
     labels,
     datasets: [
@@ -100,7 +107,7 @@ export default function BusyChart() {
     setWeek(true);
     setMonth(false);
     setYear(false);
-    labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     setData({
       labels,
       datasets: [
@@ -165,7 +172,7 @@ export default function BusyChart() {
         </div>
       </div>
       <div className={styles.chartContainer}>
-        <Line data={data} width={"600px"} height={"200px"}/>
+        <Line data={data} width={"800px"} height={"200px"}/>
       </div>
     </div>
   );
