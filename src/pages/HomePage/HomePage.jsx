@@ -9,6 +9,7 @@ import TabButton from '../../components/TabButton/TabButton';
 import { ICON_LOGOUT } from '../../assets/icons';
 import Mylogo from '../../assets/Logo.svg';
 import styles from './HomePage.module.scss';
+import NotificationIndividual from '../../components/NotificationIndividual/NotificationIndividual';
 
 export default function HomePage() {
   const [tab, setTab] = useState('');
@@ -69,6 +70,9 @@ export default function HomePage() {
       </div>
       <div className={styles.mainBox}>
         <div className={styles.header}>
+          <div>
+            <NotificationIndividual />
+          </div>
           <img src={Mylogo} alt="Logo" />
         </div>
         <div className={styles.outlet}>

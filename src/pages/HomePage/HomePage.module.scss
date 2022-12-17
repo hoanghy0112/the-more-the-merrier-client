@@ -62,6 +62,9 @@
     align-items: flex-end;
 
     .header {
+      display: flex;
+      align-items: center;
+      gap: 200px;
       //background-color: rgb(14, 85, 119);
       padding: 10px 30px 0px 30px;
     }

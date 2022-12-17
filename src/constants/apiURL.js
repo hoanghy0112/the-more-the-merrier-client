@@ -25,3 +25,5 @@ export const CHANGE_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
 export const GET_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
 
 export const GET_ALL_NOTIFICATIONS = `${BASE_URL}/api/v1/notifications`;
+
+export const SOCKET_ENDPOINT = `${BASE_URL}`;

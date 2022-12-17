@@ -9,6 +9,8 @@ import { store, persistor } from './app/store';
 
 import router from './routers/MainRouter';
 
+import connectSocket from './services/connectSocket';
+
 function App() {
   return (
     <Provider store={store}>
