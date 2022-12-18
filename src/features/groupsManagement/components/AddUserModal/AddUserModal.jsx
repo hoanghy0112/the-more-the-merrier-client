@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -8,7 +9,7 @@ import { ICON_SEARCH } from '../../../../assets/icons';
 import { FIND_USER_BY_NAME } from '../../../../constants/apiURL';
 import styles from './AddUserModal.module.scss';
 
-export default function AddUserModal() {
+export default function AddUserModal({ addUser }) {
   const [searchInput, setSearchInput] = useState('');
   const [users, setUsers] = useState([]);
   const [isNotFind, setIsNotFind] = useState(true);
@@ -20,10 +21,13 @@ export default function AddUserModal() {
       });
       setUsers(userList.data);
     };
-    fetchData();
+    if (searchInput) fetchData();
+    else setIsNotFind(true);
   }, [searchInput]);
 
-  async function handleInviteUser(user) {}
+  async function handleInviteUser(user) {
+    addUser(user);
+  }
 
   const handleSearchChange = async (e) => {
     setSearchInput(e.target.value);
@@ -42,7 +46,10 @@ export default function AddUserModal() {
               height: '90%',
             }}
             value={searchInput}
-            onClick={() => setIsNotFind(false)}
+            onChange={(e) => {
+              setIsNotFind(false);
+              handleSearchChange(e);
+            }}
             placeholder="Enter tag name here ..."
           />
         </div>

@@ -10,8 +10,8 @@
   outline: none;
   background-color: #00a6ca;
   color: white;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
 
   transition: 0.3s;
@@ -20,5 +20,16 @@
     top: -5px;
     left: -5px;
     box-shadow: 5px 5px 0 0 rgb(58, 229, 206);
+  }
+
+  &.disabled {
+    cursor: default;
+    background-color: rgb(197, 195, 195);
+
+    &:hover {
+      top: 0px;
+      left: 0px;
+      box-shadow: 0px 0px 0 0 rgb(58, 229, 206);
+    }
   }
 }
