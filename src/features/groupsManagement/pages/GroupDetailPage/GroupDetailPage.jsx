@@ -101,7 +101,10 @@ export default function GroupDetailPage() {
             isOpen={isOpenAddUserModal}
             onClose={() => setIsOpenAddUserModal(false)}
           >
-            <AddUserScreen />
+            <AddUserScreen
+              groupInfo={groupInfo}
+              closeModal={() => setIsOpenAddUserModal(false)}
+            />
           </CenteredModal>
           <CenteredModal
             isOpen={isOpenAddTaskModal}

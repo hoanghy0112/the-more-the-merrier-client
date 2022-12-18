@@ -1,112 +1,113 @@
-import axios from 'axios';
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { getAuth } from 'firebase/auth';
-import { GET_ALL_NOTIFICATIONS } from '../../constants/apiURL';
+import { CSSTransition } from 'react-transition-group';
+import useComponentVisible from '../../hooks/useComponentVisible';
+
+import useNotification from '../../hooks/useNotification';
+
 import styles from './NotificationList.module.scss';
 
-export default function NotificationList() {
-  const [isSelected, setIsSelected] = useState(true);
-  const [list, setList] = useState([]);
+export default function NotificationList({
+  isDisplay,
+  setIsDisplay,
+  setGroupID,
+  setIsOpenJoinGroupBox,
+}) {
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(false);
+  const [isReadAll, setIsReadAll] = useState(true);
+
+  const { notifications, isLoading, readAllNotification, readNotification } =
+    useNotification();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const auth = getAuth();
-      const accessToken = await auth.currentUser.getIdToken();
-      const notificationList = await axios.get(GET_ALL_NOTIFICATIONS, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(notificationList);
-      setList(notificationList.data);
-    };
-    fetchData();
-  }, [isSelected]);
+    setIsDisplay(isComponentVisible);
+  }, [isComponentVisible]);
+
+  useEffect(() => {
+    setIsComponentVisible(isDisplay);
+  }, [isDisplay]);
 
   return (
-    <div className={styles.container}>
-      <p className={styles.title}>Thông báo</p>
-      <div className={styles.filterBar}>
-        {isSelected ? (
-          <div className={styles.buttonContainer}>
-            <div
-              className={styles.selectedButton}
-              style={{ cursor: 'pointer' }}
-              onClick={() => setIsSelected(true)}
+    <CSSTransition
+      in={isDisplay}
+      classNames={{
+        enter: styles.bodyEnterActive,
+        enterActive: styles.bodyEnterDone,
+        enterDone: styles.bodyEnterDone,
+        exit: styles.bodyExitActive,
+        exitActive: styles.bodyExitDone,
+        exitDone: styles.bodyExitDone,
+      }}
+      timeout={400}
+    >
+      <div ref={ref} className={styles.notificationBody}>
+        <p className={styles.header}>Notification</p>
+        <div className={styles.buttonGroup}>
+          <div className={styles.readFilter}>
+            <button
+              onClick={() => {
+                setIsReadAll(true);
+              }}
+              className={isReadAll && styles.choosing}
+              type="button"
             >
-              Tất cả
-            </div>
-            <div
-              className={styles.notSelectedButton}
-              style={{ cursor: 'pointer' }}
-              onClick={() => setIsSelected(false)}
+              All
+            </button>
+            <button
+              onClick={() => {
+                setIsReadAll(false);
+              }}
+              className={isReadAll || styles.choosing}
+              type="button"
             >
-              Chưa đọc
-            </div>
+              Unread
+            </button>
           </div>
+          <button
+            type="button"
+            onClick={readAllNotification}
+            className={styles.readAll}
+          >
+            Mark read all
+          </button>
+        </div>
+        {isLoading ? (
+          <div>Loading...</div>
         ) : (
-          <div className={styles.buttonContainer}>
-            <div
-              className={styles.notSelectedButton}
-              style={{ cursor: 'pointer' }}
-              onClick={() => setIsSelected(true)}
-            >
-              Tất cả
-            </div>
-            <div
-              className={styles.selectedButton}
-              style={{ cursor: 'pointer' }}
-              onClick={() => setIsSelected(false)}
-            >
-              Chưa đọc
-            </div>
+          <div className={styles.notificationList}>
+            {notifications
+              ?.filter?.((notification) => isReadAll || !notification.isRead)
+              ?.map?.(
+                ({
+                  content,
+                  thumbnail,
+                  isRead,
+                  _id,
+                  type,
+                  groupID: groupDataID,
+                }) => (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (type === 'invite') {
+                        setGroupID(groupDataID);
+                        setIsOpenJoinGroupBox(true);
+                      }
+                      readNotification(_id);
+                    }}
+                    className={`${styles.notificationItem} ${
+                      isRead || styles.unread
+                    }`}
+                  >
+                    <img src={thumbnail} alt="" />
+                    <p>{content}</p>
+                  </button>
+                ),
+              )}
           </div>
         )}
-        <p className={styles.text} style={{ cursor: 'pointer' }}>
-          Xem tất cả
-        </p>
       </div>
-      <div className={styles.listContainer}>
-        {isSelected
-          ? list.map((notification) => (
-              <div
-                className={styles.notiContainer}
-                style={{
-                  backgroundColor: notification.isRead
-                    ? '#EFDAD7'
-                    : 'transparent',
-                }}
-              >
-                <img
-                  src={notification.thumbnail}
-                  alt="notification"
-                  className={styles.imageContainer}
-                />
-                <p className={styles.content}>{notification.content}</p>
-              </div>
-            ))
-          : list
-              .filter((notice) => {
-                return notice.isRead;
-              })
-              .map((notification) => (
-                <div
-                  className={styles.notiContainer}
-                  style={{
-                    backgroundColor: notification.isRead
-                      ? '#EFDAD7'
-                      : 'transparent',
-                  }}
-                >
-                  <img
-                    src={notification.thumbnail}
-                    alt="notification"
-                    className={styles.imageContainer}
-                  />
-                  <p className={styles.content}>{notification.content}</p>
-                </div>
-              ))}
-      </div>
-    </div>
+    </CSSTransition>
   );
 }
