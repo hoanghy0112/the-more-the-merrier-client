@@ -1,0 +1,125 @@
+.popup {
+  padding: 25px 30px;
+  border-radius: 10px;
+  background-color: #fff;
+
+  display: grid;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+
+  .header {
+    font-weight: 600;
+  }
+
+  .content {
+    font-weight: 500;
+  }
+
+  .groupName {
+    color: #0066ff;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .buttonGroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+
+    button {
+      border: none;
+      outline: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: 0.3s;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .agree {
+      background-color: #00a6ca;
+      color: white;
+
+      &:hover {
+        transform: translate(-5px, -5px);
+        box-shadow: 5px 5px 0 0 rgb(58, 229, 206);
+      }
+    }
+
+    .reject {
+      color: #e09191;
+      background: #ffffff;
+      border: 0.5px solid #e09191;
+
+      &:hover {
+        background-color: #e09191;
+        color: white;
+      }
+    }
+  }
+}
+
+.detailedPopUp {
+  padding: 30px 30px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: grid;
+  gap: 15px;
+  font-size: 16px;
+  text-align: center;
+
+  p {
+    font-weight: 500;
+    color: rgb(132, 132, 132);
+    display: flex;
+    align-items: center;
+
+    .description {
+      font-weight: 500;
+      font-style: italic;
+      color: rgb(101, 101, 101);
+    }
+
+    .author {
+      font-weight: 500;
+      color: rgb(213, 164, 4);
+    }
+  }
+
+  .information {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0066ff;
+    margin-bottom: 20px;
+  }
+
+  img {
+   width: 30px;
+   border-radius: 999px;
+   margin: 0 5px 0 5px;
+  }
+
+  button {
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgb(150, 150, 150);
+    transition: 0.2s;
+    background-color: #00a6ca;
+    color: white;
+
+    &:hover {
+      cursor: pointer;
+      transform: translate(-5px, -5px);
+      box-shadow: 5px 5px 0 0 rgb(58, 229, 206);
+    }
+  }
+}

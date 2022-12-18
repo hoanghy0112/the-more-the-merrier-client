@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getAuth } from 'firebase/auth';
 
 import {
@@ -7,6 +8,7 @@ import {
   CREATE_TASK_OF_GROUP,
   GET_ALL_GROUP_OF_CURRENT_USER,
   GET_BUSY_TIME_OF_GROUP,
+  GET_GROUP_BY_ID,
   GET_TASK_OF_GROUP,
 } from '../../constants/apiURL';
 
@@ -156,3 +158,15 @@ export async function getTaskOfGroupAPI() {
     return null;
   }
 }
+
+export const getGroupInformationByID = createApi({
+  reducerPath: 'groupInformation',
+  baseQuery: fetchBaseQuery({ baseUrl: GET_GROUP_BY_ID }),
+  endpoints: (builder) => ({
+    groupInformationByID: builder.query({
+      query: (groupID) => `/${groupID}`,
+    }),
+  }),
+});
+
+export const { useGroupInformationByIDQuery } = getGroupInformationByID;
