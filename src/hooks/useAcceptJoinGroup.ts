@@ -1,4 +1,4 @@
-export default function useJoinGroup() {
+export default function useJoinGroup(groupID: string) {
   function accept() {}
   function reject() {}
 

@@ -6,7 +6,7 @@
   transform: translateY(-50%);
 
   display: grid;
-  gap: 20px;
+  gap: 30px;
 
   background-color: white;
 
@@ -17,7 +17,7 @@
 
   // border: 0.5px solid rgb(113, 113, 113);
   border: 0.562212px solid rgba(0, 165, 202, 0.602);
-  border-radius: 30px;
+  border-radius: 20px;
 
   font-size: 16px;
   font-weight: 500;
@@ -29,8 +29,8 @@
     .name {
       font-family: 'Baloo 2';
       font-style: normal;
-      font-weight: 700;
-      font-size: 30px;
+      font-weight: 600;
+      font-size: 25px;
       color: #00a6ca;
       align-self: center;
     }

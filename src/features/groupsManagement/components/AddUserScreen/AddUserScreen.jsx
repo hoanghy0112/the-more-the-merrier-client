@@ -6,19 +6,28 @@ import AddUserModal from '../AddUserModal/AddUserModal';
 import styles from './AddUserScreen.module.scss';
 
 export default function AddUserScreen() {
-  const location = useLocation();
-  const groupInfo = useSelector(
-    selectGroupByID(location.pathname.split('/').slice(-1)[0]),
-  );
+  // const location = useLocation();
+  // const groupInfo = useSelector(
+  //   selectGroupByID(location.pathname.split('/').slice(-1)[0]),
+  // );
+  const [users, setUsers] = useState(new Map());
 
-  // console.log('Info: ', groupInfo);
+  function addUser(user) {
+    const { _id } = user;
+    setUsers((prev) => {
+      prev.set(_id, user);
+      return new Map(prev);
+    });
+  }
+
   return (
     <div className={styles.groupContainer}>
       <div className={styles.introduction}>
-        <p className={styles.name}>{groupInfo?.name || ''}</p>
-        <div className={styles.numOfUser}>
+        {/* <p className={styles.name}>{groupInfo?.name || ''}</p> */}
+        <p className={styles.name}>Invite users to group</p>
+        {/* <div className={styles.numOfUser}>
           {`${(groupInfo?.users?.length || 0) + 1} users`}
-        </div>
+        </div> */}
       </div>
       <AddUserModal />
     </div>

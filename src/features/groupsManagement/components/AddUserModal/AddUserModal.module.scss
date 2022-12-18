@@ -43,8 +43,13 @@
     align-self: stretch;
     flex-grow: 0;
     .search {
+      width: 100%;
       outline: none;
       border: none;
+
+      &::placeholder {
+        font-size: 12px;
+      }
     }
   }
   .tagDescription {
@@ -111,7 +116,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 5px 10px;
+    padding: 8px 10px;
     gap: 10px;
     width: 100%;
 
@@ -136,37 +141,38 @@
       }
     }
 
-    .nameContainer {
-      height: 21px;
+    .information {
+      display: grid;
+      gap: 7px;
 
-      font-family: 'Manrope';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 10px;
-      line-height: 11px;
+      .nameContainer {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 11px;
 
-      display: flex;
-      align-items: center;
-      text-align: center;
-      letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        letter-spacing: 0.5px;
 
-      color: #000000;
-    }
-    .email {
-      height: 21px;
+        color: #000000;
+      }
+      .email {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 11px;
 
-      font-family: 'Manrope';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 10px;
-      line-height: 11px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        letter-spacing: 0.5px;
 
-      display: flex;
-      align-items: center;
-      text-align: center;
-      letter-spacing: 0.5px;
-
-      color: rgba(0, 85, 103, 0.5);
+        color: rgba(0, 85, 103, 0.5);
+      }
     }
   }
 }
