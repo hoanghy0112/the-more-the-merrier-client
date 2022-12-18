@@ -1,13 +1,17 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import axios from 'axios';
+
+import { ACCEPT_JOIN_GROUP } from '../../constants/apiURL';
 import { useGroupInformationByIDQuery } from '../../features/groupsManagement/groupAPI';
 import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 import CenteredModal from '../CenteredModal/CenteredModal';
 
 import styles from './JoinGroupPopup.module.scss';
+import { getAuth } from 'firebase/auth';
 
-export default function JoinGroupPopup({ groupID, isOpen, onClose }) {
+export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
   const {
     data: groupData,
     error: groupError,
@@ -20,19 +24,29 @@ export default function JoinGroupPopup({ groupID, isOpen, onClose }) {
     isLoading: adminIsLoading,
   } = useUserProfileByIDQuery(groupData?.admin || '');
 
-  console.log({ adminData });
-
   const [
     isOpenDetailGroupInformationPopUp,
     setIsOpenDetailGroupInformationPopUp,
   ] = useState(false);
 
-  function handleAgree() {}
+  async function handleAgree() {
+    closePopup();
+    const auth = getAuth();
+    const accessToken = await auth.currentUser.getIdToken();
+    const response = await axios.put(`${ACCEPT_JOIN_GROUP}/${groupID}`, '', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(response);
+  }
 
-  function handleReject() {}
+  function handleReject() {
+    closePopup();
+  }
 
   return (
-    <CenteredModal isOpen={isOpen} onClose={() => onClose(false)}>
+    <CenteredModal isOpen={isOpen} onClose={closePopup}>
       <div className={styles.popup}>
         {groupIsLoading ? (
           <p>Loading group info...</p>
@@ -81,10 +95,7 @@ export default function JoinGroupPopup({ groupID, isOpen, onClose }) {
         onClose={() => setIsOpenDetailGroupInformationPopUp(false)}
       >
         <div className={styles.detailedPopUp}>
-          {/* <p> */}
-          {/* <span>Name: </span> */}
           <p className={styles.information}>{groupData?.name || 'No name'}</p>
-          {/* </p> */}
           <p>
             <span>Description: </span>
             <span className={styles.description}>
@@ -101,10 +112,10 @@ export default function JoinGroupPopup({ groupID, isOpen, onClose }) {
               </span>
             )}
             <span className={styles.author}>
-              {/* {groupData?.description || 'No description'} */}
-              {adminIsLoading
+              {adminIsLoading && !adminError
                 ? 'Loading...'
                 : `${adminData?.familyName} ${adminData?.givenName}`}
+              {adminError && 'Error'}
             </span>
           </p>
           <button

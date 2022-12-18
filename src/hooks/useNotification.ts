@@ -8,7 +8,7 @@ export default function useNotification() {
   const { data: notifications, isLoading } = useRealTimeData(onConnect);
 
   function readNotification(notificationID: string) {
-    console.log({ notificationID });
+    console.log({ notificationIDs: [notificationID] });
     socket?.emit('read-notification', {
       notificationIDs: [notificationID],
     });
@@ -27,7 +27,6 @@ export default function useNotification() {
     socket.emit('get-notification');
 
     socket.on('notification', (data) => {
-      console.log({ data });
       setNotifications(data);
     });
 

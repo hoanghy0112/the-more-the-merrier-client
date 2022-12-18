@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import NOTIFICATION_ICON from '../../assets/icons/notification.svg';
 import useNotification from '../../hooks/useNotification';
-import CenteredModal from '../CenteredModal/CenteredModal';
 import JoinGroupPopup from '../JoinGroupPopup/JoinGroupPopup';
 
 import styles from './NotificationIndividual.module.scss';
@@ -81,7 +80,6 @@ export default function NotificationIndividual() {
                     content,
                     thumbnail,
                     isRead,
-                    time,
                     _id,
                     type,
                     groupID: groupDataID,
@@ -112,7 +110,7 @@ export default function NotificationIndividual() {
         <JoinGroupPopup
           groupID={groupID}
           isOpen={isOpenJoinGroupBox}
-          onClose={() => setIsOpenJoinGroupBox(false)}
+          closePopup={() => setIsOpenJoinGroupBox(false)}
         />
       )}
     </div>
