@@ -1,15 +1,18 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 
 import { ACCEPT_JOIN_GROUP } from '../../constants/apiURL';
 import { useGroupInformationByIDQuery } from '../../features/groupsManagement/groupAPI';
 import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
+
 import CenteredModal from '../CenteredModal/CenteredModal';
+import PrimaryButton from '../PrimaryButton/PrimaryButton';
 
 import styles from './JoinGroupPopup.module.scss';
-import { getAuth } from 'firebase/auth';
 
 export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
   const {
@@ -60,14 +63,27 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
               <>
                 <p className={styles.header}>Invitation to join group</p>
                 <p className={styles.content}>
-                  <span>Group </span>
+                  <span
+                    className={styles.adminName}
+                    onClick={() => setIsOpenDetailGroupInformationPopUp(true)}
+                  >
+                    {`${adminData?.familyName || ''} ${
+                      adminData?.givenName || ''
+                    }` || 'no name'}
+                  </span>
+                  <span> has invited you to join group </span>
                   <span
                     className={styles.groupName}
                     onClick={() => setIsOpenDetailGroupInformationPopUp(true)}
                   >
                     {groupData?.name || 'no name'}
                   </span>
-                  <span> has invited you to join group</span>
+                </p>
+                <p
+                  className={styles.groupName}
+                  onClick={() => setIsOpenDetailGroupInformationPopUp(true)}
+                >
+                  View group detail
                 </p>
                 <div className={styles.buttonGroup}>
                   <button
@@ -118,12 +134,10 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
               {adminError && 'Error'}
             </span>
           </p>
-          <button
-            type="button"
+          <PrimaryButton
+            title="Cancel"
             onClick={() => setIsOpenDetailGroupInformationPopUp(false)}
-          >
-            Cancel
-          </button>
+          />
         </div>
       </CenteredModal>
     </CenteredModal>
