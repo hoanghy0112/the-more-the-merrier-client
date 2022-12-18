@@ -29,7 +29,7 @@
     font-family: 'Manrope';
     font-style: normal;
     font-weight: 400;
-    font-size: 20.4px;
+    font-size: 22px;
     line-height: 28px;
 
     flex: none;
@@ -97,7 +97,7 @@
         font-family: 'Manrope';
         font-style: normal;
         font-weight: 500;
-        font-size: 11px;
+        font-size: 13px;
         line-height: 13px;
         display: flex;
         align-items: center;
@@ -135,7 +135,7 @@
       font-family: 'Manrope';
       font-style: normal;
       font-weight: 600;
-      font-size: 9.6px;
+      font-size: 12px !important;
       line-height: 13px;
       display: flex;
       align-items: center;
@@ -239,7 +239,7 @@
       font-family: 'Manrope';
       font-style: normal;
       font-weight: 400;
-      font-size: 9.6px;
+      font-size: 11px;
       line-height: 13px;
       display: flex;
       align-items: center;
@@ -269,9 +269,9 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 6px 65px;
+    padding: 8px 65px;
     gap: 10px;
-    height: 26px;
+    // height: 26px;
 
     background: #00a6ca;
     border-radius: 6px;
@@ -280,6 +280,7 @@
     order: 2;
     align-self: stretch;
     flex-grow: 0;
+    font-size: 13px;
 
     transition: 0.3s;
 

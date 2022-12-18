@@ -1,7 +1,7 @@
 .container {
-  width: 50px;
-  height: 17px;
-  padding: 3px;
+  // width: 50px;
+  // height: 17px;
+  padding: 3px 5px;
   position: relative;
 
   background: #00a6ca;
@@ -11,12 +11,12 @@
   .time {
     flex-direction: row;
     justify-content: center;
-    height: 13px;
+    // height: 13px;
 
     font-family: 'Manrope';
     font-style: normal;
     font-weight: 400;
-    font-size: 9px;
+    font-size: 12px;
     line-height: 13px;
     display: flex;
     align-items: center;

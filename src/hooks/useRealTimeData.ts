@@ -2,14 +2,13 @@
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 
 import { useMemo, useState, useRef, useEffect } from 'react';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
 import { SOCKET_ENDPOINT } from '../constants/apiURL';
 
-export default function useRealTimeData(endpoint) {
-  const [data, setData] = useState({});
-  const [token, setToken] = useState(null);
-  const isLoading = useRef(true);
+export default function useRealTimeData(onConnect) {
+  const [data, setData] = useState<any>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   const socket = useMemo(() => {
     if (token) {
@@ -23,7 +22,7 @@ export default function useRealTimeData(endpoint) {
   useEffect(() => {
     if (socket) {
       socket.on('connect', () => {
-        console.log('connect rui ne');
+        onConnect?.call?.(null, socket, setData);
       });
     }
   }, [socket]);
@@ -31,10 +30,10 @@ export default function useRealTimeData(endpoint) {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, async () => {
-      const accessToken = await auth.currentUser.getIdToken();
+      const accessToken = (await auth?.currentUser?.getIdToken?.()) || null;
       setToken(accessToken);
     });
   }, []);
 
-  return { data, isLoading: isLoading.current };
+  return { data, isLoading: data == null };
 }
