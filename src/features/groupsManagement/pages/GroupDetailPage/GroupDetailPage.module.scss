@@ -38,7 +38,7 @@
 
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
 
       background-color: white;
       box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
@@ -76,18 +76,10 @@
           color: #00a6ca;
         }
 
-        .numOfUser {
-          font-family: 'Baloo 2';
-          font-style: normal;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 19px;
+        .users {
           display: flex;
-          align-items: center;
-          text-align: center;
-          letter-spacing: 0.3625px;
-
-          color: #808080;
+          flex-wrap: wrap;
+          gap: 10px;
         }
       }
     }

@@ -3,14 +3,15 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/no-unknown-property */
 import React, { useCallback, useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import axios from 'axios';
+
 import AddUserModal from '../AddUserModal/AddUserModal';
 
 import CLOSE_ICON from '../../../../assets/icons/close.svg';
 
 import styles from './AddUserScreen.module.scss';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
-import { getAuth } from 'firebase/auth';
-import axios from 'axios';
 import { INVITE_USER_TO_GROUP } from '../../../../constants/apiURL';
 
 export default function AddUserScreen({ closeModal, groupInfo }) {
@@ -54,9 +55,6 @@ export default function AddUserScreen({ closeModal, groupInfo }) {
     <div className={styles.groupContainer}>
       <div className={styles.introduction}>
         <p className={styles.name}>Invite users to group</p>
-        {/* <div className={styles.numOfUser}>
-          {`${(groupInfo?.users?.length || 0) + 1} users`}
-        </div> */}
       </div>
       <AddUserModal addUser={addUser} />
       <div className={styles.userListContainer}>

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,11 +12,13 @@ import { getAllTasks } from '../../../tasksManagement/TasksSlice';
 import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
+import UserIcon from '../../../../components/UserIcon/UserIcon';
 import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
+import GroupInformation from '../../components/GroupInformation/GroupInformation';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -26,12 +28,21 @@ export default function GroupDetailPage() {
   const [isOpenAddTaskModal, setIsOpenAddTaskModal] = useState(false);
   const [isOpenGeneratedTimeModal, setIsOpenGeneratedTimeModal] =
     useState(false);
+  const [isOpenMoreInformationModal, setIsOpenMoreInformationModal] =
+    useState(false);
 
   const [suggestionOptions, setSuggestionOptions] = useState({});
 
   const groupInfo = useSelector(
     selectGroupByID(location.pathname.split('/').slice(-1)[0]),
   );
+
+  const userIDs = useMemo(() => {
+    if (groupInfo) {
+      return [...(groupInfo?.users || []), groupInfo?.admin || ''];
+    }
+    return [];
+  }, [groupInfo?.admin]);
 
   const now = new Date();
 
@@ -85,8 +96,10 @@ export default function GroupDetailPage() {
           </div>
           <div className={styles.groupBasicInfo}>
             <p className={styles.name}>{groupInfo?.name || ''}</p>
-            <p className={styles.numOfUser}>
-              {`${(groupInfo?.users?.length || 0) + 1} users`}
+            <p className={styles.users}>
+              {userIDs.map((userID) => (
+                <UserIcon userID={userID} />
+              ))}
             </p>
           </div>
           <PrimaryButton
@@ -96,6 +109,11 @@ export default function GroupDetailPage() {
           <PrimaryButton
             onClick={() => setIsOpenAddTaskModal(true)}
             title="Add new meeting"
+          />
+          <PrimaryButton
+            onClick={() => setIsOpenMoreInformationModal(true)}
+            title="More information"
+            reversed
           />
           <CenteredModal
             isOpen={isOpenAddUserModal}
@@ -126,6 +144,17 @@ export default function GroupDetailPage() {
               options={suggestionOptions}
               onClose={() => setIsOpenGeneratedTimeModal(false)}
             />
+          </CenteredModal>
+          <CenteredModal
+            isOpen={isOpenMoreInformationModal}
+            onClose={() => setIsOpenMoreInformationModal(false)}
+          >
+            {groupInfo && (
+              <GroupInformation
+                groupInfo={groupInfo}
+                closeModal={() => setIsOpenMoreInformationModal(false)}
+              />
+            )}
           </CenteredModal>
         </div>
       </div>

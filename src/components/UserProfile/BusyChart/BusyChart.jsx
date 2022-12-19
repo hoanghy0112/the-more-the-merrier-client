@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { selectAllTasks, selectCurrentWeekTasks } from '../../../features/tasksManagement/TasksSlice';
+import {
+  selectAllTasks,
+  selectCurrentWeekTasks,
+} from '../../../features/tasksManagement/TasksSlice';
 import { useSelector } from 'react-redux';
 import styles from './BusyChart.module.scss';
 
 import Chart from 'chart.js/auto';
-import { Bar, Line } from "react-chartjs-2";
-
-
-
-
+import { Bar, Line } from 'react-chartjs-2';
 
 export default function BusyChart() {
   const now = new Date();
@@ -29,28 +28,28 @@ export default function BusyChart() {
 
   function getWeekWorkHour(dayOfWeek) {
     var count = 0;
-    for (let i=0; i<tasks.length; i++)
-    {
+    for (let i = 0; i < tasks.length; i++) {
       var taskDate = new Date(tasks[i].time.from);
       var taskDayNumber = taskDate.getDay();
       taskDayNumber -= 1;
-      if (taskDayNumber === -1)
-      {
-        taskDayNumber = 6
+      if (taskDayNumber === -1) {
+        taskDayNumber = 6;
       }
-      console.log(taskDayNumber); 
+      console.log(taskDayNumber);
       var taskDayOfWeek = labels[taskDayNumber];
-      if (taskDayOfWeek === dayOfWeek)
-      {
-        count += ((new Date(tasks[i].time.to).getTime() - new Date(tasks[i].time.from).getTime()) / 86400000) * 24;
+      if (taskDayOfWeek === dayOfWeek) {
+        count +=
+          ((new Date(tasks[i].time.to).getTime() -
+            new Date(tasks[i].time.from).getTime()) /
+            86400000) *
+          24;
       }
     }
     return count;
   }
   function getMonthWorkHour(dayOfMonth) {
     var count = 0;
-    for (let i=0; i<allTasks.length; i++)
-    {
+    for (let i = 0; i < allTasks.length; i++) {
       var taskDate = new Date(allTasks[i].time.from);
       var taskDayOfMonth = taskDate.getDate();
       var taskMonth = taskDate.getMonth();
@@ -60,17 +59,23 @@ export default function BusyChart() {
       // console.log(taskDayOfMonth);
       // console.log(taskMonth);
       // console.log(now.getMonth());
-      if (taskDayOfMonth === dayOfMonth && taskMonth === now.getMonth() && taskYear === now.getFullYear())
-      {
-        count += ((new Date(allTasks[i].time.to).getTime() - new Date(allTasks[i].time.from).getTime()) / 86400000) * 24;
+      if (
+        taskDayOfMonth === dayOfMonth &&
+        taskMonth === now.getMonth() &&
+        taskYear === now.getFullYear()
+      ) {
+        count +=
+          ((new Date(allTasks[i].time.to).getTime() -
+            new Date(allTasks[i].time.from).getTime()) /
+            86400000) *
+          24;
       }
     }
     return count;
   }
   function getYearWorkHour(monthOfYear) {
     var count = 0;
-    for (let i=0; i<allTasks.length; i++)
-    {
+    for (let i = 0; i < allTasks.length; i++) {
       var taskDate = new Date(allTasks[i].time.from);
       var taskMonth = labels[taskDate.getMonth()];
       var taskYear = taskDate.getFullYear();
@@ -79,16 +84,27 @@ export default function BusyChart() {
       // console.log(taskDayOfMonth);
       // console.log(taskMonth);
       // console.log(now.getMonth());
-      if (taskMonth === monthOfYear && taskYear === now.getFullYear())
-      {
-        count += ((new Date(allTasks[i].time.to).getTime() - new Date(allTasks[i].time.from).getTime()) / 86400000) * 24;
+      if (taskMonth === monthOfYear && taskYear === now.getFullYear()) {
+        count +=
+          ((new Date(allTasks[i].time.to).getTime() -
+            new Date(allTasks[i].time.from).getTime()) /
+            86400000) *
+          24;
       }
     }
     return count;
   }
 
   // const [labels, setLabels] = useState(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
-  var labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  var labels = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
   const [data, setData] = useState({
     labels,
     datasets: [
@@ -96,18 +112,26 @@ export default function BusyChart() {
         label: 'Hours',
         data: labels.map((label) => getWeekWorkHour(label)),
         // data: [4, 0, 2, 1, 3, 4, 5],
-        backgroundColor: '#00A6CA', 
-        borderColor: "#00A6CA",
+        backgroundColor: '#00A6CA',
+        borderColor: '#00A6CA',
         borderWidth: 2,
       },
     ],
-  })
+  });
 
   function handleClick1() {
     setWeek(true);
     setMonth(false);
     setYear(false);
-    labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    labels = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
     setData({
       labels,
       datasets: [
@@ -115,8 +139,8 @@ export default function BusyChart() {
           label: 'Hours',
           data: labels.map((label) => getWeekWorkHour(label)),
           // data: [4, 0, 2, 1, 3, 4, 5],
-          backgroundColor: '#00A6CA', 
-          borderColor: "#00A6CA",
+          backgroundColor: '#00A6CA',
+          borderColor: '#00A6CA',
           borderWidth: 2,
         },
       ],
@@ -127,7 +151,10 @@ export default function BusyChart() {
     setMonth(true);
     setYear(false);
     // labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
-    labels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26, 27, 28, 29, 30];
+    labels = [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+      22, 23, 24, 25, 26, 27, 28, 29, 30,
+    ];
     setData({
       labels,
       datasets: [
@@ -135,8 +162,8 @@ export default function BusyChart() {
           label: 'Hours',
           data: labels.map((label) => getMonthWorkHour(label)),
           // data: [4, 0, 2, 1, 3, 4, 5],
-          backgroundColor: '#00A6CA', 
-          borderColor: "#00A6CA",
+          backgroundColor: '#00A6CA',
+          borderColor: '#00A6CA',
           borderWidth: 2,
         },
       ],
@@ -146,7 +173,20 @@ export default function BusyChart() {
     setWeek(false);
     setMonth(false);
     setYear(true);
-    labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    labels = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
     setData({
       labels,
       datasets: [
@@ -154,8 +194,8 @@ export default function BusyChart() {
           label: 'Hours',
           data: labels.map((label) => getYearWorkHour(label)),
           // data: [4, 0, 2, 1, 3, 4, 5],
-          backgroundColor: '#00A6CA', 
-          borderColor: "#00A6CA",
+          backgroundColor: '#00A6CA',
+          borderColor: '#00A6CA',
           borderWidth: 2,
         },
       ],
@@ -164,15 +204,35 @@ export default function BusyChart() {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <p className={styles.header}><span className={styles.highlighted}>Busy</span> chart</p>
+        <p className={styles.header}>
+          <span className={styles.highlighted}>Busy</span> chart
+        </p>
         <div className={styles.buttonContainer}>
-          <button type='button' onClick={handleClick1} className={weekIsClicked ? styles.buttonClicked : ''}>Week</button>
-          <button type='button' onClick={handleClick2} className={monthIsClicked ? styles.buttonClicked : ''}>Month</button>
-          <button type='button' onClick={handleClick3} className={yearIsClicked ? styles.buttonClicked : ''}>Year</button>
+          <button
+            type="button"
+            onClick={handleClick1}
+            className={weekIsClicked ? styles.buttonClicked : ''}
+          >
+            Week
+          </button>
+          <button
+            type="button"
+            onClick={handleClick2}
+            className={monthIsClicked ? styles.buttonClicked : ''}
+          >
+            Month
+          </button>
+          <button
+            type="button"
+            onClick={handleClick3}
+            className={yearIsClicked ? styles.buttonClicked : ''}
+          >
+            Year
+          </button>
         </div>
       </div>
       <div className={styles.chartContainer}>
-        <Line data={data} width={"800px"} height={"200px"}/>
+        <Line data={data} width={'800px'} height={'200px'} />
       </div>
     </div>
   );
