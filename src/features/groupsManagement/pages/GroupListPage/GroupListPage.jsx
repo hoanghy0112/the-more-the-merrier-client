@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
-import UserIcon from '../../../../components/UserIcon/UserIcon';
 import UserList from '../../../../components/UserList/UserList';
 import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
 import { getAllGroups, selectAllGroups } from '../../groupSlice';
