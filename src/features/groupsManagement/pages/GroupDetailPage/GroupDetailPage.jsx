@@ -96,11 +96,11 @@ export default function GroupDetailPage() {
           </div>
           <div className={styles.groupBasicInfo}>
             <p className={styles.name}>{groupInfo?.name || ''}</p>
-            <p className={styles.users}>
+            <div className={styles.users}>
               {userIDs.map((userID) => (
                 <UserIcon userID={userID} />
               ))}
-            </p>
+            </div>
           </div>
           <PrimaryButton
             onClick={() => setIsOpenAddUserModal(true)}

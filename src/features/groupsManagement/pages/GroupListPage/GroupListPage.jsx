@@ -1,8 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
+import UserIcon from '../../../../components/UserIcon/UserIcon';
+import UserList from '../../../../components/UserList/UserList';
 import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
 import { getAllGroups, selectAllGroups } from '../../groupSlice';
 
@@ -43,28 +47,26 @@ export default function GroupListPage() {
         <CreateNewGroup />
       </CenteredModal>
       <div className={styles.groupList}>
-        {groupList.map(({ _id, name, description, admin, users }) => (
-          <div
-            key={_id}
-            className={styles.groupContainer}
-            onClick={() => {
-              navigate(_id);
-            }}
-          >
-            <div className={styles.introduction}>
-              <p className={styles.name}>{name}</p>
-              <div className={styles.numOfUser}>
-                <p className={styles.num}>{users.length + 1}</p>
-                <p className={styles.string}> users</p>
+        {groupList.map(
+          ({ _id, name, description, admin: adminID, users: userIDs }) => (
+            <div
+              key={_id}
+              className={styles.groupContainer}
+              onClick={() => {
+                navigate(_id);
+              }}
+            >
+              <div className={styles.introduction}>
+                <p className={styles.name}>{name}</p>
+                <UserList userIDs={[adminID, ...userIDs]} max={3} size={30} />
+              </div>
+              <p className={styles.description}>{description}</p>
+              <div className={styles.detail}>
+                <PrimaryButton title="View detail" />
               </div>
             </div>
-            <p className={styles.description}>{description}</p>
-            <div className={styles.adminInfo}>
-              <p className={styles.string}>Admin ID: </p>
-              <p className={styles.num}>{admin}</p>
-            </div>
-          </div>
-        ))}
+          ),
+        )}
       </div>
     </div>
   );

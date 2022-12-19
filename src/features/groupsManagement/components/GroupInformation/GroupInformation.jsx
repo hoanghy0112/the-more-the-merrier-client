@@ -2,9 +2,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-import BusyChart from '../../../../components/UserProfile/BusyChart/BusyChart';
-import Info from '../../../../components/UserProfile/Info/Info';
-
 import CLOSE_ICON from '../../../../assets/icons/close.svg';
 
 import styles from './GroupInformation.module.scss';

@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  & > p {
+    color: rgb(136, 136, 136);
+  }
+
+  .bold {
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+  }
+}
