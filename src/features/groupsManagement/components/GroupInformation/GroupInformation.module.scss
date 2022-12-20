@@ -5,12 +5,18 @@
   gap: 25px;
   background-color: #fff;
   width: calc(100vw - 400px);
-  height: calc(100vh - 100px);
+  // height: calc(100vh - 100px);
   border-radius: 20px;
-  padding: 20px;
+  padding: 20px 80px;
+  padding-right: 120px;
 
   .header {
     display: grid;
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+    }
 
     h1 {
       font-size: 28px;
@@ -22,10 +28,17 @@
     }
   }
 
+  .body {
+    height: calc(100vh - 250px);
+    padding: 10px;
+    overflow-x: visible;
+    overflow-y: scroll;
+  }
+
   & > .close {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 20px;
     width: 40px;
     height: 40px;
     cursor: pointer;

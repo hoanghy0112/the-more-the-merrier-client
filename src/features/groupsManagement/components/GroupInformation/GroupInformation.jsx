@@ -14,11 +14,15 @@ export default function GroupInformation({ groupInfo, closeModal }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>{name}</h1>
+        <div className={styles.title}>
+          <h1>{name}</h1>
+          <UserList userIDs={[admin, ...users] || []} size={30} max={5} />
+        </div>
         <p>{description}</p>
       </div>
-      <UserList userIDs={[admin, ...users] || []} size={30} max={5} />
-      <BusyTimeChart groupInfo={groupInfo} />
+      <div className={styles.body}>
+        <BusyTimeChart groupInfo={groupInfo} />
+      </div>
       <img
         className={styles.close}
         src={CLOSE_ICON}
