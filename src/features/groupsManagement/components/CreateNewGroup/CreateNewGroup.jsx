@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,12 +8,11 @@ import { createNewGroup } from '../../groupSlice';
 
 import styles from './CreateNewGroup.module.scss';
 
-export default function CreateNewGroup() {
+export default function CreateNewGroup({ closeModal }) {
   const titleRef = useRef();
   const [description, setDescription] = useState('');
   const dispatch = useDispatch();
   const user = useSelector(selectUserProfile);
-  // console.log('user: ', user._id);
   const users = [];
 
   const handleCreateCLick = () => {
@@ -24,6 +24,7 @@ export default function CreateNewGroup() {
         admin: user._id,
       }),
     );
+    closeModal();
   };
 
   return (
@@ -45,14 +46,6 @@ export default function CreateNewGroup() {
         spellCheck={false}
         placeholder="Enter your group description here..."
       />
-      <div className={styles.user}>
-        <button type="button">
-          <span>
-            <img src={ICON_ADD} alt="" />
-          </span>
-          Add user
-        </button>
-      </div>
       <button
         type="button"
         className={styles.createButton}

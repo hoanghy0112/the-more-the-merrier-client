@@ -33,7 +33,7 @@ export const getAllGroups = createAsyncThunk(
 
 export const createNewGroup = createAsyncThunk(
   'groupsManagement/createNewGroup',
-  async (req) => {
+  async (req, { dispatch }) => {
     const { name, description, users, admin } = req;
     const response = await createNewGroupAPI({
       name,
@@ -41,6 +41,8 @@ export const createNewGroup = createAsyncThunk(
       users,
       admin,
     });
+
+    dispatch(getAllGroups());
 
     return response;
   },

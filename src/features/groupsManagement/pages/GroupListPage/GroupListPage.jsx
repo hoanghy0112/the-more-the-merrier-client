@@ -43,7 +43,7 @@ export default function GroupListPage() {
         isOpen={isOpenCreateGroupModal}
         onClose={() => setIsOpenCreateGroupModal(false)}
       >
-        <CreateNewGroup />
+        <CreateNewGroup closeModal={() => setIsOpenCreateGroupModal(false)} />
       </CenteredModal>
       <div className={styles.groupList}>
         {groupList.map(
