@@ -3,7 +3,7 @@ import { Socket } from 'socket.io-client';
 
 import useRealTimeData from './useRealTimeData';
 
-export default function useNotification() {
+export default function useNotification(setNewNotification = (data) => {}) {
   const [socket, setSocket] = useState<Socket>();
   const { data: notifications, isLoading } = useRealTimeData(onConnect);
 
@@ -29,6 +29,8 @@ export default function useNotification() {
     socket.on('notification', (data) => {
       setNotifications(data);
     });
+
+    socket.on('new-notification', (data) => setNewNotification(data));
 
     setSocket(socket);
   }

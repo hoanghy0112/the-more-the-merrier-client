@@ -12,9 +12,82 @@
 
     transition: 0.4s;
 
+    .numberCircle {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      font-size: 0.9rem;
+      display: grid;
+      place-items: center;
+      top: -10px;
+      right: -10px;
+      background-color: rgb(244, 146, 0);
+      color: white;
+      border-radius: 999px;
+    }
+
     &:hover {
       cursor: pointer;
       background-color: #fff;
     }
+  }
+
+  .newNotification {
+    position: absolute;
+    width: max-content;
+    transform: translateY(calc(100% + 20px));
+    bottom: 0;
+    opacity: 0;
+    right: -100px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+    border: none;
+    outline: none;
+
+    padding: 10px 10px;
+    border-radius: 10px;
+
+    color: rgba(54, 54, 54, 0.74);
+    border: 1px solid #00a6ca;
+    box-shadow: 0px 0px 18px -4px #00a6ca;
+    background-color: white;
+    z-index: 99;
+
+    transition: 0.4s;
+
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 999px;
+    }
+
+    p {
+      text-align: start;
+    }
+  }
+
+  .newNotificationEnterActive {
+    opacity: 0;
+    right: -100px;
+    z-index: 0;
+  }
+
+  .newNotificationEnterDone {
+    opacity: 1;
+    right: -40px;
+  }
+
+  .newNotificationExitActive {
+    opacity: 1;
+    right: -40px;
+  }
+
+  .newNotificationExitDone {
+    opacity: 0;
+    right: 20px;
+    z-index: 0;
   }
 }

@@ -12,13 +12,15 @@ export default function NotificationList({
   setIsDisplay,
   setGroupID,
   setIsOpenJoinGroupBox,
+  setUnRead,
+  setNewNotification,
 }) {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
   const [isReadAll, setIsReadAll] = useState(true);
 
   const { notifications, isLoading, readAllNotification, readNotification } =
-    useNotification();
+    useNotification(setNewNotification);
 
   useEffect(() => {
     setIsDisplay(isComponentVisible);
@@ -27,6 +29,15 @@ export default function NotificationList({
   useEffect(() => {
     setIsComponentVisible(isDisplay);
   }, [isDisplay]);
+
+  useEffect(() => {
+    setUnRead(
+      notifications?.reduce?.(
+        (total, notification) => total + (notification.isRead ? 0 : 1),
+        0,
+      ),
+    );
+  }, [JSON.stringify(notifications)]);
 
   return (
     <CSSTransition

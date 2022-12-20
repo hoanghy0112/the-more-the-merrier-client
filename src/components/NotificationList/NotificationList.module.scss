@@ -76,6 +76,7 @@
 
   .notificationList {
     display: grid;
+    gap: 2px;
     padding: 0 30px;
     max-height: 500px;
     overflow-y: scroll;
