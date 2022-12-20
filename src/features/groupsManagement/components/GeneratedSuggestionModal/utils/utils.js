@@ -7,9 +7,10 @@ export function getEndDate(startDate = new Date()) {
   return endDate;
 }
 
-export function getInitialTimeList(startDate = new Date()) {
-  const endDate = getEndDate(startDate);
-
+export function getInitialTimeList(
+  startDate = new Date(),
+  endDate = getEndDate(startDate),
+) {
   return [
     {
       from: startDate,

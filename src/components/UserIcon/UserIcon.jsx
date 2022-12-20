@@ -5,7 +5,7 @@ import { useUserProfileByIDQuery } from '../../features/userManagement/profileAP
 
 import styles from './UserIcon.module.scss';
 
-export default function UserIcon({ userID, size = 40, withName = false }) {
+export default function UserIcon({ userID, size = 35, withName = false }) {
   const { data, error, isLoading } = useUserProfileByIDQuery(userID);
   const fullName = useMemo(() => {
     if (data) return `${data?.familyName || ''} ${data?.givenName || ''}`;

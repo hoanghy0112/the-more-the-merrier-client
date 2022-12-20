@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import Chart from 'chart.js/auto';
+import { Bar, Line } from 'react-chartjs-2';
+
 import {
   selectAllTasks,
   selectCurrentWeekTasks,
 } from '../../../features/tasksManagement/TasksSlice';
-import { useSelector } from 'react-redux';
 import styles from './BusyChart.module.scss';
-
-import Chart from 'chart.js/auto';
-import { Bar, Line } from 'react-chartjs-2';
 
 export default function BusyChart() {
   const now = new Date();
@@ -24,7 +24,6 @@ export default function BusyChart() {
 
   const tasks = useSelector(selectCurrentWeekTasks(date));
   const allTasks = useSelector(selectAllTasks);
-  // console.log(allTasks);
 
   function getWeekWorkHour(dayOfWeek) {
     var count = 0;
@@ -54,11 +53,6 @@ export default function BusyChart() {
       var taskDayOfMonth = taskDate.getDate();
       var taskMonth = taskDate.getMonth();
       var taskYear = taskDate.getFullYear();
-      // console.log(taskDayOfMonth);
-      // console.log(now.getFullYear());
-      // console.log(taskDayOfMonth);
-      // console.log(taskMonth);
-      // console.log(now.getMonth());
       if (
         taskDayOfMonth === dayOfMonth &&
         taskMonth === now.getMonth() &&
@@ -95,8 +89,7 @@ export default function BusyChart() {
     return count;
   }
 
-  // const [labels, setLabels] = useState(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
-  var labels = [
+  let labels = [
     'Monday',
     'Tuesday',
     'Wednesday',
@@ -150,7 +143,6 @@ export default function BusyChart() {
     setWeek(false);
     setMonth(true);
     setYear(false);
-    // labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
     labels = [
       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
       22, 23, 24, 25, 26, 27, 28, 29, 30,
@@ -205,7 +197,8 @@ export default function BusyChart() {
     <div>
       <div className={styles.headerContainer}>
         <p className={styles.header}>
-          <span className={styles.highlighted}>Busy</span> chart
+          <span className={styles.highlighted}>Busy</span>
+          <span>chart</span>
         </p>
         <div className={styles.buttonContainer}>
           <button
@@ -232,7 +225,7 @@ export default function BusyChart() {
         </div>
       </div>
       <div className={styles.chartContainer}>
-        <Line data={data} width={'800px'} height={'200px'} />
+        <Line data={data} width="800px" height="200px" />
       </div>
     </div>
   );

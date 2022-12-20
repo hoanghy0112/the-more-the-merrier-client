@@ -26,13 +26,13 @@ export default function GeneratedSuggestionModal({
   const busyTime = useSelector(selectGroupBusyTime);
   const groupTask = useSelector(selectGroupTaskOfCurrentGroup);
 
-  const filterdBusyTimeByPeriod = filterTime(
+  const filterdBusyTimeByPeriod = filterTime({
     startDate,
-    busyTime.concat(groupTask.map((task) => task.time)),
+    busyTime: busyTime.concat(groupTask.map((task) => task.time)),
     howLong,
     timeOfDay,
     isWeekend,
-  );
+  });
 
   useEffect(() => {
     dispatch(setSuggestionTime(filterdBusyTimeByPeriod));

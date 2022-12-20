@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 import axios from 'axios';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getAuth } from 'firebase/auth';
@@ -8,6 +9,7 @@ import {
   CREATE_TASK_OF_GROUP,
   GET_ALL_GROUP_OF_CURRENT_USER,
   GET_BUSY_TIME_OF_GROUP,
+  GET_BUSY_TIME_OF_GROUP_V2,
   GET_GROUP_BY_ID,
   GET_TASK_OF_GROUP,
 } from '../../constants/apiURL';
@@ -169,4 +171,29 @@ export const getGroupInformationByID = createApi({
   }),
 });
 
+export const getGroupBusyTime = createApi({
+  reducerPath: 'groupBusyTime',
+  refetchOnMountOrArgChange: true,
+  baseQuery: fetchBaseQuery({
+    baseUrl: GET_BUSY_TIME_OF_GROUP_V2,
+    prepareHeaders: async (headers) => {
+      const auth = getAuth();
+      const accessToken = await auth.currentUser.getIdToken();
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`);
+      }
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    groupBusyTime: builder.query({
+      query: ({ groupID, from, to }) =>
+        `/${groupID}/busy?from=${new Date(from || 0).getTime()}&to=${new Date(
+          to || 0,
+        ).getTime()}`,
+    }),
+  }),
+});
+
 export const { useGroupInformationByIDQuery } = getGroupInformationByID;
+export const { useGroupBusyTimeQuery } = getGroupBusyTime;

@@ -1,10 +1,26 @@
 .container {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
   background-color: #fff;
-  width: calc(100vw - 100px);
+  width: calc(100vw - 400px);
   height: calc(100vh - 100px);
   border-radius: 20px;
   padding: 20px;
+
+  .header {
+    display: grid;
+
+    h1 {
+      font-size: 28px;
+    }
+
+    p {
+      font-size: 16px;
+      color: rgb(73, 73, 73);
+    }
+  }
 
   & > .close {
     position: absolute;

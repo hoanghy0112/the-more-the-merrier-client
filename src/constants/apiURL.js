@@ -17,6 +17,7 @@ export const DELETE_TAG_BY_ID = `${BASE_URL}/api/v1/tag/`;
 export const CREATE_NEW_GROUP = `${BASE_URL}/api/v1/group`;
 export const GET_ALL_GROUP_OF_CURRENT_USER = `${BASE_URL}/api/v1/group`;
 export const GET_BUSY_TIME_OF_GROUP = `${BASE_URL}/api/v1/group`;
+export const GET_BUSY_TIME_OF_GROUP_V2 = `${BASE_URL}/api/v2/group`;
 export const GET_GROUP_BY_ID = `${BASE_URL}/api/v1/group`;
 export const ADD_NEW_USER_TO_GROUP = `${BASE_URL}/api/v1/group`;
 export const INVITE_USER_TO_GROUP = `${BASE_URL}/api/v2/group`;

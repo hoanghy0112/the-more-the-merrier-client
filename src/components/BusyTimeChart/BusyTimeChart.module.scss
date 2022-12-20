@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+
+  .header {
+    padding: 20px;
+    padding-top: 30px;
+    font-weight: 600;
+    font-size: 20px;
+
+    .highlighted {
+      font-weight: 600;
+      color: #00a6ca;
+    }
+  }
+  .buttonContainer {
+    margin-left: 300px;
+    display: flex;
+
+    button {
+      cursor: pointer;
+      transition: 0.3s;
+      color: #d9d9d9;
+      font-weight: 600;
+      font-size: 18px;
+      margin: 10px;
+      margin-top: 20px;
+      padding: 0;
+      border: none;
+      background: none;
+
+      &:hover {
+        color: rgb(125, 125, 125);
+      }
+    }
+    div {
+      width: 22.2px;
+      height: 3px;
+      background: rgba(0, 166, 202, 0.5);
+      border-radius: 6px;
+    }
+    .buttonClicked {
+      color: black !important;
+    }
+  }
+}
+.chartContainer {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  align-items: center;
+  padding: 15px 30px;
+  box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
+    3px 4.8px 6px rgba(0, 166, 202, 0.25);
+  border-radius: 18px;
+}

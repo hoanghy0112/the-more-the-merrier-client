@@ -9,7 +9,10 @@ import tagsManagementReducer from '../features/tagsManagement/TagsSlice';
 import groupsManagementReducer from '../features/groupsManagement/groupSlice';
 import calendarReducer from '../features/calendar/calendarSlice';
 
-import { getGroupInformationByID } from '../features/groupsManagement/groupAPI';
+import {
+  getGroupBusyTime,
+  getGroupInformationByID,
+} from '../features/groupsManagement/groupAPI';
 import { getUserProfileByID } from '../features/userManagement/profileAPI';
 
 export const store = configureStore({
@@ -52,11 +55,13 @@ export const store = configureStore({
     ),
     [getGroupInformationByID.reducerPath]: getGroupInformationByID.reducer,
     [getUserProfileByID.reducerPath]: getUserProfileByID.reducer,
+    [getGroupBusyTime.reducerPath]: getGroupBusyTime.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(getGroupInformationByID.middleware)
-      .concat(getUserProfileByID.middleware),
+      .concat(getUserProfileByID.middleware)
+      .concat(getGroupBusyTime.middleware),
 });
 
 export const persistor = persistStore(store);

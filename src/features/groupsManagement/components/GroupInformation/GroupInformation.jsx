@@ -3,21 +3,22 @@
 import React from 'react';
 
 import CLOSE_ICON from '../../../../assets/icons/close.svg';
+import BusyTimeChart from '../../../../components/BusyTimeChart/BusyTimeChart';
+import UserList from '../../../../components/UserList/UserList';
 
 import styles from './GroupInformation.module.scss';
 
 export default function GroupInformation({ groupInfo, closeModal }) {
-  const { name, description } = groupInfo;
+  const { name, description, users, admin } = groupInfo;
 
   return (
     <div className={styles.container}>
-      <div>
-        <div>
-          <h1>{name}</h1>
-          <img src="" alt="" />
-        </div>
+      <div className={styles.header}>
+        <h1>{name}</h1>
         <p>{description}</p>
       </div>
+      <UserList userIDs={[admin, ...users] || []} size={30} max={5} />
+      <BusyTimeChart groupInfo={groupInfo} />
       <img
         className={styles.close}
         src={CLOSE_ICON}
