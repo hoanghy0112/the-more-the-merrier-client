@@ -48,20 +48,19 @@ export default function GroupListPage() {
       <div className={styles.groupList}>
         {groupList.map(
           ({ _id, name, description, admin: adminID, users: userIDs }) => (
-            <div
-              key={_id}
-              className={styles.groupContainer}
-              onClick={() => {
-                navigate(_id);
-              }}
-            >
+            <div key={_id} className={styles.groupContainer}>
               <div className={styles.introduction}>
                 <p className={styles.name}>{name}</p>
                 <UserList userIDs={[adminID, ...userIDs]} max={3} size={30} />
               </div>
               <p className={styles.description}>{description}</p>
               <div className={styles.detail}>
-                <PrimaryButton title="View detail" />
+                <PrimaryButton
+                  title="View detail"
+                  onClick={() => {
+                    navigate(_id);
+                  }}
+                />
               </div>
             </div>
           ),

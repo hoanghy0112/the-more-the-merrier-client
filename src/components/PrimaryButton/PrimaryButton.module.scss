@@ -41,3 +41,69 @@
     border: 1px solid var(--background-color);
   }
 }
+
+.modal {
+  width: max-content;
+  max-width: 500px;
+  transform: translateY(-50%);
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 40px 50px;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  .warning {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .buttonGroup {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: 0.3s;
+      position: relative;
+      font-size: 1.1rem;
+      top: 0;
+      left: 0;
+
+      &.no {
+        color: white;
+        background-color: #00a6ca;
+
+        &:hover {
+          top: -5px;
+          left: -5px;
+          box-shadow: 5px 5px 0 0 rgb(58, 229, 206);
+        }
+      }
+
+      &.yes {
+        color: rgb(231, 0, 0);
+        background-color: #fff;
+        border: 1px solid rgb(231, 0, 0);
+
+        &:hover {
+          color: white;
+          background-color: rgb(231, 0, 0);
+        }
+      }
+    }
+  }
+
+  & > p {
+  }
+}
