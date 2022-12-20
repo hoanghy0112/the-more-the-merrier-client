@@ -60,7 +60,7 @@ export function splitDay(initialList) {
     const { from: from_, to: to_ } = filteredTime[i];
     const from = new Date(from_);
     const to = new Date(to_);
-    if (from.getDay() !== to.getDay()) {
+    if (from.getDate() !== to.getDate() || from.getMonth() !== to.getMonth()) {
       filteredTime.splice(i, 1);
       const middle = new Date(from);
       middle.setHours(23, 59, 59);

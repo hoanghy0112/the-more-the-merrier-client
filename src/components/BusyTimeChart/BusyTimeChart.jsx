@@ -72,6 +72,7 @@ export default function BusyTimeChart({ groupInfo }) {
         break;
 
       case VIEW_TYPE.YEAR:
+        setStatisticData(getStatisticByYear(busyTime));
         break;
 
       default:
@@ -357,14 +358,64 @@ function getStatisticByMonth(busyTimes = []) {
       .values(),
   ).map((miliseconds) => 24 - miliseconds / 1000 / 60 / 60);
 
-  console.log({ freeTime });
   // (24 * getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()) -
   //   miliseconds / 1000 / 60 / 60) /
   // getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()),
 
   return getStatistic({
     labels,
-    title: 'Busy hour of group in week',
+    title: 'Busy hour of group in month',
+    datasets: [{ label: 'Hour', data: busyTimeData }],
+  });
+}
+
+function getStatisticByYear(busyTimes = []) {
+  const busyTimeList = busyTimes.map(({ from, to }) => ({
+    from: new Date(from),
+    to: new Date(to),
+  }));
+
+  const labels = getLabelList(
+    VIEW_TYPE.YEAR,
+    busyTimeList?.[0]?.from || new Date(),
+  );
+
+  const startDate = new Date(busyTimeList?.[0]?.from || new Date());
+  startDate.setMonth(0);
+  startDate.setDate(1);
+  startDate.setHours(0, 0, 0, 0);
+
+  const endDate = new Date(startDate.getFullYear() + 1, 0, 1, 0, 0, 0);
+
+  const freeTime = filterTime({ startDate, busyTime: busyTimeList, endDate });
+
+  const busyTimeData = Array.from(
+    freeTime
+      .reduce((data, { from, to }) => {
+        data.set(
+          from.getMonth(),
+          data.get(from.getMonth()) + (to - from),
+        );
+        return new Map(data);
+      }, new Map(labels.map((value, index) => [index, 0])))
+      .values(),
+  ).map(
+    (miliseconds, index) =>
+      24 -
+      miliseconds /
+        1000 /
+        60 /
+        60 /
+        getDayOfMonth(index + 1, startDate.getFullYear()),
+  );
+
+  // (24 * getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()) -
+  //   miliseconds / 1000 / 60 / 60) /
+  // getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()),
+
+  return getStatistic({
+    labels,
+    title: 'Average busy hour in each month',
     datasets: [{ label: 'Hour', data: busyTimeData }],
   });
 }
