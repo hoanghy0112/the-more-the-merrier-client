@@ -23,11 +23,11 @@ export default function BusyTimeChart({ groupInfo }) {
   const { _id: groupID } = groupInfo;
 
   const now = new Date();
-  const date = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() - now.getDay() + 1,
-  );
+  // const date = new Date(
+  //   now.getFullYear(),
+  //   now.getMonth(),
+  //   now.getDate() - now.getDay() + 1,
+  // );
 
   const [viewType, setViewType] = usePersistentState(
     `view-type-${groupID}`,
