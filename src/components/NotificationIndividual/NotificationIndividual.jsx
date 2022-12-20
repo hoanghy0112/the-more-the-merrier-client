@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 import NOTIFICATION_ICON from '../../assets/icons/notification.svg';
 import JoinGroupPopup from '../JoinGroupPopup/JoinGroupPopup';
 import NotificationList from '../NotificationList/NotificationList';
+import PrimaryButton from '../PrimaryButton/PrimaryButton';
 
 import styles from './NotificationIndividual.module.scss';
 
@@ -16,6 +17,7 @@ export default function NotificationIndividual() {
 
   const [unRead, setUnRead] = useState(1);
   const [newNotification, setNewNotification] = useState(null);
+  const [isHoverNotification, setIsHoverNotification] = useState(false);
 
   const newNotificationThumbnail = useRef();
   const newNotificationContent = useRef();
@@ -26,12 +28,24 @@ export default function NotificationIndividual() {
       newNotificationThumbnail.current = newNotification.thumbnail;
     }
 
-    const timeout = setTimeout(() => {
-      setNewNotification(null);
-    }, 5000);
+    if (!isHoverNotification) {
+      const timeout = setTimeout(() => {
+        setNewNotification(null);
+      }, 4000);
 
-    return () => clearTimeout(timeout);
-  }, [newNotification?._id]);
+      return () => clearTimeout(timeout);
+    }
+
+    return () => {};
+  }, [newNotification?._id, isHoverNotification]);
+
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setNewNotification(null);
+  //   }, 5000);
+
+  //   return () => clearTimeout(timeout);
+  // }, [isHoverNotification]);
 
   return (
     <div className={styles.container}>
@@ -56,9 +70,14 @@ export default function NotificationIndividual() {
           exitDone: styles.newNotificationExitDone,
         }}
       >
-        <div className={styles.newNotification}>
+        <div
+          className={styles.newNotification}
+          onMouseEnter={() => setIsHoverNotification(true)}
+          onMouseLeave={() => setIsHoverNotification(false)}
+        >
           <img src={newNotificationThumbnail.current} alt="" />
           <p>{newNotificationContent.current}</p>
+          <PrimaryButton width={150} title="View group" />
         </div>
       </CSSTransition>
 

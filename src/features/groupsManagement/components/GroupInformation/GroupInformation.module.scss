@@ -15,7 +15,15 @@
 
     .title {
       display: flex;
+      align-items: flex-start;
       justify-content: space-between;
+
+      .users {
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+        gap: 10px;
+      }
     }
 
     h1 {

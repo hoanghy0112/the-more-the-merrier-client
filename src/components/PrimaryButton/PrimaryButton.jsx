@@ -10,6 +10,7 @@ export default function PrimaryButton({
   backgroundColor,
   shadowColor,
   disabled,
+  width,
   reversed,
   confirmed,
   confirmMesssage,
@@ -39,6 +40,7 @@ export default function PrimaryButton({
         style={{
           '--background-color': backgroundColor,
           '--shadow-color': shadowColor,
+          width: width !== 0 ? width : '100%',
         }}
         className={`${styles.primaryButton} ${disabled && styles.disabled} ${
           reversed && styles.reversed
@@ -79,6 +81,7 @@ PrimaryButton.propTypes = {
   reversed: PropTypes.bool,
   confirmed: PropTypes.bool,
   confirmMesssage: PropTypes.string,
+  width: PropTypes.number,
 };
 
 PrimaryButton.defaultProps = {
@@ -90,4 +93,5 @@ PrimaryButton.defaultProps = {
   shadowColor: 'rgb(58, 229, 206)',
   confirmed: false,
   confirmMesssage: 'Do you want to continue?',
+  width: 0,
 };
