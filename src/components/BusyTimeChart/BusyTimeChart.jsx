@@ -23,11 +23,6 @@ export default function BusyTimeChart({ groupInfo }) {
   const { _id: groupID } = groupInfo;
 
   const now = new Date();
-  // const date = new Date(
-  //   now.getFullYear(),
-  //   now.getMonth(),
-  //   now.getDate() - now.getDay() + 1,
-  // );
 
   const [viewType, setViewType] = usePersistentState(
     `view-type-${groupID}`,
@@ -80,7 +75,7 @@ export default function BusyTimeChart({ groupInfo }) {
   }, [viewType]);
 
   return (
-    <div>
+    <>
       <div className={styles.container}>
         <p className={styles.header}>
           <span className={styles.highlighted}>Busy </span>
@@ -117,16 +112,77 @@ export default function BusyTimeChart({ groupInfo }) {
           </button>
         </div>
       </div>
-      <div className={styles.chartContainer}>
-        <Line
-          data={statisticData.data}
-          options={statisticData.option}
-          width="600px"
-          height="300px"
-        />
+      <div className={styles.chartGroup}>
+        <div className={styles.chartContainer}>
+          <Line
+            data={statisticData.data}
+            options={statisticData.option}
+            width="800px"
+            height="340px"
+          />
+        </div>
+        {/* <div className={styles.chartContainer}>
+          <Bar
+            data={statisticData.data}
+            options={statisticData.optionHorizontal}
+            width="300px"
+            height="300px"
+          />
+        </div> */}
       </div>
-    </div>
+    </>
   );
+}
+
+function getStatistic(statistic) {
+  const { labels, datasets, title = '' } = statistic;
+
+  return {
+    data: {
+      labels,
+      datasets: datasets.map(
+        ({
+          label = 'Hours',
+          data,
+          backgroundColor = '#00A6CA52',
+          borderColor = '#00A6CA',
+          borderWidth = 1,
+        }) => ({
+          fill: true,
+          label,
+          data,
+          backgroundColor,
+          borderColor,
+          borderWidth,
+        }),
+      ),
+    },
+    option: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: title,
+        },
+      },
+    },
+    optionHorizontal: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: title,
+        },
+      },
+    },
+  };
 }
 
 function getLabelList(viewType, date = new Date()) {
@@ -216,43 +272,6 @@ function getToDate(viewType, date) {
   }
 }
 
-function getStatistic(statistic) {
-  const { labels, datasets, title = '' } = statistic;
-
-  return {
-    data: {
-      labels,
-      datasets: datasets.map(
-        ({
-          label = 'Hours',
-          data,
-          backgroundColor = '#00A6CA',
-          borderColor = '#00A6CA',
-          borderWidth = 2,
-        }) => ({
-          label,
-          data,
-          backgroundColor,
-          borderColor,
-          borderWidth,
-        }),
-      ),
-    },
-    option: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-        },
-        title: {
-          display: true,
-          text: title,
-        },
-      },
-    },
-  };
-}
-
 function getStatisticByDay(busyTimes = []) {
   const busyTimeList = busyTimes.map(({ from, to }) => ({
     from: new Date(from),
@@ -270,8 +289,6 @@ function getStatisticByDay(busyTimes = []) {
     }
     return new Map(data);
   }, new Map(labels.map((value, index) => [index, 0])));
-
-  console.log({ busyTimeList });
 
   return getStatistic({
     labels,
@@ -351,10 +368,6 @@ function getStatisticByMonth(busyTimes = []) {
       .values(),
   ).map((miliseconds) => 24 - miliseconds / 1000 / 60 / 60);
 
-  // (24 * getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()) -
-  //   miliseconds / 1000 / 60 / 60) /
-  // getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()),
-
   return getStatistic({
     labels,
     title: 'Busy hour of group in month',
@@ -399,47 +412,9 @@ function getStatisticByYear(busyTimes = []) {
         getDayOfMonth(index + 1, startDate.getFullYear()),
   );
 
-  // (24 * getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()) -
-  //   miliseconds / 1000 / 60 / 60) /
-  // getDayOfMonth(startDate.getMonth() + 1, startDate.getFullYear()),
-
   return getStatistic({
     labels,
     title: 'Average busy hour in each month',
     datasets: [{ label: 'Hour', data: busyTimeData }],
   });
 }
-
-// function getBusyTimeStatistic(viewType, busyTimes) {
-//   const busyTimeList = busyTimes.map(({ from, to }) => ({
-//     from: new Date(from),
-//     to: new Date(to),
-//   }));
-
-//   switch (viewType) {
-//     case VIEW_TYPE.DAY:
-//       return busyTimeList.reduce((data, { from, to }) => {
-//         for (let i = from.getHours(); i <= to.getHours(); i += 1) {
-//           data.set(i, (data.get(i) || 0) + 1);
-//         }
-//         return new Map(data);
-//       }, new Map());
-
-//     case VIEW_TYPE.WEEK:
-//       return busyTimeList.reduce((data, { from, to }) => {
-//         for (let i = from.getHours(); i <= to.getHours(); i += 1) {
-//           data.set(i, (data.get(i) || 0) + 1);
-//         }
-//         return new Map(data);
-//       }, new Map());
-
-//     case VIEW_TYPE.MONTH:
-//       return getMonthLabels(date.getMonth() + 1, date.getFullYear());
-
-//     case VIEW_TYPE.YEAR:
-//       return yearLabels;
-
-//     default:
-//       return [];
-//   }
-// }

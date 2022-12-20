@@ -29,10 +29,17 @@
   }
 
   .body {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
     height: calc(100vh - 250px);
     padding: 10px;
     overflow-x: visible;
     overflow-y: scroll;
+
+    .deleteGroup {
+      margin-top: 40px;
+    }
   }
 
   & > .close {

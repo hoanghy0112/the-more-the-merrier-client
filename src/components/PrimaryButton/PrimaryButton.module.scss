@@ -8,7 +8,7 @@
   border: none;
   border-radius: 10px;
   outline: none;
-  background-color: #00a6ca;
+  background-color: var(--background-color);
   color: white;
   font-size: 13px;
   font-weight: 600;
@@ -19,7 +19,7 @@
   &:hover {
     top: -5px;
     left: -5px;
-    box-shadow: 5px 5px 0 0 rgb(58, 229, 206);
+    box-shadow: 5px 5px 0 0 var(--shadow-color);
   }
 
   &.disabled {
@@ -34,9 +34,10 @@
   }
 
   &.reversed {
-    color: #00a6ca;
+    color: rgb(231, 0, 0);
+    color: var(--background-color);
     background-color: white;
 
-    border: 1px solid #00a6ca;
+    border: 1px solid var(--background-color);
   }
 }

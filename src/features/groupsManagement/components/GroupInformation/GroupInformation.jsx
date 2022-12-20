@@ -4,6 +4,7 @@ import React from 'react';
 
 import CLOSE_ICON from '../../../../assets/icons/close.svg';
 import BusyTimeChart from '../../../../components/BusyTimeChart/BusyTimeChart';
+import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserList from '../../../../components/UserList/UserList';
 
 import styles from './GroupInformation.module.scss';
@@ -22,6 +23,13 @@ export default function GroupInformation({ groupInfo, closeModal }) {
       </div>
       <div className={styles.body}>
         <BusyTimeChart groupInfo={groupInfo} />
+        <div className={styles.deleteGroup}>
+          <PrimaryButton
+            title="Delete group"
+            backgroundColor="rgb(230, 0, 0)"
+            shadowColor="rgb(255, 183, 0)"
+          />
+        </div>
       </div>
       <img
         className={styles.close}

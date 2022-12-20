@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  padding: 0 10px;
 
   .header {
     padding: 20px;
@@ -43,14 +44,20 @@
     }
   }
 }
-.chartContainer {
-  position: relative;
-  width: fit-content;
-  height: fit-content;
 
-  align-items: center;
-  padding: 15px 30px;
-  box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
-    3px 4.8px 6px rgba(0, 166, 202, 0.25);
-  border-radius: 18px;
+.chartGroup {
+  display: flex;
+  gap: 20px;
+
+  .chartContainer {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
+      3px 4.8px 6px rgba(0, 166, 202, 0.25);
+    border-radius: 18px;
+  }
 }
