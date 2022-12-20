@@ -34,20 +34,11 @@ export default function BusyTimeChart({ groupInfo }) {
     VIEW_TYPE.DAY,
   );
 
-  const from = getFromDate(viewType, now);
+  const from = useMemo(() => getFromDate(viewType, now), [viewType, groupID]);
 
-  const to = getToDate(viewType, now);
-  // const from = useMemo(() => getFromDate(viewType, date), [viewType, groupID]);
+  const to = useMemo(() => getToDate(viewType, now), [viewType, groupID]);
 
-  // const to = useMemo(() => getToDate(viewType, date), [viewType, groupID]);
-
-  const {
-    data: busyTime,
-    error,
-    isLoading,
-    isUninitialized,
-    refetch,
-  } = useGroupBusyTimeQuery({
+  const { data: busyTime, refetch } = useGroupBusyTimeQuery({
     groupID,
     from: from.getTime(),
     to: to.getTime(),
@@ -280,6 +271,8 @@ function getStatisticByDay(busyTimes = []) {
     return new Map(data);
   }, new Map(labels.map((value, index) => [index, 0])));
 
+  console.log({ busyTimeList });
+
   return getStatistic({
     labels,
     title: 'Number of busy user today',
@@ -392,10 +385,7 @@ function getStatisticByYear(busyTimes = []) {
   const busyTimeData = Array.from(
     freeTime
       .reduce((data, { from, to }) => {
-        data.set(
-          from.getMonth(),
-          data.get(from.getMonth()) + (to - from),
-        );
+        data.set(from.getMonth(), data.get(from.getMonth()) + (to - from));
         return new Map(data);
       }, new Map(labels.map((value, index) => [index, 0])))
       .values(),
