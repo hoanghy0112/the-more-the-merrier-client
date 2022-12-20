@@ -17,11 +17,11 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <AuthenticationRoute />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: 'home',
         element: <HomePage />,
-        errorElement: <ErrorPage />,
         children: [
           {
             path: 'schedule',
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: '/profile',
+        path: 'profile',
         element: <ProfilePage />,
       },
     ],

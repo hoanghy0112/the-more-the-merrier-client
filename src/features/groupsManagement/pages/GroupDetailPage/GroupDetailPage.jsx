@@ -19,6 +19,7 @@ import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal
 import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
 import GroupInformation from '../../components/GroupInformation/GroupInformation';
+import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -36,6 +37,8 @@ export default function GroupDetailPage() {
   const groupInfo = useSelector(
     selectGroupByID(location.pathname.split('/').slice(-1)[0]),
   );
+
+  if (!groupInfo) throw new Error(GROUP_NOT_FOUND);
 
   const userIDs = useMemo(() => {
     if (groupInfo) {

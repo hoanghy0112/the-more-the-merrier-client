@@ -1,0 +1,22 @@
+.container {
+   width: 100vw;
+   height: 100vh;
+   overflow: hidden;
+   display: grid;
+   place-items: center;
+   background-color: rgb(212, 243, 253);
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    margin-top: -90px;
+
+    &>p {
+      font-size: 18px;
+    }
+
+    & > button {
+      margin-top: 40px;
+    }
+  }
+}

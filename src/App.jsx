@@ -8,14 +8,15 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './app/store';
 
 import router from './routers/MainRouter';
-
-import connectSocket from './services/connectSocket';
+import ErrorBoundary from './routers/ErrorBoundary';
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <RouterProvider router={router} />
+        <ErrorBoundary>
+          <RouterProvider router={router} />
+        </ErrorBoundary>
       </PersistGate>
     </Provider>
   );
