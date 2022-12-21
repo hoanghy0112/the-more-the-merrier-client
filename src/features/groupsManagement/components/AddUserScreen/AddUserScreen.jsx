@@ -49,7 +49,7 @@ export default function AddUserScreen({ closeModal, groupInfo }) {
       },
     );
     console.log(response);
-  }, []);
+  }, [users]);
 
   return (
     <div className={styles.groupContainer}>
