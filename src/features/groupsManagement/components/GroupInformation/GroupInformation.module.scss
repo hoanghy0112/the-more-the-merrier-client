@@ -5,37 +5,33 @@
   gap: 25px;
   background-color: #fff;
   width: calc(100vw - 400px);
-  // height: calc(100vh - 100px);
+  min-width: 900px;
   border-radius: 20px;
   padding: 20px 80px;
   padding-right: 120px;
 
   .header {
-    display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    .title {
+    .name {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
 
-      .name {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-
-        img {
-          cursor: pointer;
-          width: 20px;
-          height: 20px;
-        }
+      img {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
       }
+    }
 
-      .users {
-        display: flex;
-        align-items: flex-end;
-        flex-direction: column;
-        gap: 10px;
-      }
+    .users {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      gap: 10px;
     }
 
     h1 {

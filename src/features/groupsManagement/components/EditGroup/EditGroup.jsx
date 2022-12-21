@@ -22,7 +22,7 @@ export default function EditGroup({ groupID, groupName, groupDescription }) {
   const handleCreateCLick = async () => {
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
-    const response = await axios.put(
+    await axios.put(
       `${CHANGE_GROUP_INFO}/${groupID}`,
       {
         name: nameRef.current.value,

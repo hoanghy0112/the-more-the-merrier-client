@@ -66,7 +66,7 @@ export default function GroupInformation({ groupInfo, closeModal }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.title}>
+        <div>
           <div className={styles.name}>
             <h1>{name}</h1>
             {userProfile._id === admin ? (
@@ -77,12 +77,12 @@ export default function GroupInformation({ groupInfo, closeModal }) {
               />
             ) : null}
           </div>
-          <div className={styles.users}>
-            <UserIcon userID={admin} size={30} withName />
-            <UserList userIDs={users || []} size={30} max={5} />
-          </div>
+          <p>{description}</p>
         </div>
-        <p>{description}</p>
+        <div className={styles.users}>
+          <UserIcon userID={admin} size={30} withName />
+          <UserList userIDs={users || []} size={30} max={5} />
+        </div>
       </div>
       <div className={styles.body}>
         <BusyTimeChart groupInfo={groupInfo} />
