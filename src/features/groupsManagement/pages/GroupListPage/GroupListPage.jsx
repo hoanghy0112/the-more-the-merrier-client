@@ -72,13 +72,12 @@ export default function GroupListPage() {
 
   return (
     <div className={styles.container}>
-      <button
-        type="button"
-        className={styles.createGroup}
+      <PrimaryButton
+        title="Create new group"
+        width={250}
+        style={{ marginLeft: 15 }}
         onClick={() => setIsOpenCreateGroupModal(true)}
-      >
-        Create new group
-      </button>
+      />
       <div className={styles.groupList}>
         {groupList.map(
           ({ _id, name, description, admin: adminID, users: userIDs }) => (
