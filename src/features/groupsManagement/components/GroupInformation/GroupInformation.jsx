@@ -69,11 +69,13 @@ export default function GroupInformation({ groupInfo, closeModal }) {
         <div className={styles.title}>
           <div className={styles.name}>
             <h1>{name}</h1>
-            <EditGroup
-              groupID={groupInfo?._id}
-              groupName={groupInfo?.name}
-              groupDescription={groupInfo?.description}
-            />
+            {userProfile._id === admin ? (
+              <EditGroup
+                groupID={groupInfo?._id}
+                groupName={groupInfo?.name}
+                groupDescription={groupInfo?.description}
+              />
+            ) : null}
           </div>
           <div className={styles.users}>
             <UserIcon userID={admin} size={30} withName />
