@@ -39,12 +39,6 @@ export default function GroupListPage() {
       >
         Create new group
       </button>
-      <CenteredModal
-        isOpen={isOpenCreateGroupModal}
-        onClose={() => setIsOpenCreateGroupModal(false)}
-      >
-        <CreateNewGroup closeModal={() => setIsOpenCreateGroupModal(false)} />
-      </CenteredModal>
       <div className={styles.groupList}>
         {groupList.map(
           ({ _id, name, description, admin: adminID, users: userIDs }) => (
@@ -66,6 +60,12 @@ export default function GroupListPage() {
           ),
         )}
       </div>
+      <CenteredModal
+        isOpen={isOpenCreateGroupModal}
+        onClose={() => setIsOpenCreateGroupModal(false)}
+      >
+        <CreateNewGroup closeModal={() => setIsOpenCreateGroupModal(false)} />
+      </CenteredModal>
     </div>
   );
 }

@@ -13,6 +13,8 @@ import CenteredModal from '../CenteredModal/CenteredModal';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 
 import styles from './JoinGroupPopup.module.scss';
+import UserIcon from '../UserIcon/UserIcon';
+import UserList from '../UserList/UserList';
 
 export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
   const {
@@ -21,11 +23,7 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
     isLoading: groupIsLoading,
   } = useGroupInformationByIDQuery(groupID);
 
-  const {
-    data: adminData,
-    error: adminError,
-    isLoading: adminIsLoading,
-  } = useUserProfileByIDQuery(groupData?.admin || '');
+  const { data: adminData } = useUserProfileByIDQuery(groupData?.admin || '');
 
   const [
     isOpenDetailGroupInformationPopUp,
@@ -36,12 +34,11 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
     closePopup();
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
-    const response = await axios.put(`${ACCEPT_JOIN_GROUP}/${groupID}`, '', {
+    await axios.put(`${ACCEPT_JOIN_GROUP}/${groupID}`, '', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response);
   }
 
   function handleReject() {
@@ -63,10 +60,7 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
               <>
                 <p className={styles.header}>Invitation to join group</p>
                 <p className={styles.content}>
-                  <span
-                    className={styles.adminName}
-                    onClick={() => setIsOpenDetailGroupInformationPopUp(true)}
-                  >
+                  <span className={styles.adminName}>
                     {`${adminData?.familyName || ''} ${
                       adminData?.givenName || ''
                     }` || 'no name'}
@@ -113,27 +107,22 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
         <div className={styles.detailedPopUp}>
           <p className={styles.information}>{groupData?.name || 'No name'}</p>
           <p>
-            <span>Description: </span>
+            {/* <span>Description: </span> */}
             <span className={styles.description}>
               {groupData?.description || 'No description'}
             </span>
           </p>
           <p>
             <span>Admin: </span>
-            {adminIsLoading ? (
-              ''
-            ) : (
-              <span>
-                <img src={adminData?.photo} alt="" />
-              </span>
-            )}
-            <span className={styles.author}>
-              {adminIsLoading && !adminError
-                ? 'Loading...'
-                : `${adminData?.familyName} ${adminData?.givenName}`}
-              {adminError && 'Error'}
+            <span>
+              <UserIcon size={30} userID={groupData?.admin} withName />
             </span>
           </p>
+          {groupData?.users?.length ? (
+            <UserList userIDs={groupData?.users} />
+          ) : (
+            <p>This group has no member</p>
+          )}
           <PrimaryButton
             title="Cancel"
             onClick={() => setIsOpenDetailGroupInformationPopUp(false)}

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import useComponentVisible from '../../hooks/useComponentVisible';
 
@@ -15,6 +16,7 @@ export default function NotificationList({
   setUnRead,
   setNewNotification,
 }) {
+  const navigate = useNavigate();
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
   const [isReadAll, setIsReadAll] = useState(true);
@@ -99,11 +101,15 @@ export default function NotificationList({
                   groupID: groupDataID,
                 }) => (
                   <button
+                    key={_id}
                     type="button"
                     onClick={() => {
                       if (type === 'invite') {
                         setGroupID(groupDataID);
                         setIsOpenJoinGroupBox(true);
+                      } else if (type === 'join-group') {
+                        setIsDisplay(false);
+                        navigate(`/home/group/${groupDataID}`);
                       }
                       readNotification(_id);
                     }}

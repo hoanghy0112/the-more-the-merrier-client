@@ -1,5 +1,8 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import NOTIFICATION_ICON from '../../assets/icons/notification.svg';
@@ -10,6 +13,8 @@ import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import styles from './NotificationIndividual.module.scss';
 
 export default function NotificationIndividual() {
+  const navigate = useNavigate();
+
   const [isDisplay, setIsDisplay] = useState(false);
 
   const [groupID, setGroupID] = useState('');
@@ -38,14 +43,6 @@ export default function NotificationIndividual() {
 
     return () => {};
   }, [newNotification?._id, isHoverNotification]);
-
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setNewNotification(null);
-  //   }, 5000);
-
-  //   return () => clearTimeout(timeout);
-  // }, [isHoverNotification]);
 
   return (
     <div className={styles.container}>
@@ -77,7 +74,15 @@ export default function NotificationIndividual() {
         >
           <img src={newNotificationThumbnail.current} alt="" />
           <p>{newNotificationContent.current}</p>
-          <PrimaryButton width={150} title="View group" />
+          {newNotification?.type === 'join-group' ? (
+            <PrimaryButton
+              width={150}
+              title="View group"
+              onClick={() =>
+                navigate(`/home/group/${newNotification?.groupID}`)
+              }
+            />
+          ) : null}
         </div>
       </CSSTransition>
 

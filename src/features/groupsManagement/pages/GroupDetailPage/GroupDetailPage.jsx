@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-no-bind */
 import React, { useEffect, useState, useMemo } from 'react';
 
@@ -20,6 +21,7 @@ import { selectGroupByID } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
 import GroupInformation from '../../components/GroupInformation/GroupInformation';
 import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
+import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -39,6 +41,8 @@ export default function GroupDetailPage() {
   );
 
   if (!groupInfo) throw new Error(GROUP_NOT_FOUND);
+
+  const userProfile = useSelector(selectUserProfile);
 
   const userIDs = useMemo(() => {
     if (groupInfo) {
@@ -105,10 +109,12 @@ export default function GroupDetailPage() {
               ))}
             </div>
           </div>
-          <PrimaryButton
-            onClick={() => setIsOpenAddUserModal(true)}
-            title="Add users"
-          />
+          {userProfile?._id === groupInfo?.admin ? (
+            <PrimaryButton
+              onClick={() => setIsOpenAddUserModal(true)}
+              title="Add users"
+            />
+          ) : null}
           <PrimaryButton
             onClick={() => setIsOpenAddTaskModal(true)}
             title="Add new meeting"
