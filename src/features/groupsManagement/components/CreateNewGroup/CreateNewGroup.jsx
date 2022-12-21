@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ICON_ADD, ICON_FULL_ARROW_RIGHT } from '../../../../assets/icons';
+import { ICON_FULL_ARROW_RIGHT } from '../../../../assets/icons';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import { createNewGroup } from '../../groupSlice';
 
@@ -42,7 +42,7 @@ export default function CreateNewGroup({ closeModal }) {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         cols="30"
-        rows={description.split('\n').length}
+        rows={Math.max(description.split('\n').length + 1, 2)}
         spellCheck={false}
         placeholder="Enter your group description here..."
       />
