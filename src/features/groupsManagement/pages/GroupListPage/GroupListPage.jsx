@@ -86,7 +86,9 @@ export default function GroupListPage() {
                 <p className={styles.name}>{name}</p>
                 <UserList userIDs={[adminID, ...userIDs]} max={3} size={30} />
               </div>
-              <p className={styles.description}>{description}</p>
+              <p className={styles.description}>
+                {description || 'No description'}
+              </p>
               <div className={styles.detail}>
                 <PrimaryButton
                   title="View detail"
