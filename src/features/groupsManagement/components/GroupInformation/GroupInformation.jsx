@@ -6,7 +6,6 @@ import { getAuth } from 'firebase/auth';
 import React, { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ICON_PENCIL } from '../../../../assets/icons';
 
 import CLOSE_ICON from '../../../../assets/icons/close.svg';
 import BusyTimeChart from '../../../../components/BusyTimeChart/BusyTimeChart';
