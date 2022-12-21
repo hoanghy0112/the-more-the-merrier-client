@@ -6,6 +6,7 @@ import { getAuth } from 'firebase/auth';
 import React, { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ICON_PENCIL } from '../../../../assets/icons';
 
 import CLOSE_ICON from '../../../../assets/icons/close.svg';
 import BusyTimeChart from '../../../../components/BusyTimeChart/BusyTimeChart';
@@ -15,6 +16,7 @@ import UserIcon from '../../../../components/UserIcon/UserIcon';
 import UserList from '../../../../components/UserList/UserList';
 import { DELETE_GROUP_BY_ID } from '../../../../constants/apiURL';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
+import EditGroup from '../EditGroup/EditGroup';
 
 import styles from './GroupInformation.module.scss';
 
@@ -66,7 +68,14 @@ export default function GroupInformation({ groupInfo, closeModal }) {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>
-          <h1>{name}</h1>
+          <div className={styles.name}>
+            <h1>{name}</h1>
+            <EditGroup
+              groupID={groupInfo?._id}
+              groupName={groupInfo?.name}
+              groupDescription={groupInfo?.description}
+            />
+          </div>
           <div className={styles.users}>
             <UserIcon userID={admin} size={30} withName />
             <UserList userIDs={users || []} size={30} max={5} />

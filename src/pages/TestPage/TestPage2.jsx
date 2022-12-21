@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react';
 
-import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
-import GroupDetail from '../../components/GroupDetail/GroupDetail';
 import NotificationList from '../../components/NotificationList/NotificationList';
-import InviteToJoinTask from '../../components/NotificationScreen/InviteToJoinTask';
-import NotificationScreen from '../../components/NotificationScreen/NotificationScreen';
-import AddUserModal from '../../features/groupsManagement/components/AddUserModal/AddUserModal';
-import AddUserScreen from '../../features/groupsManagement/components/AddUserScreen/AddUserScreen';
 
 const x = new Date();
 x.setHours(x.getHours() - Math.random() * (3 - 1));
