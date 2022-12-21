@@ -185,13 +185,13 @@ export const groupsManagementSlice = createSlice({
   },
 });
 
-export const selectAllGroups = (state) => state.groupsManagement.groups;
+export const selectAllGroups = (state) => state.groupsManagement.groups || [];
 
 export const selectGroupByID = (groupID) => (state) =>
-  state.groupsManagement.groups.find((group) => group._id === groupID);
+  selectAllGroups(state).find((group) => group._id === groupID);
 
 export const selectCurrentGroupInfo = (state) =>
-  state.groupsManagement.groups.find(
+  selectAllGroups(state).find(
     (group) => group._id === state.groupsManagement.currentGroupID,
   );
 

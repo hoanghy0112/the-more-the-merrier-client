@@ -1,13 +1,14 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import styles from './Profile.module.scss';
 import { selectUserProfile } from './ProfileSlice';
 
-export default function Profile(props) {
+export default function Profile({ onClick }) {
   const user = useSelector(selectUserProfile);
   function handleClick() {
-    props.onClick();
+    onClick();
   }
   return (
     <div className={styles.container} onClick={handleClick}>
