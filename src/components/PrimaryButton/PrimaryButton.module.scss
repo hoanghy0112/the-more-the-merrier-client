@@ -13,6 +13,9 @@
   font-weight: 600;
   cursor: pointer;
 
+  display: grid;
+  place-items: center;
+
   transition: 0.3s;
 
   &:hover {
@@ -33,11 +36,15 @@
   }
 
   &.reversed {
-    color: rgb(231, 0, 0);
+    color: var(--shadow-color);
     color: var(--background-color);
     background-color: white;
 
     border: 1px solid var(--background-color);
+  }
+  & > * {
+    position: relative;
+    top: -5px;
   }
 }
 

@@ -107,10 +107,12 @@
       }
 
       .detail {
+        display: flex;
+        gap: 20px;
+        width: 100%;
         transition: 0.3s;
         height: 0;
         overflow: hidden;
-        width: 200px;
       }
 
       &:hover {

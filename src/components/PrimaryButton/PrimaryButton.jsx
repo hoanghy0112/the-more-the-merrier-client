@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useCallback } from 'react';
 
 import PropTypes from 'prop-types';
@@ -15,6 +16,7 @@ export default function PrimaryButton({
   confirmed,
   confirmMesssage,
   onClick,
+  style = {},
 }) {
   const [isOpenConfirmedModal, setIsOpenConfirmedModal] = useState(false);
 
@@ -41,6 +43,7 @@ export default function PrimaryButton({
           '--background-color': backgroundColor,
           '--shadow-color': shadowColor,
           width: width !== 0 ? width : '100%',
+          ...style,
         }}
         className={`${styles.primaryButton} ${disabled && styles.disabled} ${
           reversed && styles.reversed

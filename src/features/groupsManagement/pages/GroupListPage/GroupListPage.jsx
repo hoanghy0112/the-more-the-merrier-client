@@ -1,11 +1,16 @@
+/* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable no-underscore-dangle */
+import axios from 'axios';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ICON_TRASH } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import NotificationModal from '../../../../components/NotificationModal/NotificationModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserList from '../../../../components/UserList/UserList';
+import { DELETE_GROUP_BY_ID } from '../../../../constants/apiURL';
 import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
 import { getAllGroups, selectAllGroups } from '../../groupSlice';
 
@@ -16,6 +21,9 @@ export default function GroupListPage() {
   const navigate = useNavigate();
 
   const [isOpenCreateGroupModal, setIsOpenCreateGroupModal] = useState(false);
+
+  const [isOpenNotificationModal, setIsOpenNotificationModal] = useState(false);
+  const notificationData = useRef({ status: '', title: '', content: '' });
 
   const groupList = useSelector(selectAllGroups);
 
@@ -28,6 +36,37 @@ export default function GroupListPage() {
     });
 
     return () => unsubscribe();
+  }, []);
+
+  const handleDeleteGroup = useCallback(async (groupID) => {
+    const auth = getAuth();
+    const accessToken = await auth.currentUser.getIdToken();
+    try {
+      const response = await axios.delete(`${DELETE_GROUP_BY_ID}/${groupID}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (response.status === 200) {
+        const { name } = groupList.find((group) => group._id === groupID);
+        notificationData.current = {
+          status: 'success',
+          title: 'Delete group successfully',
+          content: `Group ${name} has been deleted`,
+        };
+        setIsOpenNotificationModal(true);
+      }
+    } catch (error) {
+      const { data } = error.response;
+
+      notificationData.current = {
+        status: 'error',
+        title: 'Operation error',
+        content: data,
+      };
+      setIsOpenNotificationModal(true);
+    }
   }, []);
 
   return (
@@ -55,6 +94,24 @@ export default function GroupListPage() {
                     navigate(_id);
                   }}
                 />
+                <span>
+                  <PrimaryButton
+                    title={
+                      <img src={ICON_TRASH} className={styles.image} alt="" />
+                    }
+                    width={80}
+                    backgroundColor="rgb(230, 0, 0)"
+                    shadowColor="rgb(255, 183, 0)"
+                    confirmed
+                    confirmMesssage={
+                      <p>
+                        <span>Do you want to delete group</span>
+                        <span>{name}</span>
+                      </p>
+                    }
+                    onClick={() => handleDeleteGroup(_id)}
+                  />
+                </span>
               </div>
             </div>
           ),
@@ -66,6 +123,24 @@ export default function GroupListPage() {
       >
         <CreateNewGroup closeModal={() => setIsOpenCreateGroupModal(false)} />
       </CenteredModal>
+      <NotificationModal
+        isOpen={isOpenNotificationModal}
+        closeModal={() => setIsOpenNotificationModal(false)}
+        title={notificationData.current.title}
+        content={
+          notificationData.current.status === 'success' ? (
+            <p>
+              <span>Group </span>
+              <span style={{ fontWeight: 600 }}>
+                {notificationData.current.groupName}
+              </span>
+              <span> has been deleted successfully</span>
+            </p>
+          ) : (
+            notificationData.current.content
+          )
+        }
+      />
     </div>
   );
 }
