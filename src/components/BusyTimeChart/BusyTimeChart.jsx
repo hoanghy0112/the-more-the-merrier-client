@@ -63,7 +63,6 @@ export default function BusyTimeChart({ groupInfo }) {
 
       default:
     }
-    refetch();
   }
 
   useEffect(() => {
