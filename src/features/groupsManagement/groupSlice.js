@@ -203,6 +203,6 @@ export const selectGroupTaskOfCurrentGroup = (state) => {
 };
 
 export const selectGroupBusyTime = (state) =>
-  state.groupsManagement.groupBusyTime;
+  state.groupsManagement.groupBusyTime || [];
 
 export default groupsManagementSlice.reducer;
