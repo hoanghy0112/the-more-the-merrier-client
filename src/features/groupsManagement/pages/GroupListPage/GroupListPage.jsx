@@ -47,6 +47,7 @@ export default function GroupListPage() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      dispatch(getAllGroups());
 
       if (response.status === 200) {
         const { name } = groupList.find((group) => group._id === groupID);
@@ -94,24 +95,22 @@ export default function GroupListPage() {
                     navigate(_id);
                   }}
                 />
-                <span>
-                  <PrimaryButton
-                    title={
-                      <img src={ICON_TRASH} className={styles.image} alt="" />
-                    }
-                    width={80}
-                    backgroundColor="rgb(230, 0, 0)"
-                    shadowColor="rgb(255, 183, 0)"
-                    confirmed
-                    confirmMesssage={
-                      <p>
-                        <span>Do you want to delete group</span>
-                        <span>{name}</span>
-                      </p>
-                    }
-                    onClick={() => handleDeleteGroup(_id)}
-                  />
-                </span>
+                <PrimaryButton
+                  title={
+                    <img src={ICON_TRASH} className={styles.image} alt="" />
+                  }
+                  width={80}
+                  backgroundColor="rgb(230, 0, 0)"
+                  shadowColor="rgb(255, 183, 0)"
+                  confirmed
+                  confirmMesssage={
+                    <p>
+                      <span>Do you want to delete group</span>
+                      <span>{name}</span>
+                    </p>
+                  }
+                  onClick={() => handleDeleteGroup(_id)}
+                />
               </div>
             </div>
           ),

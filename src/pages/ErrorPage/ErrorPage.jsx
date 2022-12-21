@@ -13,7 +13,7 @@ export default function ErrorPage({ errorMessage }) {
   return (
     <div className={styles.container}>
       <div className={styles.error}>
-        <h1>404 page not found</h1>
+        <h1>Something went wrong</h1>
         <p>{message}</p>
         <PrimaryButton
           title="Go back to schedule"
