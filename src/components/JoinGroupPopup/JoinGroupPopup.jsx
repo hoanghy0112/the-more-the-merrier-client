@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
 
 import { ACCEPT_JOIN_GROUP } from '../../constants/apiURL';
 import { useGroupInformationByIDQuery } from '../../features/groupsManagement/groupAPI';
@@ -15,8 +16,10 @@ import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import styles from './JoinGroupPopup.module.scss';
 import UserIcon from '../UserIcon/UserIcon';
 import UserList from '../UserList/UserList';
+import { getAllGroups } from '../../features/groupsManagement/groupSlice';
 
 export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
+  const dispatch = useDispatch();
   const {
     data: groupData,
     error: groupError,
@@ -39,6 +42,7 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    dispatch(getAllGroups());
   }
 
   function handleReject() {
