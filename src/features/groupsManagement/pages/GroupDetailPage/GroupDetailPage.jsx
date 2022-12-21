@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DateTimePicker from '../../../../components/DateTimePicker/DateTimePicker';
 
 import GroupCalendar from '../../../calendar/components/GroupCalendar/GroupCalendar';
@@ -26,6 +26,7 @@ import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false);
   const [isOpenAddTaskModal, setIsOpenAddTaskModal] = useState(false);
@@ -97,7 +98,7 @@ export default function GroupDetailPage() {
       </div>
       <div className={styles.sideMenu}>
         <div className={styles.groupInfo}>
-          <div className={styles.back}>
+          <div className={styles.back} onClick={() => navigate('/home/group/')}>
             <img src={ICON_BACK_PRIMARY} alt="" />
             <p>Back</p>
           </div>
