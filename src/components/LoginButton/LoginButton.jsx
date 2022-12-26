@@ -23,7 +23,10 @@ export default function LoginButton({ providerName, onClick }) {
   })();
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      id={providerName === 'Google' ? 'googleSignInButton' : ''}
+    >
       <button type="button" onClick={onClick} className={styles.loginButton}>
         <img src={imgSrc} alt="Google icon" />
         <p>{`Sign in with ${providerName}`}</p>

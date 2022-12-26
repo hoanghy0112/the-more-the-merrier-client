@@ -17,6 +17,7 @@
     "count": "count-lines-of-code src"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.5.1",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^14.4.3",
@@ -25,6 +26,7 @@
     "count-lines-of-code": "^1.0.6",
     "date-fns": "^2.29.3",
     "firebase": "^9.12.0",
+    "gapi": "^0.0.3",
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
