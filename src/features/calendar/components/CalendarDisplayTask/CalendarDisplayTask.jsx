@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
@@ -14,6 +13,7 @@ import {
   selectSuggestionTime,
   selectSuggestionVisible,
 } from '../../calendarSlice';
+import TimeCard from '../TimeCard/TimeCard';
 
 export default function CalendarDisplayTask({
   gridSize,
@@ -44,55 +44,27 @@ export default function CalendarDisplayTask({
       ))}
 
       {groupBusyTimes.map(({ from, to }) => (
-        <div
+        <TimeCard
           key={from + to}
           className={styles.groupTask}
-          style={{
-            top: `${
-              (((new Date(from).getHours() * 60 + new Date(from).getMinutes()) %
-                (24 * 60)) /
-                (24 * 60)) *
-              1200
-            }px`,
-            left: `${
-              moment(new Date(from)).diff(new Date(startDate), 'days') *
-              gridSize
-            }px`,
-            width: `${gridSize - 6}px`,
-            height: `${
-              (moment(new Date(to)).diff(new Date(from), 'hours', true) / 24) *
-              1200
-            }px`,
-            opacity: 1 / ((groupInfo?.users?.length || 0) + 1),
-          }}
+          gridSize={gridSize}
+          startDate={startDate}
+          from={from}
+          to={to}
+          opacity={1 / ((groupInfo?.users?.length || 0) + 1) + 0.2}
         />
       ))}
 
       {suggestionVisible &&
         suggestionTime.map(({ from, to }) => (
-          <div
+          <TimeCard
             key={from + to}
             className={styles.suggestionTask}
-            style={{
-              top: `${
-                (((new Date(from).getHours() * 60 +
-                  new Date(from).getMinutes()) %
-                  (24 * 60)) /
-                  (24 * 60)) *
-                1200
-              }px`,
-              left: `${
-                moment(new Date(from)).diff(new Date(startDate), 'days') *
-                gridSize
-              }px`,
-              width: `${gridSize - 6}px`,
-              height: `${
-                (moment(new Date(to)).diff(new Date(from), 'hours', true) /
-                  24) *
-                1200
-              }px`,
-              opacity: 1 / ((groupInfo?.users?.length || 0) + 1),
-            }}
+            gridSize={gridSize}
+            startDate={startDate}
+            from={from}
+            to={to}
+            opacity={1 / ((groupInfo?.users?.length || 0) + 1) + 0.2}
           />
         ))}
     </>

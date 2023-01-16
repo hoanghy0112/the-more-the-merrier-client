@@ -51,25 +51,31 @@ export default function Calendar({
   }
 
   return (
-    <CalendarBoard startDate={startDate} onScroll={handleScroll} ref={taskRef}>
-      <CalendarDisplayTask
-        gridSize={gridSize}
+    <div className={isGroup ? 'group' : null}>
+      <CalendarBoard
         startDate={startDate}
-        rect={taskRef?.current?.getBoundingClientRect()}
-        tasks={tasks}
-        changeTask={changeTask}
-        groupBusyTimes={groupBusyTimes}
-        isGroup={isGroup}
-      />
-      <CalendarCreateTask
-        taskWrapperRect={taskRefPosition}
-        gridSize={gridSize}
-        startDate={startDate}
-        createNewTask={createNewTask}
-        retrieveAllTask={retrieveAllTask}
-        isGroup={isGroup}
-      />
-    </CalendarBoard>
+        onScroll={handleScroll}
+        ref={taskRef}
+      >
+        <CalendarDisplayTask
+          gridSize={gridSize}
+          startDate={startDate}
+          rect={taskRef?.current?.getBoundingClientRect()}
+          tasks={tasks}
+          changeTask={changeTask}
+          groupBusyTimes={groupBusyTimes}
+          isGroup={isGroup}
+        />
+        <CalendarCreateTask
+          taskWrapperRect={taskRefPosition}
+          gridSize={gridSize}
+          startDate={startDate}
+          createNewTask={createNewTask}
+          retrieveAllTask={retrieveAllTask}
+          isGroup={isGroup}
+        />
+      </CalendarBoard>
+    </div>
   );
 }
 

@@ -15,6 +15,7 @@ import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
 import { getAllGroups, selectAllGroups } from '../../groupSlice';
 
 import styles from './GroupListPage.module.scss';
+import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 
 export default function GroupListPage() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function GroupListPage() {
   const notificationData = useRef({ status: '', title: '', content: '' });
 
   const groupList = useSelector(selectAllGroups);
+  const userProfile = useSelector(selectUserProfile);
 
   useEffect(() => {
     const auth = getAuth();
@@ -96,22 +98,24 @@ export default function GroupListPage() {
                     navigate(_id);
                   }}
                 />
-                <PrimaryButton
-                  title={
-                    <img src={ICON_TRASH} className={styles.image} alt="" />
-                  }
-                  width={80}
-                  backgroundColor="rgb(230, 0, 0)"
-                  shadowColor="rgb(255, 183, 0)"
-                  confirmed
-                  confirmMesssage={
-                    <p>
-                      <span>Do you want to delete group</span>
-                      <span>{name}</span>
-                    </p>
-                  }
-                  onClick={() => handleDeleteGroup(_id)}
-                />
+                {userProfile._id === adminID ? (
+                  <PrimaryButton
+                    title={
+                      <img src={ICON_TRASH} className={styles.image} alt="" />
+                    }
+                    width={80}
+                    backgroundColor="rgb(230, 0, 0)"
+                    shadowColor="rgb(255, 183, 0)"
+                    confirmed
+                    confirmMesssage={
+                      <p>
+                        <span>Do you want to delete group</span>
+                        <span>{name}</span>
+                      </p>
+                    }
+                    onClick={() => handleDeleteGroup(_id)}
+                  />
+                ) : null}
               </div>
             </div>
           ),
