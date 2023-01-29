@@ -12,7 +12,11 @@ import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserList from '../../../../components/UserList/UserList';
 import { DELETE_GROUP_BY_ID } from '../../../../constants/apiURL';
 import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
-import { getAllGroups, selectAllGroups } from '../../groupSlice';
+import {
+  getAllGroups,
+  selectAllGroups,
+  setCurrentGroup,
+} from '../../groupSlice';
 
 import styles from './GroupListPage.module.scss';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
@@ -95,6 +99,7 @@ export default function GroupListPage() {
                 <PrimaryButton
                   title="View detail"
                   onClick={() => {
+                    dispatch(setCurrentGroup(_id));
                     navigate(_id);
                   }}
                 />

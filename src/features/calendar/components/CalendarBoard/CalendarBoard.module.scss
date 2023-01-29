@@ -71,6 +71,10 @@
 
         cursor: crosshair;
       }
+
+      &.group > div {
+        cursor: default;
+      }
     }
   }
 }

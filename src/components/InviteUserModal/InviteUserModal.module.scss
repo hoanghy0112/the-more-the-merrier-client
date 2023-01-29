@@ -1,0 +1,69 @@
+.container {
+  width: 500px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  transform: translate(-25%, -50%);
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #00a6ca;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    color: #00566780;
+    margin-top: -30px;
+
+    .number {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: black;
+      margin-right: 8px;
+    }
+  }
+
+  .timeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 17px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    .todoTime {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0px;
+      gap: 5px;
+    }
+    .timePicker {
+      box-sizing: border-box;
+
+      background: #ffffff;
+      box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
+        1.2px 1.8px 6px rgba(0, 166, 202, 0.25);
+      border-radius: 6px;
+    }
+  }
+}

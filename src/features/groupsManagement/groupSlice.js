@@ -111,6 +111,11 @@ export const getTaskOfGroup = createAsyncThunk(
 export const groupsManagementSlice = createSlice({
   name: 'groupsManagement',
   initialState,
+  reducers: {
+    setCurrentGroup: (state, action) => {
+      state.currentGroupID = action.groupID;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getAllGroups.pending, (state) => {
@@ -184,6 +189,8 @@ export const groupsManagementSlice = createSlice({
       });
   },
 });
+
+export const { setCurrentGroup } = groupsManagementSlice.actions;
 
 export const selectAllGroups = (state) => state.groupsManagement.groups || [];
 

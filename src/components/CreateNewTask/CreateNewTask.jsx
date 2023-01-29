@@ -35,6 +35,7 @@ import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
+import InviteUserModal from '../InviteUserModal/InviteUserModal';
 
 Modal.setAppElement('#modal');
 
@@ -278,7 +279,7 @@ export default function CreateNewTask({
             )}
           </div>
         )}
-        {isGroup && <div>Add users</div>}
+        {isGroup && <InviteUserModal time={{ from: startTime, to: endTime }} />}
       </div>
       <div className={styles.descriptionContainer}>
         <p className={styles.text}>Description</p>

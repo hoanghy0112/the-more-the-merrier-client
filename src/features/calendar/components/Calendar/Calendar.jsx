@@ -50,32 +50,33 @@ export default function Calendar({
     setTaskRefPosition(taskRef?.current?.getBoundingClientRect());
   }
 
+  // <div className={isGroup ? 'group' : null}>
+
   return (
-    <div className={isGroup ? 'group' : null}>
-      <CalendarBoard
+    <CalendarBoard
+      isGroup={isGroup}
+      startDate={startDate}
+      onScroll={handleScroll}
+      ref={taskRef}
+    >
+      <CalendarDisplayTask
+        gridSize={gridSize}
         startDate={startDate}
-        onScroll={handleScroll}
-        ref={taskRef}
-      >
-        <CalendarDisplayTask
-          gridSize={gridSize}
-          startDate={startDate}
-          rect={taskRef?.current?.getBoundingClientRect()}
-          tasks={tasks}
-          changeTask={changeTask}
-          groupBusyTimes={groupBusyTimes}
-          isGroup={isGroup}
-        />
-        <CalendarCreateTask
-          taskWrapperRect={taskRefPosition}
-          gridSize={gridSize}
-          startDate={startDate}
-          createNewTask={createNewTask}
-          retrieveAllTask={retrieveAllTask}
-          isGroup={isGroup}
-        />
-      </CalendarBoard>
-    </div>
+        rect={taskRef?.current?.getBoundingClientRect()}
+        tasks={tasks}
+        changeTask={changeTask}
+        groupBusyTimes={groupBusyTimes}
+        isGroup={isGroup}
+      />
+      <CalendarCreateTask
+        taskWrapperRect={taskRefPosition}
+        gridSize={gridSize}
+        startDate={startDate}
+        createNewTask={createNewTask}
+        retrieveAllTask={retrieveAllTask}
+        isGroup={isGroup}
+      />
+    </CalendarBoard>
   );
 }
 
