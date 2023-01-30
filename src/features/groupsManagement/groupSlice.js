@@ -8,6 +8,7 @@ import {
   changeTaskOfGroupAPI,
   createNewGroupAPI,
   createTaskOfGroupAPI,
+  deleteTaskOfGroupAPI,
   getAllGroupsOfUserAPI,
   getBusyTimeOfGroupAPI,
   getTaskOfGroupAPI,
@@ -99,11 +100,23 @@ export const changeTaskOfGroup = createAsyncThunk(
   },
 );
 
+export const deleteTaskOfGroup = createAsyncThunk(
+  'groupsManagement/deleteTaskOfGroup',
+  async (req) => {
+    const {
+      data: { _id },
+    } = req;
+
+    const response = await deleteTaskOfGroupAPI(_id);
+
+    return response;
+  },
+);
+
 export const getTaskOfGroup = createAsyncThunk(
   'groupsManagement/getTaskOfGroup',
   async (groupID) => {
     const response = await getTaskOfGroupAPI(groupID);
-    console.log({ response });
 
     return response;
   },
@@ -114,7 +127,7 @@ export const groupsManagementSlice = createSlice({
   initialState,
   reducers: {
     setCurrentGroup: (state, action) => {
-      state.currentGroupID = action.groupID;
+      if (action.groupID) state.currentGroupID = action.groupID;
     },
   },
   extraReducers(builder) {
@@ -170,6 +183,13 @@ export const groupsManagementSlice = createSlice({
           },
         ];
       })
+      .addCase(deleteTaskOfGroup.pending, (state, action) => {
+        const { data } = action.meta.arg;
+
+        state.groupTasks = [
+          ...state.groupTasks.filter((task) => task._id !== data._id),
+        ];
+      })
       .addCase(getBusyTimeOfGroup.pending, (state, action) => {
         state.fetchGroupBusyTimeStatus = 'loading';
 
@@ -201,7 +221,7 @@ export const selectGroupByID = (groupID) => (state) =>
 export const selectCurrentGroupInfo = (state) =>
   selectAllGroups(state).find(
     (group) => group._id === state.groupsManagement.currentGroupID,
-  );
+  ) || null;
 
 export const selectGroupTaskOfCurrentGroup = (state) => {
   const { currentGroupID } = state.groupsManagement;

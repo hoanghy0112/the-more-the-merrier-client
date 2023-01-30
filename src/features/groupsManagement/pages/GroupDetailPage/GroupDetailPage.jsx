@@ -25,6 +25,7 @@ import {
   getTaskOfGroup,
   selectCurrentGroupInfo,
   selectGroupByID,
+  setCurrentGroup,
 } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
 
@@ -47,8 +48,6 @@ export default function GroupDetailPage() {
   );
   const currentGroupInfo = useSelector(selectCurrentGroupInfo);
 
-  if (!groupInfo) throw new Error(GROUP_NOT_FOUND);
-
   const userProfile = useSelector(selectUserProfile);
 
   const userIDs = useMemo(() => {
@@ -70,7 +69,7 @@ export default function GroupDetailPage() {
 
   function refresh() {
     dispatch(getAllGroups());
-    if (currentGroupInfo?._id) dispatch(getTaskOfGroup(currentGroupInfo?._id));
+    if (groupInfo?._id) dispatch(getTaskOfGroup(groupInfo?._id));
   }
 
   function handleChangeDate(newDate) {
@@ -88,6 +87,14 @@ export default function GroupDetailPage() {
   }, [currentGroupInfo?._id]);
 
   useEffect(() => {
+    if (location.pathname.split('/').slice(-1)[0]) {
+      refresh();
+      // dispatch( setCurrentGroup({ groupID: location.pathname.split('/').slice(-1)[0] }),
+      // );
+    }
+  }, [location.pathname.split('/').slice(-1)[0]]);
+
+  useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -95,6 +102,7 @@ export default function GroupDetailPage() {
         dispatch(getAllTasks());
       }
     });
+    if (currentGroupInfo === null) throw new Error(GROUP_NOT_FOUND);
 
     return () => unsubscribe();
   }, []);

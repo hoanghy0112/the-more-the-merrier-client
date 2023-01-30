@@ -7,6 +7,7 @@ import {
   CHANGE_TASK_OF_GROUP,
   CREATE_NEW_GROUP,
   CREATE_TASK_OF_GROUP,
+  DELETE_TASK_OF_GROUP,
   GET_ALL_GROUP_OF_CURRENT_USER,
   GET_BUSY_TIME_OF_GROUP,
   GET_BUSY_TIME_OF_GROUP_V2,
@@ -144,6 +145,22 @@ export async function changeTaskOfGroupAPI(taskID, data) {
   }
 }
 
+export async function deleteTaskOfGroupAPI(taskID) {
+  try {
+    const auth = getAuth();
+    const accessToken = await auth.currentUser.getIdToken();
+    const response = await axios.delete(`${DELETE_TASK_OF_GROUP}/${taskID}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
 export async function getTaskOfGroupAPI(groupID) {
   try {
     const auth = getAuth();

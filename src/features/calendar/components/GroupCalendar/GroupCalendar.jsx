@@ -35,14 +35,6 @@ export default function GroupCalendar({ startDate, updateTask }) {
   // });
 
   useEffect(() => {
-    // refetch();
-  }, []);
-
-  // useEffect(() => {
-  //   setRefetch(refetch);
-  // }, [refetch]);
-
-  useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {

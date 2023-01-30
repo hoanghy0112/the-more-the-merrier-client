@@ -36,6 +36,7 @@ import InviteUserModal from '../InviteUserModal/InviteUserModal';
 import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
+import { deleteTaskOfGroup } from '../../features/groupsManagement/groupSlice';
 
 Modal.setAppElement('#modal');
 
@@ -78,6 +79,8 @@ export default function CreateNewTask({
   const { data: groupInformation } = useGroupInformationByIDQuery(
     data?.belongTo,
   );
+
+  const isEditable = data.belongTo && !isGroup;
   // const { _id: groupID } = useSelector(selectCurrentGroupInfo);
 
   // useEffect(() => {
@@ -142,7 +145,8 @@ export default function CreateNewTask({
   }
 
   function handleDelete() {
-    dispatch(deleteTask(data));
+    if (isGroup) dispatch(deleteTaskOfGroup(data));
+    else dispatch(deleteTask(data));
   }
 
   function handleAddTag(tagID) {
@@ -196,7 +200,7 @@ export default function CreateNewTask({
           className={styles.input}
           placeholder="Task’s title..."
           spellCheck="false"
-          disabled={data.belongTo}
+          disabled={isEditable}
         />
         {data.belongTo && !isGroup ? (
           <p>
@@ -212,20 +216,16 @@ export default function CreateNewTask({
           <TimeTag
             time={startTime}
             onChange={setStartTime}
-            disabled={data.belongTo}
+            disabled={isEditable}
           />
           -
-          <TimeTag
-            time={endTime}
-            onChange={setEndTime}
-            disabled={data.belongTo}
-          />
+          <TimeTag time={endTime} onChange={setEndTime} disabled={isEditable} />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
             startDay={startTime}
             hanldeChangeStartDay={() => {}}
-            disabled={data.belongTo}
+            disabled={isEditable}
           />
         </span>
       </div>
@@ -238,10 +238,10 @@ export default function CreateNewTask({
             onChange={(e) => setPosition(e.target.value)}
             style={{ overflowWrap: '-moz-initial' }}
             placeholder={
-              data.belongTo ? 'No data' : 'Enter your task’s location here...'
+              isEditable ? 'No data' : 'Enter your task’s location here...'
             }
             spellCheck="false"
-            disabled={data.belongTo}
+            disabled={isEditable}
           />
         </div>
         <div className={styles.desSentence_2}>
@@ -255,7 +255,7 @@ export default function CreateNewTask({
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                if (!data.belongTo) setIsChoosePriority(true);
+                if (!isEditable) setIsChoosePriority(true);
               }}
             >
               <p>{priorityText}</p>
@@ -299,7 +299,7 @@ export default function CreateNewTask({
               <div
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (!data.belongTo) setIsAddTag(true);
+                  if (!isEditable) setIsAddTag(true);
                 }}
                 className={styles.buttonAdd}
                 style={{ cursor: 'pointer' }}
@@ -366,7 +366,7 @@ export default function CreateNewTask({
             </div>
           ) : (
             <>
-              {data.belongTo ? (
+              {isEditable ? (
                 ''
               ) : (
                 <div
@@ -387,7 +387,7 @@ export default function CreateNewTask({
           <img src={ICON_MAIL} alt="invite" />
           <p className={styles.textInvite}>Invite participants</p>
         </div>
-        {data.belongTo ? (
+        {isEditable ? (
           ''
         ) : (
           <div

@@ -20,6 +20,7 @@ import CreateNewTask from '../CreateNewTask/CreateNewTask';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './PopUpMinimize.module.scss';
 import CenteredModal from '../CenteredModal/CenteredModal';
+import { deleteTaskOfGroup } from '../../features/groupsManagement/groupSlice';
 
 Modal.setAppElement('#modal');
 
@@ -50,7 +51,9 @@ export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
   }
 
   function handleDelete() {
-    dispatch(deleteTask(data));
+    console.log({ data });
+    if (isGroup) dispatch(deleteTaskOfGroup({ data }));
+    else dispatch(deleteTask(data));
   }
 
   return (
