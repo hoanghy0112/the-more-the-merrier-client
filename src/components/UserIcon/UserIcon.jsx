@@ -5,15 +5,31 @@ import { useUserProfileByIDQuery } from '../../features/userManagement/profileAP
 
 import styles from './UserIcon.module.scss';
 
-export default function UserIcon({ userID, size = 35, withName = false }) {
+export default function UserIcon({
+  userID,
+  size = 35,
+  withName = false,
+  isChoosing = false,
+  choosable = false,
+  onClick = () => {},
+}) {
   const { data, error, isLoading } = useUserProfileByIDQuery(userID);
+
   const fullName = useMemo(() => {
     if (data) return `${data?.familyName || ''} ${data?.givenName || ''}`;
     return '';
   }, [data]);
 
   return (
-    <div className={styles.container} userName={fullName}>
+    <div
+      className={[
+        styles.container,
+        isChoosing && choosable ? styles.choosing : null,
+        withName ? styles.withName : null,
+      ].join(' ')}
+      userName={fullName}
+      onClick={onClick}
+    >
       {isLoading && !error ? (
         <p>...</p>
       ) : (
@@ -24,7 +40,12 @@ export default function UserIcon({ userID, size = 35, withName = false }) {
         />
       )}
       {error ? <p>!</p> : null}
-      {withName ? <p>{fullName}</p> : null}
+      {withName ? (
+        <div className={styles.userInfo}>
+          <p>{fullName}</p>
+          <p>{data?.email}</p>
+        </div>
+      ) : null}
     </div>
   );
 }

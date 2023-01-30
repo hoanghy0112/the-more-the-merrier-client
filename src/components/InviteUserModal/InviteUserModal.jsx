@@ -1,26 +1,37 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import CenteredModal from '../CenteredModal/CenteredModal';
 
-import { selectCurrentGroupInfo } from '../../features/groupsManagement/groupSlice';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import styles from './InviteUserModal.module.scss';
-import TimeTag from '../TimeTag/TimeTag';
+import {
+  selectCurrentGroupInfo,
+  selectGroupBusyTime,
+} from '../../features/groupsManagement/groupSlice';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
+import PrimaryButton from '../PrimaryButton/PrimaryButton';
+import TimeTag from '../TimeTag/TimeTag';
+import UserChoosing from '../UserChoosing/UserChoosing';
+import styles from './InviteUserModal.module.scss';
 
 export default function InviteUserModal({ time: { from, to } }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [participants, setParticipants] = useState(new Set());
 
-  const {
-    _id: groupID,
-    admin,
-    description,
-    name: groupName,
-    users,
-  } = useSelector(selectCurrentGroupInfo);
+  const numberOfBusyUser = useRef(0);
+
+  const { name: groupName, users } = useSelector(selectCurrentGroupInfo);
+
+  const groupBusyTimes = useSelector(selectGroupBusyTime);
+
+  useEffect(() => {
+    numberOfBusyUser.current = groupBusyTimes.filter(
+      (time) =>
+        new Date(from) < new Date(time.to) &&
+        new Date(to) > new Date(time.from),
+    ).length;
+  }, [groupBusyTimes]);
 
   function onClose() {
     setIsOpen(false);
@@ -38,8 +49,8 @@ export default function InviteUserModal({ time: { from, to } }) {
           <div>
             <h1>{groupName}</h1>
             <h2>
-              <span className={styles.number}>{users.length}</span>
-              <span>active users</span>
+              <span className={styles.number}>{numberOfBusyUser.current}</span>
+              <span>busy users</span>
             </h2>
             <div className={styles.timeContainer}>
               <div className={styles.todoTime}>
@@ -55,6 +66,11 @@ export default function InviteUserModal({ time: { from, to } }) {
               </span>
             </div>
           </div>
+          <UserChoosing
+            participants={participants}
+            setParticipants={setParticipants}
+            close={() => setIsOpen(false)}
+          />
         </div>
       </CenteredModal>
     </>

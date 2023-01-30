@@ -6,7 +6,22 @@
 
   transition: 0.3s;
 
-  &::before {
+  border-radius: 10px;
+  padding: 5px;
+  font-weight: 500;
+
+  &.choosing {
+    // border: 5px solid #00a6ca;
+    background-color: #00a5ca95;
+    color: rgb(0, 0, 0);
+  }
+
+  &.withName {
+    cursor: pointer;
+    border: 1px solid #00a5cad2;
+  }
+
+  &:not(.withName)::before {
     content: '';
     transition: 0.3s;
     position: absolute;
@@ -20,7 +35,7 @@
     opacity: 0;
     z-index: 0;
   }
-  &::after {
+  &:not(.withName)::after {
     content: attr(userName);
     transition: 0.3s;
     position: absolute;
@@ -37,7 +52,7 @@
     z-index: 0;
   }
 
-  &:hover {
+  &:not(.withName):hover {
     &::before {
       opacity: 1;
       top: -4px;
@@ -69,5 +84,16 @@
     width: var(--size);
     height: var(--size);
     border-radius: 999px;
+  }
+
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    p:nth-child(2) {
+      font-weight: 400;
+      color: rgb(0, 0, 0);
+    }
   }
 }
