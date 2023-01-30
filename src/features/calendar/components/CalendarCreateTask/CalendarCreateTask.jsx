@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
@@ -5,11 +6,12 @@ import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
 
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
+
+import { useDispatch } from 'react-redux';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import CreateNewTask from '../../../../components/CreateNewTask/CreateNewTask';
 import styles from './CalendarCreateTask.module.scss';
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import { useDispatch } from 'react-redux';
 
 Modal.setAppElement('#modal');
 

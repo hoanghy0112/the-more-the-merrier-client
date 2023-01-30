@@ -17,7 +17,11 @@ import UserIcon from '../../../../components/UserIcon/UserIcon';
 import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
-import { selectGroupByID } from '../../groupSlice';
+import {
+  getTaskOfGroup,
+  selectCurrentGroupInfo,
+  selectGroupByID,
+} from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
 import GroupInformation from '../../components/GroupInformation/GroupInformation';
 import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
@@ -28,6 +32,8 @@ export default function GroupDetailPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [refetch, setRefetch] = useState(() => {});
+  console.log({ refetch });
   const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false);
   const [isOpenAddTaskModal, setIsOpenAddTaskModal] = useState(false);
   const [isOpenGeneratedTimeModal, setIsOpenGeneratedTimeModal] =
@@ -40,6 +46,7 @@ export default function GroupDetailPage() {
   const groupInfo = useSelector(
     selectGroupByID(location.pathname.split('/').slice(-1)[0]),
   );
+  const currentGroupInfo = useSelector(selectCurrentGroupInfo);
 
   if (!groupInfo) throw new Error(GROUP_NOT_FOUND);
 
@@ -62,6 +69,10 @@ export default function GroupDetailPage() {
     ),
   );
 
+  function updateTask() {
+    dispatch(getTaskOfGroup(currentGroupInfo._id));
+  }
+
   function handleChangeDate(newDate) {
     setDate(
       new Date(
@@ -76,6 +87,7 @@ export default function GroupDetailPage() {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        updateTask();
         dispatch(getAllTasks());
       }
     });
@@ -91,9 +103,12 @@ export default function GroupDetailPage() {
             startDay={date}
             hanldeChangeStartDay={handleChangeDate}
           />
+          <button type="button" className={styles.refresh} onClick={updateTask}>
+            <p>Refresh</p>
+          </button>
         </div>
         <div className={styles.calendarMain}>
-          <GroupCalendar startDate={date} />
+          <GroupCalendar startDate={date} updateTask={updateTask} />
         </div>
       </div>
       <div className={styles.sideMenu}>

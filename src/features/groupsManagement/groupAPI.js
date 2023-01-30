@@ -161,6 +161,26 @@ export async function getTaskOfGroupAPI(groupID) {
   }
 }
 
+export const getGroupTaskByID = createApi({
+  reducerPath: 'groupTasks',
+  baseQuery: fetchBaseQuery({
+    baseUrl: GET_TASK_OF_GROUP,
+    prepareHeaders: async (headers) => {
+      const auth = getAuth();
+      const accessToken = await auth.currentUser.getIdToken();
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`);
+      }
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    groupTaskByID: builder.query({
+      query: ({ groupID }) => `/${groupID}`,
+    }),
+  }),
+});
+
 export const getGroupInformationByID = createApi({
   reducerPath: 'groupInformation',
   baseQuery: fetchBaseQuery({ baseUrl: GET_GROUP_BY_ID }),
@@ -197,3 +217,4 @@ export const getGroupBusyTime = createApi({
 
 export const { useGroupInformationByIDQuery } = getGroupInformationByID;
 export const { useGroupBusyTimeQuery } = getGroupBusyTime;
+export const { useGroupTaskByIDQuery } = getGroupTaskByID;

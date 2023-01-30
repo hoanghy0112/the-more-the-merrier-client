@@ -1,4 +1,5 @@
 .drag {
+  user-select: none;
   z-index: 10;
   position: absolute;
   padding: 0px 3px;
@@ -32,11 +33,19 @@
       }
     }
 
+    &.group {
+      color: #1572a1;
+      background-color: #fff;
+      border: 1px solid #1572a1;
+      cursor: pointer;
+    }
+
     &:hover {
       // transform: scale(1.1);
       // box-shadow: 0 0 20px 0 var(--color);
       transform: translate(-6px, -6px);
-      box-shadow: 6px 6px 0px 0 rgba(162, 162, 162, 0.653), 6px 6px 0 0 var(--color);
+      box-shadow: 6px 6px 0px 0 rgba(162, 162, 162, 0.653),
+        6px 6px 0 0 var(--color);
     }
 
     .taskContent {

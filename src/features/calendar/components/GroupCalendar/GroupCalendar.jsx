@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-curly-newline */
@@ -16,21 +17,30 @@ import {
   changeTaskOfGroup,
   createTaskOfGroup,
   getBusyTimeOfGroup,
-  getTaskOfGroup,
   selectCurrentGroupInfo,
   selectGroupBusyTime,
   selectGroupTaskOfCurrentGroup,
 } from '../../../groupsManagement/groupSlice';
 
-// import styles from './GroupCalendar.module.scss';
-
-export default function GroupCalendar({ startDate }) {
+export default function GroupCalendar({ startDate, updateTask }) {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const tasks = useSelector(selectGroupTaskOfCurrentGroup);
   const currentGroupInfo = useSelector(selectCurrentGroupInfo);
   const groupBusyTimes = useSelector(selectGroupBusyTime);
+
+  const tasks = useSelector(selectGroupTaskOfCurrentGroup);
+  // const { data: tasks, refetch } = useGroupTaskByIDQuery({
+  //   groupID: currentGroupInfo?._id,
+  // });
+
+  useEffect(() => {
+    // refetch();
+  }, []);
+
+  // useEffect(() => {
+  //   setRefetch(refetch);
+  // }, [refetch]);
 
   useEffect(() => {
     const auth = getAuth();
@@ -47,6 +57,7 @@ export default function GroupCalendar({ startDate }) {
   }, [startDate]);
 
   return (
+    // <div className={styles.container}>
     <Calendar
       startDate={startDate}
       tasks={tasks}
@@ -54,16 +65,13 @@ export default function GroupCalendar({ startDate }) {
       createNewTask={(data) => {
         dispatch(createTaskOfGroup({ groupID: currentGroupInfo._id, ...data }));
       }}
-      changeTask={(data, taskID) => {
-        dispatch(changeTaskOfGroup({ taskID, ...data }));
+      changeTask={(data) => {
+        dispatch(changeTaskOfGroup({ data }));
       }}
-      retrieveAllTask={() =>
-        currentGroupInfo?._id
-          ? dispatch(getTaskOfGroup(currentGroupInfo._id))
-          : null
-      }
+      retrieveAllTask={updateTask}
       isGroup
     />
+    // </div>
   );
 }
 

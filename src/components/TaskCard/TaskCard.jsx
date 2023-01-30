@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
@@ -16,6 +17,8 @@ import HoverBox from '../HoverBox/HoverBox';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 
 import styles from './TaskCard.module.scss';
+import CenteredModal from '../CenteredModal/CenteredModal';
+import CreateNewTask from '../CreateNewTask/CreateNewTask';
 
 export default function TaskCard({
   task,
@@ -26,6 +29,7 @@ export default function TaskCard({
   isGroup,
 }) {
   const [isDrag, setIsDrag] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
   const {
@@ -97,6 +101,7 @@ export default function TaskCard({
         setIsDrag(false);
         handleDragStop(...params);
       }}
+      disabled={task.belongTo}
     >
       <div
         className={styles.drag}
@@ -113,8 +118,10 @@ export default function TaskCard({
             <div
               className={[
                 styles.task,
+                task?.belongTo ? styles.group : null,
                 new Date(to) < new Date() && styles.passed,
               ].join(' ')}
+              onClick={() => setIsOpen(true)}
             >
               <div className={styles.taskContent}>
                 <p>{title}</p>
@@ -135,8 +142,11 @@ export default function TaskCard({
           }
           onOpen={setIsHovering}
           parentRect={rect}
-          canAppear={!isDrag}
+          canAppear={!isDrag && (isGroup || !task.belongTo)}
         />
+        <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+          <CreateNewTask onChange={changeTask} isGroup={isGroup} data={task} />
+        </CenteredModal>
       </div>
     </Draggable>
   );

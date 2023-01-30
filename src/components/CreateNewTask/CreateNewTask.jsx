@@ -358,14 +358,10 @@ export default function CreateNewTask({
           <img src={ICON_TRASH} alt="trash" />
         </div>
       </div>
-      {data._id ? (
-        ''
-      ) : (
-        <div className={styles.createButton} onClick={handleCreateNewTask}>
-          <p>Create</p>
-          <img src={ICON_FULL_ARROW_RIGHT} alt="next" />
-        </div>
-      )}
+      <div className={styles.createButton} onClick={handleCreateNewTask}>
+        <p>{data._id ? 'Update' : 'Create'}</p>
+        <img src={ICON_FULL_ARROW_RIGHT} alt="next" />
+      </div>
     </div>
   );
 }

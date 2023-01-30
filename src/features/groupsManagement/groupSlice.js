@@ -89,11 +89,11 @@ export const createTaskOfGroup = createAsyncThunk(
 export const changeTaskOfGroup = createAsyncThunk(
   'groupsManagement/changeTaskOfGroup',
   async (req) => {
-    const { taskID, ...data } = req;
-    console.log(req);
+    const {
+      data: { _id, ...otherFields },
+    } = req;
 
-    const response = await changeTaskOfGroupAPI(taskID, data);
-    console.log({ response });
+    const response = await changeTaskOfGroupAPI(_id, otherFields);
 
     return response;
   },
@@ -159,14 +159,14 @@ export const groupsManagementSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(changeTaskOfGroup.pending, (state, action) => {
-        const { taskID, ...data } = action.meta.arg;
+        const { data } = action.meta.arg;
 
         state.groupTasks = [
-          ...state.groupTasks.filter((task) => task._id !== taskID),
+          ...state.groupTasks.filter((task) => task._id !== data._id),
           {
-            ...state.groupTasks.find((task) => task._id === taskID),
+            ...state.groupTasks.find((task) => task._id === data._id),
             ...data,
-            _id: taskID,
+            _id: data._id,
           },
         ];
       })

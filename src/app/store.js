@@ -12,6 +12,7 @@ import calendarReducer from '../features/calendar/calendarSlice';
 import {
   getGroupBusyTime,
   getGroupInformationByID,
+  getGroupTaskByID,
 } from '../features/groupsManagement/groupAPI';
 import { getUserProfileByID } from '../features/userManagement/profileAPI';
 
@@ -56,12 +57,14 @@ export const store = configureStore({
     [getGroupInformationByID.reducerPath]: getGroupInformationByID.reducer,
     [getUserProfileByID.reducerPath]: getUserProfileByID.reducer,
     [getGroupBusyTime.reducerPath]: getGroupBusyTime.reducer,
+    [getGroupTaskByID.reducerPath]: getGroupTaskByID.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(getGroupInformationByID.middleware)
       .concat(getUserProfileByID.middleware)
-      .concat(getGroupBusyTime.middleware),
+      .concat(getGroupBusyTime.middleware)
+      .concat(getGroupTaskByID.middleware),
 });
 
 export const persistor = persistStore(store);

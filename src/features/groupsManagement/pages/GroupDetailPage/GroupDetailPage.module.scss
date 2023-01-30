@@ -16,7 +16,33 @@
     display: grid;
 
     .picker {
-      padding-left: 10px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+
+      .refresh {
+        // position: absolute;
+        // right: 0;
+        // z-index: 9999;
+        // transform: translateY(-100%);
+        border: 1px solid rgb(149, 149, 149);
+        border-radius: 5px;
+        background-color: white;
+        color: rgb(86, 85, 85);
+        padding: 4px 8px;
+        display: flex;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: #00a5ca3e;
+        }
+
+        &:active {
+          background-color: #00a5ca81;
+        }
+      }
     }
 
     .calendarMain {
