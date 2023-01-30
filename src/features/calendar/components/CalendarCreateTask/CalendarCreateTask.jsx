@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -8,6 +8,8 @@ import Modal from 'react-modal';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import CreateNewTask from '../../../../components/CreateNewTask/CreateNewTask';
 import styles from './CalendarCreateTask.module.scss';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { useDispatch } from 'react-redux';
 
 Modal.setAppElement('#modal');
 
@@ -19,6 +21,8 @@ export default function CalendarCreateTask({
   retrieveAllTask,
   isGroup,
 }) {
+  const dispatch = useDispatch();
+
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
   const [data, setData] = useState(null);
@@ -33,6 +37,17 @@ export default function CalendarCreateTask({
   useLayoutEffect(() => {
     setHeight(Math.abs(end[1] - begin[1]));
   }, [end]);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(retrieveAllTask());
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   function handleMouseMove(e) {
     e.stopPropagation();

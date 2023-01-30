@@ -144,11 +144,11 @@ export async function changeTaskOfGroupAPI(taskID, data) {
   }
 }
 
-export async function getTaskOfGroupAPI() {
+export async function getTaskOfGroupAPI(groupID) {
   try {
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
-    const response = await axios.get(`${GET_TASK_OF_GROUP}`, {
+    const response = await axios.get(`${GET_TASK_OF_GROUP}/${groupID}`, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`,

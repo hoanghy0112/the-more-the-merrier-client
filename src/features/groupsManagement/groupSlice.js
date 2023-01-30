@@ -101,8 +101,9 @@ export const changeTaskOfGroup = createAsyncThunk(
 
 export const getTaskOfGroup = createAsyncThunk(
   'groupsManagement/getTaskOfGroup',
-  async () => {
-    const response = await getTaskOfGroupAPI();
+  async (groupID) => {
+    const response = await getTaskOfGroupAPI(groupID);
+    console.log({ response });
 
     return response;
   },
@@ -204,7 +205,7 @@ export const selectCurrentGroupInfo = (state) =>
 
 export const selectGroupTaskOfCurrentGroup = (state) => {
   const { currentGroupID } = state.groupsManagement;
-  return state.groupsManagement.groupTasks.filter(
+  return (state.groupsManagement.groupTasks || []).filter(
     (task) => task.belongTo === currentGroupID,
   );
 };

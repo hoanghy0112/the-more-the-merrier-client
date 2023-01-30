@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
@@ -56,7 +57,11 @@ export default function GroupCalendar({ startDate }) {
       changeTask={(data, taskID) => {
         dispatch(changeTaskOfGroup({ taskID, ...data }));
       }}
-      retrieveAllTask={() => dispatch(getTaskOfGroup())}
+      retrieveAllTask={() =>
+        currentGroupInfo?._id
+          ? dispatch(getTaskOfGroup(currentGroupInfo._id))
+          : null
+      }
       isGroup
     />
   );
