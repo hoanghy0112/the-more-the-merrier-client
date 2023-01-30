@@ -11,7 +11,11 @@ import styles from './DateTimePicker.module.scss';
 
 import 'react-day-picker/dist/style.css';
 
-export default function DateTimePicker({ startDay, hanldeChangeStartDay }) {
+export default function DateTimePicker({
+  startDay,
+  hanldeChangeStartDay,
+  disabled = false,
+}) {
   const [isOpenDateTimePicker, setIsOpenDateTimePicker] = useState(false);
   const [selected, setSelected] = useState(startDay);
 
@@ -40,7 +44,7 @@ export default function DateTimePicker({ startDay, hanldeChangeStartDay }) {
           <img src={ICON_CALENDAR_2} alt="Calendar" />
         </div>
       </div>
-      {isOpenDateTimePicker && (
+      {isOpenDateTimePicker && !disabled && (
         <div className={styles['date-time-picker']}>
           <DayPicker mode="single" selected={selected} onSelect={setSelected} />
         </div>
@@ -52,4 +56,9 @@ export default function DateTimePicker({ startDay, hanldeChangeStartDay }) {
 DateTimePicker.propTypes = {
   startDay: PropTypes.instanceOf(Date).isRequired,
   hanldeChangeStartDay: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};
+
+DateTimePicker.defaultProps = {
+  disabled: false,
 };

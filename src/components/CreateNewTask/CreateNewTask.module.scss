@@ -19,13 +19,25 @@
 
   .taskTitle {
     padding: 0px;
-    gap: 15px;
-    height: 28px;
+    // gap: 15px;
 
     font-family: 'Manrope';
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
+
+    p {
+      font-size: 0.9rem;
+
+      span:nth-child(2) {
+        color: #00a6ca;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
   .input {
@@ -321,6 +333,8 @@
 
   .buttonContainer {
     display: flex;
+    gap: 20px;
+    height: 40px;
     align-items: flex-start;
     padding: 0px;
     justify-content: space-between;
@@ -335,20 +349,25 @@
       box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
         1.2px 1.8px 6px rgba(0, 166, 202, 0.25);
       border-radius: 6px;
-      width: 234.6px;
-      height: 30.6px;
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       gap: 3.6px;
+
+      transition: 0.3s;
+
+      &:hover {
+        background-color: rgb(217, 231, 250);
+      }
     }
+
     .textInvite {
       font-family: 'Manrope';
-      font-style: normal;
       font-weight: 400;
-      font-size: 9.6px;
-      line-height: 13px;
+      font-size: 0.8rem;
       display: flex;
       align-items: center;
       text-align: center;
@@ -356,8 +375,8 @@
       color: #0066ff;
     }
     .trashContainer {
-      width: 65.4px;
-      height: 30.6px;
+      width: 65px;
+      height: 100%;
       display: flex;
       flex-direction: row;
       align-items: center;

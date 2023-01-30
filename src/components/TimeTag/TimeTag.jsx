@@ -5,7 +5,7 @@ import styles from './TimeTag.module.scss';
 
 import TimePicker from '../TimePicker/TimePicker';
 
-export default function TimeTag({ time, onChange }) {
+export default function TimeTag({ time, onChange, disabled = false }) {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleChangeTime = (newTime) => {
@@ -21,7 +21,7 @@ export default function TimeTag({ time, onChange }) {
         }`}
       </p>
       <div className={styles.timePicker}>
-        {isEdit === true && (
+        {isEdit === true && !disabled && (
           <TimePicker time={time} handleChangeTime={handleChangeTime} />
         )}
       </div>
@@ -32,4 +32,9 @@ export default function TimeTag({ time, onChange }) {
 TimeTag.propTypes = {
   time: PropTypes.instanceOf(Date).isRequired,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};
+
+TimeTag.defaultProps = {
+  disabled: false,
 };

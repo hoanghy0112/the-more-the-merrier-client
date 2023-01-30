@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-no-bind */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,26 +14,25 @@ import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserIcon from '../../../../components/UserIcon/UserIcon';
+import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
+import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
+import GroupInformation from '../../components/GroupInformation/GroupInformation';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import {
+  getAllGroups,
   getTaskOfGroup,
   selectCurrentGroupInfo,
   selectGroupByID,
 } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
-import GroupInformation from '../../components/GroupInformation/GroupInformation';
-import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
-import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [refetch, setRefetch] = useState(() => {});
-  console.log({ refetch });
   const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false);
   const [isOpenAddTaskModal, setIsOpenAddTaskModal] = useState(false);
   const [isOpenGeneratedTimeModal, setIsOpenGeneratedTimeModal] =
@@ -69,8 +68,9 @@ export default function GroupDetailPage() {
     ),
   );
 
-  function updateTask() {
-    dispatch(getTaskOfGroup(currentGroupInfo._id));
+  function refresh() {
+    dispatch(getAllGroups());
+    if (currentGroupInfo?._id) dispatch(getTaskOfGroup(currentGroupInfo?._id));
   }
 
   function handleChangeDate(newDate) {
@@ -84,10 +84,14 @@ export default function GroupDetailPage() {
   }
 
   useEffect(() => {
+    refresh();
+  }, [currentGroupInfo?._id]);
+
+  useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        updateTask();
+        refresh();
         dispatch(getAllTasks());
       }
     });
@@ -103,12 +107,12 @@ export default function GroupDetailPage() {
             startDay={date}
             hanldeChangeStartDay={handleChangeDate}
           />
-          <button type="button" className={styles.refresh} onClick={updateTask}>
+          <button type="button" className={styles.refresh} onClick={refresh}>
             <p>Refresh</p>
           </button>
         </div>
         <div className={styles.calendarMain}>
-          <GroupCalendar startDate={date} updateTask={updateTask} />
+          <GroupCalendar startDate={date} updateTask={refresh} />
         </div>
       </div>
       <div className={styles.sideMenu}>

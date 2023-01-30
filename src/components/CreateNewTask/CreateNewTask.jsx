@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable function-paren-newline */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
@@ -9,10 +10,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import TagChoosing from '../../features/tagsManagement/components/TagChoosing/TagChoosing';
 
@@ -26,11 +28,9 @@ import {
   ICON_TRASH,
 } from '../../assets/icons';
 
+import { useGroupInformationByIDQuery } from '../../features/groupsManagement/groupAPI';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
-import {
-  changeTask,
-  deleteTask,
-} from '../../features/tasksManagement/TasksSlice';
+import { deleteTask } from '../../features/tasksManagement/TasksSlice';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import InviteUserModal from '../InviteUserModal/InviteUserModal';
 import ImportedTag from '../Tag/ImportedTag/ImportedTag';
@@ -46,6 +46,7 @@ export default function CreateNewTask({
   isGroup,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState(data?.title || '');
   const [startTime, setStartTime] = useState(
@@ -73,46 +74,50 @@ export default function CreateNewTask({
   const [isChoosePriority, setIsChoosePriority] = useState(false);
 
   const populatedTags = useSelector(selectTagsWithIDs(tags));
+
+  const { data: groupInformation } = useGroupInformationByIDQuery(
+    data?.belongTo,
+  );
   // const { _id: groupID } = useSelector(selectCurrentGroupInfo);
 
-  useEffect(() => {
-    const newData = {
-      title,
-      time: {
-        from: startTime.toISOString(),
-        to: endTime.toISOString(),
-      },
-      location: position,
-      priority,
-      participants: [...participants],
-      tags,
-      descriptions: desSentence,
-    };
+  // useEffect(() => {
+  //   const newData = {
+  //     title,
+  //     time: {
+  //       from: startTime.toISOString(),
+  //       to: endTime.toISOString(),
+  //     },
+  //     location: position,
+  //     priority,
+  //     participants: [...participants],
+  //     tags,
+  //     descriptions: desSentence,
+  //   };
 
-    const timeout = setTimeout(() => {
-      if (onChange) {
-        onChange(newData, data._id);
-      } else {
-        dispatch(
-          changeTask({
-            _id: data._id,
-            ...newData,
-          }),
-        );
-      }
-    }, 500);
+  //   const timeout = setTimeout(() => {
+  //     if (onChange) {
+  //       onChange(newData, data._id);
+  //     } else {
+  //       dispatch(
+  //         changeTask({
+  //           _id: data._id,
+  //           ...newData,
+  //         }),
+  //       );
+  //     }
+  //   }, 500);
 
-    return () => clearTimeout(timeout);
-  }, [
-    title,
-    startTime,
-    endTime,
-    position,
-    priority,
-    participants,
-    tags,
-    desSentence,
-  ]);
+  //   return () => clearTimeout(timeout);
+  // }, [
+  //   title,
+  //   startTime,
+  //   endTime,
+  //   position,
+  //   priority,
+  //   participants,
+  //   tags,
+  //   desSentence,
+  // ]);
 
   function handleCreateNewTask() {
     const newData = {
@@ -128,7 +133,12 @@ export default function CreateNewTask({
       descriptions: desSentence,
     };
 
-    onCreateNewTask(newData);
+    if (data._id) {
+      onChange({
+        _id: data._id,
+        ...newData,
+      });
+    } else onCreateNewTask(newData);
   }
 
   function handleDelete() {
@@ -186,18 +196,36 @@ export default function CreateNewTask({
           className={styles.input}
           placeholder="Task’s title..."
           spellCheck="false"
+          disabled={data.belongTo}
         />
+        {data.belongTo && !isGroup ? (
+          <p>
+            <span>Task of </span>
+            <span onClick={() => navigate(`/home/group/${data.belongTo}`)}>
+              {groupInformation?.name}
+            </span>
+          </p>
+        ) : null}
       </span>
       <div className={styles.timeContainer}>
         <div className={styles.todoTime}>
-          <TimeTag time={startTime} onChange={setStartTime} />
+          <TimeTag
+            time={startTime}
+            onChange={setStartTime}
+            disabled={data.belongTo}
+          />
           -
-          <TimeTag time={endTime} onChange={setEndTime} />
+          <TimeTag
+            time={endTime}
+            onChange={setEndTime}
+            disabled={data.belongTo}
+          />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
             startDay={startTime}
             hanldeChangeStartDay={() => {}}
+            disabled={data.belongTo}
           />
         </span>
       </div>
@@ -209,8 +237,11 @@ export default function CreateNewTask({
             value={position}
             onChange={(e) => setPosition(e.target.value)}
             style={{ overflowWrap: '-moz-initial' }}
-            placeholder="Enter your task’s location here..."
+            placeholder={
+              data.belongTo ? 'No data' : 'Enter your task’s location here...'
+            }
             spellCheck="false"
+            disabled={data.belongTo}
           />
         </div>
         <div className={styles.desSentence_2}>
@@ -224,7 +255,7 @@ export default function CreateNewTask({
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                setIsChoosePriority(true);
+                if (!data.belongTo) setIsChoosePriority(true);
               }}
             >
               <p>{priorityText}</p>
@@ -268,7 +299,7 @@ export default function CreateNewTask({
               <div
                 onClick={(e) => {
                   e.stopPropagation();
-                  setIsAddTag(true);
+                  if (!data.belongTo) setIsAddTag(true);
                 }}
                 className={styles.buttonAdd}
                 style={{ cursor: 'pointer' }}
@@ -334,14 +365,20 @@ export default function CreateNewTask({
               />
             </div>
           ) : (
-            <div
-              className={styles.addDescription}
-              style={{ cursor: 'pointer' }}
-              onClick={() => setIsAdd(true)}
-            >
-              <img src={ICON_ADD} alt="add" />
-              <p className={styles.addText}>Add description</p>
-            </div>
+            <>
+              {data.belongTo ? (
+                ''
+              ) : (
+                <div
+                  className={styles.addDescription}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setIsAdd(true)}
+                >
+                  <img src={ICON_ADD} alt="add" />
+                  <p className={styles.addText}>Add description</p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -350,18 +387,24 @@ export default function CreateNewTask({
           <img src={ICON_MAIL} alt="invite" />
           <p className={styles.textInvite}>Invite participants</p>
         </div>
-        <div
-          onClick={handleDelete}
-          className={styles.trashContainer}
-          style={{ cursor: 'pointer' }}
-        >
-          <img src={ICON_TRASH} alt="trash" />
+        {data.belongTo ? (
+          ''
+        ) : (
+          <div
+            onClick={handleDelete}
+            className={styles.trashContainer}
+            style={{ cursor: 'pointer' }}
+          >
+            <img src={ICON_TRASH} alt="trash" />
+          </div>
+        )}
+      </div>
+      {isGroup || !data.belongTo ? (
+        <div className={styles.createButton} onClick={handleCreateNewTask}>
+          <p>{data._id ? 'Update' : 'Create'}</p>
+          <img src={ICON_FULL_ARROW_RIGHT} alt="next" />
         </div>
-      </div>
-      <div className={styles.createButton} onClick={handleCreateNewTask}>
-        <p>{data._id ? 'Update' : 'Create'}</p>
-        <img src={ICON_FULL_ARROW_RIGHT} alt="next" />
-      </div>
+      ) : null}
     </div>
   );
 }

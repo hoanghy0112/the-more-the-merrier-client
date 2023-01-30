@@ -111,7 +111,14 @@ export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
         </div>
       </div>
       <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <CreateNewTask onChange={onChange} isGroup={isGroup} data={data} />
+        <CreateNewTask
+          onChange={(newData) => {
+            onChange(newData);
+            setIsOpen(false);
+          }}
+          isGroup={isGroup}
+          data={data}
+        />
       </CenteredModal>
     </div>
   );

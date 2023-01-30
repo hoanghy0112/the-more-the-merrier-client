@@ -40,7 +40,7 @@ export default function HoverBox({
     if (!isHovering) {
       const timeout = setTimeout(() => {
         if (canAppear) setIsAppear(false);
-      }, 300);
+      }, 500);
 
       return () => clearTimeout(timeout);
     }
@@ -57,7 +57,7 @@ export default function HoverBox({
     if (!canAppear) setIsAppear(false);
   }, [canAppear]);
 
-  const PADDING = 7;
+  const PADDING = 5;
 
   const left = (() => {
     if (mainBoxRef?.current && infoBoxRef?.current) {

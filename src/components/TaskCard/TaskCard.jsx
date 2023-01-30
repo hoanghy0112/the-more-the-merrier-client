@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-wrap-multilines */
@@ -101,7 +104,7 @@ export default function TaskCard({
         setIsDrag(false);
         handleDragStop(...params);
       }}
-      disabled={task.belongTo}
+      disabled={task.belongTo && !isGroup}
     >
       <div
         className={styles.drag}
@@ -118,10 +121,12 @@ export default function TaskCard({
             <div
               className={[
                 styles.task,
-                task?.belongTo ? styles.group : null,
+                task?.belongTo && !isGroup ? styles.group : null,
                 new Date(to) < new Date() && styles.passed,
               ].join(' ')}
-              onClick={() => setIsOpen(true)}
+              onClick={() =>
+                task.belongTo && !isGroup ? setIsOpen(true) : null
+              }
             >
               <div className={styles.taskContent}>
                 <p>{title}</p>
@@ -145,7 +150,14 @@ export default function TaskCard({
           canAppear={!isDrag && (isGroup || !task.belongTo)}
         />
         <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-          <CreateNewTask onChange={changeTask} isGroup={isGroup} data={task} />
+          <CreateNewTask
+            onChange={(data) => {
+              changeTask(data);
+              setIsOpen(false);
+            }}
+            isGroup={isGroup}
+            data={task}
+          />
         </CenteredModal>
       </div>
     </Draggable>

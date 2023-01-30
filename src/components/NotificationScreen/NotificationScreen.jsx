@@ -7,7 +7,6 @@ import styles from './NotificationScreen.module.scss';
 export default function NotificationScreen() {
   const now = new Date();
   const nowTime = moment(now).format('HH:mm');
-  console.log(nowTime);
   return (
     <div className={styles.container}>
       <p className={styles.title}>Lời mời gia nhập nhóm</p>
