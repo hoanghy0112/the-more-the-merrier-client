@@ -77,7 +77,7 @@ export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
       </div>
       <div className={styles.descriptionContainer}>
         <div className={styles.detailDescription}>
-          {data.descriptions.map((sentence) => (
+          {(data.descriptions || []).map((sentence) => (
             <div key={sentence} className={styles.descriptionItem}>
               <p
                 className={styles.descriptionText}

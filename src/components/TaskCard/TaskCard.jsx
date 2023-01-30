@@ -34,7 +34,7 @@ export default function TaskCard({
     tags: tagIDs,
   } = task;
 
-  const tags = useSelector(selectTagsWithIDs(tagIDs));
+  const tags = useSelector(selectTagsWithIDs(tagIDs || []));
 
   const fromDate = new Date(from);
   const top =

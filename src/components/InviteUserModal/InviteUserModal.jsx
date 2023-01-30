@@ -15,9 +15,13 @@ import TimeTag from '../TimeTag/TimeTag';
 import UserChoosing from '../UserChoosing/UserChoosing';
 import styles from './InviteUserModal.module.scss';
 
-export default function InviteUserModal({ time: { from, to } }) {
+export default function InviteUserModal({
+  time: { from, to },
+  participants,
+  setParticipants,
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [participants, setParticipants] = useState(new Set());
+  // const [participants, setParticipants] = useState(new Set());
 
   const numberOfBusyUser = useRef(0);
 

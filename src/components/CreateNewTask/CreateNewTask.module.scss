@@ -228,9 +228,6 @@
     padding: 0px;
     gap: 15px;
 
-    width: 310px;
-    // height: 162.4px;
-
     flex: none;
     order: 2;
     align-self: stretch;
@@ -254,6 +251,7 @@
       padding: 0px;
       gap: 12px;
       width: 100%;
+
       .addDescription {
         box-sizing: border-box;
 
@@ -320,17 +318,18 @@
       }
     }
   }
+
   .buttonContainer {
     display: flex;
-    flex-direction: row;
     align-items: flex-start;
     padding: 0px;
-    gap: 10px;
+    justify-content: space-between;
 
     flex: none;
     order: 3;
     align-self: stretch;
     flex-grow: 0;
+
     .inviteParticipant {
       background: #ffffff;
       box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),

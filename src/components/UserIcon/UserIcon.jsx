@@ -43,7 +43,7 @@ export default function UserIcon({
       {withName ? (
         <div className={styles.userInfo}>
           <p>{fullName}</p>
-          <p>{data?.email}</p>
+          {/* <p>{data?.email}</p> */}
         </div>
       ) : null}
     </div>

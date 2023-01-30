@@ -26,16 +26,16 @@ import {
   ICON_TRASH,
 } from '../../assets/icons';
 
+import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 import {
   changeTask,
   deleteTask,
 } from '../../features/tasksManagement/TasksSlice';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
+import InviteUserModal from '../InviteUserModal/InviteUserModal';
 import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
-import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
-import InviteUserModal from '../InviteUserModal/InviteUserModal';
 
 Modal.setAppElement('#modal');
 
@@ -56,10 +56,11 @@ export default function CreateNewTask({
   );
   const [position, setPosition] = useState(data?.location || '');
   const [priority, setPriority] = useState(data?.priority || 3);
-  const [participants] = useState(data?.participants || []);
+  const [participants, setParticipants] = useState(
+    new Set(data?.participants || []),
+  );
 
   const [tags, setTags] = useState(data?.tags || []);
-  // const [populatedTags, setPopulatedTags] = useState([]);
 
   const [desSentence, setDesSentence] = useState(
     data?.descriptions?.filter((des) => des !== '') || [],
@@ -72,6 +73,7 @@ export default function CreateNewTask({
   const [isChoosePriority, setIsChoosePriority] = useState(false);
 
   const populatedTags = useSelector(selectTagsWithIDs(tags));
+  // const { _id: groupID } = useSelector(selectCurrentGroupInfo);
 
   useEffect(() => {
     const newData = {
@@ -82,7 +84,7 @@ export default function CreateNewTask({
       },
       location: position,
       priority,
-      participants,
+      participants: [...participants],
       tags,
       descriptions: desSentence,
     };
@@ -121,7 +123,7 @@ export default function CreateNewTask({
       },
       location: position,
       priority,
-      participants,
+      participants: [...participants],
       tags,
       descriptions: desSentence,
     };
@@ -279,7 +281,13 @@ export default function CreateNewTask({
             )}
           </div>
         )}
-        {isGroup && <InviteUserModal time={{ from: startTime, to: endTime }} />}
+        {isGroup && (
+          <InviteUserModal
+            time={{ from: startTime, to: endTime }}
+            participants={participants}
+            setParticipants={setParticipants}
+          />
+        )}
       </div>
       <div className={styles.descriptionContainer}>
         <p className={styles.text}>Description</p>
