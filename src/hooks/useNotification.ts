@@ -5,7 +5,10 @@ import useRealTimeData from './useRealTimeData';
 
 export default function useNotification(setNewNotification = (data) => {}) {
   const [socket, setSocket] = useState<Socket>();
-  const { data: notifications, isLoading } = useRealTimeData(onConnect);
+  const { data: notifications, isLoading } = useRealTimeData(
+    onConnect,
+    'notification-real-time',
+  );
 
   function readNotification(notificationID: string) {
     console.log({ notificationIDs: [notificationID] });

@@ -5,7 +5,10 @@ import useRealTimeData from './useRealTimeData';
 
 export default function useAllGroup() {
   const [socket, setSocket] = useState<Socket>();
-  const { data: groups, isLoading } = useRealTimeData(onConnect);
+  const { data: groups, isLoading } = useRealTimeData(
+    onConnect,
+    'groups-real-time',
+  );
 
   function onConnect(socket: Socket, setGroups: (data) => {}) {
     socket.emit('groups');

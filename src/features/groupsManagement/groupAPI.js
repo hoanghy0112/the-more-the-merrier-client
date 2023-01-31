@@ -1,11 +1,11 @@
 /* eslint-disable implicit-arrow-linebreak */
-import axios from 'axios';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 
 import {
   CHANGE_TASK_OF_GROUP,
-  CREATE_NEW_GROUP,
+  CREATE_NEW_GROUP_V2,
   CREATE_TASK_OF_GROUP,
   DELETE_TASK_OF_GROUP,
   GET_ALL_GROUP_OF_CURRENT_USER,
@@ -25,7 +25,7 @@ export async function createNewGroupAPI({
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     const response = await axios.post(
-      CREATE_NEW_GROUP,
+      CREATE_NEW_GROUP_V2,
       {
         name,
         description,

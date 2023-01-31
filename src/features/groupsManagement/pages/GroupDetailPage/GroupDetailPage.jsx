@@ -25,7 +25,6 @@ import {
   getTaskOfGroup,
   selectCurrentGroupInfo,
   selectGroupByID,
-  setCurrentGroup,
 } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
 
@@ -89,8 +88,6 @@ export default function GroupDetailPage() {
   useEffect(() => {
     if (location.pathname.split('/').slice(-1)[0]) {
       refresh();
-      // dispatch( setCurrentGroup({ groupID: location.pathname.split('/').slice(-1)[0] }),
-      // );
     }
   }, [location.pathname.split('/').slice(-1)[0]]);
 
@@ -133,7 +130,7 @@ export default function GroupDetailPage() {
             <p className={styles.name}>{groupInfo?.name || ''}</p>
             <div className={styles.users}>
               {userIDs.map((userID) => (
-                <UserIcon userID={userID} />
+                <UserIcon marginLeft={-20} userID={userID} />
               ))}
             </div>
           </div>

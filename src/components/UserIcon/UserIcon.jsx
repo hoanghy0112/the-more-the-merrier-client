@@ -8,6 +8,7 @@ import styles from './UserIcon.module.scss';
 export default function UserIcon({
   userID,
   size = 35,
+  marginLeft = 0,
   withName = false,
   isChoosing = false,
   choosable = false,
@@ -29,6 +30,9 @@ export default function UserIcon({
       ].join(' ')}
       userName={fullName}
       onClick={onClick}
+      style={{
+        marginLeft,
+      }}
     >
       {isLoading && !error ? (
         <p>...</p>

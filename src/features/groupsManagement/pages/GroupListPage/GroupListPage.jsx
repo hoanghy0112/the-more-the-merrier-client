@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ICON_TRASH } from '../../../../assets/icons';
@@ -12,29 +12,23 @@ import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserList from '../../../../components/UserList/UserList';
 import { DELETE_GROUP_BY_ID } from '../../../../constants/apiURL';
 import CreateNewGroup from '../../components/CreateNewGroup/CreateNewGroup';
-import {
-  getAllGroups,
-  selectAllGroups,
-  setCurrentGroup,
-} from '../../groupSlice';
+import { getAllGroups, setCurrentGroup } from '../../groupSlice';
 
-import styles from './GroupListPage.module.scss';
-import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import useAllGroup from '../../../../hooks/useAllGroup';
+import { selectUserProfile } from '../../../userManagement/ProfileSlice';
+import styles from './GroupListPage.module.scss';
 
 export default function GroupListPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { groups: groupList } = useAllGroup();
-  console.log({ groupList });
 
   const [isOpenCreateGroupModal, setIsOpenCreateGroupModal] = useState(false);
 
   const [isOpenNotificationModal, setIsOpenNotificationModal] = useState(false);
   const notificationData = useRef({ status: '', title: '', content: '' });
 
-  // const groupList = useSelector(selectAllGroups);
   const userProfile = useSelector(selectUserProfile);
 
   useEffect(() => {
