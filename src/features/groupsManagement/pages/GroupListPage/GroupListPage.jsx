@@ -20,17 +20,21 @@ import {
 
 import styles from './GroupListPage.module.scss';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
+import useAllGroup from '../../../../hooks/useAllGroup';
 
 export default function GroupListPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { groups: groupList } = useAllGroup();
+  console.log({ groupList });
 
   const [isOpenCreateGroupModal, setIsOpenCreateGroupModal] = useState(false);
 
   const [isOpenNotificationModal, setIsOpenNotificationModal] = useState(false);
   const notificationData = useRef({ status: '', title: '', content: '' });
 
-  const groupList = useSelector(selectAllGroups);
+  // const groupList = useSelector(selectAllGroups);
   const userProfile = useSelector(selectUserProfile);
 
   useEffect(() => {
@@ -85,7 +89,7 @@ export default function GroupListPage() {
         onClick={() => setIsOpenCreateGroupModal(true)}
       />
       <div className={styles.groupList}>
-        {groupList.map(
+        {groupList?.map(
           ({ _id, name, description, admin: adminID, users: userIDs }) => (
             <div key={_id} className={styles.groupContainer}>
               <div className={styles.introduction}>

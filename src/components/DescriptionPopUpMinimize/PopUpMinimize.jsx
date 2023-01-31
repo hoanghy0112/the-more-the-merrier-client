@@ -51,7 +51,6 @@ export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
   }
 
   function handleDelete() {
-    console.log({ data });
     if (isGroup) dispatch(deleteTaskOfGroup({ data }));
     else dispatch(deleteTask(data));
   }
