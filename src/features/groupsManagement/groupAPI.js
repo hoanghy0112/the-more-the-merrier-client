@@ -45,6 +45,10 @@ export async function createNewGroupAPI({
   }
 }
 
+export async function deleteGroupAPI() {
+
+}
+
 export async function getAllGroupsOfUserAPI() {
   try {
     const auth = getAuth();

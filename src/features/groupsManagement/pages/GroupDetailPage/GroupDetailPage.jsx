@@ -15,17 +15,13 @@ import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserIcon from '../../../../components/UserIcon/UserIcon';
 import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
+import useGroupInformation from '../../../../hooks/useGroupInformation';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
 import GroupInformation from '../../components/GroupInformation/GroupInformation';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
-import {
-  getAllGroups,
-  getTaskOfGroup,
-  selectCurrentGroupInfo,
-  selectGroupByID,
-} from '../../groupSlice';
+import { getTaskOfGroup } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
 
 export default function GroupDetailPage() {
@@ -42,19 +38,18 @@ export default function GroupDetailPage() {
 
   const [suggestionOptions, setSuggestionOptions] = useState({});
 
-  const groupInfo = useSelector(
-    selectGroupByID(location.pathname.split('/').slice(-1)[0]),
-  );
-  const currentGroupInfo = useSelector(selectCurrentGroupInfo);
+  const groupID = location.pathname.split('/').slice(-1)[0];
+  const { groupInfo, isLoading: groupIsLoading } = useGroupInformation(groupID);
 
   const userProfile = useSelector(selectUserProfile);
 
   const userIDs = useMemo(() => {
-    if (groupInfo) {
+    if (groupInfo && !groupIsLoading) {
       return [...(groupInfo?.users || []), groupInfo?.admin || ''];
     }
+    if (!groupInfo && !groupIsLoading) throw new Error(GROUP_NOT_FOUND);
     return [];
-  }, [groupInfo?.admin]);
+  }, [groupIsLoading]);
 
   const now = new Date();
 
@@ -67,8 +62,8 @@ export default function GroupDetailPage() {
   );
 
   function refresh() {
-    dispatch(getAllGroups());
-    if (groupInfo?._id) dispatch(getTaskOfGroup(groupInfo?._id));
+    // dispatch(getAllGroups());
+    if (!groupIsLoading) dispatch(getTaskOfGroup(groupInfo?._id));
   }
 
   function handleChangeDate(newDate) {
@@ -83,7 +78,7 @@ export default function GroupDetailPage() {
 
   useEffect(() => {
     refresh();
-  }, [currentGroupInfo?._id]);
+  }, [groupInfo?._id]);
 
   useEffect(() => {
     if (location.pathname.split('/').slice(-1)[0]) {
@@ -99,7 +94,6 @@ export default function GroupDetailPage() {
         dispatch(getAllTasks());
       }
     });
-    if (currentGroupInfo === null) throw new Error(GROUP_NOT_FOUND);
 
     return () => unsubscribe();
   }, []);

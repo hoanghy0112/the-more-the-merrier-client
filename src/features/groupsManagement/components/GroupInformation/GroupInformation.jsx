@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/prop-types */
@@ -18,11 +19,13 @@ import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import EditGroup from '../EditGroup/EditGroup';
 
 import styles from './GroupInformation.module.scss';
+import useGroupInformation from '../../../../hooks/useGroupInformation';
 
 export default function GroupInformation({ groupInfo, closeModal }) {
   const navigate = useNavigate();
 
-  const { _id: groupID, name, description, users, admin } = groupInfo;
+  const { _id: groupID } = groupInfo;
+  const { groupInfo: groupData, isLoading } = useGroupInformation(groupID);
   const userProfile = useSelector(selectUserProfile);
 
   const [isOpenNotificationModal, setIsOpenNotificationModal] = useState(false);
@@ -42,7 +45,7 @@ export default function GroupInformation({ groupInfo, closeModal }) {
         notificationData.current = {
           status: 'success',
           title: 'Delete group successfully',
-          content: `Group ${name} has been deleted`,
+          content: `Group ${groupData.name} has been deleted`,
         };
         setIsOpenNotificationModal(true);
       }
@@ -64,64 +67,70 @@ export default function GroupInformation({ groupInfo, closeModal }) {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div>
-          <div className={styles.name}>
-            <h1>{name}</h1>
-            {userProfile._id === admin ? (
-              <EditGroup
-                groupID={groupInfo?._id}
-                groupName={groupInfo?.name}
-                groupDescription={groupInfo?.description}
-              />
+    <>
+      {isLoading ? (
+        ''
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <div>
+              <div className={styles.name}>
+                <h1>{groupData.name}</h1>
+                {userProfile._id === groupData.admin ? (
+                  <EditGroup
+                    groupID={groupInfo?._id}
+                    groupName={groupInfo?.name}
+                    groupDescription={groupInfo?.description}
+                  />
+                ) : null}
+              </div>
+              <p>{groupData.description}</p>
+            </div>
+            <div className={styles.users}>
+              <UserIcon userID={groupData.admin} size={30} withName />
+              <UserList userIDs={groupData.users || []} size={30} max={5} />
+            </div>
+          </div>
+          <div className={styles.body}>
+            <BusyTimeChart groupInfo={groupInfo} />
+            {userProfile._id === groupData.admin ? (
+              <div className={styles.deleteGroup}>
+                <PrimaryButton
+                  title="Delete group"
+                  confirmed
+                  backgroundColor="rgb(230, 0, 0)"
+                  shadowColor="rgb(255, 183, 0)"
+                  onClick={handleDeleteGroup}
+                />
+              </div>
             ) : null}
           </div>
-          <p>{description}</p>
-        </div>
-        <div className={styles.users}>
-          <UserIcon userID={admin} size={30} withName />
-          <UserList userIDs={users || []} size={30} max={5} />
-        </div>
-      </div>
-      <div className={styles.body}>
-        <BusyTimeChart groupInfo={groupInfo} />
-        {userProfile._id === admin ? (
-          <div className={styles.deleteGroup}>
-            <PrimaryButton
-              title="Delete group"
-              confirmed
-              backgroundColor="rgb(230, 0, 0)"
-              shadowColor="rgb(255, 183, 0)"
-              onClick={handleDeleteGroup}
-            />
-          </div>
-        ) : null}
-      </div>
 
-      <img
-        className={styles.close}
-        src={CLOSE_ICON}
-        alt="close"
-        onClick={closeModal}
-      />
+          <img
+            className={styles.close}
+            src={CLOSE_ICON}
+            alt="close"
+            onClick={closeModal}
+          />
 
-      <NotificationModal
-        isOpen={isOpenNotificationModal}
-        closeModal={handleCloseNotificationModal}
-        title={notificationData.current.title}
-        content={
-          notificationData.current.status === 'success' ? (
-            <p>
-              <span>Group </span>
-              <span style={{ fontWeight: 600 }}>{name}</span>
-              <span> has been deleted successfully</span>
-            </p>
-          ) : (
-            notificationData.current.content
-          )
-        }
-      />
-    </div>
+          <NotificationModal
+            isOpen={isOpenNotificationModal}
+            closeModal={handleCloseNotificationModal}
+            title={notificationData.current.title}
+            content={
+              notificationData.current.status === 'success' ? (
+                <p>
+                  <span>Group </span>
+                  <span style={{ fontWeight: 600 }}>{groupData.name}</span>
+                  <span> has been deleted successfully</span>
+                </p>
+              ) : (
+                notificationData.current.content
+              )
+            }
+          />
+        </div>
+      )}
+    </>
   );
 }

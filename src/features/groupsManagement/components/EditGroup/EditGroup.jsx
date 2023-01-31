@@ -4,16 +4,13 @@
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { ICON_FULL_ARROW_RIGHT, ICON_PENCIL } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import { CHANGE_GROUP_INFO } from '../../../../constants/apiURL';
-import { getAllGroups } from '../../groupSlice';
 
 import styles from './EditGroup.module.scss';
 
 export default function EditGroup({ groupID, groupName, groupDescription }) {
-  const dispatch = useDispatch();
   const nameRef = useRef();
   const [description, setDescription] = useState(groupDescription || '');
 
@@ -35,7 +32,6 @@ export default function EditGroup({ groupID, groupName, groupDescription }) {
         },
       },
     );
-    dispatch(getAllGroups());
     setIsOpen(false);
   };
 
