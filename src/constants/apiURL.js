@@ -5,9 +5,9 @@ export const GET_USER_PROFILE_BY_ID = `${BASE_URL}/api/v2/user/find`;
 export const FIND_USER_BY_NAME = `${BASE_URL}/api/v1/user/find`;
 export const ACCEPT_JOIN_GROUP = `${BASE_URL}/api/v2/user/accept-join`;
 
-export const CREATE_NEW_TASK = `${BASE_URL}/api/v1/task/`;
-export const UPDATE_TASK = `${BASE_URL}/api/v1/task/`;
-export const GET_ALL_TASK_OF_CURRENT_USER_API_LINK = `${BASE_URL}/api/v1/task`;
+export const CREATE_NEW_TASK = `${BASE_URL}/api/v2/task/`;
+export const UPDATE_TASK = `${BASE_URL}/api/v2/task/`;
+export const GET_ALL_TASK_OF_CURRENT_USER_API_LINK = `${BASE_URL}/api/v2/task`;
 
 export const CREATE_NEW_TAG = `${BASE_URL}/api/v1/tag`;
 export const FIND_TAG_BY_TITLE = `${BASE_URL}/api/v1/tag/find/`;
@@ -27,8 +27,11 @@ export const REMOVE_USER_FROM_GROUP = `${BASE_URL}/api/v1/group`;
 export const DELETE_GROUP_BY_ID = `${BASE_URL}/api/v2/group`;
 
 export const CREATE_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
+export const CREATE_TASK_OF_GROUP_V2 = `${BASE_URL}/api/v2/task`;
 export const CHANGE_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
+export const CHANGE_TASK_OF_GROUP_V2 = `${BASE_URL}/api/v2/task`;
 export const DELETE_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
+export const DELETE_TASK_OF_GROUP_V2 = `${BASE_URL}/api/v2/task`;
 export const GET_TASK_OF_GROUP = `${BASE_URL}/api/v1/groupTasks`;
 
 export const GET_ALL_NOTIFICATIONS = `${BASE_URL}/api/v1/notifications`;

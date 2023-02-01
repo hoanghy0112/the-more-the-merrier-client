@@ -33,7 +33,7 @@ export const createNewTask = createAsyncThunk(
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     const res = await axios.post(
-      'https://hoanghy.tech/api/v1/task',
+      'https://hoanghy.tech/api/v2/task',
       {
         ...req,
       },
@@ -54,7 +54,7 @@ export const changeTask = createAsyncThunk(
     const accessToken = await auth.currentUser.getIdToken();
     try {
       const res = await axios.put(
-        `https://hoanghy.tech/api/v1/task/${_id}`,
+        `https://hoanghy.tech/api/v2/task/${_id}`,
         { ...otherField },
         {
           headers: {
@@ -76,7 +76,7 @@ export const deleteTask = createAsyncThunk(
     const accessToken = await auth.currentUser.getIdToken();
     try {
       const res = await axios.delete(
-        `https://hoanghy.tech/api/v1/task/${_id}`,
+        `https://hoanghy.tech/api/v2/task/${_id}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -95,6 +95,27 @@ export const deleteTask = createAsyncThunk(
 export const tasksManagementSclice = createSlice({
   name: 'tasksManagement',
   initialState,
+  reducers: {
+    updateListTask: (state, action) => {
+      state.listTasks = action.payload;
+    },
+    updateModifiedTask: (state, action) => {
+      const newTask = action.payload;
+      state.listTasks = [
+        ...state.listTasks.filter((task) => task._id === newTask._id),
+        newTask,
+      ];
+    },
+    updateAddedTask: (state, action) => {
+      state.listTasks = [...state.listTasks, action.payload];
+    },
+    updateDeletedTask: (state, action) => {
+      const taskID = action.payload;
+      state.listTasks = [
+        ...state.listTasks.filter((task) => task._id === taskID),
+      ];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getAllTasks.pending, (state) => {
@@ -151,22 +172,24 @@ export const tasksManagementSclice = createSlice({
   },
 });
 
-export const { changeListTask } = tasksManagementSclice.actions;
+export const {
+  updateListTask,
+  updateAddedTask,
+  updateModifiedTask,
+  updateDeletedTask,
+} = tasksManagementSclice.actions;
 
 export const selectAllTasks = (state) => state.tasksManagement.listTasks;
-export const selectCurrentWeekTasks = (startDate) =>
-  function (state) {
-    // console.log({ startDate });
-    const tasks = state.tasksManagement.listTasks.filter((task) => {
-      const diff = moment(new Date(task.time.from)).diff(
-        new Date(startDate),
-        'd',
-      );
-      return diff >= 0 && diff < 7;
-    });
-    // console.log({ tasks });
-    return tasks;
-  };
+export const selectCurrentWeekTasks = (startDate) => (state) => {
+  const tasks = state.tasksManagement.listTasks.filter((task) => {
+    const diff = moment(new Date(task.time.from)).diff(
+      new Date(startDate),
+      'd',
+    );
+    return diff >= 0 && diff < 7;
+  });
+  return tasks;
+};
 
 export const selectTasksStatus = (state) => state.tasksManagement.status;
 

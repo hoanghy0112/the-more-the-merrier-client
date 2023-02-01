@@ -4,10 +4,10 @@ import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 
 import {
-  CHANGE_TASK_OF_GROUP,
+  CHANGE_TASK_OF_GROUP_V2,
   CREATE_NEW_GROUP_V2,
-  CREATE_TASK_OF_GROUP,
-  DELETE_TASK_OF_GROUP,
+  CREATE_TASK_OF_GROUP_V2,
+  DELETE_TASK_OF_GROUP_V2,
   GET_ALL_GROUP_OF_CURRENT_USER,
   GET_BUSY_TIME_OF_GROUP,
   GET_BUSY_TIME_OF_GROUP_V2,
@@ -102,7 +102,7 @@ export async function createTaskOfGroupAPI(
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     const response = await axios.post(
-      `${CREATE_TASK_OF_GROUP}`,
+      `${CREATE_TASK_OF_GROUP_V2}`,
       {
         title,
         location,
@@ -131,7 +131,7 @@ export async function changeTaskOfGroupAPI(taskID, data) {
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
     const response = await axios.put(
-      `${CHANGE_TASK_OF_GROUP}/${taskID}`,
+      `${CHANGE_TASK_OF_GROUP_V2}/${taskID}`,
       data,
       {
         withCredentials: true,
@@ -151,12 +151,15 @@ export async function deleteTaskOfGroupAPI(taskID) {
   try {
     const auth = getAuth();
     const accessToken = await auth.currentUser.getIdToken();
-    const response = await axios.delete(`${DELETE_TASK_OF_GROUP}/${taskID}`, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    const response = await axios.delete(
+      `${DELETE_TASK_OF_GROUP_V2}/${taskID}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
+    );
     return response.data;
   } catch (error) {
     console.log(error);

@@ -14,7 +14,6 @@ export default function useAllGroup() {
     socket.emit('groups');
 
     socket.on('groups', (data) => {
-      console.log({ groupData: data });
       setGroups(data);
     });
 

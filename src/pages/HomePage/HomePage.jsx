@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import Profile from '../../features/userManagement/Profile';
 import TabButton from '../../components/TabButton/TabButton';
+import Profile from '../../features/userManagement/Profile';
 
-import { ICON_LOGOUT } from '../../assets/icons';
 import Mylogo from '../../assets/Logo.svg';
-import styles from './HomePage.module.scss';
+import { ICON_LOGOUT } from '../../assets/icons';
 import NotificationIndividual from '../../components/NotificationIndividual/NotificationIndividual';
+import styles from './HomePage.module.scss';
 
 export default function HomePage() {
   const [tab, setTab] = useState('');
@@ -20,6 +20,17 @@ export default function HomePage() {
   useEffect(() => {
     setTab(location.pathname.split('/')[2]);
   }, [location]);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // dispatch(getAllTasks());
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   function handleSignout() {
     const auth = getAuth();

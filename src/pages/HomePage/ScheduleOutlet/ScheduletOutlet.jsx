@@ -9,6 +9,7 @@ import TagsBar from '../../../features/tagsManagement/components/TagBar/TagsBar'
 import { getAllTasks } from '../../../features/tasksManagement/TasksSlice';
 
 import styles from './ScheduleOutlet.module.scss';
+import usePersonalTask from '../../../features/tasksManagement/hooks/usePersonalTask';
 
 export default function ScheduleOutlet() {
   const dispatch = useDispatch();
@@ -21,6 +22,12 @@ export default function ScheduleOutlet() {
       now.getDate() - now.getDay() + 1,
     ),
   );
+
+  const tasks = usePersonalTask(
+    date,
+    new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000),
+  );
+  console.log({ tasks });
 
   function handleChangeDate(newDate) {
     setDate(
@@ -36,7 +43,7 @@ export default function ScheduleOutlet() {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(getAllTasks());
+        // dispatch(getAllTasks());
       }
     });
 

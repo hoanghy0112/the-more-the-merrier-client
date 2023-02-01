@@ -23,7 +23,7 @@ export default function PersonalCalendar({ startDate }) {
       tasks={tasks}
       changeTask={(data) => dispatch(changeTask(data))}
       createNewTask={(data) => dispatch(createNewTask(data))}
-      retrieveAllTask={() => dispatch(getAllTasks())}
+      // retrieveAllTask={() => dispatch(getAllTasks())}
     />
   );
 }

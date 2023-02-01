@@ -1,14 +1,15 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+
 import CenteredModal from '../CenteredModal/CenteredModal';
 
-import {
-  selectCurrentGroupInfo,
-  selectGroupBusyTime,
-} from '../../features/groupsManagement/groupSlice';
+import { selectGroupBusyTime } from '../../features/groupsManagement/groupSlice';
+import useGroupInformation from '../../hooks/useGroupInformation';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import TimeTag from '../TimeTag/TimeTag';
@@ -21,11 +22,12 @@ export default function InviteUserModal({
   setParticipants,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  // const [participants, setParticipants] = useState(new Set());
+  const location = useLocation();
 
   const numberOfBusyUser = useRef(0);
 
-  const { name: groupName, users } = useSelector(selectCurrentGroupInfo);
+  const groupID = location.pathname.split('/').slice(-1)[0];
+  const { groupInfo } = useGroupInformation(groupID);
 
   const groupBusyTimes = useSelector(selectGroupBusyTime);
 
@@ -51,7 +53,7 @@ export default function InviteUserModal({
       <CenteredModal isOpen={isOpen} onClose={onClose}>
         <div className={styles.container}>
           <div>
-            <h1>{groupName}</h1>
+            <h1>{groupInfo?.name}</h1>
             <h2>
               <span className={styles.number}>{numberOfBusyUser.current}</span>
               <span>busy users</span>

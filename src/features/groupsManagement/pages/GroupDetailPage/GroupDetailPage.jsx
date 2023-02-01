@@ -91,7 +91,7 @@ export default function GroupDetailPage() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         refresh();
-        dispatch(getAllTasks());
+        // dispatch(getAllTasks());
       }
     });
 
