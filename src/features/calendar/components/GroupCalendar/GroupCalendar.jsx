@@ -30,9 +30,6 @@ export default function GroupCalendar({ startDate, updateTask }) {
   const groupBusyTimes = useSelector(selectGroupBusyTime);
 
   const tasks = useSelector(selectGroupTaskOfCurrentGroup);
-  // const { data: tasks, refetch } = useGroupTaskByIDQuery({
-  //   groupID: currentGroupInfo?._id,
-  // });
 
   useEffect(() => {
     const auth = getAuth();
@@ -49,7 +46,6 @@ export default function GroupCalendar({ startDate, updateTask }) {
   }, [startDate]);
 
   return (
-    // <div className={styles.container}>
     <Calendar
       startDate={startDate}
       tasks={tasks}
@@ -63,7 +59,6 @@ export default function GroupCalendar({ startDate, updateTask }) {
       retrieveAllTask={updateTask}
       isGroup
     />
-    // </div>
   );
 }
 

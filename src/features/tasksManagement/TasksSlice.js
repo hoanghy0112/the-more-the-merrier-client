@@ -102,7 +102,7 @@ export const tasksManagementSclice = createSlice({
     updateModifiedTask: (state, action) => {
       const newTask = action.payload;
       state.listTasks = [
-        ...state.listTasks.filter((task) => task._id === newTask._id),
+        ...state.listTasks.filter((task) => task._id !== newTask._id),
         newTask,
       ];
     },
@@ -112,7 +112,7 @@ export const tasksManagementSclice = createSlice({
     updateDeletedTask: (state, action) => {
       const taskID = action.payload;
       state.listTasks = [
-        ...state.listTasks.filter((task) => task._id === taskID),
+        ...state.listTasks.filter((task) => task._id !== taskID),
       ];
     },
   },

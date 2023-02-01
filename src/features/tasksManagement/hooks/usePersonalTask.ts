@@ -6,6 +6,7 @@ import {
   updateAddedTask,
   updateDeletedTask,
   updateListTask,
+  updateModifiedTask,
 } from '../TasksSlice';
 
 export default function usePersonalTask(from, to) {
@@ -29,13 +30,16 @@ export default function usePersonalTask(from, to) {
     socket.on('new-task', (task) => {
       console.log({ newTask: task });
       dispatch(updateAddedTask(task));
-      // setTasks((prev) => [...prev, task]);
+    });
+
+    socket.on('update-task', (task) => {
+      console.log({ modifiedTask: task });
+      dispatch(updateModifiedTask(task));
     });
 
     socket.on('delete-task', (taskID) => {
       console.log({ deleteTask: taskID });
       dispatch(updateDeletedTask(taskID));
-      // setTasks((prev) => [...prev.filter((task) => task._id !== taskID)]);
     });
 
     setSocket(socket);

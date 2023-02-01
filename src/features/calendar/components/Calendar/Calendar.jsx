@@ -50,8 +50,6 @@ export default function Calendar({
     setTaskRefPosition(taskRef?.current?.getBoundingClientRect());
   }
 
-  // <div className={isGroup ? 'group' : null}>
-
   return (
     <CalendarBoard
       isGroup={isGroup}

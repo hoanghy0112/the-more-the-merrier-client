@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   changeTask,
   createNewTask,
-  getAllTasks,
   selectCurrentWeekTasks,
 } from '../../../tasksManagement/TasksSlice';
 
@@ -23,7 +22,6 @@ export default function PersonalCalendar({ startDate }) {
       tasks={tasks}
       changeTask={(data) => dispatch(changeTask(data))}
       createNewTask={(data) => dispatch(createNewTask(data))}
-      // retrieveAllTask={() => dispatch(getAllTasks())}
     />
   );
 }
