@@ -22,7 +22,6 @@ import GroupInformation from '../../components/GroupInformation/GroupInformation
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import { getTaskOfGroup } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
-import useGroupTask from '../../hooks/useGroupTask';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();

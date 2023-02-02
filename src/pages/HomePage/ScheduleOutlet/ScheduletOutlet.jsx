@@ -1,18 +1,14 @@
 /* eslint-disable react/jsx-no-bind */
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
 
 import PersonalCalendar from '../../../features/calendar/components/PersonalCalendar/PersonalCalendar';
 import TagsBar from '../../../features/tagsManagement/components/TagBar/TagsBar';
-import { getAllTasks } from '../../../features/tasksManagement/TasksSlice';
 
-import styles from './ScheduleOutlet.module.scss';
 import usePersonalTask from '../../../features/tasksManagement/hooks/usePersonalTask';
+import styles from './ScheduleOutlet.module.scss';
 
 export default function ScheduleOutlet() {
-  const dispatch = useDispatch();
   const now = new Date();
 
   const [date, setDate] = useState(
@@ -23,10 +19,7 @@ export default function ScheduleOutlet() {
     ),
   );
 
-  const tasks = usePersonalTask(
-    date,
-    new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000),
-  );
+  usePersonalTask(date, new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000));
 
   function handleChangeDate(newDate) {
     setDate(
@@ -38,16 +31,15 @@ export default function ScheduleOutlet() {
     );
   }
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // dispatch(getAllTasks());
-      }
-    });
+  // useEffect(() => {
+  //   const auth = getAuth();
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
   return (
     <div className={styles.container}>

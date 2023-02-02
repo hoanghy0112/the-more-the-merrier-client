@@ -1,11 +1,11 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-param-reassign */
-import axios from 'axios';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAuth } from 'firebase/auth';
 import moment from 'moment';
+import { createNewTaskAPI, deleteTaskAPI, updateTaskAPI } from './TasksAPI';
 
 const initialState = {
   listTasks: [],
@@ -13,82 +13,38 @@ const initialState = {
   error: null,
 };
 
-export const getAllTasks = createAsyncThunk(
-  'tasksManagement/getAllTasks',
-  async () => {
-    const auth = getAuth();
-    const accessToken = await auth.currentUser.getIdToken();
-    const res = await axios.get('https://hoanghy.tech/api/v1/task/', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return res.data;
-  },
-);
-
 export const createNewTask = createAsyncThunk(
   'tasksManagement/createNewTask',
   async (req) => {
-    const auth = getAuth();
-    const accessToken = await auth.currentUser.getIdToken();
-    const res = await axios.post(
-      'https://hoanghy.tech/api/v2/task',
-      {
-        ...req,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-    return res.data;
+    try {
+      return await createNewTaskAPI(req);
+    } catch (error) {
+      console.log({ error });
+      return {};
+    }
   },
 );
 
 export const changeTask = createAsyncThunk(
   'tasksManagement/changeTask',
-  async ({ _id, ...otherField }) => {
-    const auth = getAuth();
-    const accessToken = await auth.currentUser.getIdToken();
+  async (req) => {
     try {
-      const res = await axios.put(
-        `https://hoanghy.tech/api/v2/task/${_id}`,
-        { ...otherField },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      return res.data;
+      return await updateTaskAPI(req);
     } catch (error) {
-      // console.log({ error });
+      console.log({ error });
+      return {};
     }
-    return {};
   },
 );
 export const deleteTask = createAsyncThunk(
   'tasksManagement/deleteTask',
-  async ({ _id }) => {
-    const auth = getAuth();
-    const accessToken = await auth.currentUser.getIdToken();
+  async (req) => {
     try {
-      const res = await axios.delete(
-        `https://hoanghy.tech/api/v2/task/${_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      // console.log({ res });
-      return res.data;
+      return await deleteTaskAPI(req);
     } catch (error) {
-      // console.log({ error });
+      console.log({ error });
+      return {};
     }
-    return {};
   },
 );
 
@@ -118,31 +74,6 @@ export const tasksManagementSclice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getAllTasks.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(getAllTasks.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.listTasks = action.payload;
-      })
-      .addCase(getAllTasks.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
-      .addCase(createNewTask.pending, (state, action) => {
-        state.status = 'loading';
-
-        const data = action.meta.arg;
-
-        state.listTasks = [...state.listTasks, data];
-      })
-      .addCase(createNewTask.fulfilled, (state) => {
-        state.status = 'succeeded';
-      })
-      .addCase(createNewTask.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
       .addCase(changeTask.pending, (state, action) => {
         state.status = 'loading';
         const data = action.meta.arg;
@@ -161,13 +92,6 @@ export const tasksManagementSclice = createSlice({
       .addCase(changeTask.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      })
-      .addCase(deleteTask.pending, (state, action) => {
-        state.status = 'loading';
-        const { _id } = action.meta.arg;
-        state.listTasks = [
-          ...state.listTasks.filter((task) => task._id !== _id),
-        ];
       });
   },
 });
