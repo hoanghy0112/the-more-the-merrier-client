@@ -99,9 +99,9 @@ export default function TaskCard({
       bounds="parent"
       grid={[width, 50 / 12]}
       position={{ x: column * width, y: top }}
-      onStart={() => setIsDrag(true)}
+      onStart={() => setTimeout(() => setIsDrag(true), 400)}
       onStop={(...params) => {
-        setIsDrag(false);
+        setTimeout(() => setIsDrag(false), 400);
         handleDragStop(...params);
       }}
       disabled={task.belongTo && !isGroup}
@@ -124,9 +124,9 @@ export default function TaskCard({
                 task?.belongTo && !isGroup ? styles.group : null,
                 new Date(to) < new Date() && styles.passed,
               ].join(' ')}
-              onClick={() =>
-                task.belongTo && !isGroup ? setIsOpen(true) : null
-              }
+              onClick={() => {
+                if (!isDrag) setIsOpen(true);
+              }}
             >
               <div className={styles.taskContent}>
                 <p>{title}</p>
