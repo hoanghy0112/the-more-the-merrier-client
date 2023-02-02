@@ -22,6 +22,7 @@ import {
   selectGroupTaskOfCurrentGroup,
 } from '../../../groupsManagement/groupSlice';
 import useGroupBusyTime from '../../../groupsManagement/hooks/useGroupBusyTime';
+import useGroupTask from '../../../groupsManagement/hooks/useGroupTask';
 
 export default function GroupCalendar({ startDate, updateTask }) {
   const dispatch = useDispatch();
@@ -33,7 +34,13 @@ export default function GroupCalendar({ startDate, updateTask }) {
 
   const tasks = useSelector(selectGroupTaskOfCurrentGroup);
 
-  const busyTimes = useGroupBusyTime(
+  useGroupBusyTime(
+    groupID,
+    startDate,
+    new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000),
+  );
+
+  useGroupTask(
     groupID,
     startDate,
     new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000),

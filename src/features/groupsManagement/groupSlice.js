@@ -152,6 +152,22 @@ export const groupsManagementSlice = createSlice({
         ...state.groupBusyTime.filter((task) => task._id !== taskID),
       ];
     },
+    updateListGroupTask: (state, action) => {
+      state.groupTasks = action.payload;
+    },
+    updateModifiedGroupTask: (state, action) => {
+      const groupTask = action.payload;
+      state.groupTasks = [
+        ...state.groupTasks.filter((task) => task._id !== groupTask._id),
+        groupTask,
+      ];
+    },
+    updateDeletedGroupTask: (state, action) => {
+      const taskID = action.payload;
+      state.groupTasks = [
+        ...state.groupTasks.filter((task) => task._id !== taskID),
+      ];
+    },
   },
   extraReducers(builder) {
     builder
@@ -241,6 +257,9 @@ export const {
   updateDeletedBusy,
   updateListBusy,
   updateModifiedBusy,
+  updateDeletedGroupTask,
+  updateListGroupTask,
+  updateModifiedGroupTask,
 } = groupsManagementSlice.actions;
 
 export const selectAllGroups = (state) => state.groupsManagement.groups || [];

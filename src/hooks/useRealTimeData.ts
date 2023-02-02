@@ -26,7 +26,7 @@ export default function useRealTimeData(onConnect, name) {
         onConnect?.call?.(null, socket, setData);
       });
     }
-  }, [socket]);
+  }, [socket, name]);
 
   useEffect(() => {
     const auth = getAuth();

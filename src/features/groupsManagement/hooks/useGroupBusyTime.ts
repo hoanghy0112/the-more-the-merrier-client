@@ -12,7 +12,6 @@ import {
 export default function useGroupBusyTime(groupID, from, to) {
   const dispatch = useDispatch();
 
-  const [socket, setSocket] = useState<Socket>();
   const { data: busyTimes, isLoading } = useRealTimeData(
     onConnect,
     'busy-time-real-time',
@@ -22,21 +21,16 @@ export default function useGroupBusyTime(groupID, from, to) {
     socket.emit('get-busy', groupID, from, to);
 
     socket.on('busy', (data) => {
-      console.log({ data });
       dispatch(updateListBusy(data));
     });
 
     socket.on('update-task', (task) => {
-      console.log({ modifiedTask: task });
       dispatch(updateModifiedBusy(task));
     });
 
     socket.on('delete-task', (taskID) => {
-      console.log({ deleteTask: taskID });
       dispatch(updateDeletedBusy(taskID));
     });
-
-    setSocket(socket);
   }
 
   return {

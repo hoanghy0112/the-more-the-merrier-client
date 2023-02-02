@@ -22,6 +22,7 @@ import GroupInformation from '../../components/GroupInformation/GroupInformation
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
 import { getTaskOfGroup } from '../../groupSlice';
 import styles from './GroupDetailPage.module.scss';
+import useGroupTask from '../../hooks/useGroupTask';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -61,7 +62,6 @@ export default function GroupDetailPage() {
   );
 
   function refresh() {
-    // dispatch(getAllGroups());
     if (!groupIsLoading) dispatch(getTaskOfGroup(groupInfo?._id));
   }
 
@@ -90,7 +90,6 @@ export default function GroupDetailPage() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         refresh();
-        // dispatch(getAllTasks());
       }
     });
 
