@@ -31,7 +31,7 @@ export default function CalendarCreateTask({
   const offset = useRef(null);
 
   useLayoutEffect(() => {
-    setHeight(Math.abs(end[1] - begin[1]));
+    setHeight((parseInt((Math.abs(end[1] - begin[1]) / 25) * 2, 10) * 25) / 2);
   }, [end]);
 
   function handleMouseMove(e) {
@@ -43,12 +43,38 @@ export default function CalendarCreateTask({
     }
   }
 
+  function handleClick(e) {
+    e.stopPropagation();
+    if (Math.abs(end[1] - begin[1]) > 25) return;
+    setHeight(25);
+    const top = end[1] > begin[1] ? begin[1] : end[1];
+    const newFrom = new Date(
+      startDate.getYear() + 1900,
+      startDate.getMonth(),
+      startDate.getDate() + parseInt(begin[0] / gridSize, 10),
+      parseInt((top / 1200) * 24, 10),
+      parseInt((top / 1200) * 24 * 60, 10) % 60,
+    );
+
+    setIsCreateNewTask(true);
+
+    setData({
+      time: {
+        from: newFrom,
+        to: new Date(
+          parseInt(newFrom.getTime() + (25 / 1200) * 24 * 60 * 60 * 1000, 10),
+        ),
+      },
+    });
+  }
+
   function handleMouseDown(e) {
     e.stopPropagation();
+    if (e.button === 2) return;
     setIsMouseDown(true);
     setBegin([
       parseInt(offset.current[0] / gridSize, 10) * gridSize,
-      offset.current[1],
+      (parseInt(((offset.current[1] - 25 / 3) / 25) * 2, 10) * 25) / 2,
     ]);
     setEnd([...offset.current]);
   }
@@ -84,6 +110,7 @@ export default function CalendarCreateTask({
   return (
     <div className={styles.container}>
       <div
+        onClick={handleClick}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

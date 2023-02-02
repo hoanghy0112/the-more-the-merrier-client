@@ -8,21 +8,28 @@ import TimePicker from '../TimePicker/TimePicker';
 export default function TimeTag({ time, onChange, disabled = false }) {
   const [isEdit, setIsEdit] = useState(false);
 
+  function isValidDate(date) {
+    return date.toString() !== 'Invalid Date';
+  }
   const handleChangeTime = (newTime) => {
-    onChange(newTime);
+    if (!isValidDate(new Date(newTime))) return;
+    onChange(new Date(newTime));
     setIsEdit(false);
   };
 
   return (
     <div className={styles.container}>
       <p className={styles.time} onClick={() => setIsEdit(!isEdit)}>
-        {`${time.getHours()}h${time.getMinutes()} ${
-          (time || new Date().getHours()) - 7 < 12 ? 'AM' : 'PM'
+        {`${new Date(time).getHours()}h${new Date(time).getMinutes()} ${
+          (new Date(time) || new Date().getHours()) - 7 < 12 ? 'AM' : 'PM'
         }`}
       </p>
       <div className={styles.timePicker}>
         {isEdit === true && !disabled && (
-          <TimePicker time={time} handleChangeTime={handleChangeTime} />
+          <TimePicker
+            time={new Date(time)}
+            handleChangeTime={handleChangeTime}
+          />
         )}
       </div>
     </div>

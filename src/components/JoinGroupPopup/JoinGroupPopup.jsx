@@ -40,7 +40,6 @@ export default function JoinGroupPopup({ groupID, isOpen, closePopup }) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    // dispatch(getAllGroups());
   }
 
   function handleReject() {

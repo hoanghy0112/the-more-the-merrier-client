@@ -9,8 +9,6 @@ import {
   createNewGroupAPI,
   createTaskOfGroupAPI,
   deleteTaskOfGroupAPI,
-  getAllGroupsOfUserAPI,
-  getBusyTimeOfGroupAPI,
   getTaskOfGroupAPI,
 } from './groupAPI';
 
@@ -24,17 +22,9 @@ const initialState = {
   error: null,
 };
 
-export const getAllGroups = createAsyncThunk(
-  'groupsManagement/getAllGroups',
-  async () => {
-    const response = await getAllGroupsOfUserAPI();
-    return response;
-  },
-);
-
 export const createNewGroup = createAsyncThunk(
   'groupsManagement/createNewGroup',
-  async (req, { dispatch }) => {
+  async (req) => {
     const { name, description, users, admin } = req;
     const response = await createNewGroupAPI({
       name,
@@ -42,18 +32,6 @@ export const createNewGroup = createAsyncThunk(
       users,
       admin,
     });
-
-    dispatch(getAllGroups());
-
-    return response;
-  },
-);
-
-export const getBusyTimeOfGroup = createAsyncThunk(
-  'groupsManagement/getBusyTimeOfGroup',
-  async (req) => {
-    const { groupID, from, to } = req;
-    const response = await getBusyTimeOfGroupAPI(groupID, from, to);
 
     return response;
   },
@@ -127,7 +105,7 @@ export const groupsManagementSlice = createSlice({
   initialState,
   reducers: {
     setCurrentGroup: (state, action) => {
-      if (action.groupID) state.currentGroupID = action.groupID;
+      state.currentGroupID = action.payload;
     },
     updateGroupInformation: (state, action) => {
       const groupInformation = action.payload;
@@ -171,17 +149,6 @@ export const groupsManagementSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getAllGroups.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(getAllGroups.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.groups = action.payload;
-      })
-      .addCase(getAllGroups.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
       .addCase(createNewGroup.pending, (state, action) => {
         state.status = 'loading';
 
@@ -228,21 +195,6 @@ export const groupsManagementSlice = createSlice({
         state.groupTasks = [
           ...state.groupTasks.filter((task) => task._id !== data._id),
         ];
-      })
-      .addCase(getBusyTimeOfGroup.pending, (state, action) => {
-        state.fetchGroupBusyTimeStatus = 'loading';
-
-        const { groupID } = action.meta.arg;
-
-        state.currentGroupID = groupID;
-      })
-      .addCase(getBusyTimeOfGroup.fulfilled, (state, action) => {
-        state.fetchGroupBusyTimeStatus = 'succeeded';
-        state.groupBusyTime = action.payload;
-      })
-      .addCase(getBusyTimeOfGroup.rejected, (state, action) => {
-        state.fetchGroupBusyTimeStatus = 'failed';
-        state.error = action.error.message;
       })
       .addCase(getTaskOfGroup.fulfilled, (state, action) => {
         state.groupTasks = action.payload;

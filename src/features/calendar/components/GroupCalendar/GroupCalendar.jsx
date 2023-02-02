@@ -3,9 +3,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -14,7 +13,6 @@ import Calendar from '../Calendar/Calendar';
 import {
   changeTaskOfGroup,
   createTaskOfGroup,
-  getBusyTimeOfGroup,
   selectCurrentGroupInfo,
   selectGroupBusyTime,
   selectGroupTaskOfCurrentGroup,
@@ -38,17 +36,6 @@ export default function GroupCalendar() {
   useGroupBusyTime(groupID, startDate, endDate);
 
   useGroupTask(groupID, startDate, endDate);
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(getBusyTimeOfGroup({ groupID, startDate, endDate }));
-      }
-    });
-
-    return () => unsubscribe();
-  }, [startDate]);
 
   return (
     <Calendar

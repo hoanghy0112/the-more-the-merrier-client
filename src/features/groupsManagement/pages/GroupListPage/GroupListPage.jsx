@@ -24,7 +24,7 @@ export default function GroupListPage() {
       />
       <div className={styles.groupList}>
         {groupList?.map(({ _id }) => (
-          <GroupPreview groupID={_id} />
+          <GroupPreview key={_id} groupID={_id} />
         ))}
       </div>
       <CenteredModal

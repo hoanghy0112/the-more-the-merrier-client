@@ -19,18 +19,15 @@ export default function useGroupTask(groupID, from, to) {
   function onConnect(socket: Socket) {
     socket.emit('get-group-tasks', groupID, from, to);
 
-    socket.on('tasks', (data) => {
-      // console.log({ tasks: data });
+    socket.on('group-tasks', (data) => {
       dispatch(updateListGroupTask(data));
     });
 
     socket.on('update-task', (data) => {
-      // console.log({ modified: data });
       dispatch(updateModifiedGroupTask(data));
     });
 
     socket.on('delete-task', (data) => {
-      // console.log({ deleted: data });
       dispatch(updateDeletedGroupTask(data));
     });
 

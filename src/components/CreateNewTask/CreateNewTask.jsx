@@ -10,7 +10,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -103,6 +103,11 @@ export default function CreateNewTask({
       });
     } else onCreateNewTask(newData);
   }
+
+  useEffect(() => {
+    if (data.time.from) setStartTime(data.time.from);
+    if (data.time.to) setEndTime(data.time.to);
+  }, [data.time.from, data.time.to]);
 
   function handleDelete() {
     if (isGroup) dispatch(deleteTaskOfGroup(data));
@@ -240,7 +245,7 @@ export default function CreateNewTask({
             )}
           </div>
         </div>
-        {!isGroup && (
+        {isEditable || (
           <div className={styles.desSentence_2}>
             <img src={ICON_BOOKMARKS} alt="time" />
             <div className={styles.list}>

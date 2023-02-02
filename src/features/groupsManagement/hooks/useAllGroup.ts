@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 
 import useRealTimeData from '../../../hooks/useRealTimeData';

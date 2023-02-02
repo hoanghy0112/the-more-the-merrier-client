@@ -8,8 +8,6 @@ import {
   CREATE_NEW_GROUP_V2,
   CREATE_TASK_OF_GROUP_V2,
   DELETE_TASK_OF_GROUP_V2,
-  GET_ALL_GROUP_OF_CURRENT_USER,
-  GET_BUSY_TIME_OF_GROUP,
   GET_BUSY_TIME_OF_GROUP_V2,
   GET_GROUP_BY_ID,
   GET_TASK_OF_GROUP,
@@ -41,49 +39,6 @@ export async function createNewGroupAPI({
     );
     return response.data;
   } catch (error) {
-    return null;
-  }
-}
-
-// export async function deleteGroupAPI() {}
-
-export async function getAllGroupsOfUserAPI() {
-  try {
-    const auth = getAuth();
-    const accessToken = await auth.currentUser.getIdToken();
-    const response = await axios.get(GET_ALL_GROUP_OF_CURRENT_USER, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-}
-
-export async function getBusyTimeOfGroupAPI(groupID, from, to) {
-  try {
-    const auth = getAuth();
-    const accessToken = await auth.currentUser.getIdToken();
-    const response = await axios.get(
-      `${GET_BUSY_TIME_OF_GROUP}/${groupID}/tasks`,
-      {
-        withCredentials: true,
-        params: {
-          from,
-          to,
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
     return null;
   }
 }
