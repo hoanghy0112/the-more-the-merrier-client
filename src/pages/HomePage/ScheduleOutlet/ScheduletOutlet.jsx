@@ -27,7 +27,6 @@ export default function ScheduleOutlet() {
     date,
     new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000),
   );
-  console.log({ tasks });
 
   function handleChangeDate(newDate) {
     setDate(

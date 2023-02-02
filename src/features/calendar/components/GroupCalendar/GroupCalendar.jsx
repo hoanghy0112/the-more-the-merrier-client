@@ -21,21 +21,28 @@ import {
   selectGroupBusyTime,
   selectGroupTaskOfCurrentGroup,
 } from '../../../groupsManagement/groupSlice';
+import useGroupBusyTime from '../../../groupsManagement/hooks/useGroupBusyTime';
 
 export default function GroupCalendar({ startDate, updateTask }) {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  const groupID = location.pathname.split('/').slice(-1)[0];
   const currentGroupInfo = useSelector(selectCurrentGroupInfo);
   const groupBusyTimes = useSelector(selectGroupBusyTime);
 
   const tasks = useSelector(selectGroupTaskOfCurrentGroup);
 
+  const busyTimes = useGroupBusyTime(
+    groupID,
+    startDate,
+    new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000),
+  );
+
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const groupID = location.pathname.split('/').slice(-1)[0];
         const from = new Date(startDate).getTime();
         const to = new Date(from + 7 * 24 * 60 * 60 * 1000).getTime();
         dispatch(getBusyTimeOfGroup({ groupID, from, to }));

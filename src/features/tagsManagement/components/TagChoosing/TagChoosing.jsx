@@ -11,22 +11,19 @@ import { selectTagsWithKeyword } from '../../TagsSlice';
 import styles from './TagChoosing.module.scss';
 
 export default function TagChoosing({ setTag }) {
-  // const [tagList, setTagList] = useState([]);
   const [keyword, setKeyword] = useState('');
 
   const tagList = useSelector(selectTagsWithKeyword(keyword));
 
-  async function fetchData() {
-    // if (keyword) setTagList(await findTagByTitleAPI(keyword));
-  }
+  // async function fetchData() {}
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      fetchData();
-    }, 300);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     fetchData();
+  //   }, 300);
 
-    return () => clearTimeout(timeout);
-  }, [keyword]);
+  //   return () => clearTimeout(timeout);
+  // }, [keyword]);
 
   function handleKeywordChanged(e) {
     setKeyword(e.target.value);

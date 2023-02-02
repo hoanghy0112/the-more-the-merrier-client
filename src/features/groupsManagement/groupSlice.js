@@ -129,6 +129,29 @@ export const groupsManagementSlice = createSlice({
     setCurrentGroup: (state, action) => {
       if (action.groupID) state.currentGroupID = action.groupID;
     },
+    updateGroupInformation: (state, action) => {
+      const groupInformation = action.payload;
+      state.groups = [groupInformation];
+    },
+    updateListBusy: (state, action) => {
+      state.groupBusyTime = action.payload;
+    },
+    updateModifiedBusy: (state, action) => {
+      const busyTime = action.payload;
+      state.groupBusyTime = [
+        ...state.groupBusyTime.filter((task) => task._id !== busyTime._id),
+        busyTime,
+      ];
+    },
+    updateAddedBusy: (state, action) => {
+      state.groupBusyTime = [...state.groupBusyTime, action.payload];
+    },
+    updateDeletedBusy: (state, action) => {
+      const taskID = action.payload;
+      state.groupBusyTime = [
+        ...state.groupBusyTime.filter((task) => task._id !== taskID),
+      ];
+    },
   },
   extraReducers(builder) {
     builder
@@ -211,7 +234,14 @@ export const groupsManagementSlice = createSlice({
   },
 });
 
-export const { setCurrentGroup } = groupsManagementSlice.actions;
+export const {
+  setCurrentGroup,
+  updateGroupInformation,
+  updateAddedBusy,
+  updateDeletedBusy,
+  updateListBusy,
+  updateModifiedBusy,
+} = groupsManagementSlice.actions;
 
 export const selectAllGroups = (state) => state.groupsManagement.groups || [];
 

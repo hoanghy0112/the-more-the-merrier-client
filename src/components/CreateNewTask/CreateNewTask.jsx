@@ -81,46 +81,6 @@ export default function CreateNewTask({
   );
 
   const isEditable = data.belongTo && !isGroup;
-  // const { _id: groupID } = useSelector(selectCurrentGroupInfo);
-
-  // useEffect(() => {
-  //   const newData = {
-  //     title,
-  //     time: {
-  //       from: startTime.toISOString(),
-  //       to: endTime.toISOString(),
-  //     },
-  //     location: position,
-  //     priority,
-  //     participants: [...participants],
-  //     tags,
-  //     descriptions: desSentence,
-  //   };
-
-  //   const timeout = setTimeout(() => {
-  //     if (onChange) {
-  //       onChange(newData, data._id);
-  //     } else {
-  //       dispatch(
-  //         changeTask({
-  //           _id: data._id,
-  //           ...newData,
-  //         }),
-  //       );
-  //     }
-  //   }, 500);
-
-  //   return () => clearTimeout(timeout);
-  // }, [
-  //   title,
-  //   startTime,
-  //   endTime,
-  //   position,
-  //   priority,
-  //   participants,
-  //   tags,
-  //   desSentence,
-  // ]);
 
   function handleCreateNewTask() {
     const newData = {

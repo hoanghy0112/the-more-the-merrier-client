@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DateTimePicker from '../../../../components/DateTimePicker/DateTimePicker';
 
 import GroupCalendar from '../../../calendar/components/GroupCalendar/GroupCalendar';
-import { getAllTasks } from '../../../tasksManagement/TasksSlice';
 
 import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';

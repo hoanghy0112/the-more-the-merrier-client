@@ -2,9 +2,12 @@ import { useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 
 import useRealTimeData from './useRealTimeData';
+import { useDispatch } from 'react-redux';
+import { updateGroupInformation } from '../features/groupsManagement/groupSlice';
 
 export default function useGroupInformation(groupID) {
-  const [socket, setSocket] = useState<Socket>();
+  const dispatch = useDispatch();
+
   const { data: groupInfo, isLoading } = useRealTimeData(
     onConnect,
     `group-info-real-time-${groupID}`,
@@ -14,11 +17,9 @@ export default function useGroupInformation(groupID) {
     socket.emit('group-info', groupID);
 
     socket.on('group-info', (data) => {
-      console.log({ groupInfomationData: data });
       setGroupInformation(data);
+      dispatch(updateGroupInformation(data));
     });
-
-    setSocket(socket);
   }
 
   return {
