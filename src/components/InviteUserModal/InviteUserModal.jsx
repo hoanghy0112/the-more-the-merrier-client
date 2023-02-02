@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import CenteredModal from '../CenteredModal/CenteredModal';
 
 import { selectGroupBusyTime } from '../../features/groupsManagement/groupSlice';
-import useGroupInformation from '../../hooks/useGroupInformation';
+import useGroupInformation from '../../features/groupsManagement/hooks/useGroupInformation';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import TimeTag from '../TimeTag/TimeTag';

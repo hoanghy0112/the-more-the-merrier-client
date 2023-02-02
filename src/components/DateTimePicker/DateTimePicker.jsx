@@ -1,5 +1,7 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { DayPicker } from 'react-day-picker';
 
@@ -10,12 +12,16 @@ import { ICON_CALENDAR_2 } from '../../assets/icons';
 import styles from './DateTimePicker.module.scss';
 
 import 'react-day-picker/dist/style.css';
+import {
+  selectPersonalDate,
+  updatePersonalDate,
+} from '../../features/tasksManagement/TasksSlice';
+import { getTimeOfDate } from '../../utils/calendar.utils';
 
-export default function DateTimePicker({
-  startDay,
-  hanldeChangeStartDay,
-  disabled = false,
-}) {
+export default function DateTimePicker({ disabled = false }) {
+  const dispatch = useDispatch();
+  const startDay = useSelector(selectPersonalDate);
+
   const [isOpenDateTimePicker, setIsOpenDateTimePicker] = useState(false);
   const [selected, setSelected] = useState(startDay);
 
@@ -23,6 +29,10 @@ export default function DateTimePicker({
     if (!selected) hanldeChangeStartDay(new Date());
     else hanldeChangeStartDay(selected);
   }, [selected]);
+
+  function hanldeChangeStartDay(date) {
+    dispatch(updatePersonalDate(getTimeOfDate(date)));
+  }
 
   function formatDay(date) {
     const month = date.getMonth() + 1;
@@ -54,8 +64,6 @@ export default function DateTimePicker({
 }
 
 DateTimePicker.propTypes = {
-  startDay: PropTypes.instanceOf(Date).isRequired,
-  hanldeChangeStartDay: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
 };
 

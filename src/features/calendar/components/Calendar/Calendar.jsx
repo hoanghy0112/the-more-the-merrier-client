@@ -6,9 +6,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
+import useWindowSize from '../../../../hooks/useWindowSize';
 import CalendarCreateTask from '../CalendarCreateTask/CalendarCreateTask';
 import CalendarDisplayTask from '../CalendarDisplayTask/CalendarDisplayTask';
-import useWindowSize from '../../../../hooks/useWindowSize';
 
 import CalendarBoard from '../CalendarBoard/CalendarBoard';
 
@@ -19,7 +19,6 @@ export default function Calendar({
   tasks,
   changeTask,
   createNewTask,
-  retrieveAllTask,
   setGridSize,
   groupBusyTimes,
   isGroup,
@@ -71,7 +70,6 @@ export default function Calendar({
         gridSize={gridSize}
         startDate={startDate}
         createNewTask={createNewTask}
-        retrieveAllTask={retrieveAllTask}
         isGroup={isGroup}
       />
     </CalendarBoard>
@@ -94,7 +92,6 @@ Calendar.propTypes = {
   ),
   changeTask: PropTypes.func,
   createNewTask: PropTypes.func,
-  retrieveAllTask: PropTypes.func,
   setGridSize: PropTypes.func,
   groupBusyTimes: PropTypes.arrayOf(
     PropTypes.shape({
@@ -110,7 +107,6 @@ Calendar.defaultProps = {
   tasks: [],
   changeTask: () => {},
   createNewTask: () => {},
-  retrieveAllTask: () => {},
   setGridSize: () => {},
   groupBusyTimes: [],
   isGroup: false,

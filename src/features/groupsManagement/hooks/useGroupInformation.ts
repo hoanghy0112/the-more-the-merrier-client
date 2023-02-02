@@ -1,9 +1,8 @@
-import { useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 
-import useRealTimeData from './useRealTimeData';
+import useRealTimeData from '../../../hooks/useRealTimeData';
 import { useDispatch } from 'react-redux';
-import { updateGroupInformation } from '../features/groupsManagement/groupSlice';
+import { updateGroupInformation } from '../groupSlice';
 
 export default function useGroupInformation(groupID) {
   const dispatch = useDispatch();

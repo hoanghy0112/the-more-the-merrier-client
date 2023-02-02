@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 
-import useRealTimeData from './useRealTimeData';
+import useRealTimeData from '../../../hooks/useRealTimeData';
 
 export default function useAllGroup() {
-  const [socket, setSocket] = useState<Socket>();
   const { data: groups, isLoading } = useRealTimeData(
     onConnect,
     'groups-real-time',
@@ -16,8 +15,6 @@ export default function useAllGroup() {
     socket.on('groups', (data) => {
       setGroups(data);
     });
-
-    setSocket(socket);
   }
 
   return {

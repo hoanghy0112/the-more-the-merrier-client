@@ -1,19 +1,20 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
   changeTask,
   createNewTask,
   selectCurrentWeekTasks,
+  selectPersonalMonday,
 } from '../../../tasksManagement/TasksSlice';
 
 import Calendar from '../Calendar/Calendar';
 
-export default function PersonalCalendar({ startDate }) {
+export default function PersonalCalendar() {
   const dispatch = useDispatch();
+
+  const startDate = useSelector(selectPersonalMonday);
   const tasks = useSelector(selectCurrentWeekTasks(startDate));
 
   return (
@@ -26,10 +27,6 @@ export default function PersonalCalendar({ startDate }) {
   );
 }
 
-PersonalCalendar.propTypes = {
-  startDate: PropTypes.instanceOf(Date),
-};
+PersonalCalendar.propTypes = {};
 
-PersonalCalendar.defaultProps = {
-  startDate: new Date(),
-};
+PersonalCalendar.defaultProps = {};

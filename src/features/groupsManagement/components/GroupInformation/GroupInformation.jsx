@@ -19,7 +19,7 @@ import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import EditGroup from '../EditGroup/EditGroup';
 
 import styles from './GroupInformation.module.scss';
-import useGroupInformation from '../../../../hooks/useGroupInformation';
+import useGroupInformation from '../../hooks/useGroupInformation';
 
 export default function GroupInformation({ groupInfo, closeModal }) {
   const navigate = useNavigate();

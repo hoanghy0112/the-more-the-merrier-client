@@ -5,8 +5,6 @@
 /* eslint-disable implicit-arrow-linebreak */
 import React, { useEffect } from 'react';
 
-import PropTypes from 'prop-types';
-
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -23,10 +21,13 @@ import {
 } from '../../../groupsManagement/groupSlice';
 import useGroupBusyTime from '../../../groupsManagement/hooks/useGroupBusyTime';
 import useGroupTask from '../../../groupsManagement/hooks/useGroupTask';
+import { selectPersonalStartAndEndOfWeek } from '../../../tasksManagement/TasksSlice';
 
-export default function GroupCalendar({ startDate, updateTask }) {
+export default function GroupCalendar() {
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const { startDate, endDate } = useSelector(selectPersonalStartAndEndOfWeek);
 
   const groupID = location.pathname.split('/').slice(-1)[0];
   const currentGroupInfo = useSelector(selectCurrentGroupInfo);
@@ -34,25 +35,15 @@ export default function GroupCalendar({ startDate, updateTask }) {
 
   const tasks = useSelector(selectGroupTaskOfCurrentGroup);
 
-  useGroupBusyTime(
-    groupID,
-    startDate,
-    new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000),
-  );
+  useGroupBusyTime(groupID, startDate, endDate);
 
-  useGroupTask(
-    groupID,
-    startDate,
-    new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000),
-  );
+  useGroupTask(groupID, startDate, endDate);
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const from = new Date(startDate).getTime();
-        const to = new Date(from + 7 * 24 * 60 * 60 * 1000).getTime();
-        dispatch(getBusyTimeOfGroup({ groupID, from, to }));
+        dispatch(getBusyTimeOfGroup({ groupID, startDate, endDate }));
       }
     });
 
@@ -70,16 +61,11 @@ export default function GroupCalendar({ startDate, updateTask }) {
       changeTask={(data) => {
         dispatch(changeTaskOfGroup({ data }));
       }}
-      retrieveAllTask={updateTask}
       isGroup
     />
   );
 }
 
-GroupCalendar.propTypes = {
-  startDate: PropTypes.instanceOf(Date),
-};
+GroupCalendar.propTypes = {};
 
-GroupCalendar.defaultProps = {
-  startDate: new Date(),
-};
+GroupCalendar.defaultProps = {};

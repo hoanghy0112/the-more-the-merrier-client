@@ -13,7 +13,7 @@ import NotificationModal from '../../../../components/NotificationModal/Notifica
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserList from '../../../../components/UserList/UserList';
 import { DELETE_GROUP_BY_ID } from '../../../../constants/apiURL';
-import useGroupInformation from '../../../../hooks/useGroupInformation';
+import useGroupInformation from '../../hooks/useGroupInformation';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import styles from './GroupPreview.module.scss';
 

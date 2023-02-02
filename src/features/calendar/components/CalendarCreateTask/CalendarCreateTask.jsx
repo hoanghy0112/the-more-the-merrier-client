@@ -1,14 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
 
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
-
-import { useDispatch } from 'react-redux';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import CreateNewTask from '../../../../components/CreateNewTask/CreateNewTask';
 import styles from './CalendarCreateTask.module.scss';
@@ -20,11 +17,8 @@ export default function CalendarCreateTask({
   taskWrapperRect,
   startDate,
   createNewTask,
-  retrieveAllTask,
   isGroup,
 }) {
-  const dispatch = useDispatch();
-
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isCreateNewTask, setIsCreateNewTask] = useState(false);
   const [data, setData] = useState(null);
@@ -39,17 +33,6 @@ export default function CalendarCreateTask({
   useLayoutEffect(() => {
     setHeight(Math.abs(end[1] - begin[1]));
   }, [end]);
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(retrieveAllTask());
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   function handleMouseMove(e) {
     e.stopPropagation();
@@ -136,7 +119,6 @@ export default function CalendarCreateTask({
           onCreateNewTask={(newData) => {
             setIsCreateNewTask(false);
             createNewTask(newData);
-            setTimeout(() => retrieveAllTask(), 500);
             setIsMouseDown(false);
             setEnd([...begin]);
             setHeight(0);
@@ -150,7 +132,6 @@ export default function CalendarCreateTask({
 CalendarCreateTask.propTypes = {
   gridSize: PropTypes.number.isRequired,
   createNewTask: PropTypes.func.isRequired,
-  retrieveAllTask: PropTypes.func.isRequired,
   taskWrapperRect: PropTypes.instanceOf(DOMRect),
   startDate: PropTypes.instanceOf(Date).isRequired,
   isGroup: PropTypes.bool,

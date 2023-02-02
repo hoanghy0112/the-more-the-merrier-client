@@ -6,11 +6,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { createNewTaskAPI, deleteTaskAPI, updateTaskAPI } from './TasksAPI';
+import {
+  getPreviousMonday,
+  getStartAndEndOfWeek,
+} from '../../utils/calendar.utils';
 
 const initialState = {
   listTasks: [],
   status: 'idle',
   error: null,
+  date: new Date().getTime(),
 };
 
 export const createNewTask = createAsyncThunk(
@@ -52,6 +57,9 @@ export const tasksManagementSclice = createSlice({
   name: 'tasksManagement',
   initialState,
   reducers: {
+    updatePersonalDate: (state, action) => {
+      state.date = new Date(action.payload).getTime();
+    },
     updateListTask: (state, action) => {
       state.listTasks = action.payload;
     },
@@ -97,11 +105,19 @@ export const tasksManagementSclice = createSlice({
 });
 
 export const {
+  updatePersonalDate,
   updateListTask,
   updateAddedTask,
   updateModifiedTask,
   updateDeletedTask,
 } = tasksManagementSclice.actions;
+
+export const selectPersonalDate = (state) =>
+  new Date(state.tasksManagement.date);
+export const selectPersonalMonday = (state) =>
+  getPreviousMonday(selectPersonalDate(state));
+export const selectPersonalStartAndEndOfWeek = (state) =>
+  getStartAndEndOfWeek(selectPersonalDate(state));
 
 export const selectAllTasks = (state) => state.tasksManagement.listTasks;
 export const selectCurrentWeekTasks = (startDate) => (state) => {

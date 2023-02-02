@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 import TabButton from '../../components/TabButton/TabButton';
 import Profile from '../../features/userManagement/Profile';
@@ -20,17 +20,6 @@ export default function HomePage() {
   useEffect(() => {
     setTab(location.pathname.split('/')[2]);
   }, [location]);
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // dispatch(getAllTasks());
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   function handleSignout() {
     const auth = getAuth();

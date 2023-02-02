@@ -1,9 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-no-bind */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DateTimePicker from '../../../../components/DateTimePicker/DateTimePicker';
 
@@ -14,17 +13,15 @@ import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserIcon from '../../../../components/UserIcon/UserIcon';
 import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
-import useGroupInformation from '../../../../hooks/useGroupInformation';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
 import GroupInformation from '../../components/GroupInformation/GroupInformation';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
-import { getTaskOfGroup } from '../../groupSlice';
+import useGroupInformation from '../../hooks/useGroupInformation';
 import styles from './GroupDetailPage.module.scss';
 
 export default function GroupDetailPage() {
-  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -50,65 +47,14 @@ export default function GroupDetailPage() {
     return [];
   }, [groupIsLoading]);
 
-  const now = new Date();
-
-  const [date, setDate] = useState(
-    new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() - now.getDay() + 1,
-    ),
-  );
-
-  function refresh() {
-    if (!groupIsLoading) dispatch(getTaskOfGroup(groupInfo?._id));
-  }
-
-  function handleChangeDate(newDate) {
-    setDate(
-      new Date(
-        newDate.getFullYear(),
-        newDate.getMonth(),
-        newDate.getDate() - newDate.getDay() + 1,
-      ),
-    );
-  }
-
-  useEffect(() => {
-    refresh();
-  }, [groupInfo?._id]);
-
-  useEffect(() => {
-    if (location.pathname.split('/').slice(-1)[0]) {
-      refresh();
-    }
-  }, [location.pathname.split('/').slice(-1)[0]]);
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        refresh();
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   return (
     <div className={styles.container}>
       <div className={styles.calendar}>
         <div className={styles.picker}>
-          <DateTimePicker
-            startDay={date}
-            hanldeChangeStartDay={handleChangeDate}
-          />
-          <button type="button" className={styles.refresh} onClick={refresh}>
-            <p>Refresh</p>
-          </button>
+          <DateTimePicker />
         </div>
         <div className={styles.calendarMain}>
-          <GroupCalendar startDate={date} updateTask={refresh} />
+          <GroupCalendar />
         </div>
       </div>
       <div className={styles.sideMenu}>

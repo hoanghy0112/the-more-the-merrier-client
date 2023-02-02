@@ -1,57 +1,37 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '../../../components/DateTimePicker/DateTimePicker';
 
 import PersonalCalendar from '../../../features/calendar/components/PersonalCalendar/PersonalCalendar';
 import TagsBar from '../../../features/tagsManagement/components/TagBar/TagsBar';
 
+import {
+  selectPersonalStartAndEndOfWeek,
+  updatePersonalDate,
+} from '../../../features/tasksManagement/TasksSlice';
 import usePersonalTask from '../../../features/tasksManagement/hooks/usePersonalTask';
 import styles from './ScheduleOutlet.module.scss';
+import { getTimeOfDate } from '../../../utils/calendar.utils';
 
 export default function ScheduleOutlet() {
-  const now = new Date();
+  const dispatch = useDispatch();
 
-  const [date, setDate] = useState(
-    new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() - now.getDay() + 1,
-    ),
-  );
+  const { startDate, endDate } = useSelector(selectPersonalStartAndEndOfWeek);
+  usePersonalTask(startDate, endDate);
 
-  usePersonalTask(date, new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000));
-
-  function handleChangeDate(newDate) {
-    setDate(
-      new Date(
-        newDate.getFullYear(),
-        newDate.getMonth(),
-        newDate.getDate() - newDate.getDay() + 1,
-      ),
-    );
-  }
-
-  // useEffect(() => {
-  //   const auth = getAuth();
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
+  useEffect(() => {
+    dispatch(updatePersonalDate(getTimeOfDate(new Date())));
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.calendar}>
         <div className={styles.picker}>
-          <DateTimePicker
-            startDay={date}
-            hanldeChangeStartDay={handleChangeDate}
-          />
+          <DateTimePicker />
         </div>
         <div className={styles.calendarMain}>
-          <PersonalCalendar startDate={date} />
+          <PersonalCalendar />
         </div>
       </div>
       <div className={styles.sideMenu}>

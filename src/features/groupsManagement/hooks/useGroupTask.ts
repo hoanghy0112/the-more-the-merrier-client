@@ -33,6 +33,10 @@ export default function useGroupTask(groupID, from, to) {
       // console.log({ deleted: data });
       dispatch(updateDeletedGroupTask(data));
     });
+
+    socket.on('error', (error) => {
+      console.log({ groupTasksError: error });
+    });
   }
 
   return {
