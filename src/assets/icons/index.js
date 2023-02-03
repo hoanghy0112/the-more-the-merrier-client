@@ -7,7 +7,13 @@ import {
 } from 'react-icons/md';
 // import { IoAdd } from 'react-icons/io5';
 import { IoMdAdd } from 'react-icons/io';
-import { IoChevronUpOutline, IoStatsChartOutline } from 'react-icons/io5';
+import {
+  IoChevronUpOutline,
+  IoStatsChartOutline,
+  IoCloseOutline,
+  IoCheckmarkOutline,
+} from 'react-icons/io5';
+import { BsCheck } from 'react-icons/bs';
 import { FaRegFlag } from 'react-icons/fa';
 // import { IoSettingsOutline } from 'react-icons/io';
 
@@ -59,3 +65,7 @@ export const ICON_ADD_IO = IoMdAdd;
 export const ICON_CHEVRON_UP = IoChevronUpOutline;
 
 export const ICON_STACK = IoStatsChartOutline;
+
+export const ICON_CHECK = BsCheck;
+export const ICON_CLOSE = IoCloseOutline;
+export const ICON_TICK = IoCheckmarkOutline;

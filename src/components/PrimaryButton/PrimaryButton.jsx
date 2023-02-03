@@ -17,6 +17,7 @@ export default function PrimaryButton({
   confirmMesssage,
   onClick,
   style = {},
+  children,
 }) {
   const [isOpenConfirmedModal, setIsOpenConfirmedModal] = useState(false);
 
@@ -50,6 +51,7 @@ export default function PrimaryButton({
         }`}
       >
         {title}
+        {children}
       </button>
       <CenteredModal isOpen={isOpenConfirmedModal} onClose={closeModal}>
         <div className={styles.modal}>
@@ -88,7 +90,7 @@ PrimaryButton.propTypes = {
 };
 
 PrimaryButton.defaultProps = {
-  title: 'None title',
+  title: '',
   onClick: () => {},
   disabled: false,
   reversed: false,

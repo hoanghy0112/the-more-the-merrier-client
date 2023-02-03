@@ -10,7 +10,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,14 +29,15 @@ import {
 } from '../../assets/icons';
 
 import { useGroupInformationByIDQuery } from '../../features/groupsManagement/groupAPI';
+import { deleteTaskOfGroup } from '../../features/groupsManagement/groupSlice';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 import { deleteTask } from '../../features/tasksManagement/TasksSlice';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
+import DescriptionLine from '../DescriptionLine/DescriptionLine';
 import InviteUserModal from '../InviteUserModal/InviteUserModal';
 import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
-import { deleteTaskOfGroup } from '../../features/groupsManagement/groupSlice';
 
 Modal.setAppElement('#modal');
 
@@ -65,11 +66,15 @@ export default function CreateNewTask({
   const [tags, setTags] = useState(data?.tags || []);
 
   const [desSentence, setDesSentence] = useState(
-    data?.descriptions?.filter((des) => des !== '') || [],
+    (data?.descriptions?.filter((des) => des !== '') || []).map(
+      (description, index) => ({
+        id: index,
+        sentence: description,
+      }),
+    ),
   );
 
   const [isAdd, setIsAdd] = useState(false);
-  const [descriptionAdd, setDescriptionAdd] = useState('');
 
   const [isAddTag, setIsAddTag] = useState(false);
   const [isChoosePriority, setIsChoosePriority] = useState(false);
@@ -86,14 +91,14 @@ export default function CreateNewTask({
     const newData = {
       title,
       time: {
-        from: startTime.toISOString(),
-        to: endTime.toISOString(),
+        from: new Date(startTime).toISOString(),
+        to: new Date(endTime).toISOString(),
       },
       location: position,
       priority,
       participants: [...participants],
       tags,
-      descriptions: desSentence,
+      descriptions: desSentence.map(({ sentence }) => sentence),
     };
 
     if (data._id) {
@@ -118,15 +123,16 @@ export default function CreateNewTask({
     setTags((prev) => [...prev, tagID]);
   }
 
-  const handleAddDescription = () => {
-    const str = descriptionAdd.replace(/\s/g, '');
-    if (str !== '') {
-      setDesSentence((current) => [
-        ...current.filter((des) => des !== ''),
-        descriptionAdd.trim(),
-      ]);
-    }
-    setDescriptionAdd('');
+  const handleChangeDescription = (id) => (newSentence) => {
+    setDesSentence((prev) => [
+      ...prev.filter(({ id: desId }) => desId !== id),
+      { id, sentence: newSentence },
+    ]);
+    setIsAdd(false);
+  };
+
+  const handleDeleteDescription = (id) => () => {
+    setDesSentence((prev) => [...prev.filter(({ id: desId }) => desId !== id)]);
     setIsAdd(false);
   };
 
@@ -288,52 +294,23 @@ export default function CreateNewTask({
       <div className={styles.descriptionContainer}>
         <p className={styles.text}>Description</p>
         <div className={styles.detailDescription}>
-          {desSentence.map((sentence, index) => (
-            <div key={index} className={styles.descriptionItem}>
-              <textarea
-                className={styles.descriptionText}
-                value={sentence}
-                rows={sentence.split('\n').length}
-                spellCheck="false"
-                onChange={(e) => {
-                  setDesSentence(
-                    [...desSentence]
-                      .map((object) => {
-                        if (object === sentence) return e.target.value;
-                        return object;
-                      })
-                      .filter((des) => des !== ''),
-                  );
-                }}
-                onBlur={(e) =>
-                  setDesSentence(
-                    [...desSentence].map((object) => {
-                      if (object === sentence) return e.target.value.trim();
-                      return object;
-                    }),
-                  )
-                }
-              />
-            </div>
+          {desSentence.map(({ sentence, id }) => (
+            <DescriptionLine
+              key={id}
+              sentence={sentence}
+              changeDescription={handleChangeDescription(id)}
+              deleteDescription={handleDeleteDescription(id)}
+            />
           ))}
           {isAdd ? (
-            <div className={styles.descriptionItem}>
-              <textarea
-                className={styles.descriptionText}
-                value={descriptionAdd}
-                rows={descriptionAdd.split('\n').length}
-                spellCheck="false"
-                onChange={(e) => {
-                  setDescriptionAdd(e.target.value);
-                }}
-                onBlur={handleAddDescription}
-              />
-            </div>
+            <DescriptionLine
+              sentence=""
+              changeDescription={handleChangeDescription(desSentence.length)}
+              deleteDescription={handleDeleteDescription(desSentence.length)}
+            />
           ) : (
             <>
-              {isEditable ? (
-                ''
-              ) : (
+              {isEditable ? null : (
                 <div
                   className={styles.addDescription}
                   style={{ cursor: 'pointer' }}

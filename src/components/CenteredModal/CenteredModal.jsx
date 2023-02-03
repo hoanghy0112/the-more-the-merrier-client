@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React from 'react';
 
 import Modal from 'react-modal';
@@ -35,7 +36,15 @@ export default function CenteredModal({ isOpen, onClose, children }) {
         },
       }}
     >
-      {children}
+      <div
+        style={{ width: 0, height: 0 }}
+        onMouseDown={(e) => e.stopPropagation()}
+        onMouseUp={(e) => e.stopPropagation()}
+        onMouseOver={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
     </Modal>
   );
 }
