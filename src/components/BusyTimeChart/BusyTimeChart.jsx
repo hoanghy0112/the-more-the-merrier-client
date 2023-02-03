@@ -6,6 +6,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
 import {
   Chart as ChartJS,
   LineController,
