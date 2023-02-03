@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 
 import styles from './UserIcon.module.scss';
@@ -9,6 +9,7 @@ export default function UserIcon({
   userID,
   size = 35,
   marginLeft = 0,
+  response,
   withName = false,
   isChoosing = false,
   choosable = false,
@@ -21,6 +22,13 @@ export default function UserIcon({
     return '';
   }, [data]);
 
+  const backgroundColor = useMemo(() => {
+    if (!isChoosing) return 'white';
+    const state = response?.state || '';
+    if (state === 'approve') return '#00cc2950';
+    return '#00a5ca50';
+  }, [response?.state, isChoosing]);
+
   return (
     <div
       className={[
@@ -32,22 +40,30 @@ export default function UserIcon({
       onClick={onClick}
       style={{
         marginLeft,
+        backgroundColor,
       }}
     >
-      {isLoading && !error ? (
-        <p>...</p>
-      ) : (
-        <img
-          src={data?.photo}
-          alt="user icon"
-          style={{ '--size': `${size}px` }}
-        />
-      )}
-      {error ? <p>!</p> : null}
-      {withName ? (
-        <div className={styles.userInfo}>
-          <p>{fullName}</p>
-          {/* <p>{data?.email}</p> */}
+      <div className={styles.info}>
+        {isLoading && !error ? (
+          <p>...</p>
+        ) : (
+          <img
+            src={data?.photo}
+            alt="user icon"
+            style={{ '--size': `${size}px` }}
+          />
+        )}
+        {error ? <p>!</p> : null}
+        {withName ? (
+          <div className={styles.userInfo}>
+            <p>{fullName}</p>
+          </div>
+        ) : null}
+        <div className={styles.state}>{response?.state}</div>
+      </div>
+      {response?.state ? (
+        <div className={styles.response}>
+          <p>{response?.message}</p>
         </div>
       ) : null}
     </div>

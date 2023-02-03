@@ -19,6 +19,7 @@ import styles from './InviteUserModal.module.scss';
 export default function InviteUserModal({
   time: { from, to },
   participants,
+  responses,
   setParticipants,
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +47,7 @@ export default function InviteUserModal({
   return (
     <>
       <PrimaryButton
-        title="View participants"
+        title="Manage participants"
         onClick={() => setIsOpen(true)}
         reversed
       />
@@ -74,6 +75,7 @@ export default function InviteUserModal({
           </div>
           <UserChoosing
             participants={participants}
+            responses={responses}
             setParticipants={setParticipants}
             close={() => setIsOpen(false)}
           />

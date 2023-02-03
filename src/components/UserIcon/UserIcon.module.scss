@@ -1,7 +1,7 @@
 .container {
   position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 10px;
 
   transition: 0.3s;
@@ -10,15 +10,16 @@
   padding: 5px;
   font-weight: 500;
 
-  &.choosing {
-    // border: 5px solid #00a6ca;
-    background-color: #00a5ca95;
-    color: rgb(0, 0, 0);
-  }
-
   &.withName {
     cursor: pointer;
-    border: 1px solid #00a5cad2;
+    border: 1px solid #00a5ca85;
+  }
+
+  &.choosing {
+    // border: 5px solid #00a6ca;
+    background-color: #00cc2950;
+    border: 2px solid #00a5ca;
+    color: rgb(0, 0, 0);
   }
 
   &:not(.withName)::before {
@@ -91,9 +92,42 @@
     flex-direction: column;
     gap: 5px;
 
+    p {
+      width: max-content;
+    }
+
     p:nth-child(2) {
       font-weight: 400;
       color: rgb(0, 0, 0);
+    }
+  }
+
+  .info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .state {
+    width: 100%;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .response {
+    justify-self: flex-end;
+
+    p {
+      min-width: 100px;
+      width: max-content;
+      padding: 5px 10px;
+      margin-left: 10px;
+      margin-bottom: 5px;
+      border-radius: 0 15px 15px 15px;
+      background-color: #fff;
+      border: 1px solid #00a6ca;
     }
   }
 }

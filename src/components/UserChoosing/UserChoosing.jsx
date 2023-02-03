@@ -10,6 +10,7 @@ import UserIcon from '../UserIcon/UserIcon';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 
 export default function UserChoosing({
+  responses,
   participants: defaultParticipants = new Set(),
   setParticipants: defaultSetParticipants = () => {},
   close,
@@ -22,20 +23,25 @@ export default function UserChoosing({
       <p>Click to add participants</p>
       <div className={styles.userList}>
         {[...users, admin].map((userID) => (
-          <UserIcon
-            choosable
-            withName
-            userID={userID}
-            isChoosing={participants.has(userID)}
-            onClick={() =>
-              setParticipants((prev) => {
-                const newSet = new Set(prev);
-                if (participants.has(userID)) newSet.delete(userID);
-                else newSet.add(userID);
-                return newSet;
-              })
-            }
-          />
+          <div>
+            <UserIcon
+              choosable
+              withName
+              userID={userID}
+              isChoosing={participants.has(userID)}
+              response={responses?.find(
+                ({ userID: responseUserID }) => responseUserID === userID,
+              )}
+              onClick={() =>
+                setParticipants((prev) => {
+                  const newSet = new Set(prev);
+                  if (participants.has(userID)) newSet.delete(userID);
+                  else newSet.add(userID);
+                  return newSet;
+                })
+              }
+            />
+          </div>
         ))}
       </div>
       <div className={styles.buttons}>

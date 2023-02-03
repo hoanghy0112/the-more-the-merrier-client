@@ -3,6 +3,11 @@
   flex-direction: column;
   gap: 20px !important;
 
+  &>p {
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
   .userList {
     display: flex;
     flex-direction: column;
