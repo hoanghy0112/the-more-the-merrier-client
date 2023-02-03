@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-use-before-define */
+/* eslint-disable vars-on-top */
+/* eslint-disable no-var */
+import React, { useState } from 'react';
+import { Line } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
-import Chart from 'chart.js/auto';
-import { Bar, Line } from 'react-chartjs-2';
 
 import {
   selectAllTasks,
