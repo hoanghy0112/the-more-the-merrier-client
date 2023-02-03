@@ -6,6 +6,14 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+} from 'chart.js';
 import filterTime from '../../features/groupsManagement/components/GeneratedSuggestionModal/utils';
 import { useGroupBusyTimeQuery } from '../../features/groupsManagement/groupAPI';
 import usePersistentState from '../../hooks/usePersistentState';
@@ -18,6 +26,8 @@ import {
   weekLabels,
   yearLabels,
 } from './labels';
+
+ChartJS.register(LineController, LineElement, PointElement, LinearScale, Title);
 
 export default function BusyTimeChart({ groupInfo }) {
   const { _id: groupID } = groupInfo;
@@ -33,7 +43,7 @@ export default function BusyTimeChart({ groupInfo }) {
 
   const to = useMemo(() => getToDate(viewType, now), [viewType, groupID]);
 
-  const { data: busyTime, refetch } = useGroupBusyTimeQuery({
+  const { data: busyTime } = useGroupBusyTimeQuery({
     groupID,
     from: from.getTime(),
     to: to.getTime(),
@@ -120,14 +130,6 @@ export default function BusyTimeChart({ groupInfo }) {
             height="340px"
           />
         </div>
-        {/* <div className={styles.chartContainer}>
-          <Bar
-            data={statisticData.data}
-            options={statisticData.optionHorizontal}
-            width="300px"
-            height="300px"
-          />
-        </div> */}
       </div>
     </>
   );
