@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
@@ -10,12 +10,16 @@ import JoinGroupPopup from '../JoinGroupPopup/JoinGroupPopup';
 import NotificationList from '../NotificationList/NotificationList';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 
+import TaskPopUp from '../TaskPopUp/TaskPopUp';
 import styles from './NotificationIndividual.module.scss';
 
 export default function NotificationIndividual() {
   const navigate = useNavigate();
 
   const [isDisplay, setIsDisplay] = useState(false);
+
+  const [taskID, setTaskID] = useState();
+  const [isOpenTaskPopup, setIsOpenTaskPopup] = useState(false);
 
   const [groupID, setGroupID] = useState('');
   const [isOpenJoinGroupBox, setIsOpenJoinGroupBox] = useState(false);
@@ -93,6 +97,8 @@ export default function NotificationIndividual() {
         setIsOpenJoinGroupBox={setIsOpenJoinGroupBox}
         setUnRead={setUnRead}
         setNewNotification={setNewNotification}
+        setTaskID={setTaskID}
+        openTaskPopup={() => setIsOpenTaskPopup(true)}
       />
 
       {groupID ? (
@@ -102,6 +108,12 @@ export default function NotificationIndividual() {
           closePopup={() => setIsOpenJoinGroupBox(false)}
         />
       ) : null}
+
+      <TaskPopUp
+        id={taskID}
+        isOpen={isOpenTaskPopup}
+        onClose={() => setIsOpenTaskPopup(false)}
+      />
     </div>
   );
 }

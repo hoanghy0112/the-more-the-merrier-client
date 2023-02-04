@@ -15,6 +15,8 @@ export default function NotificationList({
   setIsOpenJoinGroupBox,
   setUnRead,
   setNewNotification,
+  setTaskID,
+  openTaskPopup,
 }) {
   const navigate = useNavigate();
   const { ref, isComponentVisible, setIsComponentVisible } =
@@ -99,6 +101,7 @@ export default function NotificationList({
                   _id,
                   type,
                   groupID: groupDataID,
+                  taskID,
                 }) => (
                   <button
                     key={_id}
@@ -110,6 +113,9 @@ export default function NotificationList({
                       } else if (type === 'join-group') {
                         setIsDisplay(false);
                         navigate(`/home/group/${groupDataID}`);
+                      } else if (type === 'invite-task') {
+                        setTaskID(taskID);
+                        openTaskPopup();
                       }
                       readNotification(_id);
                     }}

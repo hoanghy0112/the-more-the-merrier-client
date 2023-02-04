@@ -5,13 +5,14 @@ import {
   MdOutlineSettings,
   MdLogout,
 } from 'react-icons/md';
-// import { IoAdd } from 'react-icons/io5';
+import { AiOutlineClockCircle } from 'react-icons/ai';
 import { IoMdAdd } from 'react-icons/io';
 import {
   IoChevronUpOutline,
   IoStatsChartOutline,
   IoCloseOutline,
   IoCheckmarkOutline,
+  // IoWarningOutline,
 } from 'react-icons/io5';
 import { BsCheck } from 'react-icons/bs';
 import { FaRegFlag } from 'react-icons/fa';
@@ -69,3 +70,4 @@ export const ICON_STACK = IoStatsChartOutline;
 export const ICON_CHECK = BsCheck;
 export const ICON_CLOSE = IoCloseOutline;
 export const ICON_TICK = IoCheckmarkOutline;
+export const ICON_WARNING = AiOutlineClockCircle;

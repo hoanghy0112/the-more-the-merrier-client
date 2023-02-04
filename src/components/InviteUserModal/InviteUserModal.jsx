@@ -21,6 +21,7 @@ export default function InviteUserModal({
   participants,
   responses,
   setParticipants,
+  disabled = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -78,6 +79,7 @@ export default function InviteUserModal({
             responses={responses}
             setParticipants={setParticipants}
             close={() => setIsOpen(false)}
+            disabled={disabled}
           />
         </div>
       </CenteredModal>

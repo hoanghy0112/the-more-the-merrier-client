@@ -14,6 +14,7 @@ export default function UserChoosing({
   participants: defaultParticipants = new Set(),
   setParticipants: defaultSetParticipants = () => {},
   close,
+  disabled = false,
 }) {
   const [participants, setParticipants] = useState(defaultParticipants);
   const { users, admin } = useSelector(selectCurrentGroupInfo);
@@ -33,6 +34,7 @@ export default function UserChoosing({
                 ({ userID: responseUserID }) => responseUserID === userID,
               )}
               onClick={() =>
+                disabled ||
                 setParticipants((prev) => {
                   const newSet = new Set(prev);
                   if (participants.has(userID)) newSet.delete(userID);
@@ -44,25 +46,27 @@ export default function UserChoosing({
           </div>
         ))}
       </div>
-      <div className={styles.buttons}>
-        <PrimaryButton
-          title="Discard changes"
-          backgroundColor="rgb(230, 0, 0)"
-          shadowColor="rgb(255, 183, 0)"
-          confirmed
-          confirmMesssage={<p>Do you want to discard all changes?</p>}
-          onClick={() => {
-            setParticipants(defaultParticipants);
-          }}
-        />
-        <PrimaryButton
-          title="Agree"
-          onClick={() => {
-            defaultSetParticipants(participants);
-            close();
-          }}
-        />
-      </div>
+      {disabled ? null : (
+        <div className={styles.buttons}>
+          <PrimaryButton
+            title="Discard changes"
+            backgroundColor="rgb(230, 0, 0)"
+            shadowColor="rgb(255, 183, 0)"
+            confirmed
+            confirmMesssage={<p>Do you want to discard all changes?</p>}
+            onClick={() => {
+              setParticipants(defaultParticipants);
+            }}
+          />
+          <PrimaryButton
+            title="Agree"
+            onClick={() => {
+              defaultSetParticipants(participants);
+              close();
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

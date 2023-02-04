@@ -28,3 +28,12 @@ export async function deleteTaskAPI({ _id }) {
   );
   return res.data;
 }
+
+export async function sendResponseAPI({ id, message, state }) {
+  const res = await axios.put(
+    `https://hoanghy.tech/api/v2/task/response/${id}`,
+    { message, state },
+    await getAuthorizeHeader(),
+  );
+  return res.data;
+}

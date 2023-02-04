@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 
 import styles from './UserIcon.module.scss';

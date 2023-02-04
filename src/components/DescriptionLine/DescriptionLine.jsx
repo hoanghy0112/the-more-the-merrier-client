@@ -10,6 +10,7 @@ export default function DescriptionLine({
   sentence,
   changeDescription,
   deleteDescription,
+  disabled = false,
 }) {
   const [isEdit, setIsEdit] = useState(false);
   const [newSentence, setNewSentence] = useState(sentence);
@@ -19,7 +20,6 @@ export default function DescriptionLine({
   useEffect(() => {
     if (!isEdit) {
       setNewSentence(sentence);
-      // if (newSentence.trim() === '') deleteDescription();
     }
     if (sentence === '') {
       inputRef?.current.focus();
@@ -39,7 +39,8 @@ export default function DescriptionLine({
           onChange={(e) => {
             setNewSentence(e.target.value);
           }}
-          onClick={() => setIsEdit(true)}
+          onClick={() => disabled || setIsEdit(true)}
+          disabled={disabled}
         />
       </div>
       {isEdit ? (
