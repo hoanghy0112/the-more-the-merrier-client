@@ -28,6 +28,7 @@ export default function UserChoosing({
             <UserIcon
               choosable
               withName
+              withResponse
               userID={userID}
               isChoosing={participants.has(userID)}
               response={responses?.find(

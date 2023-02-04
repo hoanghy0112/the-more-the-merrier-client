@@ -114,6 +114,23 @@
     padding-right: 10px;
     display: flex;
     flex-direction: row-reverse;
+    position: relative;
+    // top: 5px;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      gap: 5px;
+      border-radius: 999px;
+      p {
+        color: white;
+        font-size: 0.9rem;
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
   }
 
   .response {
