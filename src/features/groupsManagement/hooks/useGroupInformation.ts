@@ -22,7 +22,6 @@ export default function useGroupInformation(groupID) {
     if (groupID) socket.emit('group-info', groupID);
 
     socket.on('group-info', (data) => {
-      console.log({ data });
       setGroupInformation(data);
       dispatch(updateGroupInformation(data));
     });

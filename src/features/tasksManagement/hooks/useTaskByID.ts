@@ -17,7 +17,6 @@ export default function useTaskByID(taskID) {
     if (taskID) socket.emit('get-task', taskID);
 
     socket.on('task', (data) => {
-      console.log({ task: data });
       setTasks(data);
     });
 

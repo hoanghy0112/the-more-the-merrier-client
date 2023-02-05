@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable no-confusing-arrow */
@@ -25,6 +26,7 @@ import CenteredModal from '../CenteredModal/CenteredModal';
 import CreateNewTask from '../CreateNewTask/CreateNewTask';
 import TaskPopUp from '../TaskPopUp/TaskPopUp';
 import { selectUserProfile } from '../../features/userManagement/ProfileSlice';
+import { getColorOfGroupTask } from '../../utils/taskColor.util';
 
 export default function TaskCard({
   task,
@@ -132,6 +134,13 @@ export default function TaskCard({
               onClick={() => {
                 if (!isDrag) setIsOpen(true);
               }}
+              style={
+                task?.belongTo && !isGroup
+                  ? {
+                      backgroundColor: getColorOfGroupTask(task, userInfo._id),
+                    }
+                  : {}
+              }
             >
               <div className={styles.taskContent}>
                 <p>{title}</p>

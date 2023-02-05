@@ -50,7 +50,7 @@ export default function InviteUserModal({
   return (
     <>
       <PrimaryButton
-        title="Manage participants"
+        title={disabled ? 'View participants' : 'Manage participants'}
         onClick={() => setIsOpen(true)}
         reversed
       />
