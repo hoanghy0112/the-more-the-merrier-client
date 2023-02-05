@@ -40,6 +40,7 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
   const [isViewResponse, setIsViewResponse] = useState(false);
 
   const { task } = useTaskByID(id);
+  const userInfo = useSelector(selectUserProfile);
 
   const {
     title,
@@ -189,136 +190,142 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
             </div>
           </div>
 
-          {isViewResponse ? (
-            <div className={styles.userResponse}>
-              <p>Your response</p>
-              <div className={styles.content}>
-                <p
-                  className={styles.state}
-                  style={{
-                    backgroundColor: getResponseStateColor(response?.state),
-                  }}
-                >
-                  {getResponseMessage(response?.state)}
-                </p>
-                <p>{response?.message}</p>
-              </div>
-              {response?.state === 'hover' ? (
-                <>
-                  {response?.adminState === 'approve' ? (
-                    <p className={styles.approve}>
-                      Your request has been approved
+          {participants?.has(userInfo._id) ? (
+            <>
+              {isViewResponse ? (
+                <div className={styles.userResponse}>
+                  <p>Your response</p>
+                  <div className={styles.content}>
+                    <p
+                      className={styles.state}
+                      style={{
+                        backgroundColor: getResponseStateColor(response?.state),
+                      }}
+                    >
+                      {getResponseMessage(response?.state)}
                     </p>
-                  ) : null}
-                  {response?.adminState === 'decline' ? (
-                    <p className={styles.decline}>
-                      Your request has been declined
-                    </p>
-                  ) : null}
-                  {response?.adminState === 'no-response' ? (
-                    <p className={styles.noreply}>Admin has not replied yet</p>
-                  ) : null}
-                </>
-              ) : null}
-              <PrimaryButton onClick={() => setIsViewResponse(false)}>
-                Edit your response
-              </PrimaryButton>
-            </div>
-          ) : (
-            <div className={styles.response}>
-              <p>Your response</p>
-              <textarea
-                className={styles.comment}
-                rows="4"
-                defaultValue={response?.message}
-                spellCheck={false}
-                placeholder="Write your comment here"
-                ref={messageRef}
-              />
-              <div className={styles.buttons}>
-                <PrimaryButton
-                  backgroundColor={getResponseStateColor('decline')}
-                  shadowColor={getResponseStateColor('decline')}
-                  onClick={() => {
-                    setResponseState('decline');
-                  }}
-                  reversed={responseState !== 'decline'}
-                  disabled={responseState === 'decline'}
-                >
-                  <div className={styles.ok}>
-                    <ICON_CLOSE
-                      size={25}
-                      style={{
-                        color:
-                          responseState !== 'decline'
-                            ? getResponseStateColor('decline')
-                            : 'white',
-                      }}
-                    />
-                    <p>Decline</p>
+                    <p>{response?.message}</p>
                   </div>
-                </PrimaryButton>
-                <PrimaryButton
-                  backgroundColor={getResponseStateColor('hover')}
-                  shadowColor={getResponseStateColor('hover')}
-                  reversed={responseState !== 'hover'}
-                  disabled={responseState === 'hover'}
-                  onClick={() => {
-                    setResponseState('hover');
-                  }}
-                >
-                  <div className={styles.ok}>
-                    <ICON_WARNING
-                      size={25}
-                      style={{
-                        color:
-                          responseState !== 'hover'
-                            ? getResponseStateColor('hover')
-                            : 'white',
+                  {response?.state === 'hover' ? (
+                    <>
+                      {response?.adminState === 'approve' ? (
+                        <p className={styles.approve}>
+                          Your request has been approved
+                        </p>
+                      ) : null}
+                      {response?.adminState === 'decline' ? (
+                        <p className={styles.decline}>
+                          Your request has been declined
+                        </p>
+                      ) : null}
+                      {response?.adminState === 'no-response' ? (
+                        <p className={styles.noreply}>
+                          Admin has not replied yet
+                        </p>
+                      ) : null}
+                    </>
+                  ) : null}
+                  <PrimaryButton onClick={() => setIsViewResponse(false)}>
+                    Edit your response
+                  </PrimaryButton>
+                </div>
+              ) : (
+                <div className={styles.response}>
+                  <p>Your response</p>
+                  <textarea
+                    className={styles.comment}
+                    rows="4"
+                    defaultValue={response?.message}
+                    spellCheck={false}
+                    placeholder="Write your comment here"
+                    ref={messageRef}
+                  />
+                  <div className={styles.buttons}>
+                    <PrimaryButton
+                      backgroundColor={getResponseStateColor('decline')}
+                      shadowColor={getResponseStateColor('decline')}
+                      onClick={() => {
+                        setResponseState('decline');
                       }}
-                    />
-                    <p>Discuss</p>
-                  </div>
-                </PrimaryButton>
-                <PrimaryButton
-                  backgroundColor={getResponseStateColor('approve')}
-                  shadowColor={getResponseStateColor('approve')}
-                  reversed={responseState !== 'approve'}
-                  disabled={responseState === 'approve'}
-                  onClick={() => {
-                    setResponseState('approve');
-                  }}
-                >
-                  <div className={styles.ok}>
-                    <ICON_TICK
-                      size={25}
-                      style={{
-                        color:
-                          responseState !== 'approve'
-                            ? getResponseStateColor('approve')
-                            : 'white',
+                      reversed={responseState !== 'decline'}
+                      disabled={responseState === 'decline'}
+                    >
+                      <div className={styles.ok}>
+                        <ICON_CLOSE
+                          size={25}
+                          style={{
+                            color:
+                              responseState !== 'decline'
+                                ? getResponseStateColor('decline')
+                                : 'white',
+                          }}
+                        />
+                        <p>Decline</p>
+                      </div>
+                    </PrimaryButton>
+                    <PrimaryButton
+                      backgroundColor={getResponseStateColor('hover')}
+                      shadowColor={getResponseStateColor('hover')}
+                      reversed={responseState !== 'hover'}
+                      disabled={responseState === 'hover'}
+                      onClick={() => {
+                        setResponseState('hover');
                       }}
-                    />
-                    <p>Approve</p>
+                    >
+                      <div className={styles.ok}>
+                        <ICON_WARNING
+                          size={25}
+                          style={{
+                            color:
+                              responseState !== 'hover'
+                                ? getResponseStateColor('hover')
+                                : 'white',
+                          }}
+                        />
+                        <p>Discuss</p>
+                      </div>
+                    </PrimaryButton>
+                    <PrimaryButton
+                      backgroundColor={getResponseStateColor('approve')}
+                      shadowColor={getResponseStateColor('approve')}
+                      reversed={responseState !== 'approve'}
+                      disabled={responseState === 'approve'}
+                      onClick={() => {
+                        setResponseState('approve');
+                      }}
+                    >
+                      <div className={styles.ok}>
+                        <ICON_TICK
+                          size={25}
+                          style={{
+                            color:
+                              responseState !== 'approve'
+                                ? getResponseStateColor('approve')
+                                : 'white',
+                          }}
+                        />
+                        <p>Approve</p>
+                      </div>
+                    </PrimaryButton>
                   </div>
-                </PrimaryButton>
-              </div>
-              <div className={styles.send}>
-                <PrimaryButton onClick={sendResponse}>
-                  Send response
-                </PrimaryButton>
-                <PrimaryButton
-                  backgroundColor="rgb(230, 0, 0)"
-                  shadowColor="rgb(255, 183, 0)"
-                  onClick={() =>
-                    response ? setIsViewResponse(true) : onClose()
-                  }
-                >
-                  Cancel
-                </PrimaryButton>
-              </div>
-            </div>
-          )}
+                  <div className={styles.send}>
+                    <PrimaryButton onClick={sendResponse}>
+                      Send response
+                    </PrimaryButton>
+                    <PrimaryButton
+                      backgroundColor="rgb(230, 0, 0)"
+                      shadowColor="rgb(255, 183, 0)"
+                      onClick={() =>
+                        response ? setIsViewResponse(true) : onClose()
+                      }
+                    >
+                      Cancel
+                    </PrimaryButton>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : null}
         </div>
       ) : null}
     </CenteredModal>

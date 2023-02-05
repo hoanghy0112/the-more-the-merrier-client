@@ -59,6 +59,9 @@ export default function TaskCard({
 
   const column = moment(new Date(from)).diff(new Date(startDate), 'd');
 
+  const isEditable = task?.admin === userInfo?._id;
+  console.log({ isEditable });
+
   function handleDragStop(event, { lastX, lastY }) {
     const newFrom = new Date(
       startDate.getYear() + 1900,
@@ -111,7 +114,7 @@ export default function TaskCard({
         setTimeout(() => setIsDrag(false), 400);
         handleDragStop(...params);
       }}
-      disabled={task.belongTo && !isGroup}
+      disabled={(task.belongTo && !isGroup) || !isEditable}
     >
       <div
         className={styles.drag}
