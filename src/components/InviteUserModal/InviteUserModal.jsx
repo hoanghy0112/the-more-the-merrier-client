@@ -4,11 +4,13 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 import CenteredModal from '../CenteredModal/CenteredModal';
 
-import { selectGroupBusyTime } from '../../features/groupsManagement/groupSlice';
+import {
+  selectCurrentGroupID,
+  selectGroupBusyTime,
+} from '../../features/groupsManagement/groupSlice';
 import useGroupInformation from '../../features/groupsManagement/hooks/useGroupInformation';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
@@ -25,11 +27,10 @@ export default function InviteUserModal({
   disabled = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
 
   const numberOfBusyUser = useRef(0);
 
-  const groupID = location.pathname.split('/').slice(-1)[0];
+  const groupID = useSelector(selectCurrentGroupID);
   const { groupInfo } = useGroupInformation(groupID);
 
   const groupBusyTimes = useSelector(selectGroupBusyTime);

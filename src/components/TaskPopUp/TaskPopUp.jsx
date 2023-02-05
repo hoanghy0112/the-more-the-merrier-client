@@ -77,7 +77,7 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
   useEffect(() => {
     if (response) setIsViewResponse(true);
     else setIsViewResponse(false);
-  }, []);
+  }, [response?.message, response?.state]);
 
   const { groupInfo } = useGroupInformation(belongTo);
 

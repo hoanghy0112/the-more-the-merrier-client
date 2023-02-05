@@ -22,7 +22,7 @@ export default function UserChoosing({
 
   return (
     <div className={styles.container}>
-      <p>Click to add participants</p>
+      {disabled ? null : <p>Click to add participants</p>}
       <div className={styles.userList}>
         {[...users, admin].map((userID) => (
           <div>

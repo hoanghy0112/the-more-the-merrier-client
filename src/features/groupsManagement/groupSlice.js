@@ -214,6 +214,9 @@ export const {
   updateModifiedGroupTask,
 } = groupsManagementSlice.actions;
 
+export const selectCurrentGroupID = (state) =>
+  state.groupsManagement.currentGroupID;
+
 export const selectAllGroups = (state) => state.groupsManagement.groups || [];
 
 export const selectGroupByID = (groupID) => (state) =>

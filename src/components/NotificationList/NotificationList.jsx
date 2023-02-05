@@ -116,6 +116,9 @@ export default function NotificationList({
                       } else if (type === 'invite-task') {
                         setTaskID(taskID);
                         openTaskPopup();
+                      } else if (type === 'reply-task-request') {
+                        setTaskID(taskID);
+                        openTaskPopup();
                       }
                       readNotification(_id);
                     }}
