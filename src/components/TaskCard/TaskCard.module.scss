@@ -51,16 +51,14 @@
     }
 
     .taskContent {
-      // height: 60%;
-      // max-height: 200px;
-      padding: 0px 20px;
+      padding: 0px 10px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       gap: 20px;
 
       p {
-        font-size: 20px;
+        font-size: 1rem;
         font-weight: 500;
       }
 

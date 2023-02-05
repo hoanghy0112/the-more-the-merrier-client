@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useGroupInformation from '../../features/groupsManagement/hooks/useGroupInformation';
@@ -25,9 +25,15 @@ import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './TaskPopUp.module.scss';
 import { sendResponseAPI } from '../../features/tasksManagement/TasksAPI';
+import {
+  getResponseMessage,
+  getResponseStateColor,
+} from '../../utils/response';
 
 export default function TaskPopUp({ id, isOpen, onClose }) {
   const navigate = useNavigate();
+
+  const [isViewResponse, setIsViewResponse] = useState(false);
 
   const { task } = useTaskByID(id);
 
@@ -49,6 +55,11 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
 
   const userProfile = useSelector(selectUserProfile);
   const messageRef = useRef();
+  const response = useMemo(
+    () => responses?.find(({ userID }) => userID === userProfile?._id),
+    [responses],
+  );
+
   const [responseState, setResponseState] = useState(
     responses?.find(({ userID }) => userID === userProfile?._id)?.state,
   );
@@ -58,6 +69,11 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
       responses?.find(({ userID }) => userID === userProfile?._id)?.state,
     );
   }, [userProfile._id, responses]);
+
+  useEffect(() => {
+    if (response) setIsViewResponse(true);
+    else setIsViewResponse(false);
+  }, []);
 
   const { groupInfo } = useGroupInformation(belongTo);
 
@@ -82,8 +98,8 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
 
   function sendResponse() {
     const message = messageRef?.current.value;
+    setIsViewResponse(true);
     sendResponseAPI({ id, message, state: responseState });
-    // sendResponseAPI({message});
     onClose();
   }
 
@@ -169,83 +185,116 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
             </div>
           </div>
 
-          <div className={styles.response}>
-            <textarea
-              className={styles.comment}
-              rows="4"
-              placeholder="Write your comment here"
-              ref={messageRef}
-            />
-            <div className={styles.buttons}>
-              <PrimaryButton
-                backgroundColor="rgb(230, 0, 0)"
-                shadowColor="rgb(255, 183, 0)"
-                onClick={() => {
-                  setResponseState('decline');
-                }}
-                reversed={responseState !== 'decline'}
-              >
-                <div className={styles.ok}>
-                  <ICON_CLOSE
-                    size={25}
-                    style={{
-                      color:
-                        responseState !== 'decline'
-                          ? 'rgb(230, 0, 0)'
-                          : 'white',
-                    }}
-                  />
-                  <p>Decline</p>
-                </div>
-              </PrimaryButton>
-              <PrimaryButton
-                backgroundColor="#f9b122"
-                shadowColor="#f9b122"
-                reversed={responseState !== 'hover'}
-                onClick={() => {
-                  setResponseState('hover');
-                }}
-              >
-                <div className={styles.ok}>
-                  <ICON_WARNING
-                    size={25}
-                    style={{
-                      color: responseState !== 'hover' ? '#f9b122' : 'white',
-                    }}
-                  />
-                  <p>Discuss more</p>
-                </div>
-              </PrimaryButton>
-              <PrimaryButton
-                reversed={responseState !== 'approve'}
-                onClick={() => {
-                  setResponseState('approve');
-                }}
-              >
-                <div className={styles.ok}>
-                  <ICON_TICK
-                    size={25}
-                    style={{
-                      color: responseState !== 'approve' ? '#00a6ca' : 'white',
-                    }}
-                  />
-                  <p>Approve</p>
-                </div>
+          {isViewResponse ? (
+            <div className={styles.userResponse}>
+              <p>Your response</p>
+              <div className={styles.content}>
+                <p
+                  className={styles.state}
+                  style={{
+                    backgroundColor: getResponseStateColor(response.state),
+                  }}
+                >
+                  {getResponseMessage(response.state)}
+                </p>
+                <p>{response.message}</p>
+              </div>
+              <PrimaryButton onClick={() => setIsViewResponse(false)}>
+                Edit your response
               </PrimaryButton>
             </div>
-            <div className={styles.send}>
-              <PrimaryButton onClick={sendResponse}>
-                Send response
-              </PrimaryButton>
-              <PrimaryButton
-                backgroundColor="rgb(230, 0, 0)"
-                shadowColor="rgb(255, 183, 0)"
-                onClick={onClose}
-              >
-                Cancel
-              </PrimaryButton>
+          ) : (
+            <div className={styles.response}>
+              <textarea
+                className={styles.comment}
+                rows="4"
+                defaultValue={response?.message}
+                spellCheck={false}
+                placeholder="Write your comment here"
+                ref={messageRef}
+              />
+              <div className={styles.buttons}>
+                <PrimaryButton
+                  backgroundColor={getResponseStateColor('decline')}
+                  shadowColor={getResponseStateColor('decline')}
+                  onClick={() => {
+                    setResponseState('decline');
+                  }}
+                  reversed={responseState !== 'decline'}
+                  disabled={responseState === 'decline'}
+                >
+                  <div className={styles.ok}>
+                    <ICON_CLOSE
+                      size={25}
+                      style={{
+                        color:
+                          responseState !== 'decline'
+                            ? getResponseStateColor('decline')
+                            : 'white',
+                      }}
+                    />
+                    <p>Decline</p>
+                  </div>
+                </PrimaryButton>
+                <PrimaryButton
+                  backgroundColor={getResponseStateColor('hover')}
+                  shadowColor={getResponseStateColor('hover')}
+                  reversed={responseState !== 'hover'}
+                  disabled={responseState === 'hover'}
+                  onClick={() => {
+                    setResponseState('hover');
+                  }}
+                >
+                  <div className={styles.ok}>
+                    <ICON_WARNING
+                      size={25}
+                      style={{
+                        color:
+                          responseState !== 'hover'
+                            ? getResponseStateColor('hover')
+                            : 'white',
+                      }}
+                    />
+                    <p>Discuss</p>
+                  </div>
+                </PrimaryButton>
+                <PrimaryButton
+                  backgroundColor={getResponseStateColor('approve')}
+                  shadowColor={getResponseStateColor('approve')}
+                  reversed={responseState !== 'approve'}
+                  disabled={responseState === 'approve'}
+                  onClick={() => {
+                    setResponseState('approve');
+                  }}
+                >
+                  <div className={styles.ok}>
+                    <ICON_TICK
+                      size={25}
+                      style={{
+                        color:
+                          responseState !== 'approve'
+                            ? getResponseStateColor('approve')
+                            : 'white',
+                      }}
+                    />
+                    <p>Approve</p>
+                  </div>
+                </PrimaryButton>
+              </div>
+              <div className={styles.send}>
+                <PrimaryButton onClick={sendResponse}>
+                  Send response
+                </PrimaryButton>
+                <PrimaryButton
+                  backgroundColor="rgb(230, 0, 0)"
+                  shadowColor="rgb(255, 183, 0)"
+                  onClick={() => setIsViewResponse(true)}
+                >
+                  Cancel
+                </PrimaryButton>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ) : null}
     </CenteredModal>

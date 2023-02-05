@@ -3,13 +3,8 @@
 import React, { useMemo } from 'react';
 import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 
+import { ICON_CLOSE, ICON_TICK, ICON_WARNING } from '../../assets/icons';
 import styles from './UserIcon.module.scss';
-import {
-  ICON_CLOSE,
-  ICON_COMPLETED,
-  ICON_TICK,
-  ICON_WARNING,
-} from '../../assets/icons';
 
 export default function UserIcon({
   userID,

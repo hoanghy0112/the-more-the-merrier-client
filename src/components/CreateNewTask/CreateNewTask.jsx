@@ -85,7 +85,7 @@ export default function CreateNewTask({
     data?.belongTo,
   );
 
-  const isEditable = data.belongTo && !isGroup;
+  const isDisable = data.belongTo && !isGroup;
 
   function handleCreateNewTask() {
     const newData = {
@@ -171,7 +171,7 @@ export default function CreateNewTask({
           className={styles.input}
           placeholder="Task’s title..."
           spellCheck="false"
-          disabled={isEditable}
+          disabled={isDisable}
         />
         {data.belongTo && !isGroup ? (
           <p>
@@ -187,16 +187,16 @@ export default function CreateNewTask({
           <TimeTag
             time={startTime}
             onChange={setStartTime}
-            disabled={isEditable}
+            disabled={isDisable}
           />
           -
-          <TimeTag time={endTime} onChange={setEndTime} disabled={isEditable} />
+          <TimeTag time={endTime} onChange={setEndTime} disabled={isDisable} />
         </div>
         <span className={styles.timePicker}>
           <DateTimePicker
             startDay={startTime}
             hanldeChangeStartDay={() => {}}
-            disabled={isEditable}
+            disabled={isDisable}
           />
         </span>
       </div>
@@ -209,10 +209,10 @@ export default function CreateNewTask({
             onChange={(e) => setPosition(e.target.value)}
             style={{ overflowWrap: '-moz-initial' }}
             placeholder={
-              isEditable ? 'No data' : 'Enter your task’s location here...'
+              isDisable ? 'No data' : 'Enter your task’s location here...'
             }
             spellCheck="false"
-            disabled={isEditable}
+            disabled={isDisable}
           />
         </div>
         <div className={styles.desSentence_2}>
@@ -226,7 +226,7 @@ export default function CreateNewTask({
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                if (!isEditable) setIsChoosePriority(true);
+                if (!isDisable) setIsChoosePriority(true);
               }}
             >
               <p>{priorityText}</p>
@@ -251,7 +251,7 @@ export default function CreateNewTask({
             )}
           </div>
         </div>
-        {isEditable || (
+        {isDisable || isGroup || (
           <div className={styles.desSentence_2}>
             <img src={ICON_BOOKMARKS} alt="time" />
             <div className={styles.list}>
@@ -270,7 +270,7 @@ export default function CreateNewTask({
               <div
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (!isEditable) setIsAddTag(true);
+                  if (!isDisable) setIsAddTag(true);
                 }}
                 className={styles.buttonAdd}
                 style={{ cursor: 'pointer' }}
@@ -311,7 +311,7 @@ export default function CreateNewTask({
             />
           ) : (
             <>
-              {isEditable ? null : (
+              {isDisable ? null : (
                 <div
                   className={styles.addDescription}
                   style={{ cursor: 'pointer' }}
@@ -330,7 +330,7 @@ export default function CreateNewTask({
           <img src={ICON_MAIL} alt="invite" />
           <p className={styles.textInvite}>Invite participants</p>
         </div>
-        {isEditable ? (
+        {isDisable ? (
           ''
         ) : (
           <div

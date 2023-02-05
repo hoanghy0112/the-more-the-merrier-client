@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-use-before-define */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
@@ -17,6 +19,7 @@ import {
   updatePersonalDate,
 } from '../../features/tasksManagement/TasksSlice';
 import { getTimeOfDate } from '../../utils/calendar.utils';
+import { isValidDate } from '../../utils/date';
 
 export default function DateTimePicker({ disabled = false }) {
   const dispatch = useDispatch();
@@ -35,9 +38,9 @@ export default function DateTimePicker({ disabled = false }) {
   }
 
   function formatDay(date) {
-    const month = date.getMonth() + 1;
-    const weekday = date.getDay();
-    const day = date.getDate();
+    const month = new Date(date).getMonth() + 1;
+    const weekday = new Date(date).getDay();
+    const day = new Date(date).getDate();
     return `${
       weekday !== 0 ? `Thứ ${weekday + 1}` : 'Chủ nhật'
     }, Ngày ${day} Tháng ${month}`;
@@ -56,7 +59,13 @@ export default function DateTimePicker({ disabled = false }) {
       </div>
       {isOpenDateTimePicker && !disabled && (
         <div className={styles['date-time-picker']}>
-          <DayPicker mode="single" selected={selected} onSelect={setSelected} />
+          <DayPicker
+            mode="single"
+            selected={selected}
+            onSelect={(date) =>
+              isValidDate(new Date(date)) && setSelected(date)
+            }
+          />
         </div>
       )}
     </div>

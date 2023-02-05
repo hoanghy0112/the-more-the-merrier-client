@@ -63,7 +63,6 @@
     /* Inside auto layout */
 
     flex: none;
-    order: 1;
     align-self: stretch;
     flex-grow: 0;
     .todoTime {
@@ -90,7 +89,6 @@
     gap: 20px;
 
     flex: none;
-    order: 1;
     align-self: stretch;
     flex-grow: 0;
 
@@ -214,19 +212,14 @@
     gap: 15px;
 
     flex: none;
-    order: 2;
     align-self: stretch;
     flex-grow: 0;
     .text {
       font-family: 'Manrope';
-      font-style: normal;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 0.9rem;
       line-height: 13px;
-      display: flex;
-      align-items: center;
       letter-spacing: 0.3px;
-
       color: #000000;
     }
     .detailDescription {
@@ -239,71 +232,41 @@
     }
   }
 
-  .buttonContainer {
+  .userResponse {
+    width: calc(100% + 60px);
     display: flex;
-    gap: 20px;
-    height: 40px;
-    align-items: flex-start;
-    padding: 0px;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0px -10px 20px -5px #00a6ca;
+    padding: 20px 30px;
+    margin: -20px -30px;
+    margin-top: 0;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
 
-    flex: none;
-    order: 3;
-    align-self: stretch;
-    flex-grow: 0;
+    & > p:nth-child(1) {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
 
-    .inviteParticipant {
-      background: #ffffff;
-      box-shadow: -1.8px -1.2px 6px rgba(0, 166, 202, 0.25),
-        1.2px 1.8px 6px rgba(0, 166, 202, 0.25);
-      border-radius: 6px;
-      width: 100%;
-      height: 100%;
+    .content {
       display: flex;
-      flex-direction: row;
       align-items: center;
-      justify-content: center;
-      gap: 3.6px;
+      gap: 10px;
 
-      transition: 0.3s;
-
-      &:hover {
-        background-color: rgb(217, 231, 250);
+      .state {
+        padding: 4px 8px;
+        border-radius: 6px;
+        color: white;
       }
-    }
 
-    .textInvite {
-      font-family: 'Manrope';
-      font-weight: 400;
-      font-size: 0.8rem;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      letter-spacing: 0.3px;
-      color: #0066ff;
-    }
-    .trashContainer {
-      width: 65px;
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      background: #e11c1c;
-      border-radius: 6px;
-
-      transition: 0.5s;
-      transition-timing-function: cubic-bezier(0.74, -0.65, 0.16, 1.62);
-
-      &:hover {
-        transform: scale(1.1);
-        background-color: #ff0000;
+      p {
+        font-weight: 500;
       }
     }
   }
 
   .response {
-    order: 4;
     width: calc(100% + 60px);
     display: flex;
     flex-direction: column;

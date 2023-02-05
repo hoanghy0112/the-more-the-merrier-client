@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable implicit-arrow-linebreak */
@@ -22,6 +23,7 @@ import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 import styles from './TaskCard.module.scss';
 import CenteredModal from '../CenteredModal/CenteredModal';
 import CreateNewTask from '../CreateNewTask/CreateNewTask';
+import TaskPopUp from '../TaskPopUp/TaskPopUp';
 
 export default function TaskCard({
   task,
@@ -149,16 +151,29 @@ export default function TaskCard({
           parentRect={rect}
           canAppear={!isDrag && (isGroup || !task.belongTo)}
         />
-        <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-          <CreateNewTask
-            onChange={(data) => {
-              changeTask(data);
-              setIsOpen(false);
-            }}
-            isGroup={isGroup}
-            data={task}
-          />
-        </CenteredModal>
+
+        {isGroup ? (
+          <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <CreateNewTask
+              onChange={(data) => {
+                changeTask(data);
+                setIsOpen(false);
+              }}
+              isGroup={isGroup}
+              data={task}
+            />
+          </CenteredModal>
+        ) : (
+          <>
+            {task?._id ? (
+              <TaskPopUp
+                id={task._id}
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+              />
+            ) : null}
+          </>
+        )}
       </div>
     </Draggable>
   );

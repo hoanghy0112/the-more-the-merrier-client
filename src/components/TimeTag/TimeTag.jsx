@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 import styles from './TimeTag.module.scss';
 
 import TimePicker from '../TimePicker/TimePicker';
+import { isValidDate } from '../../utils/date';
 
 export default function TimeTag({ time, onChange, disabled = false }) {
   const [isEdit, setIsEdit] = useState(false);
 
-  function isValidDate(date) {
-    return date.toString() !== 'Invalid Date';
-  }
   const handleChangeTime = (newTime) => {
     if (!isValidDate(new Date(newTime))) return;
     onChange(new Date(newTime));
