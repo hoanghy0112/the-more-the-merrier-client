@@ -1,3 +1,23 @@
+.wrapper {
+  border-radius: 10px;
+  overflow-x: visible;
+  overflow-y: hidden;
+
+  .adminReply {
+    display: flex;
+    gap: 15px;
+    padding: 0 25px;
+    transition: 0.3s;
+    height: 0;
+  }
+
+  &:hover {
+    .adminReply {
+      height: 50px;
+    }
+  }
+}
+
 .container {
   position: relative;
   display: flex;
@@ -16,7 +36,6 @@
   }
 
   &.choosing {
-    // border: 5px solid #00a6ca;
     background-color: #00cc2950;
     border: 2px solid #00a5ca;
     color: rgb(0, 0, 0);
@@ -147,4 +166,22 @@
       border: 1px solid #00a6ca;
     }
   }
+}
+
+.adminReply {
+  margin-top: 10px;
+}
+
+.notiApprove,
+.notiDecline {
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.notiApprove {
+  color: #00ae00;
+}
+
+.notiDecline {
+  color: rgb(226, 0, 0);
 }

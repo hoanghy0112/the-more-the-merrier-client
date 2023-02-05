@@ -24,6 +24,7 @@ import styles from './TaskCard.module.scss';
 import CenteredModal from '../CenteredModal/CenteredModal';
 import CreateNewTask from '../CreateNewTask/CreateNewTask';
 import TaskPopUp from '../TaskPopUp/TaskPopUp';
+import { selectUserProfile } from '../../features/userManagement/ProfileSlice';
 
 export default function TaskCard({
   task,
@@ -36,6 +37,8 @@ export default function TaskCard({
   const [isDrag, setIsDrag] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+
+  const userInfo = useSelector(selectUserProfile);
 
   const {
     title,
@@ -152,7 +155,7 @@ export default function TaskCard({
           canAppear={!isDrag && (isGroup || !task.belongTo)}
         />
 
-        {isGroup ? (
+        {isGroup && task?.admin === userInfo?._id ? (
           <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <CreateNewTask
               onChange={(data) => {

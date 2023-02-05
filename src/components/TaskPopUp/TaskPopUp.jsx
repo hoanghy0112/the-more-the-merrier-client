@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
@@ -192,19 +196,37 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
                 <p
                   className={styles.state}
                   style={{
-                    backgroundColor: getResponseStateColor(response.state),
+                    backgroundColor: getResponseStateColor(response?.state),
                   }}
                 >
-                  {getResponseMessage(response.state)}
+                  {getResponseMessage(response?.state)}
                 </p>
-                <p>{response.message}</p>
+                <p>{response?.message}</p>
               </div>
+              {response?.state === 'hover' ? (
+                <>
+                  {response?.adminState === 'approve' ? (
+                    <p className={styles.approve}>
+                      Your request has been approved
+                    </p>
+                  ) : null}
+                  {response?.adminState === 'decline' ? (
+                    <p className={styles.decline}>
+                      Your request has been declined
+                    </p>
+                  ) : null}
+                  {response?.adminState === 'no-response' ? (
+                    <p className={styles.noreply}>Admin has not replied yet</p>
+                  ) : null}
+                </>
+              ) : null}
               <PrimaryButton onClick={() => setIsViewResponse(false)}>
                 Edit your response
               </PrimaryButton>
             </div>
           ) : (
             <div className={styles.response}>
+              <p>Your response</p>
               <textarea
                 className={styles.comment}
                 rows="4"
@@ -288,7 +310,9 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
                 <PrimaryButton
                   backgroundColor="rgb(230, 0, 0)"
                   shadowColor="rgb(255, 183, 0)"
-                  onClick={() => setIsViewResponse(true)}
+                  onClick={() =>
+                    response ? setIsViewResponse(true) : onClose()
+                  }
                 >
                   Cancel
                 </PrimaryButton>

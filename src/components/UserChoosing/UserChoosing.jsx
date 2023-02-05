@@ -11,6 +11,7 @@ import PrimaryButton from '../PrimaryButton/PrimaryButton';
 
 export default function UserChoosing({
   responses,
+  taskID,
   participants: defaultParticipants = new Set(),
   setParticipants: defaultSetParticipants = () => {},
   close,
@@ -30,6 +31,7 @@ export default function UserChoosing({
               withName
               withResponse
               userID={userID}
+              taskID={taskID}
               isChoosing={participants.has(userID)}
               response={responses?.find(
                 ({ userID: responseUserID }) => responseUserID === userID,

@@ -18,6 +18,7 @@ import styles from './InviteUserModal.module.scss';
 
 export default function InviteUserModal({
   time: { from, to },
+  taskID,
   participants,
   responses,
   setParticipants,
@@ -75,6 +76,7 @@ export default function InviteUserModal({
             </div>
           </div>
           <UserChoosing
+            taskID={taskID}
             participants={participants}
             responses={responses}
             setParticipants={setParticipants}

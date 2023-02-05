@@ -37,3 +37,12 @@ export async function sendResponseAPI({ id, message, state }) {
   );
   return res.data;
 }
+
+export async function replyResponseOfUserAPI({ id, userID, state }) {
+  const res = await axios.put(
+    `https://hoanghy.tech/api/v2/task/response/${id}/reply/${userID}`,
+    { state },
+    await getAuthorizeHeader(),
+  );
+  return res.data;
+}

@@ -278,6 +278,11 @@
     border-bottom-left-radius: 18px;
     border-bottom-right-radius: 18px;
 
+    & > p:nth-child(1) {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
     .comment {
       resize: none;
       border-radius: 10px;
@@ -320,4 +325,28 @@
       gap: 15px;
     }
   }
+}
+
+.approve,
+.decline,
+.noreply {
+  width: max-content;
+  padding: 5px 15px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.approve {
+  color: #04c401;
+  background-color: #00cc2927;
+}
+
+.decline {
+  background-color: #fed3d3;
+  color: #b50000;
+}
+
+.noreply {
+  background-color: #dbd9d9;
+  color: #3e3e3e;
 }

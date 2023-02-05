@@ -285,6 +285,7 @@ export default function CreateNewTask({
         )}
         {isGroup && (
           <InviteUserModal
+            taskID={data?._id}
             time={{ from: startTime, to: endTime }}
             responses={data?.responses}
             participants={participants}
