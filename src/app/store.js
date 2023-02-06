@@ -25,6 +25,7 @@ export const store = configureStore({
       },
       userManagementReducer,
     ),
+    // userManagement: userManagementReducer,
     tasksManagement: persistReducer(
       {
         key: 'tasksManagement',

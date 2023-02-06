@@ -8,7 +8,10 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { findAllTagsOfUser } from '../../features/tagsManagement/TagsSlice';
 import {
   getUserProfile,
+  selectAuthenticationStatus,
   selectFetchUserProfileStatus,
+  signInLoading,
+  signInSuccessful,
 } from '../../features/userManagement/ProfileSlice';
 import LoadingPage from '../LoadingPage/LoadingPage';
 import styles from './AuthenticationRoute.module.scss';
@@ -20,11 +23,13 @@ export default function AuthenticationRoute() {
   const location = useLocation();
 
   const status = useSelector(selectFetchUserProfileStatus);
+  const authenticationStatus = useSelector(selectAuthenticationStatus);
 
   function onAuthChange(user) {
     if (user) {
       dispatch(getUserProfile());
       dispatch(findAllTagsOfUser());
+      dispatch(signInSuccessful());
     } else {
       navigate('/authentication');
     }
@@ -46,6 +51,7 @@ export default function AuthenticationRoute() {
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, onAuthChange);
+    dispatch(signInLoading());
 
     return () => {
       unsubscribe();
@@ -55,6 +61,7 @@ export default function AuthenticationRoute() {
   return (
     <div className={styles.container}>
       {status === 'loading' && <LoadingPage />}
+      {authenticationStatus === 'loading' && <LoadingPage />}
       <Outlet />
     </div>
   );

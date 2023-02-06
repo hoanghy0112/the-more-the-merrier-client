@@ -7,8 +7,8 @@ import signInWithGoogleAPI from '../../firebase/signInWithGoogleAPI';
 import { getUserProfileAPI } from './profileAPI';
 
 const initialState = {
-  authenticationStatus: '',
-  status: '',
+  authenticationStatus: 'loading',
+  status: 'loading',
   errorMessage: '',
   accessToken: '',
   givenName: '',
@@ -63,6 +63,17 @@ export const getUserProfile = createAsyncThunk(
 export const userManagementSlice = createSlice({
   name: 'userManagement',
   initialState,
+  reducers: {
+    signInSuccessful: (state) => {
+      state.authenticationStatus = 'success';
+    },
+    signInLoading: (state) => {
+      state.authenticationStatus = 'loading';
+    },
+    logout: (state) => {
+      state.authenticationStatus = '';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUserProfile.pending, (state) => {
@@ -79,16 +90,17 @@ export const userManagementSlice = createSlice({
       .addCase(signInWithGoogle.pending, (state) => {
         state.authenticationStatus = 'loading';
       })
-      .addCase(signInWithGoogle.fulfilled, (state, action) => {
-        state.authenticationStatus = 'success';
-        state = { ...Object.assign(state, action.payload) };
+      .addCase(signInWithFacebook.pending, (state) => {
+        state.authenticationStatus = 'loading';
       })
-      .addCase(signInWithGoogle.rejected, (state, action) => {
-        state.authenticationStatus = 'fail';
-        state.errorMessage = action.payload;
+      .addCase(signInWithGithub.pending, (state) => {
+        state.authenticationStatus = 'loading';
       });
   },
 });
+
+export const { signInSuccessful, signInLoading, logout } =
+  userManagementSlice.actions;
 
 export const selectUserProfile = (state) => state.userManagement;
 export const selectFetchUserProfileStatus = (state) =>

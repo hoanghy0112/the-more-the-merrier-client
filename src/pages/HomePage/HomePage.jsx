@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { getAuth } from 'firebase/auth';
 
@@ -9,9 +10,12 @@ import Profile from '../../features/userManagement/Profile';
 import Mylogo from '../../assets/Logo.svg';
 import { ICON_LOGOUT } from '../../assets/icons';
 import NotificationIndividual from '../../components/NotificationIndividual/NotificationIndividual';
+import { logout } from '../../features/userManagement/ProfileSlice';
 import styles from './HomePage.module.scss';
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+
   const [tab, setTab] = useState('');
 
   const location = useLocation();
@@ -22,6 +26,7 @@ export default function HomePage() {
   }, [location]);
 
   function handleSignout() {
+    dispatch(logout());
     const auth = getAuth();
     auth.signOut();
   }

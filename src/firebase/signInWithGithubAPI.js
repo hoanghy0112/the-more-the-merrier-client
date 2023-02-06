@@ -1,4 +1,4 @@
-import { getAuth, GithubAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { getAuth, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import app from './configuration';
 
 const provider = new GithubAuthProvider();
@@ -7,8 +7,7 @@ export const auth = getAuth(app);
 
 export default async function signInWithGithubAPI() {
   return new Promise((resolve) => {
-    signInWithRedirect(auth, provider).then((result) => {
-      console.log({ result });
+    signInWithPopup(auth, provider).then((result) => {
       const { user } = result;
 
       resolve(user);

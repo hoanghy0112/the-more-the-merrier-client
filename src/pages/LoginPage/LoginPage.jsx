@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -9,6 +9,10 @@ import styles from './LoginPage.module.scss';
 
 import LoginButton from '../../components/LoginButton/LoginButton';
 import {
+  logout,
+  selectAuthenticationStatus,
+  signInLoading,
+  signInSuccessful,
   signInWithFacebook,
   signInWithGithub,
   signInWithGoogle,
@@ -21,12 +25,16 @@ import IMAGE_TOP_RIGHT from '../../assets/images/top-right.png';
 import IMAGE_BOTTOM from '../../assets/images/bottom.png';
 import FULL_LOGO from '../../assets/images/full-logo.svg';
 import CIRCLE from '../../assets/images/circle.svg';
+import LoadingPage from '../LoadingPage/LoadingPage';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const authenticationStatus = useSelector(selectAuthenticationStatus);
+
   function handleSignInWithGoogle() {
+    dispatch(signInLoading());
     dispatch(signInWithGoogle());
   }
 
@@ -40,6 +48,7 @@ export default function LoginPage() {
 
   function onAuthChange(user) {
     if (user) {
+      dispatch(signInSuccessful());
       navigate('/home/schedule');
     }
   }
@@ -47,6 +56,7 @@ export default function LoginPage() {
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, onAuthChange);
+    dispatch(logout());
 
     return () => {
       unsubscribe();
@@ -101,6 +111,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+      {authenticationStatus === 'loading' && <LoadingPage />}
     </div>
   );
 }
