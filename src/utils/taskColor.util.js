@@ -4,7 +4,7 @@ export function getColorOfGroupTask(task, userID) {
   const response = task?.responses.find(({ userID: id }) => id === userID);
 
   if (task?.admin === userID) {
-    return '#9dc1fc';
+    return '#9dc1fc95';
   }
 
   if (response?.adminState) {

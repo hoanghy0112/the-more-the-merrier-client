@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/jsx-curly-newline */
@@ -120,7 +121,11 @@ export default function TaskCard({
         style={{
           width,
           height,
-          zIndex: isHovering ? 20 : 10,
+          zIndex: isHovering
+            ? 200
+            : (task.belongTo && !isGroup) || !isEditable
+            ? 250
+            : 160,
           '--color': primaryColor,
           color: task.priority === 1 ? 'white' : 'black',
         }}
@@ -166,7 +171,7 @@ export default function TaskCard({
           canAppear={!isDrag && (isGroup || !task.belongTo)}
         />
 
-        {isGroup && task?.admin === userInfo?._id ? (
+        {(isGroup && task?.admin === userInfo?._id) || !task?.belongTo ? (
           <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <CreateNewTask
               onChange={(data) => {
