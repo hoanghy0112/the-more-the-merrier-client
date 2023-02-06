@@ -16,6 +16,16 @@
   background-color: #22cef9;
   margin: 0 3px;
   border-radius: 10px;
+
+  cursor: pointer !important;
+
+  transition: 0.5s;
+
+  z-index: 9999;
+
+  &:hover {
+    background-color: rgb(0, 60, 255);
+  }
 }
 
 .now {
