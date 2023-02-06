@@ -1,5 +1,5 @@
 /* eslint-disable implicit-arrow-linebreak */
-import { IS_WEEKEND_LABELS } from '../../../../../constants/suggestion';
+import { IS_WEEKEND_LABELS } from '../../constants/suggestion';
 
 export default function filterIsWeekend(timeList, isWeekend) {
   if (isWeekend === IS_WEEKEND_LABELS.WEEKEND) {

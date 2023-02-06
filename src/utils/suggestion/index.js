@@ -2,15 +2,15 @@ import {
   IS_WEEKEND_LABELS,
   TIME_OF_DAY_LABELS,
   TIME_PERIOD_LABELS,
-} from '../../../../../constants/suggestion';
+} from '../../constants/suggestion';
 import filterByPeriod from './filterByPeriod';
 import filterByTimeOfDay from './filterByTimeOfDay';
 import filterIsWeekend from './filterIsWeekend';
 import {
+  filterTimeList,
   getEndDate,
   getInitialTimeList,
   splitBusyTime,
-  splitDay,
 } from './utils';
 
 export default function filterTime({
@@ -23,16 +23,13 @@ export default function filterTime({
 }) {
   let filteredTime = getInitialTimeList(startDate, endDate);
 
-  filteredTime = splitBusyTime(filteredTime, busyTime);
-  filteredTime = splitDay(filteredTime);
+  filteredTime = splitBusyTime(filteredTime, busyTime, timeOfDay);
 
   let timeList = filterByPeriod(filteredTime, howLong);
   timeList = filterByTimeOfDay(timeList, timeOfDay);
   timeList = filterIsWeekend(timeList, isWeekend);
-
-  filteredTime.sort(
-    (a, b) => new Date(a.from).getTime() - new Date(b.from).getTime(),
-  );
+  timeList = filterTimeList(timeList);
+  // console.log({ timeList: [...timeList] });
 
   return timeList;
 }

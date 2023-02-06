@@ -1,6 +1,6 @@
 /* eslint-disable implicit-arrow-linebreak */
 import moment from 'moment';
-import { TIME_PERIOD_LABELS } from '../../../../../constants/suggestion';
+import { TIME_PERIOD_LABELS } from '../../constants/suggestion';
 
 export default function filterByPeriod(timeList, howLong) {
   const filteredTime = [...timeList];

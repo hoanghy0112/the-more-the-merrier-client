@@ -15,7 +15,7 @@ import {
   selectGroupTaskOfCurrentGroup,
 } from '../../groupSlice';
 import styles from './GeneratedSuggestionModal.module.scss';
-import filterTime from './utils';
+import filterTime from '../../../../utils/suggestion';
 
 export default function GeneratedSuggestionModal({
   startDate,

@@ -15,7 +15,7 @@ import {
   LinearScale,
   Title,
 } from 'chart.js';
-import filterTime from '../../features/groupsManagement/components/GeneratedSuggestionModal/utils';
+import filterTime from '../../utils/suggestion';
 import { useGroupBusyTimeQuery } from '../../features/groupsManagement/groupAPI';
 import usePersistentState from '../../hooks/usePersistentState';
 

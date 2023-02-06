@@ -18,10 +18,27 @@
 
   transition: 0.3s;
 
+  &::before {
+    content: '';
+    position: absolute;
+    display: block;
+    bottom: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    transition: 0.3s;
+  }
+
   &:hover {
     top: -5px;
     left: -5px;
     box-shadow: 5px 5px 0 0 var(--shadow-color);
+
+    &::before {
+      content: '';
+      bottom: -7px;
+      left: 3px;
+    }
   }
 
   &.disabled {
