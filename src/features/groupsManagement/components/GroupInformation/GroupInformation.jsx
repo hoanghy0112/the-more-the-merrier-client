@@ -20,6 +20,8 @@ import EditGroup from '../EditGroup/EditGroup';
 
 import styles from './GroupInformation.module.scss';
 import useGroupInformation from '../../hooks/useGroupInformation';
+import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import ManageParticipants from '../ManageParticipants/ManageParticipants';
 
 export default function GroupInformation({ groupInfo, closeModal }) {
   const navigate = useNavigate();
@@ -29,6 +31,9 @@ export default function GroupInformation({ groupInfo, closeModal }) {
   const userProfile = useSelector(selectUserProfile);
 
   const [isOpenNotificationModal, setIsOpenNotificationModal] = useState(false);
+  const [isOpenManageParticipants, setIsOpenManageParticipants] =
+    useState(false);
+
   const notificationData = useRef({ status: '', title: '', content: '' });
 
   const handleDeleteGroup = useCallback(async () => {
@@ -87,8 +92,16 @@ export default function GroupInformation({ groupInfo, closeModal }) {
               <p>{groupData.description}</p>
             </div>
             <div className={styles.users}>
-              <UserIcon userID={groupData.admin} size={30} withName />
-              <UserList userIDs={groupData.users || []} size={30} max={5} />
+              <div className={styles.userIcons}>
+                <UserIcon userID={groupData.admin} size={30} withName />
+                <UserList userIDs={groupData.users || []} size={30} max={5} />
+              </div>
+              <PrimaryButton
+                onClick={() => setIsOpenManageParticipants(true)}
+                width={200}
+              >
+                Manage participants
+              </PrimaryButton>
             </div>
           </div>
           <div className={styles.body}>
@@ -129,6 +142,12 @@ export default function GroupInformation({ groupInfo, closeModal }) {
               )
             }
           />
+          <CenteredModal
+            isOpen={isOpenManageParticipants}
+            onClose={() => setIsOpenManageParticipants(false)}
+          >
+            <ManageParticipants group={groupData} />
+          </CenteredModal>
         </div>
       )}
     </>

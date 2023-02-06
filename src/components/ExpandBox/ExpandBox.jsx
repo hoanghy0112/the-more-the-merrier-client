@@ -1,23 +1,24 @@
-import React, { useMemo, useRef, useState } from 'react';
+/* eslint-disable implicit-arrow-linebreak */
+import React, { useCallback, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import styles from './ExpandBox.module.scss';
 import { ICON_CHEVRON_UP } from '../../assets/icons';
+import styles from './ExpandBox.module.scss';
 
 export default function ExpandBox({ title, children, className, style }) {
+  const [height, setHeight] = useState(0);
+  const [ref, setRef] = useState(null);
   const [isExpand, setIsExpand] = useState(true);
 
-  const contentRef = useRef();
+  const contentRef = useCallback((node) => {
+    setHeight(parseInt(node?.getBoundingClientRect().height, 10) + 10);
+    setRef(node);
+  }, []);
 
-  const height = useMemo(() => {
-    if (contentRef?.current) {
-      return (
-        parseInt(contentRef?.current?.getBoundingClientRect().height, 10) + 50
-      );
-    }
-    return 0;
-  }, [contentRef?.current?.getBoundingClientRect().height, children.length]);
+  useEffect(() => {
+    setHeight(parseInt(ref?.getBoundingClientRect().height, 10) + 10);
+  }, [children.length]);
 
   return (
     <div className={`${styles.container} ${className}`} style={style}>

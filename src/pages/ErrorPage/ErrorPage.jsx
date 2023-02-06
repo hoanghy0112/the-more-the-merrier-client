@@ -7,8 +7,9 @@ import styles from './ErrorPage.module.scss';
 
 export default function ErrorPage({ errorMessage }) {
   const navigate = useNavigate();
-  const { message = errorMessage || 'Your link seems to be wrong' } =
-    useRouteError();
+  const error = useRouteError();
+  console.log({ error });
+  const { message = errorMessage || 'Your link seems to be wrong' } = error;
 
   return (
     <div className={styles.container}>

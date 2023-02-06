@@ -11,6 +11,7 @@ import {
   GET_BUSY_TIME_OF_GROUP_V2,
   GET_GROUP_BY_ID,
   GET_TASK_OF_GROUP,
+  REMOVE_PARTICIPANT_OF_GROUP_V2,
 } from '../../constants/apiURL';
 
 export async function createNewGroupAPI({
@@ -121,6 +122,28 @@ export async function deleteTaskOfGroupAPI(taskID) {
     return null;
   }
 }
+
+export async function removeParticipantOfGroupAPI(groupID, userID) {
+  try {
+    const auth = getAuth();
+    const accessToken = await auth.currentUser.getIdToken();
+    const response = await axios.put(
+      `${REMOVE_PARTICIPANT_OF_GROUP_V2}/${groupID}/${userID}/remove`,
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 export async function getTaskOfGroupAPI(groupID) {
   try {
     const auth = getAuth();

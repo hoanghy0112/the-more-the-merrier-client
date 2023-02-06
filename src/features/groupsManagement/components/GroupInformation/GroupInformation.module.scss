@@ -29,10 +29,16 @@
     }
 
     .users {
+      padding-top: 20px;
       display: flex;
       align-items: flex-end;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
+
+      .userIcons {
+        display: flex;
+        gap: 10px;
+      }
     }
 
     h1 {

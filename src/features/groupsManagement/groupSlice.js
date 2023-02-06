@@ -109,7 +109,12 @@ export const groupsManagementSlice = createSlice({
     },
     updateGroupInformation: (state, action) => {
       const groupInformation = action.payload;
-      state.groups = [groupInformation];
+      state.groups = [
+        ...state.groups.filter(
+          (group) => !group || group?._id !== groupInformation?._id,
+        ),
+        groupInformation,
+      ];
     },
     updateListBusy: (state, action) => {
       state.groupBusyTime = action.payload;

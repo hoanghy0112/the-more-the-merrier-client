@@ -67,6 +67,15 @@ export default function CalendarDisplayTask({
             opacity={1 / ((groupInfo?.users?.length || 0) + 1) + 0.2}
           />
         ))}
+
+      <TimeCard
+        className={styles.now}
+        gridSize={gridSize}
+        startDate={startDate}
+        from={new Date()}
+        to={new Date(new Date().getTime() + 5 * 60 * 1000)}
+        opacity={1}
+      />
     </>
   );
 }

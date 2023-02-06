@@ -60,7 +60,6 @@ export default function TaskCard({
   const column = moment(new Date(from)).diff(new Date(startDate), 'd');
 
   const isEditable = task?.admin === userInfo?._id;
-  console.log({ isEditable });
 
   function handleDragStop(event, { lastX, lastY }) {
     const newFrom = new Date(
