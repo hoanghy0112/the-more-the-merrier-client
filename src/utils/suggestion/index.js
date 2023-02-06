@@ -29,7 +29,7 @@ export default function filterTime({
   timeList = filterByTimeOfDay(timeList, timeOfDay);
   timeList = filterIsWeekend(timeList, isWeekend);
   timeList = filterTimeList(timeList);
-  // console.log({ timeList: [...timeList] });
+  console.log({ timeList: [...timeList] });
 
   return timeList;
 }

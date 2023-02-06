@@ -200,6 +200,7 @@ export function filterTimeList(list) {
 
   let maxBusy = 0;
   newTimeList = timeList.filter(({ busy }) => busy <= maxBusy);
+
   while (newTimeList.length <= 4) {
     maxBusy += 1;
     if (maxBusy > maxBusyOfTimeList) break;
@@ -207,5 +208,5 @@ export function filterTimeList(list) {
   }
   // timeList = timeList.slice(0, parseInt(timeList.length / 2, 10) + 1);
 
-  return timeList;
+  return newTimeList;
 }
