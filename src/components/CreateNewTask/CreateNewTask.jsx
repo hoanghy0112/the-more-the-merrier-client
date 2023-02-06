@@ -38,6 +38,7 @@ import InviteUserModal from '../InviteUserModal/InviteUserModal';
 import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
+import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 
 Modal.setAppElement('#modal');
 
@@ -49,6 +50,8 @@ export default function CreateNewTask({
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { data: adminInfo } = useUserProfileByIDQuery(data?.admin);
 
   const [title, setTitle] = useState(data?.title || '');
   const [startTime, setStartTime] = useState(
@@ -179,6 +182,12 @@ export default function CreateNewTask({
             <span onClick={() => navigate(`/home/group/${data.belongTo}`)}>
               {groupInformation?.name}
             </span>
+          </p>
+        ) : null}
+        {data?.admin ? (
+          <p>
+            <span>Created by </span>
+            <span>{`${adminInfo?.familyName} ${adminInfo?.givenName}`}</span>
           </p>
         ) : null}
       </span>

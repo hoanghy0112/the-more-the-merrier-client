@@ -56,10 +56,10 @@ export default function HomePage() {
               }}
             />
             <TabButton
-              isSelected={tab === 'setting'}
+              isSelected={tab === 'profile'}
               type="Setting"
               onClick={() => {
-                navigate('/home/setting');
+                navigate('/home/profile');
               }}
             />
           </div>

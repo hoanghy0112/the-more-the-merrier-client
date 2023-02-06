@@ -124,7 +124,7 @@ export default function TaskCard({
           zIndex: isHovering
             ? 200
             : (task.belongTo && !isGroup) || !isEditable
-            ? 250
+            ? 190
             : 160,
           '--color': primaryColor,
           color: task.priority === 1 ? 'white' : 'black',

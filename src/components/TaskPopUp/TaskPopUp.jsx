@@ -33,6 +33,7 @@ import {
   getResponseMessage,
   getResponseStateColor,
 } from '../../utils/response';
+import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 
 export default function TaskPopUp({ id, isOpen, onClose }) {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
 
   const { task } = useTaskByID(id);
   const userInfo = useSelector(selectUserProfile);
+  const { data: adminInfo } = useUserProfileByIDQuery(task?.admin);
 
   const {
     title,
@@ -126,6 +128,10 @@ export default function TaskPopUp({ id, isOpen, onClose }) {
               <span onClick={() => navigate(`/home/group/${belongTo}`)}>
                 {groupInfo?.name}
               </span>
+            </p>
+            <p>
+              <span>Created by </span>
+              <span>{`${adminInfo?.familyName} ${adminInfo?.givenName}`}</span>
             </p>
           </span>
           <div className={styles.timeContainer}>
