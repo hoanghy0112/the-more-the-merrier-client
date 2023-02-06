@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment/moment';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import TimeDetail from '../TimeDetail/TimeDetail';
 
 export default function TimeCard({
   className,
@@ -9,13 +10,17 @@ export default function TimeCard({
   startDate,
   from,
   to,
+  busy,
   opacity,
 }) {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   return (
     <>
       <div
         key={from + to}
         className={className}
+        onClick={() => setIsOpenModal(true)}
         style={{
           top: `${
             (((new Date(from).getHours() * 60 + new Date(from).getMinutes()) %
@@ -34,7 +39,9 @@ export default function TimeCard({
           opacity,
         }}
       />
-      <CenteredModal></CenteredModal>
+      <CenteredModal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <TimeDetail busy={busy} from={from} to={to} />
+      </CenteredModal>
     </>
   );
 }

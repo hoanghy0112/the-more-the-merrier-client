@@ -18,7 +18,9 @@ export default function TimeTag({ time, onChange, disabled = false }) {
   return (
     <div className={styles.container}>
       <p className={styles.time} onClick={() => setIsEdit(!isEdit)}>
-        {`${new Date(time).getHours()}h${new Date(time).getMinutes()} ${
+        {`${new Date(time).getHours()}h${String(
+          new Date(time).getMinutes(),
+        ).padStart(2, '0')} ${
           (new Date(time) || new Date().getHours()) - 7 < 12 ? 'AM' : 'PM'
         }`}
       </p>

@@ -188,13 +188,12 @@ export function splitDay(initialList) {
 }
 
 export function filterTimeList(list) {
-  let timeList = [...list];
+  const timeList = [...list];
 
   timeList.sort((a, b) => a.busy - b.busy);
 
-  const maxBusyOfTimeList = timeList
-    .map(({ busy }) => busy)
-    .sort((a, b) => b - a)[0];
+  const maxBusyOfTimeList =
+    timeList.map(({ busy }) => busy).sort((a, b) => b - a)[0] || 0;
 
   let newTimeList = [];
 
@@ -206,7 +205,12 @@ export function filterTimeList(list) {
     if (maxBusy > maxBusyOfTimeList) break;
     newTimeList = timeList.filter(({ busy }) => busy <= maxBusy);
   }
-  // timeList = timeList.slice(0, parseInt(timeList.length / 2, 10) + 1);
+
+  newTimeList = newTimeList.map(({ from, to, busy }) => ({
+    from: new Date(new Date(from).getTime() + 5 * 60 * 1000),
+    to: new Date(new Date(to).getTime() - 5 * 60 * 1000),
+    busy,
+  }));
 
   return newTimeList;
 }

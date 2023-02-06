@@ -56,7 +56,7 @@ export default function CalendarDisplayTask({
       ))}
 
       {suggestionVisible &&
-        suggestionTime.map(({ from, to }) => (
+        suggestionTime.map(({ from, to, busy }) => (
           <TimeCard
             key={from + to}
             className={styles.suggestionTask}
@@ -64,6 +64,7 @@ export default function CalendarDisplayTask({
             startDate={startDate}
             from={from}
             to={to}
+            busy={busy}
             opacity={1 / ((groupInfo?.users?.length || 0) + 1) + 0.2}
           />
         ))}

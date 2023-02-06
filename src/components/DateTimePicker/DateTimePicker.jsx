@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-use-before-define */
@@ -21,12 +22,12 @@ import {
 import { getTimeOfDate } from '../../utils/calendar.utils';
 import { isValidDate } from '../../utils/date';
 
-export default function DateTimePicker({ disabled = false }) {
+export default function DateTimePicker({ originalDate, disabled = false }) {
   const dispatch = useDispatch();
   const startDay = useSelector(selectPersonalDate);
 
   const [isOpenDateTimePicker, setIsOpenDateTimePicker] = useState(false);
-  const [selected, setSelected] = useState(startDay);
+  const [selected, setSelected] = useState(originalDate || startDay);
 
   useEffect(() => {
     if (!selected) hanldeChangeStartDay(new Date());
