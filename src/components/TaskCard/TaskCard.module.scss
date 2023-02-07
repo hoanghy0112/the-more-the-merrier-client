@@ -6,6 +6,10 @@
 
   transition: 0.5s;
 
+  &.hovering {
+    transition: 0.1s !important;
+  }
+
   .task {
     width: 100%;
     height: 100%;

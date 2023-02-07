@@ -56,6 +56,7 @@ export default function TimeDetail({ busy, from, to }) {
             setIsOpenModal(false);
           }}
           isGroup
+          closeModal={() => setIsOpenModal(false)}
         />
       </CenteredModal>
     </div>

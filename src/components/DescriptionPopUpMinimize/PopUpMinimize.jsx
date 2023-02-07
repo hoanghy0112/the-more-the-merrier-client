@@ -120,6 +120,7 @@ export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
           }}
           isGroup={isGroup}
           data={data}
+          closeModal={() => setIsOpen(false)}
         />
       </CenteredModal>
     </div>

@@ -150,6 +150,12 @@ export default function CalendarCreateTask({
             setEnd([...begin]);
             setHeight(0);
           }}
+          closeModal={() => {
+            setIsCreateNewTask(false);
+            setIsMouseDown(false);
+            setEnd([...begin]);
+            setHeight(0);
+          }}
         />
       </CenteredModal>
     </div>

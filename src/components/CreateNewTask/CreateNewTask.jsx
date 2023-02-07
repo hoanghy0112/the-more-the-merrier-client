@@ -47,6 +47,7 @@ export default function CreateNewTask({
   onChange,
   onCreateNewTask,
   isGroup,
+  closeModal,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -118,8 +119,12 @@ export default function CreateNewTask({
   }, [data.time.from, data.time.to]);
 
   function handleDelete() {
-    if (isGroup) dispatch(deleteTaskOfGroup(data));
-    else dispatch(deleteTask(data));
+    if (!data?._id) {
+      //
+    } else if (isGroup) {
+      dispatch(deleteTaskOfGroup({ data }));
+    } else dispatch(deleteTask(data));
+    closeModal?.();
   }
 
   function handleAddTag(tagID) {

@@ -117,7 +117,7 @@ export default function TaskCard({
       disabled={(task.belongTo && !isGroup) || !isEditable}
     >
       <div
-        className={styles.drag}
+        className={[styles.drag, isDrag ? styles.hovering : null].join(' ')}
         style={{
           width,
           height,
@@ -180,6 +180,7 @@ export default function TaskCard({
               }}
               isGroup={isGroup}
               data={task}
+              closeModal={() => setIsOpen(false)}
             />
           </CenteredModal>
         ) : (
