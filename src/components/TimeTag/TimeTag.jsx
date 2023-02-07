@@ -8,7 +8,6 @@ import styles from './TimeTag.module.scss';
 import useComponentVisible from '../../hooks/useComponentVisible';
 
 export default function TimeTag({ time, onChange, disabled = false }) {
-  // const [value, setValue] = useState(new Date(time));
   const [hour, setHour] = useState(new Date(time).getHours());
   const [minute, setMinute] = useState(new Date(time).getMinutes());
   const [period, setPeriod] = useState(
@@ -50,7 +49,7 @@ export default function TimeTag({ time, onChange, disabled = false }) {
     const newDate = new Date(time);
     newDate.setHours(parseInt(hour, 10));
     newDate.setMinutes(parseInt(minute, 10));
-    // onChange(newDate);
+    onChange(newDate);
   }, [hour, minute, period]);
 
   useEffect(() => {
