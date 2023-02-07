@@ -49,7 +49,7 @@ export default function TimeTag({ time, onChange, disabled = false }) {
     const newDate = new Date(time);
     newDate.setHours(parseInt(hour, 10));
     newDate.setMinutes(parseInt(minute, 10));
-    onChange(newDate);
+    onChange?.(newDate);
   }, [hour, minute, period]);
 
   useEffect(() => {
