@@ -28,7 +28,6 @@ export default function useGroupBusyTime(groupID, from, to) {
     if (groupID && from && to) socket.emit('get-busy', groupID, from, to);
 
     socket.on('busy', (data) => {
-      console.log('update list');
       dispatch(updateListBusy(data));
     });
 
