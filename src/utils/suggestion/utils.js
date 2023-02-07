@@ -20,7 +20,7 @@ export function getInitialTimeList(
   const newStartDate = new Date(
     startDate.getFullYear(),
     startDate.getMonth(),
-    startDate.getDate(),
+    startDate.getDate() - startDate.getDay() + 1,
     0,
     0,
     0,
@@ -95,26 +95,26 @@ export function splitBusyTime(initial, busyTime, timeOfDay) {
   busyTimeList.forEach(({ from, to }) => timeStamps.push(from, to));
 
   if (timeOfDay.get(TIME_OF_DAY_LABELS.MORNING)) {
-    const startHour = 6;
-    const endHour = 11;
+    const startHour = 7;
+    const endHour = 10;
     addToTimeStamps(timeStamps, startDate, endDate, startHour, endHour);
   }
 
   if (timeOfDay.get(TIME_OF_DAY_LABELS.NOON)) {
-    const startHour = 11;
-    const endHour = 13;
+    const startHour = 10;
+    const endHour = 14;
     addToTimeStamps(timeStamps, startDate, endDate, startHour, endHour);
   }
 
   if (timeOfDay.get(TIME_OF_DAY_LABELS.AFTERNOON)) {
-    const startHour = 13;
-    const endHour = 18;
+    const startHour = 14;
+    const endHour = 19;
     addToTimeStamps(timeStamps, startDate, endDate, startHour, endHour);
   }
 
   if (timeOfDay.get(TIME_OF_DAY_LABELS.EVENING)) {
-    const startHour = 18;
-    const endHour = 24;
+    const startHour = 19;
+    const endHour = 23;
     addToTimeStamps(timeStamps, startDate, endDate, startHour, endHour);
   }
 

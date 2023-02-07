@@ -2,6 +2,8 @@
   position: relative;
   width: 100%;
   height: 100%;
+
+  transition: 0.5s;
 }
 
 .groupTask {
@@ -9,6 +11,8 @@
   background-color: #f9b122;
   margin: 0 3px;
   border-radius: 10px;
+
+  transition: 0.5s;
 }
 
 .suggestionTask {

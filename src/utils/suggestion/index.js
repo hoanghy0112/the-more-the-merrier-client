@@ -17,7 +17,7 @@ export default function filterTime({
   startDate, // Date
   busyTime,
   howLong = TIME_PERIOD_LABELS.LESS_THAN_1,
-  timeOfDay = [TIME_OF_DAY_LABELS.ALL_DAY],
+  timeOfDay = new Map([[TIME_OF_DAY_LABELS.ALL_DAY, true]]),
   isWeekend = IS_WEEKEND_LABELS.FULL_WEEK,
   endDate = getEndDate(startDate),
 }) {
@@ -25,11 +25,13 @@ export default function filterTime({
 
   filteredTime = splitBusyTime(filteredTime, busyTime, timeOfDay);
 
-  let timeList = filterByPeriod(filteredTime, howLong);
+  let timeList = [];
+  if (!timeOfDay.has(TIME_OF_DAY_LABELS.ALL_DAY)) {
+    timeList = filterByPeriod(filteredTime, howLong);
+  }
   timeList = filterByTimeOfDay(timeList, timeOfDay);
   timeList = filterIsWeekend(timeList, isWeekend);
   timeList = filterTimeList(timeList);
-  // console.log({ timeList: [...timeList] });
 
   return timeList;
 }

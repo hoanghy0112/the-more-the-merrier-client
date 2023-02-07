@@ -17,7 +17,7 @@ export default function filterByPeriod(timeList, howLong) {
   }
   if (howLong === TIME_PERIOD_LABELS.HALF_DAY) {
     return filteredTime.filter(
-      ({ from, to }) => moment(to).diff(new Date(from), 'hour', true) > 4,
+      ({ from, to }) => moment(to).diff(new Date(from), 'hour', true) >= 3,
     );
   }
   if (howLong === TIME_PERIOD_LABELS.A_DAY) {

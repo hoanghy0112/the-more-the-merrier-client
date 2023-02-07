@@ -11,7 +11,7 @@ export default function filterIsWeekend(timeList, isWeekend) {
 
   if (isWeekend === IS_WEEKEND_LABELS.NOT_WEEKEND) {
     return timeList.filter(
-      ({ from }) => new Date(from).getDay() > 0 || new Date(from).getDay() < 6,
+      ({ from }) => new Date(from).getDay() > 0 && new Date(from).getDay() < 6,
     );
   }
 

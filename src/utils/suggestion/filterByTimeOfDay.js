@@ -21,44 +21,44 @@ export default function filterByTimeOfDay(timeList, timeOfDay) {
     }
 
     if (timeOfDay.get(TIME_OF_DAY_LABELS.MORNING)) {
-      startHour = 6;
-      endHour = 11;
+      startHour = 7;
+      endHour = 10;
       if (
-        new Date(from).getHours() < endHour &&
-        new Date(to).getHours() > startHour
+        new Date(from).getHours() <= startHour &&
+        new Date(to).getHours() >= endHour
       ) {
         return true;
       }
     }
 
     if (timeOfDay.get(TIME_OF_DAY_LABELS.NOON)) {
-      startHour = 11;
-      endHour = 13;
+      startHour = 10;
+      endHour = 14;
       if (
-        new Date(from).getHours() < endHour &&
-        new Date(to).getHours() > startHour
+        new Date(from).getHours() >= startHour &&
+        new Date(to).getHours() <= endHour
       ) {
         return true;
       }
     }
 
     if (timeOfDay.get(TIME_OF_DAY_LABELS.AFTERNOON)) {
-      startHour = 13;
-      endHour = 18;
+      startHour = 14;
+      endHour = 19;
       if (
-        new Date(from).getHours() < endHour &&
-        new Date(to).getHours() > startHour
+        new Date(from).getHours() >= startHour &&
+        new Date(to).getHours() <= endHour
       ) {
         return true;
       }
     }
 
     if (timeOfDay.get(TIME_OF_DAY_LABELS.EVENING)) {
-      startHour = 18;
-      endHour = 24;
+      startHour = 19;
+      endHour = 23;
       if (
-        new Date(from).getHours() < endHour &&
-        new Date(to).getHours() > startHour
+        new Date(from).getHours() >= startHour &&
+        new Date(to).getHours() <= endHour
       ) {
         return true;
       }
@@ -68,8 +68,8 @@ export default function filterByTimeOfDay(timeList, timeOfDay) {
       startHour = 0;
       endHour = 5;
       if (
-        new Date(from).getHours() < endHour &&
-        new Date(to).getHours() > startHour
+        new Date(from).getHours() >= startHour &&
+        new Date(to).getHours() <= endHour
       ) {
         return true;
       }

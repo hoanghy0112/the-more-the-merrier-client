@@ -117,7 +117,15 @@ export const groupsManagementSlice = createSlice({
       ];
     },
     updateListBusy: (state, action) => {
-      state.groupBusyTime = action.payload;
+      // state.groupBusyTime = action.payload;
+      const groupBusyTimes = action.payload;
+      const groupBusyTimeIDs = groupBusyTimes.map(({ _id }) => _id);
+      state.groupBusyTime = [
+        ...state.groupBusyTime.filter(
+          (task) => !groupBusyTimeIDs.includes(task._id),
+        ),
+        ...groupBusyTimes,
+      ];
     },
     updateModifiedBusy: (state, action) => {
       const busyTime = action.payload;
@@ -136,7 +144,13 @@ export const groupsManagementSlice = createSlice({
       ];
     },
     updateListGroupTask: (state, action) => {
-      state.groupTasks = action.payload;
+      // state.groupTasks = action.payload;
+      const groupTasks = action.payload;
+      const groupTaskIDs = groupTasks.map(({ _id }) => _id);
+      state.groupTasks = [
+        ...state.groupTasks.filter((task) => !groupTaskIDs.includes(task._id)),
+        ...groupTasks,
+      ];
     },
     updateModifiedGroupTask: (state, action) => {
       const groupTask = action.payload;

@@ -7,8 +7,11 @@ import {
   updateListGroupTask,
   updateModifiedGroupTask,
 } from '../groupSlice';
+import { useEffect, useState } from 'react';
 
 export default function useGroupTask(groupID, from, to) {
+  const [socket, setSocket] = useState<Socket>();
+
   const dispatch = useDispatch();
 
   const { isLoading } = useRealTimeData(
@@ -16,8 +19,14 @@ export default function useGroupTask(groupID, from, to) {
     `group-task-real-time-${groupID}`,
   );
 
+  useEffect(() => {
+    if (groupID && from && to && socket)
+      socket.emit('get-group-tasks', groupID, from, to);
+  }, [groupID, new Date(from).getTime(), new Date(to).getTime()]);
+
   function onConnect(socket: Socket) {
-    socket.emit('get-group-tasks', groupID, from, to);
+    if (groupID && from && to)
+      socket.emit('get-group-tasks', groupID, from, to);
 
     socket.on('group-tasks', (data) => {
       dispatch(updateListGroupTask(data));
@@ -34,6 +43,8 @@ export default function useGroupTask(groupID, from, to) {
     socket.on('error', (error) => {
       console.log({ groupTasksError: error });
     });
+
+    setSocket(socket);
   }
 
   return {
