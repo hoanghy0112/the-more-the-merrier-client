@@ -13,8 +13,8 @@ import NotificationModal from '../../../../components/NotificationModal/Notifica
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserList from '../../../../components/UserList/UserList';
 import { DELETE_GROUP_BY_ID } from '../../../../constants/apiURL';
-import useGroupInformation from '../../hooks/useGroupInformation';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
+import useGroupInformation from '../../hooks/useGroupInformation';
 import styles from './GroupPreview.module.scss';
 
 export default function GroupPreview({ groupID: id }) {
@@ -62,6 +62,11 @@ export default function GroupPreview({ groupID: id }) {
       {isLoading ? (
         ''
       ) : (
+        // <SwitchTransition>
+        //   <CSSTransition
+        //     key={state ? 'Goodbye, world!' : 'Hello, world!'}
+        //     classNames="fade"
+        //   >
         <div key={id} className={styles.groupContainer}>
           <div className={styles.introduction}>
             <p className={styles.name}>{groupInfo.name}</p>
@@ -78,7 +83,6 @@ export default function GroupPreview({ groupID: id }) {
             <PrimaryButton
               title="View detail"
               onClick={() => {
-                // dispatch(setCurrentGroup(_id));
                 navigate(groupInfo._id);
               }}
             />
@@ -118,6 +122,8 @@ export default function GroupPreview({ groupID: id }) {
             }
           />
         </div>
+        //   </CSSTransition>
+        // </SwitchTransition>
       )}
     </>
   );

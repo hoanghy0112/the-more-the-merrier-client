@@ -19,6 +19,7 @@
   border-radius: 10px;
 
   transition: 0.3s;
+  animation: open 0.4s linear 0s 1 forwards;
 
   font-size: 16px;
   font-weight: 500;
@@ -62,6 +63,10 @@
     transition: 0.3s;
     height: 0;
     overflow: hidden;
+
+    img {
+      margin-top: -5px;
+    }
   }
 
   &:hover {
@@ -72,6 +77,15 @@
     .detail {
       padding: 5px;
       height: 50px;
+    }
+  }
+
+  @keyframes open {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 }
