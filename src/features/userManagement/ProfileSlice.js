@@ -4,7 +4,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import signInWithFacebookAPI from '../../firebase/signInWithFacebookAPI';
 import signInWithGithubAPI from '../../firebase/signInWithGithubAPI';
 import signInWithGoogleAPI from '../../firebase/signInWithGoogleAPI';
-import { getUserProfileAPI } from './profileAPI';
+import { getUserProfileAPI, updateUserProfileAPI } from './profileAPI';
+import signInAnonymouslyAPI from '../../firebase/signInAnonymousAPI';
 
 const initialState = {
   authenticationStatus: 'loading',
@@ -52,10 +53,28 @@ export const signInWithGithub = createAsyncThunk(
   },
 );
 
+export const signInAnonymously = createAsyncThunk(
+  'userManagement/signInAnonymously',
+  async () => {
+    const user = await signInAnonymouslyAPI();
+    const { accessToken } = user;
+
+    return { accessToken };
+  },
+);
+
 export const getUserProfile = createAsyncThunk(
   'userManagement/getUserProfile',
   async () => {
     const response = await getUserProfileAPI();
+    return response;
+  },
+);
+
+export const updateUserProfile = createAsyncThunk(
+  'userManagement/updateUserProfile',
+  async (req) => {
+    const response = await updateUserProfileAPI(req);
     return response;
   },
 );
@@ -87,6 +106,9 @@ export const userManagementSlice = createSlice({
         state.status = 'fail';
         state.errorMessage = action.payload;
       })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state = Object.assign(state, action.payload);
+      })
       .addCase(signInWithGoogle.pending, (state) => {
         state.authenticationStatus = 'loading';
       })
@@ -94,6 +116,9 @@ export const userManagementSlice = createSlice({
         state.authenticationStatus = 'loading';
       })
       .addCase(signInWithGithub.pending, (state) => {
+        state.authenticationStatus = 'loading';
+      })
+      .addCase(signInAnonymously.pending, (state) => {
         state.authenticationStatus = 'loading';
       });
   },

@@ -1,14 +1,12 @@
-import { getAuth, GithubAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { getAuth, signInAnonymously } from 'firebase/auth';
 
 import app from './configuration';
 
-const provider = new GithubAuthProvider();
-
 export const auth = getAuth(app);
 
-export default async function signInWithGithubAPI() {
+export default async function signInAnonymouslyAPI() {
   return new Promise((resolve) => {
-    signInWithRedirect(auth, provider).then((result) => {
+    signInAnonymously(auth).then((result) => {
       console.log({ result });
 
       const { user } = result;

@@ -24,10 +24,24 @@ export async function getUserProfileAPI() {
   }
 }
 
-export function updateUserProfileAPI() {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(), 500);
-  });
+export async function updateUserProfileAPI(newProfile) {
+  try {
+    const auth = getAuth();
+    const accessToken = await auth.currentUser.getIdToken();
+    const response = await axios.put(
+      GET_USER_PROFILE_API_LINK,
+      { ...newProfile },
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    return null;
+  }
 }
 
 export const getUserProfileByID = createApi({

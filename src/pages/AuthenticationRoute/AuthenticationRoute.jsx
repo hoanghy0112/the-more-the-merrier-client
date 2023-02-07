@@ -10,12 +10,14 @@ import {
   getUserProfile,
   selectAuthenticationStatus,
   selectFetchUserProfileStatus,
+  selectUserProfile,
   signInLoading,
   signInSuccessful,
 } from '../../features/userManagement/ProfileSlice';
 import LoadingPage from '../LoadingPage/LoadingPage';
 import styles from './AuthenticationRoute.module.scss';
 import { setSuggestionVisible } from '../../features/calendar/calendarSlice';
+import AnonymousPage from '../AnonymousPage/AnonymousPage';
 
 export default function AuthenticationRoute() {
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ export default function AuthenticationRoute() {
 
   const status = useSelector(selectFetchUserProfileStatus);
   const authenticationStatus = useSelector(selectAuthenticationStatus);
+  const userProfile = useSelector(selectUserProfile);
 
   function onAuthChange(user) {
     if (user) {
@@ -62,7 +65,7 @@ export default function AuthenticationRoute() {
     <div className={styles.container}>
       {status === 'loading' && <LoadingPage />}
       {authenticationStatus === 'loading' && <LoadingPage />}
-      <Outlet />
+      {userProfile?.familyName ? <Outlet /> : <AnonymousPage />}
     </div>
   );
 }

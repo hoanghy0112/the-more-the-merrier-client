@@ -11,6 +11,7 @@ import LoginButton from '../../components/LoginButton/LoginButton';
 import {
   logout,
   selectAuthenticationStatus,
+  signInAnonymously,
   signInLoading,
   signInSuccessful,
   signInWithFacebook,
@@ -20,11 +21,11 @@ import {
 
 import { ICON_FORWARD } from '../../assets/icons';
 
+import IMAGE_BOTTOM from '../../assets/images/bottom.png';
+import CIRCLE from '../../assets/images/circle.svg';
+import FULL_LOGO from '../../assets/images/full-logo.svg';
 import IMAGE_TOP_LEFT from '../../assets/images/top-left.png';
 import IMAGE_TOP_RIGHT from '../../assets/images/top-right.png';
-import IMAGE_BOTTOM from '../../assets/images/bottom.png';
-import FULL_LOGO from '../../assets/images/full-logo.svg';
-import CIRCLE from '../../assets/images/circle.svg';
 import LoadingPage from '../LoadingPage/LoadingPage';
 
 export default function LoginPage() {
@@ -44,6 +45,10 @@ export default function LoginPage() {
 
   function handleSignInWithGithub() {
     dispatch(signInWithGithub());
+  }
+
+  function handleSignInAnonymously() {
+    dispatch(signInAnonymously());
   }
 
   function onAuthChange(user) {
@@ -105,7 +110,10 @@ export default function LoginPage() {
               providerName="Github"
             />
           </div>
-          <div className={styles.noSignIn}>
+          <div
+            className={styles.noSignIn}
+            onClick={() => handleSignInAnonymously()}
+          >
             <p>Continue without sign in</p>
             <img src={ICON_FORWARD} alt="arrow forward" />
           </div>
