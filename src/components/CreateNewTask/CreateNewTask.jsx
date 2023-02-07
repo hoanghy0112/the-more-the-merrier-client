@@ -364,14 +364,16 @@ export default function CreateNewTask({
             </div>
           )}
         </div> */}
-        <div
-          onClick={handleDelete}
-          className={styles.trashContainer}
-          style={{ cursor: 'pointer' }}
-        >
-          <img src={ICON_TRASH} alt="trash" />
-          <p>Delete task</p>
-        </div>
+        {data?._id && (
+          <div
+            onClick={handleDelete}
+            className={styles.trashContainer}
+            style={{ cursor: 'pointer' }}
+          >
+            <img src={ICON_TRASH} alt="trash" />
+            <p>Delete task</p>
+          </div>
+        )}
       </div>
       {isGroup || !data.belongTo ? (
         <div className={styles.createButton} onClick={handleCreateNewTask}>
