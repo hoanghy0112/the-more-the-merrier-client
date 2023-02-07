@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React from 'react';
 
@@ -8,7 +9,12 @@ import styles from './CenteredModal.module.scss';
 
 Modal.setAppElement('#modal');
 
-export default function CenteredModal({ isOpen, onClose, children }) {
+export default function CenteredModal({
+  isOpen,
+  onClose,
+  children,
+  isTransform = true,
+}) {
   return (
     <Modal
       isOpen={isOpen}
@@ -16,9 +22,9 @@ export default function CenteredModal({ isOpen, onClose, children }) {
       className={styles.modal}
       style={{
         content: {
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          top: isTransform ? '50%' : 0,
+          left: isTransform ? '50%' : 0,
+          transform: isTransform ? 'translate(-50%, -50%)' : 'translate(0, 0)',
           zIndex: 2000,
           backgroundColor: 'transparent',
           width: '0px',

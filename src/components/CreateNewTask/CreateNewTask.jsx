@@ -24,7 +24,6 @@ import {
   ICON_CHART,
   ICON_FULL_ARROW_RIGHT,
   ICON_LOCATE,
-  ICON_MAIL,
   ICON_TRASH,
 } from '../../assets/icons';
 
@@ -32,13 +31,13 @@ import { useGroupInformationByIDQuery } from '../../features/groupsManagement/gr
 import { deleteTaskOfGroup } from '../../features/groupsManagement/groupSlice';
 import { selectTagsWithIDs } from '../../features/tagsManagement/TagsSlice';
 import { deleteTask } from '../../features/tasksManagement/TasksSlice';
+import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 import DescriptionLine from '../DescriptionLine/DescriptionLine';
 import InviteUserModal from '../InviteUserModal/InviteUserModal';
 import ImportedTag from '../Tag/ImportedTag/ImportedTag';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './CreateNewTask.module.scss';
-import { useUserProfileByIDQuery } from '../../features/userManagement/profileAPI';
 
 Modal.setAppElement('#modal');
 
@@ -345,7 +344,7 @@ export default function CreateNewTask({
             )}
           </div>
         </div>
-        <div className={styles.buttonContainer}>
+        {/* <div className={styles.buttonContainer}>
           <div
             className={styles.inviteParticipant}
             style={{ cursor: 'pointer' }}
@@ -364,6 +363,14 @@ export default function CreateNewTask({
               <img src={ICON_TRASH} alt="trash" />
             </div>
           )}
+        </div> */}
+        <div
+          onClick={handleDelete}
+          className={styles.trashContainer}
+          style={{ cursor: 'pointer' }}
+        >
+          <img src={ICON_TRASH} alt="trash" />
+          <p>Delete task</p>
         </div>
       </div>
       {isGroup || !data.belongTo ? (

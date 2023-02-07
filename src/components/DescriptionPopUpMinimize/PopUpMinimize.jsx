@@ -1,26 +1,28 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 import Modal from 'react-modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import moment from 'moment/moment';
 
 import {
   ICON_CLOCK,
   ICON_LOCATE,
-  ICON_MAIL,
   ICON_MORE_TASK,
   ICON_TRASH,
 } from '../../assets/icons';
+import { deleteTaskOfGroup } from '../../features/groupsManagement/groupSlice';
 import { deleteTask } from '../../features/tasksManagement/TasksSlice';
+import { selectUserProfile } from '../../features/userManagement/ProfileSlice';
+import CenteredModal from '../CenteredModal/CenteredModal';
 import CreateNewTask from '../CreateNewTask/CreateNewTask';
 import TimeTag from '../TimeTag/TimeTag';
 import styles from './PopUpMinimize.module.scss';
-import CenteredModal from '../CenteredModal/CenteredModal';
-import { deleteTaskOfGroup } from '../../features/groupsManagement/groupSlice';
 
 Modal.setAppElement('#modal');
 
@@ -28,6 +30,7 @@ export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
+  const userInfo = useSelector(selectUserProfile);
 
   function getRemainString() {
     const fromDate = new Date(data.time.from);
@@ -89,28 +92,30 @@ export default function DescriptionPopUpMinimize({ data, onChange, isGroup }) {
               </p>
             </div>
           ))}
-          <div
-            className={styles.moreTaskContainer}
-            style={{ cursor: 'pointer' }}
-            onClick={() => setIsOpen(true)}
-          >
-            <img src={ICON_MORE_TASK} alt="more task" />
-            <p className={styles.text}>Detailed information</p>
-          </div>
         </div>
       </div>
       <div className={styles.buttonContainer}>
-        <div className={styles.inviteParticipant} style={{ cursor: 'pointer' }}>
+        {/* <div className={styles.inviteParticipant} style={{ cursor: 'pointer' }}>
           <img src={ICON_MAIL} alt="invite" />
           <p className={styles.textInvite}>Invite participants</p>
-        </div>
+        </div> */}
         <div
-          onClick={handleDelete}
-          className={styles.trashContainer}
+          className={styles.moreTaskContainer}
           style={{ cursor: 'pointer' }}
+          onClick={() => setIsOpen(true)}
         >
-          <img src={ICON_TRASH} alt="trash" />
+          <img src={ICON_MORE_TASK} alt="more task" />
+          <p className={styles.text}>Detailed information</p>
         </div>
+        {userInfo?._id === data?.admin ? (
+          <div
+            onClick={handleDelete}
+            className={styles.trashContainer}
+            style={{ cursor: 'pointer' }}
+          >
+            <img src={ICON_TRASH} alt="trash" />
+          </div>
+        ) : null}
       </div>
       <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <CreateNewTask

@@ -5,6 +5,10 @@ export default function useComponentVisible(initialIsVisible) {
     useState(initialIsVisible);
   const ref = useRef(null);
 
+  function refCallback(node) {
+    ref.current = node;
+  }
+
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsComponentVisible(false);
@@ -18,5 +22,5 @@ export default function useComponentVisible(initialIsVisible) {
     };
   }, []);
 
-  return { ref, isComponentVisible, setIsComponentVisible };
+  return { ref, refCallback, isComponentVisible, setIsComponentVisible };
 }

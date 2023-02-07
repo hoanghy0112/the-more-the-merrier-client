@@ -17,22 +17,22 @@ export function getInitialTimeList(
   startDate = new Date(),
   endDate = getEndDate(startDate),
 ) {
-  const newStartDate = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth(),
-    startDate.getDate(),
-    0,
-    0,
-    0,
-  );
-  const newEndDate = new Date(
-    endDate.getFullYear(),
-    endDate.getMonth(),
-    endDate.getDate(),
-    23,
-    59,
-    59,
-  );
+  // const newStartDate = new Date(
+  //   startDate.getFullYear(),
+  //   startDate.getMonth(),
+  //   startDate.getDate(),
+  //   0,
+  //   0,
+  //   0,
+  // );
+  // const newEndDate = new Date(
+  //   endDate.getFullYear(),
+  //   endDate.getMonth(),
+  //   endDate.getDate(),
+  //   23,
+  //   59,
+  //   59,
+  // );
 
   // return {
   //   from: newStartDate,
