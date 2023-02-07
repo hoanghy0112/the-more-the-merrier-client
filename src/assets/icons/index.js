@@ -7,6 +7,7 @@ import {
 } from 'react-icons/md';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { IoMdAdd } from 'react-icons/io';
+import { ImProfile } from 'react-icons/im';
 import {
   IoChevronUpOutline,
   IoStatsChartOutline,
@@ -71,3 +72,4 @@ export const ICON_CHECK = BsCheck;
 export const ICON_CLOSE = IoCloseOutline;
 export const ICON_TICK = IoCheckmarkOutline;
 export const ICON_WARNING = AiOutlineClockCircle;
+export const ICON_PROFILE = ImProfile;

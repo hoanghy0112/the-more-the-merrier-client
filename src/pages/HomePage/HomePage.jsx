@@ -57,7 +57,7 @@ export default function HomePage() {
             />
             <TabButton
               isSelected={tab === 'profile'}
-              type="Setting"
+              type="Profile"
               onClick={() => {
                 navigate('/home/profile');
               }}

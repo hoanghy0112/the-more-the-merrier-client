@@ -11,6 +11,10 @@
   gap: 20px;
   border-radius: 10px;
   background-color: #fff;
+
+  max-height: 80vh;
+  overflow: auto;
+
   transform: translate(-50%, -50%);
 
   & > div {

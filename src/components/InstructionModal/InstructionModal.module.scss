@@ -3,13 +3,15 @@
   outline: none;
   background-color: #fff;
   transition: 0.3s;
-  border: 1px solid rgb(74, 74, 74);
-  color: rgb(74, 74, 74);
+  border: 1px solid rgb(166, 166, 166);
+  color: rgb(153, 153, 153);
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
 
   &:hover {
+    border-color: black;
+    color: black;
     background-color: rgb(243, 243, 243);
   }
 }

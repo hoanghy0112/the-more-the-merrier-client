@@ -42,6 +42,7 @@ export default function CenteredModal({ isOpen, onClose, children }) {
         onMouseUp={(e) => e.stopPropagation()}
         onMouseOver={(e) => e.stopPropagation()}
         onClick={(e) => e.stopPropagation()}
+        className={styles.innerModal}
       >
         {children}
       </div>

@@ -171,191 +171,200 @@ export default function CreateNewTask({
       }}
       className={styles.container}
     >
-      <span className={styles.taskTitle}>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          tabIndex="0"
-          className={styles.input}
-          placeholder="Task’s title..."
-          spellCheck="false"
-          disabled={isDisable}
-        />
-        {data.belongTo && !isGroup ? (
-          <p>
-            <span>Task of </span>
-            <span onClick={() => navigate(`/home/group/${data.belongTo}`)}>
-              {groupInformation?.name}
-            </span>
-          </p>
-        ) : null}
-        {data?.admin ? (
-          <p>
-            <span>Created by </span>
-            <span>{`${adminInfo?.familyName} ${adminInfo?.givenName}`}</span>
-          </p>
-        ) : null}
-      </span>
-      <div className={styles.timeContainer}>
-        <div className={styles.todoTime}>
-          <TimeTag
-            time={startTime}
-            onChange={setStartTime}
-            disabled={isDisable}
-          />
-          -
-          <TimeTag time={endTime} onChange={setEndTime} disabled={isDisable} />
-        </div>
-        <span className={styles.timePicker}>
-          <DateTimePicker
-            startDay={startTime}
-            hanldeChangeStartDay={() => {}}
-            disabled={isDisable}
-          />
-        </span>
-      </div>
-      <div className={styles.sentencesContainer}>
-        <div className={styles.desSentence}>
-          <img src={ICON_LOCATE} alt="time" />
+      <div className={styles.inner}>
+        <span className={styles.taskTitle}>
           <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            tabIndex="0"
             className={styles.input}
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-            style={{ overflowWrap: '-moz-initial' }}
-            placeholder={
-              isDisable ? 'No data' : 'Enter your task’s location here...'
-            }
+            placeholder="Task’s title..."
             spellCheck="false"
             disabled={isDisable}
           />
-        </div>
-        <div className={styles.desSentence_2}>
-          <img src={ICON_CHART} alt="priority" />
-          <div className={styles.priorityDropDown}>
-            <div
-              className={styles.priorityHeader}
-              style={{
-                '--background-color': priorityBackgroundColor,
-                '--color': priorityColor,
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (!isDisable) setIsChoosePriority(true);
-              }}
-            >
-              <p>{priorityText}</p>
-            </div>
-            {isChoosePriority && (
-              <div className={styles.choosingBox}>
-                {Array(4)
-                  .fill('')
-                  .map((_, index) => (
-                    <div
-                      className={styles.tagItem}
-                      style={{
-                        '--background-color': getTagStyle(index + 1)[1],
-                        '--color': getTagStyle(index + 1)[2],
-                      }}
-                      onClick={() => setPriority(index + 1)}
-                    >
-                      <p>{getTagStyle(index + 1)[0]}</p>
-                    </div>
-                  ))}
-              </div>
-            )}
+          {data.belongTo && !isGroup ? (
+            <p>
+              <span>Task of </span>
+              <span onClick={() => navigate(`/home/group/${data.belongTo}`)}>
+                {groupInformation?.name}
+              </span>
+            </p>
+          ) : null}
+          {data?.admin ? (
+            <p>
+              <span>Created by </span>
+              <span>{`${adminInfo?.familyName} ${adminInfo?.givenName}`}</span>
+            </p>
+          ) : null}
+        </span>
+        <div className={styles.timeContainer}>
+          <div className={styles.todoTime}>
+            <TimeTag
+              time={startTime}
+              onChange={setStartTime}
+              disabled={isDisable}
+            />
+            -
+            <TimeTag
+              time={endTime}
+              onChange={setEndTime}
+              disabled={isDisable}
+            />
           </div>
+          <span className={styles.timePicker}>
+            <DateTimePicker
+              startDay={startTime}
+              hanldeChangeStartDay={() => {}}
+              disabled={isDisable}
+            />
+          </span>
         </div>
-        {isDisable || isGroup || (
+        <div className={styles.sentencesContainer}>
+          <div className={styles.desSentence}>
+            <img src={ICON_LOCATE} alt="time" />
+            <input
+              className={styles.input}
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+              style={{ overflowWrap: '-moz-initial' }}
+              placeholder={
+                isDisable ? 'No data' : 'Enter your task’s location here...'
+              }
+              spellCheck="false"
+              disabled={isDisable}
+            />
+          </div>
           <div className={styles.desSentence_2}>
-            <img src={ICON_BOOKMARKS} alt="time" />
-            <div className={styles.list}>
-              {populatedTags.map((tag) => (
-                <ImportedTag
-                  key={tag._id}
-                  name={tag.title}
-                  color={tag.color}
-                  onClose={() => {
-                    setTags((prev) =>
-                      prev.filter((currentTag) => currentTag !== tag._id),
-                    );
-                  }}
-                />
-              ))}
+            <img src={ICON_CHART} alt="priority" />
+            <div className={styles.priorityDropDown}>
               <div
+                className={styles.priorityHeader}
+                style={{
+                  '--background-color': priorityBackgroundColor,
+                  '--color': priorityColor,
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (!isDisable) setIsAddTag(true);
+                  if (!isDisable) setIsChoosePriority(true);
                 }}
-                className={styles.buttonAdd}
-                style={{ cursor: 'pointer' }}
               >
-                <img src={ICON_ADD} alt="button" />
+                <p>{priorityText}</p>
               </div>
-            </div>
-            {isAddTag && (
-              <TagChoosing setTag={(tagID) => handleAddTag(tagID)} />
-            )}
-          </div>
-        )}
-        {isGroup && (
-          <InviteUserModal
-            taskID={data?._id}
-            time={{ from: startTime, to: endTime }}
-            responses={data?.responses}
-            participants={participants}
-            setParticipants={setParticipants}
-          />
-        )}
-      </div>
-      <div className={styles.descriptionContainer}>
-        <p className={styles.text}>Description</p>
-        <div className={styles.detailDescription}>
-          {desSentence.map(({ sentence, id }) => (
-            <DescriptionLine
-              key={id}
-              sentence={sentence}
-              changeDescription={handleChangeDescription(id)}
-              deleteDescription={handleDeleteDescription(id)}
-            />
-          ))}
-          {isAdd ? (
-            <DescriptionLine
-              sentence=""
-              changeDescription={handleChangeDescription(desSentence.length)}
-              deleteDescription={handleDeleteDescription(desSentence.length)}
-            />
-          ) : (
-            <>
-              {isDisable ? null : (
-                <div
-                  className={styles.addDescription}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => setIsAdd(true)}
-                >
-                  <img src={ICON_ADD} alt="add" />
-                  <p className={styles.addText}>Add description</p>
+              {isChoosePriority && (
+                <div className={styles.choosingBox}>
+                  {Array(4)
+                    .fill('')
+                    .map((_, index) => (
+                      <div
+                        className={styles.tagItem}
+                        style={{
+                          '--background-color': getTagStyle(index + 1)[1],
+                          '--color': getTagStyle(index + 1)[2],
+                        }}
+                        onClick={() => setPriority(index + 1)}
+                      >
+                        <p>{getTagStyle(index + 1)[0]}</p>
+                      </div>
+                    ))}
                 </div>
               )}
-            </>
+            </div>
+          </div>
+          {isDisable || isGroup || (
+            <div className={styles.desSentence_2}>
+              <img src={ICON_BOOKMARKS} alt="time" />
+              <div className={styles.list}>
+                {populatedTags.map((tag) => (
+                  <ImportedTag
+                    key={tag._id}
+                    name={tag.title}
+                    color={tag.color}
+                    onClose={() => {
+                      setTags((prev) =>
+                        prev.filter((currentTag) => currentTag !== tag._id),
+                      );
+                    }}
+                  />
+                ))}
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!isDisable) setIsAddTag(true);
+                  }}
+                  className={styles.buttonAdd}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={ICON_ADD} alt="button" />
+                </div>
+              </div>
+              {isAddTag && (
+                <TagChoosing setTag={(tagID) => handleAddTag(tagID)} />
+              )}
+            </div>
+          )}
+          {isGroup && (
+            <InviteUserModal
+              taskID={data?._id}
+              time={{ from: startTime, to: endTime }}
+              responses={data?.responses}
+              participants={participants}
+              setParticipants={setParticipants}
+            />
           )}
         </div>
-      </div>
-      <div className={styles.buttonContainer}>
-        <div className={styles.inviteParticipant} style={{ cursor: 'pointer' }}>
-          <img src={ICON_MAIL} alt="invite" />
-          <p className={styles.textInvite}>Invite participants</p>
+        <div className={styles.descriptionContainer}>
+          <p className={styles.text}>Description</p>
+          <div className={styles.detailDescription}>
+            {desSentence.map(({ sentence, id }) => (
+              <DescriptionLine
+                key={id}
+                sentence={sentence}
+                changeDescription={handleChangeDescription(id)}
+                deleteDescription={handleDeleteDescription(id)}
+              />
+            ))}
+            {isAdd ? (
+              <DescriptionLine
+                sentence=""
+                changeDescription={handleChangeDescription(desSentence.length)}
+                deleteDescription={handleDeleteDescription(desSentence.length)}
+              />
+            ) : (
+              <>
+                {isDisable ? null : (
+                  <div
+                    className={styles.addDescription}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setIsAdd(true)}
+                  >
+                    <img src={ICON_ADD} alt="add" />
+                    <p className={styles.addText}>Add description</p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
-        {isDisable ? (
-          ''
-        ) : (
+        <div className={styles.buttonContainer}>
           <div
-            onClick={handleDelete}
-            className={styles.trashContainer}
+            className={styles.inviteParticipant}
             style={{ cursor: 'pointer' }}
           >
-            <img src={ICON_TRASH} alt="trash" />
+            <img src={ICON_MAIL} alt="invite" />
+            <p className={styles.textInvite}>Invite participants</p>
           </div>
-        )}
+          {isDisable ? (
+            ''
+          ) : (
+            <div
+              onClick={handleDelete}
+              className={styles.trashContainer}
+              style={{ cursor: 'pointer' }}
+            >
+              <img src={ICON_TRASH} alt="trash" />
+            </div>
+          )}
+        </div>
       </div>
       {isGroup || !data.belongTo ? (
         <div className={styles.createButton} onClick={handleCreateNewTask}>

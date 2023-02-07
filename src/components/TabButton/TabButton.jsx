@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { ICON_GROUP, ICON_HOUSE, ICON_PROFILE } from '../../assets/icons';
 import styles from './TabButton.module.scss';
-import { ICON_GROUP, ICON_HOUSE, ICON_SETTING } from '../../assets/icons';
 
 export default function TabButton({ isSelected, onClick, type }) {
   const icon = (() => {
@@ -20,9 +20,9 @@ export default function TabButton({ isSelected, onClick, type }) {
             className={styles.house}
           />
         );
-      case 'Setting':
+      case 'Profile':
         return (
-          <ICON_SETTING
+          <ICON_PROFILE
             color={isSelected ? 'white' : 'black'}
             className={styles.house}
           />
