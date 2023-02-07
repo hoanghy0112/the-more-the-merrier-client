@@ -36,6 +36,7 @@ export default function useGroupBusyTime(groupID, from, to) {
     });
 
     socket.on('delete-task', (taskID) => {
+      console.log({ taskID });
       dispatch(updateDeletedBusy(taskID));
     });
 

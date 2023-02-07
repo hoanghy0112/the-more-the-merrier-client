@@ -25,7 +25,7 @@ export default function filterTime({
 
   filteredTime = splitBusyTime(filteredTime, busyTime, timeOfDay);
 
-  let timeList = [];
+  let timeList = filteredTime;
   if (!timeOfDay.has(TIME_OF_DAY_LABELS.ALL_DAY)) {
     timeList = filterByPeriod(filteredTime, howLong);
   }

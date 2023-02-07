@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
@@ -346,7 +347,8 @@ function getStatisticByMonth(busyTimes = []) {
     busyTimeList?.[0]?.from || new Date(),
   );
 
-  const startDate = new Date(busyTimeList?.[0]?.from || new Date());
+  // const startDate = new Date(busyTimeList?.[0]?.from || new Date());
+  const startDate = new Date(new Date());
   startDate.setDate(1);
   startDate.setHours(0, 0, 0, 0);
 
@@ -360,6 +362,7 @@ function getStatisticByMonth(busyTimes = []) {
   );
 
   const freeTime = filterTime({ startDate, busyTime: busyTimeList, endDate });
+  console.log({ freeTime });
 
   const busyTimeData = Array.from(
     freeTime

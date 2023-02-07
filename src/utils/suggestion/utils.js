@@ -20,7 +20,7 @@ export function getInitialTimeList(
   const newStartDate = new Date(
     startDate.getFullYear(),
     startDate.getMonth(),
-    startDate.getDate() - startDate.getDay() + 1,
+    startDate.getDate(),
     0,
     0,
     0,
@@ -34,10 +34,11 @@ export function getInitialTimeList(
     59,
   );
 
-  return {
-    from: newStartDate,
-    to: newEndDate,
-  };
+  // return {
+  //   from: newStartDate,
+  //   to: newEndDate,
+  // };
+  return { from: startDate, to: endDate };
 }
 
 export function addToTimeStamps(

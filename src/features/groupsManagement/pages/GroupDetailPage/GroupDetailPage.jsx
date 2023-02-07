@@ -10,18 +10,19 @@ import GroupCalendar from '../../../calendar/components/GroupCalendar/GroupCalen
 
 import { ICON_BACK_PRIMARY } from '../../../../assets/icons';
 import CenteredModal from '../../../../components/CenteredModal/CenteredModal';
+import InstructionModal from '../../../../components/InstructionModal/InstructionModal';
 import PrimaryButton from '../../../../components/PrimaryButton/PrimaryButton';
 import UserIcon from '../../../../components/UserIcon/UserIcon';
 import { GROUP_NOT_FOUND } from '../../../../constants/errorMessage';
+import { selectPersonalStartAndEndOfWeek } from '../../../tasksManagement/TasksSlice';
 import { selectUserProfile } from '../../../userManagement/ProfileSlice';
 import AddUserScreen from '../../components/AddUserScreen/AddUserScreen';
 import GeneratedSuggestionModal from '../../components/GeneratedSuggestionModal/GeneratedSuggestionModal';
 import GroupInformation from '../../components/GroupInformation/GroupInformation';
 import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal';
+import { setCurrentGroup } from '../../groupSlice';
 import useGroupInformation from '../../hooks/useGroupInformation';
 import styles from './GroupDetailPage.module.scss';
-import { setCurrentGroup } from '../../groupSlice';
-import InstructionModal from '../../../../components/InstructionModal/InstructionModal';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export default function GroupDetailPage() {
 
   const groupID = location.pathname.split('/').slice(-1)[0];
   const { groupInfo, isLoading: groupIsLoading } = useGroupInformation(groupID);
+  const { startDate } = useSelector(selectPersonalStartAndEndOfWeek);
 
   const userProfile = useSelector(selectUserProfile);
 
@@ -120,6 +122,7 @@ export default function GroupDetailPage() {
             onClose={() => setIsOpenGeneratedTimeModal(false)}
           >
             <GeneratedSuggestionModal
+              startDate={startDate}
               options={suggestionOptions}
               onClose={() => setIsOpenGeneratedTimeModal(false)}
             />
