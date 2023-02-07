@@ -4,7 +4,7 @@ export function getColorOfGroupTask(task, userID) {
   const response = task?.responses.find(({ userID: id }) => id === userID);
 
   if (task?.admin === userID) {
-    return '#9dc1fc95';
+    return 'rgba(0, 41, 244, 0.498)';
   }
 
   if (response?.adminState) {
@@ -14,7 +14,7 @@ export function getColorOfGroupTask(task, userID) {
     }
   }
 
-  if (response?.state === 'approve') return '#0029f47f';
+  if (response?.state === 'approve') return 'rgba(157, 193, 252, 0.584)';
 
   return 'white';
 }

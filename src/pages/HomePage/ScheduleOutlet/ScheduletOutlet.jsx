@@ -13,6 +13,7 @@ import {
 import usePersonalTask from '../../../features/tasksManagement/hooks/usePersonalTask';
 import styles from './ScheduleOutlet.module.scss';
 import { getTimeOfDate } from '../../../utils/calendar.utils';
+import InstructionModal from '../../../components/InstructionModal/InstructionModal';
 
 export default function ScheduleOutlet() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export default function ScheduleOutlet() {
       <div className={styles.calendar}>
         <div className={styles.picker}>
           <DateTimePicker />
+          <InstructionModal />
         </div>
         <div className={styles.calendarMain}>
           <PersonalCalendar />

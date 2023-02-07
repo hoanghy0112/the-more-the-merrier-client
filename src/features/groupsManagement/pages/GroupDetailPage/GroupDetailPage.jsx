@@ -21,6 +21,7 @@ import SuggestTimeModal from '../../components/SuggestTimeModal/SuggestTimeModal
 import useGroupInformation from '../../hooks/useGroupInformation';
 import styles from './GroupDetailPage.module.scss';
 import { setCurrentGroup } from '../../groupSlice';
+import InstructionModal from '../../../../components/InstructionModal/InstructionModal';
 
 export default function GroupDetailPage() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ export default function GroupDetailPage() {
       <div className={styles.calendar}>
         <div className={styles.picker}>
           <DateTimePicker />
+          <InstructionModal isGroup />
         </div>
         <div className={styles.calendarMain}>
           <GroupCalendar />
