@@ -59,6 +59,9 @@ export default function TaskCard({
     ((new Date(to).getTime() - new Date(from).getTime()) / 86400000) * 1200;
 
   const column = moment(new Date(from)).diff(new Date(startDate), 'd');
+  const response = task?.responses?.find(
+    ({ userID }) => userID === userInfo?._id,
+  );
 
   const isEditable = task?.admin === userInfo?._id;
 
@@ -102,100 +105,109 @@ export default function TaskCard({
   })();
 
   return (
-    <Draggable
-      onMouseDown={(e) => e.stopPropagation()}
-      onMouseMove={(e) => e.stopPropagation()}
-      onMouseUp={(e) => e.stopPropagation()}
-      bounds="parent"
-      grid={[width, 50 / 12]}
-      position={{ x: column * width, y: top }}
-      onStart={() => setTimeout(() => setIsDrag(true), 400)}
-      onStop={(...params) => {
-        setTimeout(() => setIsDrag(false), 400);
-        handleDragStop(...params);
-      }}
-      disabled={(task.belongTo && !isGroup) || !isEditable}
-    >
-      <div
-        className={[styles.drag, isDrag ? styles.hovering : null].join(' ')}
-        style={{
-          width,
-          height,
-          zIndex: isHovering
-            ? 200
-            : (task.belongTo && !isGroup) || !isEditable
-            ? 190
-            : 160,
-          '--color': primaryColor,
-          color: task.priority === 1 ? 'white' : 'black',
-        }}
-      >
-        <HoverBox
-          mainBox={
-            <div
-              className={[
-                styles.task,
-                task?.belongTo && !isGroup ? styles.group : null,
-                new Date(to) < new Date() && styles.passed,
-              ].join(' ')}
-              onClick={() => {
-                if (!isDrag) setIsOpen(true);
-              }}
-              style={
-                task?.belongTo && !isGroup
-                  ? {
-                      backgroundColor: getColorOfGroupTask(task, userInfo._id),
-                    }
-                  : {}
-              }
-            >
-              <div className={styles.taskContent}>
-                <p>{title}</p>
-                <div className={styles.tags}>
-                  {tags.map((tag) => (
-                    <p style={{ backgroundColor: tag.color }}>{tag.title}</p>
-                  ))}
+    <>
+      {!(!isGroup && response?.state === 'decline') ? (
+        <Draggable
+          onMouseDown={(e) => e.stopPropagation()}
+          onMouseMove={(e) => e.stopPropagation()}
+          onMouseUp={(e) => e.stopPropagation()}
+          bounds="parent"
+          grid={[width, 50 / 12]}
+          position={{ x: column * width, y: top }}
+          onStart={() => setTimeout(() => setIsDrag(true), 400)}
+          onStop={(...params) => {
+            setTimeout(() => setIsDrag(false), 400);
+            handleDragStop(...params);
+          }}
+          disabled={(task.belongTo && !isGroup) || !isEditable}
+        >
+          <div
+            className={[styles.drag, isDrag ? styles.hovering : null].join(' ')}
+            style={{
+              width,
+              height,
+              zIndex: isHovering
+                ? 200
+                : (task.belongTo && !isGroup) || !isEditable
+                ? 190
+                : 160,
+              '--color': primaryColor,
+              color: task.priority === 1 ? 'white' : 'black',
+            }}
+          >
+            <HoverBox
+              mainBox={
+                <div
+                  className={[
+                    styles.task,
+                    task?.belongTo && !isGroup ? styles.group : null,
+                    new Date(to) < new Date() && styles.passed,
+                  ].join(' ')}
+                  onClick={() => {
+                    if (!isDrag) setIsOpen(true);
+                  }}
+                  style={
+                    task?.belongTo && !isGroup
+                      ? {
+                          backgroundColor: getColorOfGroupTask(
+                            task,
+                            userInfo._id,
+                          ),
+                        }
+                      : {}
+                  }
+                >
+                  <div className={styles.taskContent}>
+                    <p>{title}</p>
+                    <div className={styles.tags}>
+                      {tags.map((tag) => (
+                        <p style={{ backgroundColor: tag.color }}>
+                          {tag.title}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          }
-          infoBox={
-            <DescriptionPopUpMinimize
-              onChange={changeTask}
-              isGroup={isGroup}
-              data={task}
+              }
+              infoBox={
+                <DescriptionPopUpMinimize
+                  onChange={changeTask}
+                  isGroup={isGroup}
+                  data={task}
+                />
+              }
+              onOpen={setIsHovering}
+              parentRect={rect}
+              canAppear={!isDrag && (isGroup || !task.belongTo)}
             />
-          }
-          onOpen={setIsHovering}
-          parentRect={rect}
-          canAppear={!isDrag && (isGroup || !task.belongTo)}
-        />
 
-        {(isGroup && task?.admin === userInfo?._id) || !task?.belongTo ? (
-          <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-            <CreateNewTask
-              onChange={(data) => {
-                changeTask(data);
-                setIsOpen(false);
-              }}
-              isGroup={isGroup}
-              data={task}
-              closeModal={() => setIsOpen(false)}
-            />
-          </CenteredModal>
-        ) : (
-          <>
-            {task?._id ? (
-              <TaskPopUp
-                id={task._id}
-                isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
-              />
-            ) : null}
-          </>
-        )}
-      </div>
-    </Draggable>
+            {(isGroup && task?.admin === userInfo?._id) || !task?.belongTo ? (
+              <CenteredModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                <CreateNewTask
+                  onChange={(data) => {
+                    changeTask(data);
+                    setIsOpen(false);
+                  }}
+                  isGroup={isGroup}
+                  data={task}
+                  closeModal={() => setIsOpen(false)}
+                />
+              </CenteredModal>
+            ) : (
+              <>
+                {task?._id ? (
+                  <TaskPopUp
+                    id={task._id}
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
+                  />
+                ) : null}
+              </>
+            )}
+          </div>
+        </Draggable>
+      ) : null}
+    </>
   );
 }
 
