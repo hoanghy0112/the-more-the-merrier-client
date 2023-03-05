@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './PrimaryButton.module.scss';
-import CenteredModal from '../CenteredModal/CenteredModal';
+// import CenteredModal from '../CenteredModal/CenteredModal';
 
 export default function PrimaryButton({
   title,
@@ -53,7 +53,7 @@ export default function PrimaryButton({
         {title}
         {children}
       </button>
-      <CenteredModal isOpen={isOpenConfirmedModal} onClose={closeModal}>
+      {/* <CenteredModal isOpen={isOpenConfirmedModal} onClose={closeModal}>
         <div className={styles.modal}>
           <p>{confirmMesssage}</p>
           <p className={styles.warning}>
@@ -72,7 +72,7 @@ export default function PrimaryButton({
             </button>
           </div>
         </div>
-      </CenteredModal>
+      </CenteredModal> */}
     </>
   );
 }
