@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://hoanghy.tech';
+export const BASE_URL = 'https://tm2-api.hoanghy.tech';
 
 export const GET_USER_PROFILE_API_LINK = `${BASE_URL}/api/v1/user`;
 export const GET_USER_PROFILE_BY_ID = `${BASE_URL}/api/v2/user/find`;
